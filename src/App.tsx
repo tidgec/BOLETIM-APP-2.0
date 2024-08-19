@@ -1,10 +1,17 @@
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './lib/client'
+
+import { Toaster } from 'sonner'
 
 export function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+      <Toaster richColors />
     </>
   )
 }
