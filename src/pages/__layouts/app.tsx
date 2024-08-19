@@ -9,7 +9,7 @@ export function AppLayout() {
       <Header isLogged />
       <div className="relative flex h-[48.5rem] w-full bg-slate-100 md:h-[55rem]">
         <Menu role={Role.DEV} />
-        <div className='overflow-y-auto w-full'>
+        <div className="w-full overflow-y-auto">
           <Outlet />
         </div>
       </div>

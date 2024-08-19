@@ -72,9 +72,7 @@ export function Admins() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">
-            Excluir Administrador
-          </span>
+          <span className="font-medium text-white">Excluir Administrador</span>
         </Link>
       </div>
     </section>

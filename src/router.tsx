@@ -130,23 +130,23 @@ export const router = createBrowserRouter([
       },
       {
         path: '/courses/management',
-        element: <CourseManagement/>,
+        element: <CourseManagement />,
       },
       {
         path: '/courses/all',
-        element: <AllCourses/>,
+        element: <AllCourses />,
       },
       {
         path: '/student-page/course-information',
-        element: <CourseInformation/>,
+        element: <CourseInformation />,
       },
       {
         path: '/courses/management/disciplines',
-        element: <Disciplines/>,
+        element: <Disciplines />,
       },
       {
         path: '/disciplines/add',
-        element: <AddDiscipline/>,
+        element: <AddDiscipline />,
       },
       {
         path: '/student/academic-record',
@@ -162,7 +162,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/students/courses-search-update',
-        element: <SelectCourseToUpdateStudent/>,
+        element: <SelectCourseToUpdateStudent />,
       },
       {
         path: '/managers/courses-search-active',
@@ -214,7 +214,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/classification/courses-search-general-classification',
-        element: <SelectCourseToGeneralClassification />, 
+        element: <SelectCourseToGeneralClassification />,
       },
       {
         path: '/behaviors/courses-search-batch-bahavior',
@@ -342,15 +342,15 @@ export const router = createBrowserRouter([
       },
       {
         path: '/academic-record/active-search',
-        element: <SearchActiveHistory/>,
+        element: <SearchActiveHistory />,
       },
       {
         path: '/academic-record/disable-search',
-        element: <SearchDisableHistory/>,
+        element: <SearchDisableHistory />,
       },
       {
         path: '/academic-record/download-search',
-        element: <SearchDownloadHistory/>,
+        element: <SearchDownloadHistory />,
       },
       {
         path: '/notes/search/',

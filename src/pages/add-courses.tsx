@@ -105,5 +105,5 @@ export function AddCourses() {
         </div>
       </section>
     </div>
-  );
+  )
 }
