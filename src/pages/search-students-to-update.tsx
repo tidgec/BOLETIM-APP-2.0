@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
 export function SearchStudentsToUpdate() {
-
-  const [selectedFilter, setSelectedFilter] = useState('Todos');
+  const [selectedFilter, setSelectedFilter] = useState('Todos')
 
   return (
-    <div className="w-full py-6"> 
+    <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Buscar alunos
@@ -24,12 +23,15 @@ export function SearchStudentsToUpdate() {
             <button className="hidden">Buscar</button>
           </div>
           <div className="items-center space-x-0">
-            <h2 className="flex w-full justify-center py-3 font-semibold">SELECIONE O POLO</h2>
-            <select 
-            id="filter_search_students_to_update"
-            value={selectedFilter}
-            onChange={(e)=> setSelectedFilter(e.target.value)}
-            className='flex shadow rounded-lg border border-gray-500 w-full py-1 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
+            <h2 className="flex w-full justify-center py-3 font-semibold">
+              SELECIONE O POLO
+            </h2>
+            <select
+              id="filter_search_students_to_update"
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+              className="focus:shadow-outline flex w-full rounded-lg border border-gray-500 px-5 py-1 leading-tight text-gray-700 shadow focus:outline-none"
+            >
               <option value="todos">TODOS OS POLOS</option>
               <option value="cfap">CFAP</option>
               <option value="castanhal">CASTANHAL</option>
