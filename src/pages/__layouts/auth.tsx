@@ -3,9 +3,9 @@ import { Header } from '../../components/header'
 
 export function AuthLayout() {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Header isLogged={false} />
-      <div className="h-[55rem] w-full bg-slate-100">
+      <div className="w-full flex-1 bg-slate-100 px-2">
         <Outlet />
       </div>
     </div>

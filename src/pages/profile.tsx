@@ -6,11 +6,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useProfile } from '@/hooks/use-profile'
 import { Camera, Pencil } from 'lucide-react'
 import { ChangeEvent, useState } from 'react'
 
 export function Profile() {
   const [profileImage, setProfileImage] = useState<string | null>(null)
+
+  const { user } = useProfile()
 
   function handleOnFileSelected(e: ChangeEvent<HTMLInputElement>) {
     const { files } = e.target
@@ -24,7 +27,7 @@ export function Profile() {
   }
 
   return (
-    <div className="flex w-full items-center justify-center gap-10">
+    <div className="flex h-full w-full items-center justify-center gap-10">
       <article className="flex w-full max-w-4xl gap-8 rounded bg-pmpa-blue-500 px-8 py-4">
         <div className="my-auto space-y-1 text-white">
           <div className="group relative  flex h-52 w-52 items-center justify-center overflow-hidden rounded-3xl bg-pmpa-blue-800">
@@ -50,12 +53,12 @@ export function Profile() {
             )}
             {!profileImage && <span className="text-7xl font-medium">RS</span>}
           </div>
-          <p className="text-center text-lg font-medium">Desenvolvedor</p>
+          <p className="text-center text-lg font-medium">{user?.role}</p>
         </div>
 
-        <div className="flex h-80 flex-col justify-between">
-          <div className="space-y-4 text-white">
-            <div className="flex flex-col gap-1">
+        <div className="flex h-80 w-full flex-col justify-between">
+          <div className="w-full space-y-4 text-white">
+            <div className="flex w-full flex-col gap-1">
               <Dialog>
                 <DialogTrigger asChild>
                   <button className="ml-auto">
@@ -64,12 +67,12 @@ export function Profile() {
                 </DialogTrigger>
 
                 <DialogContent className="h-[38rem] w-full max-w-3xl overflow-auto bg-pmpa-blue-700 p-0 text-white">
-                  <DialogHeader className="bg-pmpa-blue-900 px-4 py-8">
+                  <DialogHeader className="h-20 bg-pmpa-blue-900 px-4 py-8">
                     <DialogTitle>Atualizar perfil</DialogTitle>
                   </DialogHeader>
 
-                  <form className="relative space-y-2">
-                    <div className="space-y-4 px-6">
+                  <form className="relative flex flex-col items-center space-y-2">
+                    <div className="w-full flex-1 space-y-4 px-6">
                       <div className="flex flex-col gap-1">
                         <label htmlFor="name" className="text-sm">
                           Nome Completo:
@@ -103,7 +106,7 @@ export function Profile() {
                           className="rounded px-4 py-3 text-black"
                         />
                       </div>
-                      <div className="flex flex-col gap-1">
+                      {/* <div className="flex flex-col gap-1">
                         <label htmlFor="military-id" className="text-sm">
                           RG Militar:
                         </label>
@@ -113,8 +116,8 @@ export function Profile() {
                           placeholder="29328932"
                           className="rounded px-4 py-3 text-black"
                         />
-                      </div>
-                      <div className="flex flex-col gap-1">
+                      </div> */}
+                      {/* <div className="flex flex-col gap-1">
                         <label htmlFor="father-name" className="text-sm">
                           Nome do pai:
                         </label>
@@ -135,7 +138,7 @@ export function Profile() {
                           placeholder="Joana Doe"
                           className="rounded px-4 py-3 text-black"
                         />
-                      </div>
+                      </div> */}
                       <div className="flex flex-col gap-1">
                         <label htmlFor="birthday" className="text-sm">
                           Data de nascimento:
@@ -152,7 +155,7 @@ export function Profile() {
                     <DialogFooter className="sticky bottom-0 left-0 w-full bg-pmpa-blue-900 px-8 py-4">
                       <button
                         type="submit"
-                        className="rounded px-4 py-2 hover:bg-pmpa-blue-700"
+                        className="rounded px-4 py-2 hover:bg-pmpa-blue-500"
                       >
                         Atualizar
                       </button>
@@ -160,14 +163,19 @@ export function Profile() {
                   </form>
                 </DialogContent>
               </Dialog>
-              <span className="text-4xl font-bold">
-                RODINELSON DE LIMA SANCHES
-              </span>
+
+              <div className="w-full">
+                <p className="text-4xl font-bold">
+                  {user?.username.toUpperCase()}
+                </p>
+              </div>
             </div>
+
             <ul className="h-32 space-y-2 overflow-auto ">
-              <li>Email: rodinelsonsanches@gmail.com</li>
-              <li>CPF: 900.524.802-59</li>
-              <li>Data de nascimento: 01/05/2022</li>
+              <li>Email: {user?.email}</li>
+              <li>CPF: {user?.cpf}</li>
+              <li>RG: {user?.civilId}</li>
+              <li>Data de nascimento: {String(user?.birthday)}</li>
             </ul>
           </div>
 
@@ -175,16 +183,18 @@ export function Profile() {
             <div className="space-y-1 text-white">
               <span className="text-lg font-medium">Cursos:</span>
               <ul className="ml-0 space-y-1">
-                <li>CFP - 2022</li>
-                <li>CFP - 2024</li>
+                {user?.courses?.map((course, index) => (
+                  <li key={index}>{'course'}</li>
+                ))}
               </ul>
             </div>
 
             <div className="space-y-1 text-white">
               <span className="ml-20 text-lg font-medium">Polos:</span>
               <ul className="ml-20 space-y-1">
-                <li>CFAP</li>
-                <li>MARABÁ</li>
+                {user?.poles?.map((pole, index) => (
+                  <li key={index}>{'pole'}</li>
+                ))}
               </ul>
             </div>
           </div>
