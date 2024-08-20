@@ -81,6 +81,7 @@ import { ImportKtsFile } from './pages/import-kts-file'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { CourseInformation } from './pages/student/course-information'
 import { Home } from './pages/home'
+import ReportCard from './pages/student/report-card'
 
 export const router = createBrowserRouter([
   {
@@ -110,6 +111,10 @@ export const router = createBrowserRouter([
       {
         path: '/import/kts',
         element: <ImportKtsFile />,
+      },
+      {
+        path: '/student/report-card',
+        element: <ReportCard/>,
       },
       {
         path: '/import/documents',
