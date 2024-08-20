@@ -1,27 +1,28 @@
 import { LucideCircleUser, LucideList, LucideX } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { StudentMenu } from './menu-navigation/student-menu'
-import { DevMenu } from './menu-navigation/dev-menu'
-import { AdminMenu } from './menu-navigation/admin-menu'
-import { ManagerMenu } from './menu-navigation/manager-menu'
-import { Role } from '@/utils/enum-role-type'
 import { useState } from 'react'
+import { DevMenu } from './dev-menu'
+import { AdminMenu } from './admin-menu'
+import { ManagerMenu } from './manager-menu'
+import { StudentMenu } from './student-menu'
+import { Role } from '@/types/enum-role-type'
 
 interface MenuProps {
-  role: Role
+  role?: string
 }
 
 export function Menu({ role }: MenuProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
+  console.log(role)
 
   return (
     <>
       <aside className="hidden w-full max-w-60 space-y-8 bg-pmpa-blue-700 px-4 py-8 text-white md:block">
         <nav>
-          {role === Role.DEV && <DevMenu />}
-          {role === Role.ADMIN && <AdminMenu />}
-          {role === Role.MANAGER && <ManagerMenu />}
-          {role === Role.STUDENT && <StudentMenu />}
+          {role === 'dev' && <DevMenu />}
+          {role === 'admin' && <AdminMenu />}
+          {role === 'manager' && <ManagerMenu />}
+          {role === 'student' && <StudentMenu />}
         </nav>
         <div className="border-y-2 py-4">
           <Link to={'/profile'} className="flex gap-4 text-sm tracking-wider">

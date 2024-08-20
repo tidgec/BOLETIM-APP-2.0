@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 export function StudentMenu() {
   return (
-    <ul className="flex flex-col items-center md:items-start justify-center space-y-4 text-lg md:text-sm">
+    <ul className="flex flex-col items-center justify-center space-y-4 text-lg md:items-start md:text-sm">
       <li className="flex gap-4">
         <Link
-          to={'/student/home'}
+          to={'/'}
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideHome size={20} />

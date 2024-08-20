@@ -8,13 +8,11 @@ import {
   LucideBrain,
   LucideHistory,
   LucideBarChart2,
-  LucideSquareUser,
-  LucideNotepadText,
 } from 'lucide-react'
 
-export function AdminMenu() {
+export function ManagerMenu() {
   return (
-    <ul className="flex flex-col items-center md:items-start justify-center space-y-4 text-lg md:text-sm">
+    <ul className="flex flex-col items-center justify-center space-y-4 text-lg md:items-start md:text-sm">
       <li className="flex gap-4">
         <Link
           to={'/'}
@@ -44,15 +42,6 @@ export function AdminMenu() {
       </li>
       <li className="flex gap-4">
         <Link
-          to={'/managers'}
-          className="flex items-center justify-center gap-4 md:justify-start"
-        >
-          <LucideSquareUser size={20} />
-          Supervisores
-        </Link>
-      </li>
-      <li className="flex gap-4">
-        <Link
           to={'/notes'}
           className="flex items-center justify-center gap-4 md:justify-start"
         >
@@ -67,15 +56,6 @@ export function AdminMenu() {
         >
           <LucideBrain size={20} />
           Comportamentos
-        </Link>
-      </li>
-      <li className="flex gap-4">
-        <Link
-          to={'/reports'}
-          className="flex items-center justify-center gap-4 md:justify-start"
-        >
-          <LucideNotepadText size={20} />
-          Relatórios
         </Link>
       </li>
       <li className="flex gap-4">
