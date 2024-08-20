@@ -50,9 +50,7 @@ import { CourseManagement } from './pages/course-management'
 import { Disciplines } from './pages/disciplines'
 import { AllCourses } from './pages/all-courses'
 import { AddDiscipline } from './pages/add-discipline'
-import { StudentHome } from './pages/student/student-home'
 import { SearchNotes } from './pages/search-notes'
-import { DevHome } from './pages/dev-home'
 import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
 import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
 import { SelectCourseToAddBehaviors } from './pages/ways/select-course-to-add-behaviors'
@@ -82,6 +80,7 @@ import { StudentPage } from './pages/student/student-page'
 import { ImportKtsFile } from './pages/import-kts-file'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { CourseInformation } from './pages/student/course-information'
+import { Home } from './pages/home'
 
 export const router = createBrowserRouter([
   {
@@ -89,12 +88,8 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: '/dev/home',
-        element: <DevHome />,
-      },
-      {
-        path: '/student/home',
-        element: <StudentHome />,
+        path: '/',
+        element: <Home />,
       },
       {
         path: '/notes',
@@ -407,11 +402,11 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/auth',
+    path: '/',
     element: <AuthLayout />,
     children: [
       {
-        path: '/auth/sign-in',
+        path: '/sign-in',
         element: <SignIn />,
       },
     ],
