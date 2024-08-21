@@ -1,7 +1,15 @@
+import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 export function AddNotes() {
   const [selectedYear, setSelectedYear] = useState('2024')
+
+  const { courseId } = useParams()
+
+  const { students, isLoading } = useGetCourseStudents({
+    courseId: String(courseId),
+  })
 
   return (
     <div className="w-full py-6">
@@ -37,62 +45,39 @@ export function AddNotes() {
           </select>
         </div>
 
-        <div className="mb-4 rounded border p-4">
-          <h2 className="mb-4 text-lg font-bold">
-            Nome: ADENOR DE OLIVEIRA ELIAS
-          </h2>
-          <p>Curso: CAS TURMA - 2024</p>
-          <p>Polo: SANTARÉM</p>
+        {isLoading && <p>Loading...</p>}
 
-          <div className="mt-4 grid grid-cols-2 gap-4">
-            {['VC I', 'VC II', 'VF', 'VFE'].map((month) => (
-              <div key={month} className="flex flex-col items-center">
-                <label>{month}</label>
-                <input
-                  type="text"
-                  placeholder="0,00"
-                  className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-                />
+        {!isLoading &&
+          students?.map((student) => (
+            <div key={student.id} className="mb-4 rounded border p-4">
+              <h2 className="mb-4 text-lg font-bold">
+                Nome: {student.username}
+              </h2>
+              <p>Curso: {student.course.name}</p>
+              <p>Polo: {student.pole.name}</p>
+
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                {['VC I', 'VC II', 'VF', 'VFE'].map((month) => (
+                  <div key={month} className="flex flex-col items-center">
+                    <label>{month}</label>
+                    <input
+                      type="text"
+                      placeholder="0,00"
+                      className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
-            >
-              Adicionar
-            </button>
-          </div>
-        </div>
-
-        {}
-        <div className="mb-4 rounded border p-4">
-          <h2 className="mb-4 text-lg font-bold">Nome: AGOSTINHO DE SOUZA</h2>
-          <p>Curso: CAS TURMA - 2024</p>
-          <p>Polo: CASTANHAL</p>
-
-          <div className="mt-4 grid grid-cols-2 gap-4">
-            {['VC I', 'VC II', 'VF', 'VFE'].map((month) => (
-              <div key={month} className="flex flex-col items-center">
-                <label>{month}</label>
-                <input
-                  type="text"
-                  placeholder="0,00"
-                  className="w-full rounded  border bg-pmpa-blue-500 p-2 text-center text-white"
-                />
+              <div>
+                <button
+                  type="submit"
+                  className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
+                >
+                  Adicionar
+                </button>
               </div>
-            ))}
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
-            >
-              Adicionar
-            </button>
-          </div>
-        </div>
+            </div>
+          ))}
       </section>
     </div>
   )
