@@ -1,15 +1,62 @@
+import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { useParams, useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
+
+const studentFiltersSchema = z.object({
+  search: z.string().optional(),
+  poleId: z.string().optional(),
+})
+
+type StudentFiltersSchema = z.infer<typeof studentFiltersSchema>
 
 export function AddNotes() {
-  const [selectedYear, setSelectedYear] = useState('2024')
-
   const { courseId } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const poleId = searchParams.get('poleId')
+  const search = searchParams.get('search')
+
+  const { handleSubmit, register, control } = useForm<StudentFiltersSchema>({
+    resolver: zodResolver(studentFiltersSchema),
+    defaultValues: {
+      poleId: poleId ?? 'all',
+      search: search ?? '',
+    },
+  })
+
+  console.log(poleId)
+  console.log(search)
 
   const { students, isLoading } = useGetCourseStudents({
     courseId: String(courseId),
   })
+
+  const { poles, isLoading: isLoadingPoles } = useGetCoursePoles({
+    courseId: String(courseId),
+  })
+
+  function handleFilter({ poleId, search }: StudentFiltersSchema) {
+    setSearchParams((state) => {
+      if (poleId) {
+        state.set('poleId', poleId)
+      } else {
+        state.delete('poleId')
+      }
+
+      if (search) {
+        state.set('search', search)
+      } else {
+        state.delete('search')
+      }
+
+      state.set('page', '1')
+
+      return state
+    })
+  }
 
   return (
     <div className="w-full py-6">
@@ -18,32 +65,50 @@ export function AddNotes() {
           Adicionar nota
         </h2>
 
-        <div className="mb-4 py-6">
-          <input
-            type="text"
-            placeholder="PESQUISE POR NOME, CPF"
-            className="w-full rounded border p-2"
-          />
-        </div>
+        <form
+          onSubmit={handleSubmit(handleFilter)}
+          className="mb-4 mt-4 flex w-full justify-between gap-2"
+        >
+          <div className="flex w-full max-w-3xl gap-2">
+            <input
+              type="text"
+              placeholder="PESQUISE POR NOME, CPF"
+              className="w-full flex-1 rounded border p-2"
+              {...register('search')}
+            />
 
-        <div className="mb-4">
-          <select className="w-full rounded border p-2">
-            <option>TODOS OS POLOS</option>
-            <option>BELÉM</option>
-            <option>SANTARÉM</option>
-            <option>CASTANHAL</option>
-          </select>
-        </div>
+            {isLoading && <p>Loading...</p>}
+            <Controller
+              name="poleId"
+              defaultValue="all"
+              control={control}
+              render={({ field: { name, onChange, value, disabled } }) => {
+                return (
+                  <select
+                    name={name}
+                    value={value}
+                    disabled={disabled}
+                    onChange={onChange}
+                    className="rounded border p-2"
+                  >
+                    <option value={'all'}>TODOS</option>
 
-        <div className="mb-4">
-          <select
-            className="w-full rounded border p-2"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-            <option value="2024">2024</option>
-          </select>
-        </div>
+                    {!isLoadingPoles &&
+                      poles?.map((pole) => (
+                        <option key={pole.id} value={pole.id}>
+                          {pole.name}
+                        </option>
+                      ))}
+                  </select>
+                )
+              }}
+            ></Controller>
+          </div>
+
+          <button className="rounded bg-pmpa-blue-600 px-4 text-white hover:bg-pmpa-blue-500">
+            Filtrar
+          </button>
+        </form>
 
         {isLoading && <p>Loading...</p>}
 
