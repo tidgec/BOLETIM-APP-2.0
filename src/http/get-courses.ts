@@ -3,7 +3,23 @@ import { JWTPayload } from '@/types/jwt'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 
-export async function getCourses(page: string) {
+interface Course {
+  id: string
+  name: string
+  imageUrl: string
+}
+
+export interface GetCoursesResponse {
+  courses: Course[]
+  pages: number
+  totalItems: number
+}
+
+interface CourseRoleAdminOrDev {
+  course: Course
+}
+
+export async function getCourses(page: number): Promise<GetCoursesResponse> {
   const token = Cookies.get('token')
   if (!token) throw new Error('Não autorizado.')
 
@@ -17,7 +33,9 @@ export async function getCourses(page: string) {
     })
 
     return {
-      courses: response.data.courses,
+      courses: response.data.courses.map((item: CourseRoleAdminOrDev) => ({
+        ...item.course,
+      })),
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }
