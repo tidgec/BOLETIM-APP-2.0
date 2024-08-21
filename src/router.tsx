@@ -73,6 +73,10 @@ import ReportCard from './pages/student/report-card'
 import { ListCoursesPage } from './pages/list-courses'
 import { ListManagersEnabledPage } from './pages/list-managers-enabled'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
+import { RemoveNotes } from './pages/remove-notes'
+import { UpdateNotes } from './pages/update-notes'
+import { SearchStudentToUpdateInfo } from './pages/search-for-student-to-update-info'
+import { SearchManagerToUpdateInfo } from './pages/search-for-update-to-update-info'
 
 export const router = createBrowserRouter([
   {
@@ -176,6 +180,11 @@ export const router = createBrowserRouter([
         element: <ListCoursesPage />,
       },
       {
+        path: '/students/update/info',
+        element: <SearchStudentToUpdateInfo />,
+      },
+
+      {
         path: '/students/update/courses/:courseId',
         element: <UpdateStudent />,
       },
@@ -210,14 +219,6 @@ export const router = createBrowserRouter([
       {
         path: '/classification/the-classification-by-pole ',
         element: <SelectCourseTheClassificationByPole />,
-      },
-      {
-        path: '/notes/courses-search-update',
-        element: <SelectCourseToUpdateNotes />,
-      },
-      {
-        path: '/notes/search-course-notes',
-        element: <SelectCourseToNotes />,
       },
       {
         path: '/behaviors/courses-search-add-bahavior',
@@ -361,7 +362,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/notes/update/courses/:courseId/disciplines/:disciplineId',
-        element: <ListCourseDisciplinesPage />,
+        element: <UpdateNotes />,
       },
       {
         path: '/notes/remove',
@@ -373,7 +374,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/notes/remove/courses/:courseId/disciplines/:disciplineId',
-        element: <ListCourseDisciplinesPage />,
+        element: <RemoveNotes />,
       },
       {
         path: '/students/update/courses/:courseId',
@@ -394,6 +395,10 @@ export const router = createBrowserRouter([
       {
         path: '/managers/update',
         element: <ListCoursesPage />,
+      },
+      {
+        path: '/managers/update/info',
+        element: <SearchManagerToUpdateInfo />,
       },
       {
         path: '/managers/update/courses/:courseId',
