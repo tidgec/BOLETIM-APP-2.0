@@ -13,7 +13,6 @@ interface MenuProps {
 
 export function Menu({ role }: MenuProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  console.log(role)
 
   return (
     <>
