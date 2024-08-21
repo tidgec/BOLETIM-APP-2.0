@@ -42,6 +42,28 @@ export function AddAdmins() {
               />
             </div>
             <div className="space-y-1">
+                  <label htmlFor="civil" className="text-sm text-gray-200">
+                    RG Civil:
+                  </label>
+                  <input
+                    type="text"
+                    id="civil"
+                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    placeholder="Digite seu RG CIVIL..."
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label htmlFor="data" className="text-sm text-gray-200">
+                    Data de nascimento:
+                  </label>
+                  <input
+                    type="date"
+                    id="data"
+                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    placeholder="Digite sua data de nascimento..."
+                  />
+                </div>
+            <div className="space-y-1">
               <label htmlFor="Senha" className="text-sm text-gray-200">
                 Senha:
               </label>

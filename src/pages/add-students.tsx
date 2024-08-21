@@ -112,14 +112,40 @@ export function AddStudents() {
                     placeholder="Digite sua data de nascimento..."
                   />
                 </div>
+                <div className="space-y-1">
+              <label htmlFor="course" className="text-sm text-gray-200">
+                Selecione o curso
+              </label>
+              <select
+                id="course"
+                className="w-full rounded px-4 py-3 text-sm text-gray-700"
+              >
+                <option value="">Selecione um curso</option>
+                <option value="curso1">CAS</option>
+                <option value="curso2">CFP</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="pole" className="text-sm text-gray-200">
+                Selecione o polo
+              </label>
+              <select
+                id="pole"
+                className="w-full rounded px-4 py-3 text-sm text-gray-700"
+              >
+                <option value="">Selecione um polo</option>
+                <option value="belém">Belém</option>
+                <option value="santarem">Santarém</option>
+              </select>
+            </div>
               </div>
             </div>
 
             <button
               type="submit"
-              className="ml-auto block rounded bg-blue-800 px-3 py-2 text-white hover:bg-blue-700"
+              className="ml-auto block rounded bg-pmpa-blue-500 px-3 py-2 text-white hover:bg-pmpa-blue-700"
             >
-              Atualizar
+              Adicionar
             </button>
           </form>
         </div>
