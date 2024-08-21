@@ -57,7 +57,7 @@ export function AddStudents() {
               </div>
 
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
-                <div className="space-y-1">
+                {/* <div className="space-y-1">
                   <label htmlFor="pai" className="text-sm text-gray-200">
                     Nome do pai:
                   </label>
@@ -67,8 +67,8 @@ export function AddStudents() {
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite o nome completo do pai..."
                   />
-                </div>
-                <div className="space-y-1">
+                </div> */}
+                {/* <div className="space-y-1">
                   <label htmlFor="mãe" className="text-sm text-gray-200">
                     Nome da mãe:
                   </label>
@@ -78,7 +78,7 @@ export function AddStudents() {
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite o nome completo da mãe..."
                   />
-                </div>
+                </div> */}
                 <div className="space-y-1">
                   <label htmlFor="civil" className="text-sm text-gray-200">
                     RG Civil:
@@ -90,7 +90,7 @@ export function AddStudents() {
                     placeholder="Digite seu RG CIVIL..."
                   />
                 </div>
-                <div className="space-y-1">
+                {/* <div className="space-y-1">
                   <label htmlFor="civil" className="text-sm text-gray-200">
                     RG Militar:
                   </label>
@@ -100,7 +100,7 @@ export function AddStudents() {
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG MILITAR..."
                   />
-                </div>
+                </div> */}
                 <div className="space-y-1">
                   <label htmlFor="data" className="text-sm text-gray-200">
                     Data de nascimento:
