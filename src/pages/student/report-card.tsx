@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 interface GradeProps {
   disciplina: string;
   vc1: number;
@@ -128,38 +129,50 @@ function GradeItem({ grade }: { grade: GradeProps }) {
       <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">
         {grade.disciplina}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
         {grade.vc1}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
         {grade.vc2}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
         {grade.vf}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
         {grade.vfe}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
         {grade.media}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+      <td className="px-4 py-3 text-sm text-lime-700 whitespace-nowrap">
         {grade.status}
       </td>
     </tr>
   );
 }
 
-function BehaviorItem({ comportamento }: { comportamento: ComportamentoProps }) {
+function BehaviorTable() {
   return (
-    <tr className="border-b border-gray-200 hover:bg-gray-100">
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
-        {comportamento.mes}
-      </td>
-      <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
-        {comportamento.nota}
-      </td>
-    </tr>
+    <table className="w-full table-auto mb-4">
+      <thead>
+        <tr className="bg-gray-200 text-pmpa-blue-600 uppercase text-sm leading-normal">
+          {behaviorData.map((comportamento) => (
+            <th key={comportamento.mes} className="px-4 py-3 text-left font-bold whitespace-nowrap">
+              {comportamento.mes}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="bg-gray-100">
+          {behaviorData.map((comportamento) => (
+            <td key={comportamento.mes} className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+              {comportamento.nota}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
   );
 }
 
@@ -169,7 +182,7 @@ function ReportCard() {
 
   return (
     <div className="container w-full mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-4">Boletim Online</h1>
+      <h1 className="w-full py-3 border-b-2 border-b-black text-3xl font-bold mb-4">Boletim Online</h1>
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="mb-4">
           <h2 className="text-xl font-bold">Polo: CFAP</h2>
@@ -195,7 +208,7 @@ function ReportCard() {
         {showGrades && (
           <table className="w-full table-auto mb-4">
             <thead>
-              <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+              <tr className="bg-gray-200 text-pmpa-blue-600 uppercase text-sm leading-normal">
                 <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
                   DISCIPLINA
                 </th>
@@ -234,25 +247,7 @@ function ReportCard() {
             {showBehavior ? 'Ocultar Comportamento' : 'Ver Comportamento'}
           </button>
         </div>
-        {showBehavior && (
-          <table className="w-full table-auto mb-4">
-            <thead>
-              <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
-                  MÊS
-                </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
-                  NOTA
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {behaviorData.map((comportamento) => (
-                <BehaviorItem key={comportamento.mes} comportamento={comportamento} />
-              ))}
-            </tbody>
-          </table>
-        )}
+        {showBehavior && <BehaviorTable />}
         <div className="mb-4">
           <h2 className="text-xl font-bold">MÉDIA COMPORTAMENTO: 8.500</h2>
           <p className="text-gray-700">STATUS COMPORTAMENTO: APROVADO</p>
