@@ -1,3 +1,5 @@
+import { CreateAssessmentForm } from '@/components/create-assessment-form'
+import { Pagination } from '@/components/pagination'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -6,7 +8,8 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 const studentFiltersSchema = z.object({
-  search: z.string().optional(),
+  username: z.string().optional(),
+  cpf: z.string().optional(),
   poleId: z.string().optional(),
 })
 
@@ -17,28 +20,31 @@ export function AddNotes() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const poleId = searchParams.get('poleId')
-  const search = searchParams.get('search')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
+  const page = searchParams.get('page')
 
   const { handleSubmit, register, control } = useForm<StudentFiltersSchema>({
     resolver: zodResolver(studentFiltersSchema),
     defaultValues: {
       poleId: poleId ?? 'all',
-      search: search ?? '',
+      cpf: cpf ?? '',
+      username: username ?? '',
     },
   })
 
-  console.log(poleId)
-  console.log(search)
-
-  const { students, isLoading } = useGetCourseStudents({
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
     courseId: String(courseId),
+    cpf: cpf ?? '',
+    username: username ?? '',
+    page: page ?? '1',
   })
 
   const { poles, isLoading: isLoadingPoles } = useGetCoursePoles({
     courseId: String(courseId),
   })
 
-  function handleFilter({ poleId, search }: StudentFiltersSchema) {
+  function handleFilter({ poleId, cpf, username }: StudentFiltersSchema) {
     setSearchParams((state) => {
       if (poleId) {
         state.set('poleId', poleId)
@@ -46,10 +52,16 @@ export function AddNotes() {
         state.delete('poleId')
       }
 
-      if (search) {
-        state.set('search', search)
+      if (cpf) {
+        state.set('cpf', cpf)
       } else {
-        state.delete('search')
+        state.delete('cpf')
+      }
+
+      if (username) {
+        state.set('username', username)
+      } else {
+        state.delete('username')
       }
 
       state.set('page', '1')
@@ -72,9 +84,16 @@ export function AddNotes() {
           <div className="flex w-full max-w-3xl gap-2">
             <input
               type="text"
-              placeholder="PESQUISE POR NOME, CPF"
+              placeholder="Busque por CPF"
               className="w-full flex-1 rounded border p-2"
-              {...register('search')}
+              {...register('cpf')}
+            />
+
+            <input
+              type="text"
+              placeholder="Busque por nome  "
+              className="w-full flex-1 rounded border p-2"
+              {...register('username')}
             />
 
             {isLoading && <p>Loading...</p>}
@@ -112,37 +131,26 @@ export function AddNotes() {
 
         {isLoading && <p>Loading...</p>}
 
-        {!isLoading &&
-          students?.map((student) => (
-            <div key={student.id} className="mb-4 rounded border p-4">
-              <h2 className="mb-4 text-lg font-bold">
-                Nome: {student.username}
-              </h2>
-              <p>Curso: {student.course.name}</p>
-              <p>Polo: {student.pole.name}</p>
+        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+          {!isLoading &&
+            students?.map((student) => (
+              <div key={student.id} className="rounded border p-4">
+                <h2 className="mb-4 text-lg font-bold">
+                  Nome: {student.username}
+                </h2>
+                <p>Curso: {student.course.name}</p>
+                <p>Polo: {student.pole.name}</p>
 
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                {['VC I', 'VC II', 'VF', 'VFE'].map((month) => (
-                  <div key={month} className="flex flex-col items-center">
-                    <label>{month}</label>
-                    <input
-                      type="text"
-                      placeholder="0,00"
-                      className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-                    />
-                  </div>
-                ))}
+                <CreateAssessmentForm studentId={student.id} />
               </div>
-              <div>
-                <button
-                  type="submit"
-                  className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
-                >
-                  Adicionar
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
+
+        <Pagination
+          items={totalItems ?? 0}
+          page={page ? Number(page) : 1}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )
