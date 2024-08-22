@@ -23,7 +23,6 @@ export async function getCoursePoles({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      // params
     },
   )
 
