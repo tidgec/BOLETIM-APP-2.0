@@ -53,8 +53,6 @@ import { SelectCourseToBatchBehaviors } from './pages/ways/select-course-to-batc
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
 import { SelectCourseToDisableStudent } from './pages/ways/select-course-to-disable-student'
 import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
-import { SelectCourseToUpdateNotes } from './pages/ways/select-course-to-update-notes'
-import { SelectCourseToNotes } from './pages/ways/select-course-to-notes'
 import { SelectCourseToUpdateBehaviors } from './pages/ways/select-course-to-update-behaviors'
 import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
 import { GeneralClassification } from './pages/general-classification'
