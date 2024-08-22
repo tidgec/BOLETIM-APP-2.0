@@ -4,6 +4,9 @@ import Cookies from 'js-cookie'
 export interface GetCourseStudentsRequest {
   courseId: string
   poleId?: string
+  username?: string
+  cpf?: string
+  page?: string
 }
 
 export interface GetCourseStudentsResponse {
@@ -26,6 +29,9 @@ export interface GetCourseStudentsResponse {
 export async function getCourseStudents({
   courseId,
   poleId,
+  cpf,
+  username,
+  page,
 }: GetCourseStudentsRequest): Promise<GetCourseStudentsResponse> {
   const token = Cookies.get('token')
 
@@ -51,6 +57,11 @@ export async function getCourseStudents({
     {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      params: {
+        username: username ?? '',
+        cpf,
+        page,
       },
     },
   )
