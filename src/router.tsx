@@ -25,8 +25,6 @@ import { Classification } from './pages/classification'
 import { AddStudentsBatch } from './pages/add-student-batch'
 import { AddNotesBatch } from './pages/add-notes-batch'
 import { AddBehaviorsBatch } from './pages/add-behaviors-batch'
-import { SearchStudentsToUpdate } from './pages/search-students-to-update'
-import { UpdateStudent } from './pages/update-students'
 import { SearchDisableHistory } from './pages/search-disable-history'
 import { SearchActiveHistory } from './pages/search-active-history'
 import { SearchDownloadHistory } from './pages/search-download-history'
@@ -73,8 +71,9 @@ import { ListManagersEnabledPage } from './pages/list-managers-enabled'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { RemoveNotes } from './pages/remove-notes'
 import { UpdateNotes } from './pages/update-notes'
-import { SearchStudentToUpdateInfo } from './pages/search-for-student-to-update-info'
 import { SearchManagerToUpdateInfo } from './pages/search-for-update-to-update-info'
+import { ListStudentsPage } from './pages/list-students'
+import { UpdateStudent } from './pages/update-student'
 
 export const router = createBrowserRouter([
   {
@@ -178,12 +177,11 @@ export const router = createBrowserRouter([
         element: <ListCoursesPage />,
       },
       {
-        path: '/students/update/info',
-        element: <SearchStudentToUpdateInfo />,
-      },
-
-      {
         path: '/students/update/courses/:courseId',
+        element: <ListStudentsPage />,
+      },
+      {
+        path: '/students/update/:id',
         element: <UpdateStudent />,
       },
       {
@@ -323,10 +321,6 @@ export const router = createBrowserRouter([
         element: <AddStudentsBatch />,
       },
       {
-        path: '/students/search/update',
-        element: <SearchStudentsToUpdate />,
-      },
-      {
         path: '/students/disable',
         element: <ListCoursesPage />,
       },
@@ -373,10 +367,6 @@ export const router = createBrowserRouter([
       {
         path: '/notes/remove/courses/:courseId/disciplines/:disciplineId',
         element: <RemoveNotes />,
-      },
-      {
-        path: '/students/update/courses/:courseId',
-        element: <UpdateStudent />,
       },
       {
         path: '/managers/add',
