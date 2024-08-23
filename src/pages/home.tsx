@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import CFOImage from '@/assets/cfo-img-curso.jpg'
 import CASImage from '@/assets/cas-img-course.png'
 import CGSImage from '@/assets/cgs-img-course.png'
 import { LucideSearch } from 'lucide-react'
 import { useProfile } from '@/hooks/use-profile'
+import { useSearch } from '@/hooks/use-search'
 
 const courses = [
   { id: 1, title: 'CFO - 2023', imageURL: CFOImage },
@@ -12,7 +13,12 @@ const courses = [
 ]
 
 export function Home() {
+  const [searchParams] = useSearchParams()
   const { user } = useProfile()
+
+  const query = searchParams.get('query')
+
+  const { users, totalItems, pages } = useSearch(query ?? '')
 
   const isStudent = user?.role === 'student'
 
@@ -56,7 +62,7 @@ export function Home() {
             <span className="text-sm font-medium text-blue-950">
               Encontre os alunos pela pesquisa global
             </span>
-            <div className="flex w-full max-w-3xl items-center gap-4 rounded-full bg-white px-6 py-2">
+            <form className="flex w-full max-w-3xl items-center gap-4 rounded-full bg-white px-6 py-2">
               <LucideSearch size={20} className="h-4 w-4 text-slate-600" />
               <input
                 type="text"
@@ -64,7 +70,13 @@ export function Home() {
                 className="flex-1 bg-transparent py-2 hover:outline-2"
               />
               <button className="hidden"></button>
-            </div>
+            </form>
+
+            {users?.map((user) => (
+              <div key={user.id}>
+                <p>{user.username}</p>
+              </div>
+            ))}
           </main>
         </div>
       )}
