@@ -23,7 +23,11 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
 
   const { mutateAsync: createAssessmentFn } = useCreateAssessment()
 
-  const { handleSubmit, register, formState: { errors } } = useForm<CreateAssessmentFormSchema>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<CreateAssessmentFormSchema>({
     resolver: zodResolver(createAssessmentFormSchema),
     defaultValues: {
       vf: '0',
@@ -67,7 +71,9 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
             {...register('vf')}
           />
-          {errors.vf && <span className='text-sm text-red-500'>{errors.vf.message}</span>}
+          {errors.vf && (
+            <span className="text-sm text-red-500">{errors.vf.message}</span>
+          )}
         </div>
         <div className="flex flex-col items-center">
           <label>AVI</label>
@@ -77,7 +83,9 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
             {...register('avi')}
           />
-          {errors.avi && <span className='text-sm text-red-500'>{errors.avi.message}</span>}
+          {errors.avi && (
+            <span className="text-sm text-red-500">{errors.avi.message}</span>
+          )}
         </div>
         <div className="flex flex-col items-center">
           <label>AVII</label>
@@ -87,7 +95,9 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
             {...register('avii')}
           />
-          {errors.avii && <span className='text-sm text-red-500'>{errors.avii.message}</span>}
+          {errors.avii && (
+            <span className="text-sm text-red-500">{errors.avii.message}</span>
+          )}
         </div>
         <div className="flex flex-col items-center">
           <label>VFE</label>
@@ -97,7 +107,9 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
             {...register('vfe')}
           />
-          {errors.vfe && <span className='text-sm text-red-500'>{errors.vfe.message}</span>}
+          {errors.vfe && (
+            <span className="text-sm text-red-500">{errors.vfe.message}</span>
+          )}
         </div>
       </div>
       <button
