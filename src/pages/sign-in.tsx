@@ -60,9 +60,17 @@ export function SignIn() {
         action: {
           label: 'Navegar',
           onClick: () => {
-            navigate('/')
+            navigate('/', {
+              replace: true,
+            })
           },
         },
+        onAutoClose: () => {
+          navigate('/', {
+            replace: true,
+          })
+        },
+        duration: 500,
       })
       reset()
     } catch (error) {
