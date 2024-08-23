@@ -45,7 +45,6 @@ export function SearchNotesToUpdate() {
         disciplina.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     : disciplinas
-
   return (
     <div className="container mx-auto w-full p-4">
       <section className="max-w[90rem] mx-auto w-full">
