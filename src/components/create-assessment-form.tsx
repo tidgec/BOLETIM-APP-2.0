@@ -1,15 +1,15 @@
 import { useCreateAssessment } from '@/hooks/use-create-assessment'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 const createAssessmentFormSchema = z.object({
-  vf: z.number(),
-  avi: z.number().optional(),
-  avii: z.number().optional(),
-  vfe: z.number().optional(),
+  vf: z.string(),
+  avi: z.string().optional(),
+  avii: z.string().optional(),
+  vfe: z.string().optional(),
 })
 
 type CreateAssessmentFormSchema = z.infer<typeof createAssessmentFormSchema>
@@ -19,15 +19,14 @@ interface CreateAssessmentFormProps {
 }
 
 export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
-  const navigate = useNavigate()
   const { courseId, disciplineId } = useParams()
 
   const { mutateAsync: createAssessmentFn } = useCreateAssessment()
 
-  const { handleSubmit, register } = useForm<CreateAssessmentFormSchema>({
+  const { handleSubmit, register, formState: { errors } } = useForm<CreateAssessmentFormSchema>({
     resolver: zodResolver(createAssessmentFormSchema),
     defaultValues: {
-      vf: 0,
+      vf: '0',
     },
   })
 
@@ -42,20 +41,13 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
         courseId: String(courseId),
         disciplineId: String(disciplineId),
         studentId,
-        vf,
-        avi,
-        avii,
-        vfe,
+        vf: Number(vf),
+        avi: avi !== undefined ? Number(avi) : undefined,
+        avii: avii !== undefined ? Number(avii) : undefined,
+        vfe: vfe !== undefined ? Number(vfe) : undefined,
       })
 
-      toast.success('Notas adicionadas com sucesso!', {
-        action: {
-          label: 'Navegar',
-          onClick: () => {
-            navigate('/')
-          },
-        },
-      })
+      toast.success('Notas adicionadas com sucesso!')
     } catch (error) {
       toast.error('Ocorreu algum error ao criar a nota.', {
         duration: 2000,
@@ -70,46 +62,42 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
         <div className="flex flex-col items-center">
           <label>VF</label>
           <input
-            type="number"
+            type="text"
             placeholder="0,00"
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-            {...register('vf', {
-              valueAsNumber: true,
-            })}
+            {...register('vf')}
           />
+          {errors.vf && <span className='text-sm text-red-500'>{errors.vf.message}</span>}
         </div>
         <div className="flex flex-col items-center">
           <label>AVI</label>
           <input
-            type="number"
+            type="text"
             placeholder="0,00"
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-            {...register('avi', {
-              valueAsNumber: true,
-            })}
+            {...register('avi')}
           />
+          {errors.avi && <span className='text-sm text-red-500'>{errors.avi.message}</span>}
         </div>
         <div className="flex flex-col items-center">
           <label>AVII</label>
           <input
-            type="number"
+            type="text"
             placeholder="0,00"
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-            {...register('avii', {
-              valueAsNumber: true,
-            })}
+            {...register('avii')}
           />
+          {errors.avii && <span className='text-sm text-red-500'>{errors.avii.message}</span>}
         </div>
         <div className="flex flex-col items-center">
           <label>VFE</label>
           <input
-            type="number"
+            type="text"
             placeholder="0,00"
             className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-            {...register('vfe', {
-              valueAsNumber: true,
-            })}
+            {...register('vfe')}
           />
+          {errors.vfe && <span className='text-sm text-red-500'>{errors.vfe.message}</span>}
         </div>
       </div>
       <button
