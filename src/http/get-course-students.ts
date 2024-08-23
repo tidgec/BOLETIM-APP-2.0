@@ -13,6 +13,9 @@ export interface GetCourseStudentsResponse {
   students: {
     id: string
     username: string
+    email: string
+    cpf: string
+    createdAt: string
     course: {
       id: string
       name: string
@@ -26,6 +29,24 @@ export interface GetCourseStudentsResponse {
   totalItems: number
 }
 
+export interface GetCourseStudentsAxiosResponseByPole {
+  students: {
+    id: string
+    username: string
+    email: string
+    cpf: string
+    createdAt: string
+    pole: {
+      id: string
+      name: string
+    }
+  }[]
+  course: string
+  courseId: string
+  pages: number
+  totalItems: number
+}
+
 export async function getCourseStudents({
   courseId,
   poleId,
@@ -35,18 +56,29 @@ export async function getCourseStudents({
 }: GetCourseStudentsRequest): Promise<GetCourseStudentsResponse> {
   const token = Cookies.get('token')
 
-  if (poleId) {
-    const response = await api.get<GetCourseStudentsResponse>(
+  if (poleId && poleId !== 'all') {
+    const response = await api.get<GetCourseStudentsAxiosResponseByPole>(
       `/courses/${courseId}/poles/${poleId}/students`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        params: {
+          username: username ?? '',
+          cpf: cpf ?? '',
+          page,
+        },
       },
     )
 
     return {
-      students: response.data.students,
+      students: response.data.students.map((student) => ({
+        ...student,
+        course: {
+          id: response.data.courseId,
+          name: response.data.course,
+        },
+      })),
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }
@@ -60,7 +92,7 @@ export async function getCourseStudents({
       },
       params: {
         username: username ?? '',
-        cpf,
+        cpf: cpf ?? '',
         page,
       },
     },
