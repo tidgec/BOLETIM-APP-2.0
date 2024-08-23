@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import Cookies from 'js-cookie'
 
 interface CreateAssessmentProps {
   disciplineId: string
@@ -19,12 +20,18 @@ export async function createAssessment({
   avii,
   vfe,
 }: CreateAssessmentProps) {
-  return await api.post(`/disciplines/${disciplineId}/assessment`, {
+  const token = Cookies.get('token')
+
+  await api.post(`/disciplines/${disciplineId}/assessment`, {
     courseId,
     studentId,
     vf,
     avi,
     avii,
     vfe,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
 }
