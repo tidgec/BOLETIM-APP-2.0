@@ -1,0 +1,41 @@
+import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
+import { Controller, useFormContext } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
+
+export function FilterPole() {
+  const { courseId } = useParams()
+  const { control } = useFormContext()
+  const { poles, isLoading: isLoadingPoles } = useGetCoursePoles({
+    courseId: String(courseId),
+  })
+
+  return (
+    <Controller
+      name="poleId"
+      defaultValue="all"
+      control={control}
+      render={({ field: { name, onChange, value, disabled } }) => {
+        return (
+          <select
+            name={name}
+            value={value}
+            disabled={disabled}
+            onChange={onChange}
+            className="rounded border p-2"
+          >
+            <option value={'all'}>TODOS</option>
+
+            {isLoadingPoles && <option>Loading...</option>}
+
+            {!isLoadingPoles &&
+              poles?.map((pole) => (
+                <option key={pole.id} value={pole.id}>
+                  {pole.name}
+                </option>
+              ))}
+          </select>
+        )
+      }}
+    ></Controller>
+  )
+}
