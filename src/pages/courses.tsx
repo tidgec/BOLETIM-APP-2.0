@@ -59,7 +59,7 @@ export function Courses() {
           <span className="font-medium text-white">Gerenciamento de curso</span>
         </Link>
         <Link
-          to={'/import/kts'}
+          to={'/courses/QTS'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -67,9 +67,7 @@ export function Courses() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">
-            Importar QTS
-            </span>
+          <span className="font-medium text-white">Adicionar QTS</span>
         </Link>
         <Link
           to={'/import/documents'}
@@ -80,9 +78,7 @@ export function Courses() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">
-            Importar Documentos
-            </span>
+          <span className="font-medium text-white">Importar Documentos</span>
         </Link>
       </div>
     </section>
