@@ -1,7 +1,7 @@
 import { useCreateAssessment } from '@/hooks/use-create-assessment'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -19,7 +19,10 @@ interface CreateAssessmentFormProps {
 }
 
 export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
-  const { courseId, disciplineId } = useParams()
+  const [searchParams] = useSearchParams()
+  const { disciplineId } = useParams()
+
+  const courseId = searchParams.get('courseId')
 
   const { mutateAsync: createAssessmentFn } = useCreateAssessment()
 
