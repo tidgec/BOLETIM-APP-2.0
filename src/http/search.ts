@@ -21,11 +21,15 @@ interface SearchResponse {
   pages: number
 }
 
-interface SearchProps {
+export interface SearchProps {
   query: string
+  page: string
 }
 
-export async function search({ query }: SearchProps): Promise<SearchResponse> {
+export async function search({
+  query,
+  page,
+}: SearchProps): Promise<SearchResponse> {
   const token = Cookies.get('token')
 
   const response = await api.get<SearchResponse>(`/users/search`, {
@@ -34,6 +38,7 @@ export async function search({ query }: SearchProps): Promise<SearchResponse> {
     },
     params: {
       query,
+      page,
     },
   })
 

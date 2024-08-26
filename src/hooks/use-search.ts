@@ -1,10 +1,10 @@
-import { search } from '@/http/search'
+import { search, type SearchProps } from '@/http/search'
 import { useQuery } from '@tanstack/react-query'
 
-export function useSearch(searchQuery: string) {
+export function useSearch({ page, query: searchQuery }: SearchProps) {
   const query = useQuery({
-    queryKey: ['search', searchQuery],
-    queryFn: () => search({ query: searchQuery }),
+    queryKey: ['search', page, searchQuery],
+    queryFn: () => search({ query: searchQuery, page }),
   })
 
   return {
