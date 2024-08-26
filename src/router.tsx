@@ -73,6 +73,7 @@ import { UpdateNotes } from './pages/update-notes'
 import { SearchManagerToUpdateInfo } from './pages/search-for-update-to-update-info'
 import { ListStudentsPage } from './pages/list-students'
 import { UpdateStudent } from './pages/update-student'
+import { DeleteStudent } from './pages/delete-student'
 
 export const router = createBrowserRouter([
   {
@@ -368,8 +369,16 @@ export const router = createBrowserRouter([
         element: <RemoveNotes />,
       },
       {
-        path: '/managers/add/courses',
-        element: <ListCoursesPage />,
+        path: '/student/:studentId/',
+        element: <DeleteStudent />,
+      },
+      {
+        path: '/notes/remove/admin/:adminId/',
+        element: <DeleteStudent />,
+      },
+      {
+        path: '/notes/remove/manager/:managertId/',
+        element: <DeleteStudent />,
       },
       {
         path: '/managers/add',
