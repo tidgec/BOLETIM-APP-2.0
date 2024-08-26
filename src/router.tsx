@@ -49,7 +49,6 @@ import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-dow
 import { SelectCourseToAddBehaviors } from './pages/ways/select-course-to-add-behaviors'
 import { SelectCourseToBatchBehaviors } from './pages/ways/select-course-to-batch-behaviors'
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
-import { SelectCourseToDisableStudent } from './pages/ways/select-course-to-disable-student'
 import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
 import { SelectCourseToUpdateBehaviors } from './pages/ways/select-course-to-update-behaviors'
 import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
@@ -61,7 +60,7 @@ import { ClassificationByPole } from './pages/classification-by-pole'
 import { AverageScoresForPoles } from './pages/average-scores-for-poles'
 import { SelectCourseTheClassificationByPole } from './pages/ways/select-course-the-classification-by-pole'
 import { StudentPage } from './pages/student/student-page'
-import { ImportKtsFile } from './pages/import-kts-file'
+import { AddQTSFile } from './pages/add-qts-file'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { CourseInformation } from './pages/student/course-information'
 import { Home } from './pages/home'
@@ -101,8 +100,8 @@ export const router = createBrowserRouter([
         element: <Courses />,
       },
       {
-        path: '/import/kts',
-        element: <ImportKtsFile />,
+        path: '/courses/QTS',
+        element: <AddQTSFile />,
       },
       {
         path: '/student/report-card',
@@ -113,15 +112,15 @@ export const router = createBrowserRouter([
         element: <ImportDocumentsFile />,
       },
       {
-        path: '/notes/add',
+        path: '/notes/add/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/notes/add/courses/:courseId',
+        path: '/notes/add',
         element: <ListCourseDisciplinesPage />,
       },
       {
-        path: '/notes/add/courses/:courseId/disciplines/:disciplineId',
+        path: '/notes/add/disciplines/:disciplineId',
         element: <AddNotes />,
       },
       {
@@ -161,23 +160,19 @@ export const router = createBrowserRouter([
         element: <StudentAcademicRecord />,
       },
       {
-        path: '/students/enable',
+        path: '/students/enable/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/students/enable/courses/:courseId',
+        path: '/students/enable',
         element: <ListStudentsDisabledPage />,
       },
       {
-        path: '/students/courses-search-disable',
-        element: <SelectCourseToDisableStudent />,
-      },
-      {
-        path: '/students/update',
+        path: '/students/update/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/students/update/courses/:courseId',
+        path: '/students/update',
         element: <ListStudentsPage />,
       },
       {
@@ -305,6 +300,10 @@ export const router = createBrowserRouter([
         element: <StudentPage />,
       },
       {
+        path: '/students/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/students/add',
         element: <AddStudents />,
       },
@@ -321,11 +320,11 @@ export const router = createBrowserRouter([
         element: <AddStudentsBatch />,
       },
       {
-        path: '/students/disable',
+        path: '/students/disable/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/students/disable/courses/:courseId',
+        path: '/students/disable',
         element: <ListStudentsEnabledPage />,
       },
       {
@@ -345,28 +344,32 @@ export const router = createBrowserRouter([
         element: <SearchNotes />,
       },
       {
-        path: '/notes/update',
+        path: '/notes/update/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/notes/update/courses/:courseId',
+        path: '/notes/update',
         element: <ListCourseDisciplinesPage />,
       },
       {
-        path: '/notes/update/courses/:courseId/disciplines/:disciplineId',
+        path: '/notes/update/disciplines/:disciplineId',
         element: <UpdateNotes />,
       },
       {
-        path: '/notes/remove',
+        path: '/notes/remove/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/notes/remove/courses/:courseId',
+        path: '/notes/remove',
         element: <ListCourseDisciplinesPage />,
       },
       {
-        path: '/notes/remove/courses/:courseId/disciplines/:disciplineId',
+        path: '/notes/remove/disciplines/:disciplineId',
         element: <RemoveNotes />,
+      },
+      {
+        path: '/managers/add/courses',
+        element: <ListCoursesPage />,
       },
       {
         path: '/managers/add',
@@ -379,6 +382,10 @@ export const router = createBrowserRouter([
       {
         path: '/behaviors/batch',
         element: <AddBehaviorsBatch />,
+      },
+      {
+        path: '/managers/update/courses',
+        element: <ListCoursesPage />,
       },
       {
         path: '/managers/update',
