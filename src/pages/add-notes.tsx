@@ -2,12 +2,12 @@ import { CreateAssessmentForm } from '@/components/create-assessment-form'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export function AddNotes() {
-  const { courseId } = useParams()
   const [searchParams] = useSearchParams()
 
+  const courseId = searchParams.get('courseId')
   const poleId = searchParams.get('poleId')
   const cpf = searchParams.get('cpf')
   const username = searchParams.get('username')
