@@ -1,9 +1,11 @@
 import { Discipline } from '@/components/discipline'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export function ListCourseDisciplinesPage() {
-  const { courseId } = useParams()
+  const [searchParams] = useSearchParams()
+
+  const courseId = searchParams.get('courseId')
 
   const { disciplines, isLoading } = useGetCourseDisciplines(String(courseId))
 
@@ -27,6 +29,7 @@ export function ListCourseDisciplinesPage() {
             disciplines?.map((discipline) => (
               <Discipline
                 key={discipline.disciplineId}
+                courseId={String(courseId)}
                 disciplineId={discipline.disciplineId}
                 name={discipline.name}
               />
