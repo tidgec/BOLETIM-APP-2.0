@@ -1,24 +1,21 @@
-import { Link, useSearchParams } from 'react-router-dom'
-import CFOImage from '@/assets/cfo-img-curso.jpg'
-import CASImage from '@/assets/cas-img-course.png'
-import CGSImage from '@/assets/cgs-img-course.png'
-import { LucideSearch } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
 import { useProfile } from '@/hooks/use-profile'
 import { useSearch } from '@/hooks/use-search'
-
-const courses = [
-  { id: 1, title: 'CFO - 2023', imageURL: CFOImage },
-  { id: 2, title: 'CAS TURMA I - 2024', imageURL: CASImage },
-  { id: 3, title: 'CGS TURMA II - 2023', imageURL: CGSImage },
-]
+import { formatCPF } from '@/utils/format-cpf'
+import { Pagination } from '@/components/pagination'
+import { SearchForm } from '@/components/search-form'
 
 export function Home() {
   const [searchParams] = useSearchParams()
   const { user } = useProfile()
 
   const query = searchParams.get('query')
+  const page = searchParams.get('page')
 
-  const { users, totalItems, pages } = useSearch(query ?? '')
+  const { users, totalItems, pages } = useSearch({
+    page: page ?? '1',
+    query: query ?? '',
+  })
 
   const isStudent = user?.role === 'student'
 
@@ -30,53 +27,72 @@ export function Home() {
             <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
               BEM-VINDO(A), {user.username}
             </h2>
-            <div className="flex flex-wrap justify-center">
-              {courses.map((course) => (
-                <div
-                  key={course.id}
-                  className="m-10 w-80 bg-white py-1 shadow-md"
-                >
-                  <Link to={`/students/page`} className="block">
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={course.imageURL}
-                        alt="Imagem do curso"
-                        className="mb-4"
-                      />
-                      <h3 className="mb-2 text-xl">{course.title}</h3>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
+            <div className="flex flex-wrap justify-center"></div>
           </main>
         </div>
       )}
 
       {!isStudent && (
         <div className="flex h-full items-center">
-          <main className="flex flex-1 flex-col items-center justify-center space-y-4 px-2">
+          <main className="flex flex-1 flex-col items-center justify-center gap-8 px-2">
             <h1 className="text-center text-4xl font-bold text-blue-950">
               O que você deseja buscar?
             </h1>
             <span className="text-sm font-medium text-blue-950">
               Encontre os alunos pela pesquisa global
             </span>
-            <form className="flex w-full max-w-3xl items-center gap-4 rounded-full bg-white px-6 py-2">
-              <LucideSearch size={20} className="h-4 w-4 text-slate-600" />
-              <input
-                type="text"
-                placeholder="Busque por nome ou cpf..."
-                className="flex-1 bg-transparent py-2 hover:outline-2"
-              />
-              <button className="hidden"></button>
-            </form>
 
-            {users?.map((user) => (
-              <div key={user.id}>
-                <p>{user.username}</p>
+            <SearchForm />
+
+            <section className="w-full max-w-5xl space-y-4">
+              <div className="grid w-full grid-cols-2 gap-4">
+                {users?.map((user) => (
+                  <div
+                    key={user.id}
+                    className="w-full space-y-2 rounded border border-gray-300 px-2 py-1"
+                  >
+                    <div className="flex items-center justify-between gap-2 font-semibold">
+                      <span className="text-lg">{user.username}</span>
+                      <span>{formatCPF(user.cpf)}</span>
+                    </div>
+
+                    {!user.courses.length && (
+                      <p className="text-center">
+                        This user does not have course to show.
+                      </p>
+                    )}
+
+                    {user.courses.length !== 0 && user.poles.length !== 0 && (
+                      <div className="flex items-center justify-between gap-2 text-sm">
+                        <div className="ml-2">
+                          <span className="font-medium uppercase">Cursos:</span>
+                          <ul className="ml-2 list-inside list-disc">
+                            {user.courses.map((item) => (
+                              <li key={item.id}>{item.name}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="mr-2">
+                          <span className="font-medium uppercase">Polos:</span>
+                          <ul className="list-inside list-disc">
+                            {user.poles.map((item) => (
+                              <li key={item.id}>{item.name}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+
+              <Pagination
+                items={totalItems ?? 0}
+                page={page ? Number(page) : 1}
+                pages={pages ?? 0}
+              />
+            </section>
           </main>
         </div>
       )}
