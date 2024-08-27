@@ -76,11 +76,11 @@ export function AddManagers() {
         poleId,
       })
 
-      toast.success('Estudante criado com sucesso!', {
-        duration: 500,
+      toast.success('Gerente criado com sucesso!', {
+        duration: 1000,
       })
     } catch (error) {
-      toast.error('Ocorreu um erro ao criar o estudante.', {
+      toast.error('Ocorreu um erro ao criar o gerente.', {
         duration: 1000,
         closeButton: true,
       })
