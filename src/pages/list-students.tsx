@@ -21,13 +21,7 @@ export function ListStudentsPage() {
     poleId: poleId ?? 'all',
   })
 
-  const currentUrl = window.location.href
-  const host = window.location.host
-  const procotol = window.location.protocol
-  const pathname = currentUrl.split('/').splice(3, 2).join('/')
-  const newUrl = procotol.concat('//').concat(host)
-
-  const url = new URL(`${newUrl}/${pathname}`, currentUrl)
+  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
 
   return (
     <div className="w-full py-6">
@@ -42,7 +36,7 @@ export function ListStudentsPage() {
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             students?.map((student) => (
-              <Link to={`${url.href}/${student.id}`} key={student.id}>
+              <Link to={`${currentUrl}/${student.id}`} key={student.id}>
                 <ul className="space-y-2 rounded border p-4">
                   <li className="mb-4 text-lg font-semibold">
                     Nome: {student.username}
