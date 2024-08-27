@@ -1,4 +1,47 @@
+import { formatCPF } from '@/utils/format-cpf'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+const updateAdminSchema = z.object({
+  username: z.string().optional(),
+  cpf: z.string().optional(),
+  email: z.string().optional(),
+  civilId: z.string().optional(),
+  birthday: z.string().optional(),
+  password: z.string().optional(),
+})
+
+type UpdateAdminSchema = z.infer<typeof updateAdminSchema>
+
 export function UpdateAdmins() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm<UpdateAdminSchema>({
+    resolver: zodResolver(updateAdminSchema),
+    defaultValues: {
+      username: '',
+      civilId: '',
+      cpf: '',
+      email: '',
+      birthday: '',
+    },
+  })
+
+  async function handleUpdateAdmin({
+    username,
+    cpf,
+    email,
+    password,
+    birthday,
+    civilId,
+  }: UpdateAdminSchema) {}
+
+  const cpf = watch('cpf') ? formatCPF(watch('cpf') ?? '') : ''
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -19,7 +62,13 @@ export function UpdateAdmins() {
                     id="name"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu nome completo..."
+                    {...register('username')}
                   />
+                  {errors.username && (
+                    <span className="text-sm text-red-500">
+                      {errors.username.message}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="cpf" className="text-sm text-gray-200">
@@ -28,9 +77,16 @@ export function UpdateAdmins() {
                   <input
                     type="text"
                     id="cpf"
+                    value={cpf}
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu CPF..."
+                    {...register('cpf')}
                   />
+                  {errors.cpf && (
+                    <span className="text-sm text-red-500">
+                      {errors.cpf.message}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="email" className="text-sm text-gray-200">
@@ -41,7 +97,13 @@ export function UpdateAdmins() {
                     id="email"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu email..."
+                    {...register('email')}
                   />
+                  {errors.email && (
+                    <span className="text-sm text-red-500">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="senha" className="text-sm text-gray-200">
@@ -52,12 +114,18 @@ export function UpdateAdmins() {
                     id="senha"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite sua senha..."
+                    {...register('password')}
                   />
+                  {errors.password && (
+                    <span className="text-sm text-red-500">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
-                <div className="space-y-1">
+                {/* <div className="space-y-1">
                   <label htmlFor="pai" className="text-sm text-gray-200">
                     Nome do pai:
                   </label>
@@ -78,7 +146,7 @@ export function UpdateAdmins() {
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite o nome completo da mãe..."
                   />
-                </div>
+                </div> */}
                 <div className="space-y-1">
                   <label htmlFor="civil" className="text-sm text-gray-200">
                     RG Civil:
@@ -88,9 +156,15 @@ export function UpdateAdmins() {
                     id="civil"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG CIVIL..."
+                    {...register('civilId')}
                   />
+                  {errors.civilId && (
+                    <span className="text-sm text-red-500">
+                      {errors.civilId.message}
+                    </span>
+                  )}
                 </div>
-                <div className="space-y-1">
+                {/* <div className="space-y-1">
                   <label htmlFor="civil" className="text-sm text-gray-200">
                     RG Militar:
                   </label>
@@ -100,17 +174,23 @@ export function UpdateAdmins() {
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG MILITAR..."
                   />
-                </div>
+                </div> */}
                 <div className="space-y-1">
-                  <label htmlFor="data" className="text-sm text-gray-200">
+                  <label htmlFor="date" className="text-sm text-gray-200">
                     Data de nascimento:
                   </label>
                   <input
                     type="date"
-                    id="data"
+                    id="date"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite sua data de nascimento..."
+                    {...register('birthday')}
                   />
+                  {errors.birthday && (
+                    <span className="text-sm text-red-500">
+                      {errors.birthday.message}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
