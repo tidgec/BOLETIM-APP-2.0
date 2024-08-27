@@ -58,7 +58,7 @@ export function Home() {
 
                     {!user.courses.length && (
                       <p className="text-center">
-                        This user does not have course to show.
+                        Esse usuário não tem cursos para mostrar.
                       </p>
                     )}
 
