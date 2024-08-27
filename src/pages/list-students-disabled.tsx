@@ -1,7 +1,53 @@
-import { useState } from 'react'
+import { FilterForm } from '@/components/filter/filter-form'
+import { Pagination } from '@/components/pagination'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { useChangeStudentStatus } from '@/hooks/use-change-student-status'
+import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { formatCPF } from '@/utils/format-cpf'
+import { AlertDialogTrigger } from '@radix-ui/react-alert-dialog'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 export function ListStudentsDisabledPage() {
-  const [selectedFilter, setSelectedFilter] = useState('Todos')
+  const [searchParams] = useSearchParams()
+
+  const courseId = searchParams.get('courseId')
+  const poleId = searchParams.get('poleId')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
+  const page = searchParams.get('page')
+
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
+    courseId: String(courseId),
+    cpf: cpf ?? '',
+    username: username ?? '',
+    page: page ?? '1',
+    poleId: poleId ?? 'all',
+    isEnabled: false,
+  })
+
+  const { mutateAsync: changeStudentStatusFn } = useChangeStudentStatus()
+
+  async function handleActiveStudent(id: string) {
+    try {
+      await changeStudentStatusFn({
+        courseId: String(courseId),
+        studentId: id,
+        status: true,
+      })
+
+      toast.success('Estudante ativado com sucesso!', {
+        duration: 1000,
+      })
+    } catch (error) {}
+  }
 
   return (
     <div className="w-full py-6">
@@ -10,35 +56,49 @@ export function ListStudentsDisabledPage() {
           Ativar Aluno
         </h2>
 
-        <form className="my-8 flex flex-col items-center justify-center gap-6">
-          <h3 className="text-2xl font-bold">
-            Pesquisar pelo aluno que deseja ativar
-          </h3>
-          <div className="flex w-full max-w-3xl items-center justify-center gap-4">
-            <input
-              type="text"
-              className="w-full rounded-sm p-3"
-              placeholder="Digite o nome do aluno..."
-            />
-            <button className="hidden">Buscar</button>
-          </div>
-          <div className="space-x items-center">
-            <h2 className="flex w-full justify-center py-2 font-semibold">
-              SELECIONE O POLO
-            </h2>
-            <select
-              id="filter_search_students_to_active"
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-              className="focus:shadow-outline flex w-full rounded-lg border border-gray-500 px-5 py-1 leading-tight text-gray-700 shadow focus:outline-none"
-            >
-              <option value="todos">TODOS OS POLOS</option>
-              <option value="santarem">SANTARÉM</option>
-              <option value="cfap">CFAP</option>
-              <option value="castanhal">CASTANHAL</option>
-            </select>
-          </div>
-        </form>
+        <FilterForm />
+
+        <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
+          {isLoading && <p>Loading...</p>}
+          {!isLoading &&
+            students?.map((student) => (
+              <AlertDialog key={student.id}>
+                <AlertDialogTrigger className="text-start">
+                  <ul className="space-y-2 rounded border p-4">
+                    <li className="mb-4 text-lg font-semibold">
+                      Nome: {student.username}
+                    </li>
+                    <li>CPF: {formatCPF(student.cpf)}</li>
+                    <li>Email: {student.email}</li>
+                    <li>Curso: {student.course.name}</li>
+                    <li>Polo: {student.pole.name}</li>
+                    <li>Inserido em: {student.createdAt}</li>
+                  </ul>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Deseja ativar esse aluno?
+                      </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogAction
+                        onClick={() => handleActiveStudent(student.id)}
+                        className="bg-pmpa-blue-600 hover:bg-pmpa-blue-400"
+                      >
+                        Sim
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogTrigger>
+              </AlertDialog>
+            ))}
+        </div>
+        <Pagination
+          items={totalItems ?? 0}
+          page={page ? Number(page) : 1}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )
