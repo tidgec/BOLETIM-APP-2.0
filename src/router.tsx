@@ -413,7 +413,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/managers/update',
-        element: <AddManagers />,
+        element: <UpdateManagers />,
       },
       {
         path: '/managers/update/:id',
