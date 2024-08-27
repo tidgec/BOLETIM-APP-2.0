@@ -7,6 +7,7 @@ export interface GetCourseStudentsRequest {
   username?: string
   cpf?: string
   page?: string
+  isEnabled?: boolean
 }
 
 export interface GetCourseStudentsResponse {
@@ -53,6 +54,7 @@ export async function getCourseStudents({
   cpf,
   username,
   page,
+  isEnabled,
 }: GetCourseStudentsRequest): Promise<GetCourseStudentsResponse> {
   const token = Cookies.get('token')
 
@@ -67,6 +69,7 @@ export async function getCourseStudents({
           username: username ?? '',
           cpf: cpf ?? '',
           page,
+          isEnabled: isEnabled ?? true,
         },
       },
     )
@@ -94,6 +97,7 @@ export async function getCourseStudents({
         username: username ?? '',
         cpf: cpf ?? '',
         page,
+        isEnabled,
       },
     },
   )
