@@ -7,6 +7,7 @@ interface GetCourseStudentsProps {
   username?: string
   cpf?: string
   page?: string
+  isEnabled?: boolean
 }
 
 export function useGetCourseStudents({
@@ -15,10 +16,20 @@ export function useGetCourseStudents({
   cpf,
   username,
   page,
+  isEnabled,
 }: GetCourseStudentsProps) {
   const query = useQuery({
-    queryKey: ['courses', 'students', courseId, poleId, cpf, username, page],
-    queryFn: () => getCourseStudents({ courseId, poleId, cpf, username, page }),
+    queryKey: [
+      'student-courses',
+      courseId,
+      poleId,
+      cpf,
+      username,
+      page,
+      isEnabled,
+    ],
+    queryFn: () =>
+      getCourseStudents({ courseId, poleId, cpf, username, page, isEnabled }),
   })
 
   return {
