@@ -78,7 +78,7 @@ export function ListManagersDisabledPage() {
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>
-                        Deseja ativar esse aluno?
+                        Deseja ativar esse gerente?
                       </AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

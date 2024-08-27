@@ -42,10 +42,12 @@ export function ListManagersEnabledPage() {
         status: false,
       })
 
-      toast.success('Estudante desativado com sucesso!', {
+      toast.success('Gerente desativado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -77,7 +79,7 @@ export function ListManagersEnabledPage() {
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>
-                        Deseja desativar esse aluno?
+                        Deseja desativar esse gerente?
                       </AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
