@@ -116,19 +116,6 @@ export function UpdateStudent() {
 
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
-                  <label htmlFor="course" className="text-sm text-gray-200">
-                    Selecione o curso
-                  </label>
-                  <select
-                    id="course"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
-                  >
-                    <option value="">Selecione um curso</option>
-                    <option value="curso1">CAS</option>
-                    <option value="curso2">CFP</option>
-                  </select>
-                </div>
-                <div className="space-y-1">
                   <label htmlFor="pole" className="text-sm text-gray-200">
                     Selecione o polo
                   </label>
