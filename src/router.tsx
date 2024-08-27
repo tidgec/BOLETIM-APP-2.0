@@ -75,6 +75,8 @@ import { ListStudentsPage } from './pages/list-students'
 import { UpdateStudent } from './pages/update-student'
 import { DeleteStudent } from './pages/delete-student'
 import { DeleteAdmin } from './pages/delete-admin'
+import { StudentBatchPage } from './pages/student-batch'
+import { UpdateStudentsBatch } from './pages/update-students-batch'
 
 export const router = createBrowserRouter([
   {
@@ -182,19 +184,19 @@ export const router = createBrowserRouter([
         element: <UpdateStudent />,
       },
       {
-        path: '/managers/enable',
+        path: '/managers/enable/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/managers/enable/courses/:courseId',
+        path: '/managers/enable',
         element: <ListManagersDisabledPage />,
       },
       {
-        path: '/managers/disable',
+        path: '/managers/disable/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/managers/disable/courses/:courseId',
+        path: '/managers/disable',
         element: <ListManagersEnabledPage />,
       },
       {
@@ -319,7 +321,23 @@ export const router = createBrowserRouter([
       },
       {
         path: '/students/batch',
+        element: <StudentBatchPage />,
+      },
+      {
+        path: '/students/batch/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/batch/add',
         element: <AddStudentsBatch />,
+      },
+      {
+        path: '/students/batch/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/batch/update',
+        element: <UpdateStudentsBatch />,
       },
       {
         path: '/students/disable/courses',
@@ -382,7 +400,23 @@ export const router = createBrowserRouter([
         element: <DeleteStudent />,
       },
       {
+        path: '/managers/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/managers/add',
+        element: <AddManagers />,
+      },
+      {
+        path: '/managers/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/managers/update',
+        element: <AddManagers />,
+      },
+      {
+        path: '/managers/update/:id',
         element: <AddManagers />,
       },
       {
