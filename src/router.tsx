@@ -92,30 +92,6 @@ export const router = createBrowserRouter([
         element: <Notes />,
       },
       {
-        path: '/subjects',
-        element: <Subjects />,
-      },
-      {
-        path: '/behaviors',
-        element: <Behaviors />,
-      },
-      {
-        path: '/courses',
-        element: <Courses />,
-      },
-      {
-        path: '/courses/QTS',
-        element: <AddQTSFile />,
-      },
-      {
-        path: '/student/report-card',
-        element: <ReportCard />,
-      },
-      {
-        path: '/import/documents',
-        element: <ImportDocumentsFile />,
-      },
-      {
         path: '/notes/add/courses',
         element: <ListCoursesPage />,
       },
@@ -126,238 +102,6 @@ export const router = createBrowserRouter([
       {
         path: '/notes/add/disciplines/:disciplineId',
         element: <AddNotes />,
-      },
-      {
-        path: '/behaviors/add',
-        element: <AddBehaviors />,
-      },
-      {
-        path: '/behaviors/add/courses/:courseId',
-        element: <AddBehaviors />,
-      },
-      {
-        path: '/courses/management',
-        element: <CourseManagement />,
-      },
-      {
-        path: '/courses/all',
-        element: <AllCourses />,
-      },
-      {
-        path: '/student-page/course-information',
-        element: <CourseInformation />,
-      },
-      {
-        path: '/courses/management/disciplines',
-        element: <Disciplines />,
-      },
-      {
-        path: '/disciplines/add',
-        element: <AddDiscipline />,
-      },
-      {
-        path: '/disciplines/add/courses/:courseId',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/student/academic-record',
-        element: <StudentAcademicRecord />,
-      },
-      {
-        path: '/students/enable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/enable',
-        element: <ListStudentsDisabledPage />,
-      },
-      {
-        path: '/students/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/update',
-        element: <ListStudentsPage />,
-      },
-      {
-        path: '/students/update/:id',
-        element: <UpdateStudent />,
-      },
-      {
-        path: '/managers/enable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/managers/enable',
-        element: <ListManagersDisabledPage />,
-      },
-      {
-        path: '/managers/disable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/managers/disable',
-        element: <ListManagersEnabledPage />,
-      },
-      {
-        path: '/academic-record/courses-search-active',
-        element: <SelectCourseToActiveHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-disable',
-        element: <SelectCourseToDisableHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-download',
-        element: <SelectCourseToDownloadHistory />,
-      },
-      {
-        path: '/classification/the-classification-by-pole ',
-        element: <SelectCourseTheClassificationByPole />,
-      },
-      {
-        path: '/behaviors/courses-search-add-bahavior',
-        element: <SelectCourseToAddBehaviors />,
-      },
-      {
-        path: '/classification/courses-search-general-classification',
-        element: <SelectCourseToGeneralClassification />,
-      },
-      {
-        path: '/behaviors/courses-search-batch-bahavior',
-        element: <SelectCourseToBatchBehaviors />,
-      },
-      {
-        path: '/behaviors/courses-search-update-bahavior',
-        element: <SelectCourseToUpdateBehaviors />,
-      },
-      {
-        path: '/behaviors/courses-search-remove-bahavior',
-        element: <SelectCourseToRemoveBehaviors />,
-      },
-      {
-        path: '/academic-record/courses-search-login-management',
-        element: <SelectCourseToLoginManagement />,
-      },
-      {
-        path: '/classification/classification-poles',
-        element: <ClassificationPole />,
-      },
-      {
-        path: '/classification/classification-by-pole',
-        element: <ClassificationByPole />,
-      },
-      {
-        path: '/classification/average-scores-for-poles',
-        element: <AverageScoresForPoles />,
-      },
-      {
-        path: '/student/academic-record/courses',
-        element: <CoursesAcademicRecord />,
-      },
-      {
-        path: '/management/login-confirmation',
-        element: <LoginConfirmation />,
-      },
-      {
-        path: '/behaviors/behaviors-remove',
-        element: <BehaviorRemove />,
-      },
-      {
-        path: '/management/student-info',
-        element: <StudentInformation />,
-      },
-      {
-        path: '/management',
-        element: <DataManagement />,
-      },
-      {
-        path: '/academic-record',
-        element: <AcademicRecord />,
-      },
-      {
-        path: '/admins',
-        element: <Admins />,
-      },
-      {
-        path: '/managers',
-        element: <Managers />,
-      },
-      {
-        path: '/profile',
-        element: <Profile />,
-      },
-      {
-        path: '/students',
-        element: <Students />,
-      },
-      {
-        path: '/reports',
-        element: <Reports />,
-      },
-      {
-        path: '/classification',
-        element: <Classification />,
-      },
-      {
-        path: '/students/page',
-        element: <StudentPage />,
-      },
-      {
-        path: '/students/add/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/add',
-        element: <AddStudents />,
-      },
-      {
-        path: '/classification/general-classification',
-        element: <GeneralClassification />,
-      },
-      {
-        path: '/behavior/update',
-        element: <UpdateBehavior />,
-      },
-      {
-        path: '/students/batch',
-        element: <StudentBatchPage />,
-      },
-      {
-        path: '/students/batch/add/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/batch/add',
-        element: <AddStudentsBatch />,
-      },
-      {
-        path: '/students/batch/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/batch/update',
-        element: <UpdateStudentsBatch />,
-      },
-      {
-        path: '/students/disable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/disable',
-        element: <ListStudentsEnabledPage />,
-      },
-      {
-        path: '/academic-record/active-search',
-        element: <SearchActiveHistory />,
-      },
-      {
-        path: '/academic-record/disable-search',
-        element: <SearchDisableHistory />,
-      },
-      {
-        path: '/academic-record/download-search',
-        element: <SearchDownloadHistory />,
       },
       {
         path: '/notes/search/',
@@ -388,8 +132,8 @@ export const router = createBrowserRouter([
         element: <RemoveNotes />,
       },
       {
-        path: '/student/:studentId/',
-        element: <DeleteStudent />,
+        path: '/notes/batch',
+        element: <AddNotesBatch />,
       },
       {
         path: '/notes/remove/admin/:adminId/',
@@ -398,6 +142,206 @@ export const router = createBrowserRouter([
       {
         path: '/notes/remove/manager/:managertId/',
         element: <DeleteStudent />,
+      },
+      {
+        path: '/subjects',
+        element: <Subjects />,
+      },
+      {
+        path: '/behaviors',
+        element: <Behaviors />,
+      },
+      {
+        path: '/behaviors/add',
+        element: <AddBehaviors />,
+      },
+      {
+        path: '/behaviors/add/courses/:courseId',
+        element: <AddBehaviors />,
+      },
+      {
+        path: '/behaviors/courses-search-add-bahavior',
+        element: <SelectCourseToAddBehaviors />,
+      },
+      {
+        path: '/behaviors/courses-search-batch-bahavior',
+        element: <SelectCourseToBatchBehaviors />,
+      },
+      {
+        path: '/behaviors/courses-search-update-bahavior',
+        element: <SelectCourseToUpdateBehaviors />,
+      },
+      {
+        path: '/behaviors/courses-search-remove-bahavior',
+        element: <SelectCourseToRemoveBehaviors />,
+      },
+      {
+        path: '/behaviors/behaviors-remove',
+        element: <BehaviorRemove />,
+      },
+      {
+        path: '/behavior/update',
+        element: <UpdateBehavior />,
+      },
+      {
+        path: '/behaviors/batch',
+        element: <AddBehaviorsBatch />,
+      },
+      {
+        path: '/courses',
+        element: <Courses />,
+      },
+      {
+        path: '/courses/QTS',
+        element: <AddQTSFile />,
+      },
+      {
+        path: '/courses/management',
+        element: <CourseManagement />,
+      },
+      {
+        path: '/courses/all',
+        element: <AllCourses />,
+      },
+      {
+        path: '/courses/management/disciplines',
+        element: <Disciplines />,
+      },
+      {
+        path: '/courses/management/disciplines',
+        element: <Disciplines />,
+      },
+      {
+        path: '/disciplines/add',
+        element: <AddDiscipline />,
+      },
+      {
+        path: '/disciplines/add/courses/:courseId',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/courses/add',
+        element: <AddCourses />,
+      },
+      {
+        path: '/courses/update',
+        element: <UpdateCourses />,
+      },
+      {
+        path: '/courses/delete',
+        element: <DeleteCourses />,
+      },
+      {
+        path: '/students',
+        element: <Students />,
+      },
+      {
+        path: '/student/report-card',
+        element: <ReportCard />,
+      },
+      {
+        path: '/student-page/course-information',
+        element: <CourseInformation />,
+      },
+      {
+        path: '/student/academic-record',
+        element: <StudentAcademicRecord />,
+      },
+      {
+        path: '/students/enable/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/enable',
+        element: <ListStudentsDisabledPage />,
+      },
+      {
+        path: '/students/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/update',
+        element: <ListStudentsPage />,
+      },
+      {
+        path: '/students/update/:id',
+        element: <UpdateStudent />,
+      },
+      {
+        path: '/student/academic-record/courses',
+        element: <CoursesAcademicRecord />,
+      },
+      {
+        path: '/management/student-info',
+        element: <StudentInformation />,
+      },
+      {
+        path: '/students/page',
+        element: <StudentPage />,
+      },
+      {
+        path: '/students/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/add',
+        element: <AddStudents />,
+      },
+      {
+        path: '/students/batch',
+        element: <StudentBatchPage />,
+      },
+      {
+        path: '/students/batch/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/batch/add',
+        element: <AddStudentsBatch />,
+      },
+      {
+        path: '/students/batch/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/batch/update',
+        element: <UpdateStudentsBatch />,
+      },
+      {
+        path: '/students/disable/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/disable',
+        element: <ListStudentsEnabledPage />,
+      },
+      {
+        path: '/student/:studentId/',
+        element: <DeleteStudent />,
+      },
+      {
+        path: '/import/documents',
+        element: <ImportDocumentsFile />,
+      },
+      {
+        path: '/managers',
+        element: <Managers />,
+      },
+      {
+        path: '/managers/enable/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/managers/enable',
+        element: <ListManagersDisabledPage />,
+      },
+      {
+        path: '/managers/disable/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/managers/disable',
+        element: <ListManagersEnabledPage />,
       },
       {
         path: '/managers/add/courses',
@@ -420,14 +364,6 @@ export const router = createBrowserRouter([
         element: <AddManagers />,
       },
       {
-        path: '/notes/batch',
-        element: <AddNotesBatch />,
-      },
-      {
-        path: '/behaviors/batch',
-        element: <AddBehaviorsBatch />,
-      },
-      {
         path: '/managers/update/courses',
         element: <ListCoursesPage />,
       },
@@ -444,6 +380,78 @@ export const router = createBrowserRouter([
         element: <UpdateManagers />,
       },
       {
+        path: '/academic-record/courses-search-active',
+        element: <SelectCourseToActiveHistory />,
+      },
+      {
+        path: '/academic-record/courses-search-disable',
+        element: <SelectCourseToDisableHistory />,
+      },
+      {
+        path: '/academic-record/courses-search-download',
+        element: <SelectCourseToDownloadHistory />,
+      },
+      {
+        path: '/academic-record/courses-search-login-management',
+        element: <SelectCourseToLoginManagement />,
+      },
+      {
+        path: '/academic-record',
+        element: <AcademicRecord />,
+      },
+      {
+        path: '/academic-record/active-search',
+        element: <SearchActiveHistory />,
+      },
+      {
+        path: '/academic-record/disable-search',
+        element: <SearchDisableHistory />,
+      },
+      {
+        path: '/academic-record/download-search',
+        element: <SearchDownloadHistory />,
+      },
+      {
+        path: '/classification/the-classification-by-pole ',
+        element: <SelectCourseTheClassificationByPole />,
+      },
+      {
+        path: '/classification/courses-search-general-classification',
+        element: <SelectCourseToGeneralClassification />,
+      },
+      {
+        path: '/classification/classification-poles',
+        element: <ClassificationPole />,
+      },
+      {
+        path: '/classification/classification-by-pole',
+        element: <ClassificationByPole />,
+      },
+      {
+        path: '/classification/average-scores-for-poles',
+        element: <AverageScoresForPoles />,
+      },
+      {
+        path: '/classification',
+        element: <Classification />,
+      },
+      {
+        path: '/classification/general-classification',
+        element: <GeneralClassification />,
+      },
+      {
+        path: '/management/login-confirmation',
+        element: <LoginConfirmation />,
+      },
+      {
+        path: '/management',
+        element: <DataManagement />,
+      },
+      {
+        path: '/admins',
+        element: <Admins />,
+      },
+      {
         path: '/admins/add',
         element: <AddAdmins />,
       },
@@ -452,16 +460,12 @@ export const router = createBrowserRouter([
         element: <UpdateAdmins />,
       },
       {
-        path: '/courses/add',
-        element: <AddCourses />,
+        path: '/profile',
+        element: <Profile />,
       },
       {
-        path: '/courses/update',
-        element: <UpdateCourses />,
-      },
-      {
-        path: '/courses/delete',
-        element: <DeleteCourses />,
+        path: '/reports',
+        element: <Reports />,
       },
     ],
   },
