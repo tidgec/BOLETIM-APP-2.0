@@ -1,4 +1,62 @@
+import { useCreateStudentsBatch } from '@/hooks/use-create-students-batch'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
+const addStudentBatchSchema = z.object({
+  excel: z
+    .instanceof(FileList)
+    .transform((file) => file.item(0)!)
+    .refine(
+      (file) => file.size <= 5 * 1024 * 1024,
+      'Arquivo até no máximo 5MB',
+    ),
+})
+
+type AddStudentBatchSchema = z.infer<typeof addStudentBatchSchema>
+
 export function AddStudentsBatch() {
+  const [searchParams] = useSearchParams()
+  const courseId = searchParams.get('courseId')
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<AddStudentBatchSchema>({
+    resolver: zodResolver(addStudentBatchSchema),
+  })
+
+  const { mutateAsync: createStudentsBatchFn } = useCreateStudentsBatch()
+
+  async function handleAddStudentsBatch({ excel }: AddStudentBatchSchema) {
+    const uploadFormData = new FormData()
+    uploadFormData.set('excel', excel)
+
+    try {
+      await createStudentsBatchFn({
+        formData: uploadFormData,
+        courseId: String(courseId),
+      })
+
+      toast.success('Estudantes criados com sucesso!', {
+        duration: 1000,
+      })
+
+      reset()
+    } catch (error) {
+      const err = error as AxiosError
+
+      toast.error(err.response?.data?.message, {
+        duration: 1000,
+      })
+    }
+  }
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -6,7 +64,7 @@ export function AddStudentsBatch() {
           Adicionar em Lote
         </h2>
 
-        <form>
+        <form onSubmit={handleSubmit(handleAddStudentsBatch)}>
           <div className="mb-4 py-8">
             <label
               htmlFor="file"
@@ -18,14 +76,20 @@ export function AddStudentsBatch() {
               type="file"
               id="file"
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-slate-700 shadow focus:outline-none"
+              {...register('excel')}
             />
+            {errors.excel && (
+              <span className="text-sm text-red-500">
+                {errors.excel.message}
+              </span>
+            )}
           </div>
-          <div className="flex justify-end space-x-4">
+          <div className="flex justify-end">
             <button
               type="submit"
               className="hover:bg-pmpa-blue- rounded bg-pmpa-blue-500 px-4 py-2 font-semibold text-white"
             >
-              Inserir Novos Alunos
+              Adicionar
             </button>
           </div>
         </form>

@@ -1,4 +1,94 @@
+import { ListCoursePoles } from '@/components/list-course-poles'
+import { useCreateManager } from '@/hooks/use-create-manager'
+import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
+const addManagerSchema = z.object({
+  username: z
+    .string()
+    .min(3, { message: 'O nome deve conter no mínimo 3 caracteres' })
+    .max(30, { message: 'O nome deve conter no máximo 30 caracteres' }),
+  cpf: z
+    .string()
+    .length(14, { message: 'CPF inválido!' })
+    .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
+      message: 'Formato do CPF inválido.',
+    }),
+  email: z.string().email({ message: 'Email inválido' }),
+  civilId: z
+    .string()
+    .length(5, { message: 'O RG civil deve conter 5 caracteres' }),
+  birthday: z.string(),
+  poleId: z.string(),
+})
+
+type AddManagerSchema = z.infer<typeof addManagerSchema>
+
 export function AddManagers() {
+  const [searchParams] = useSearchParams()
+
+  const courseId = searchParams.get('courseId')
+
+  const addManagerForm = useForm<AddManagerSchema>({
+    resolver: zodResolver(addManagerSchema),
+    defaultValues: {
+      username: '',
+      civilId: '',
+      cpf: '',
+      email: '',
+      poleId: '',
+      birthday: '',
+    },
+  })
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    watch,
+  } = addManagerForm
+
+  const { mutateAsync: createManagerFn } = useCreateManager()
+
+  async function handleAddManager({
+    username,
+    cpf,
+    email,
+    civilId,
+    birthday,
+    poleId,
+  }: AddManagerSchema) {
+    try {
+      if (!courseId) throw new Error('Course not found.')
+
+      await createManagerFn({
+        username,
+        cpf,
+        email,
+        civilId,
+        birthday: formatDate(birthday),
+        courseId,
+        poleId,
+      })
+
+      toast.success('Estudante criado com sucesso!', {
+        duration: 500,
+      })
+    } catch (error) {
+      toast.error('Ocorreu um erro ao criar o estudante.', {
+        duration: 1000,
+        closeButton: true,
+      })
+    }
+  }
+
+  const cpf = watch('cpf') ? formatCPF(watch('cpf')) : ''
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -7,7 +97,7 @@ export function AddManagers() {
         </h2>
 
         <div className="group relative my-8 rounded">
-          <form className="space-y-2">
+          <form className="space-y-2" onSubmit={handleSubmit(handleAddManager)}>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
@@ -19,7 +109,13 @@ export function AddManagers() {
                     id="name"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu nome completo..."
+                    {...register('username')}
                   />
+                  {errors.username && (
+                    <span className="text-sm text-red-500">
+                      {errors.username.message}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="cpf" className="text-sm text-gray-200">
@@ -30,7 +126,16 @@ export function AddManagers() {
                     id="cpf"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu CPF..."
+                    value={cpf}
+                    maxLength={14}
+                    autoComplete="off"
+                    {...register('cpf')}
                   />
+                  {errors.cpf && (
+                    <span className="text-sm text-red-500">
+                      {errors.cpf.message}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="email" className="text-sm text-gray-200">
@@ -41,18 +146,13 @@ export function AddManagers() {
                     id="email"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu email..."
+                    {...register('email')}
                   />
-                </div>
-                <div className="space-y-1">
-                  <label htmlFor="senha" className="text-sm text-gray-200">
-                    Senha:
-                  </label>
-                  <input
-                    type="password"
-                    id="senha"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
-                    placeholder="Digite sua senha..."
-                  />
+                  {errors.email && (
+                    <span className="text-sm text-red-500">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -80,7 +180,7 @@ export function AddManagers() {
                   />
                 </div> */}
                 <div className="space-y-1">
-                  <label htmlFor="civil" className="text-sm text-gray-200">
+                  <label htmlFor="civilId" className="text-sm text-gray-200">
                     RG Civil:
                   </label>
                   <input
@@ -88,7 +188,13 @@ export function AddManagers() {
                     id="civil"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG CIVIL..."
+                    {...register('civilId')}
                   />
+                  {errors.civilId && (
+                    <span className="text-sm text-red-500">
+                      {errors.civilId.message}
+                    </span>
+                  )}
                 </div>
                 {/* <div className="space-y-1">
                   <label htmlFor="civil" className="text-sm text-gray-200">
@@ -110,34 +216,40 @@ export function AddManagers() {
                     id="data"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite sua data de nascimento..."
+                    {...register('birthday')}
                   />
+                  {errors.birthday && (
+                    <span className="text-sm text-red-500">
+                      {errors.birthday.message}
+                    </span>
+                  )}
                 </div>
+                {/* <div className="space-y-1">
+                  <label htmlFor="course" className="text-sm text-gray-200">
+                    Selecione o curso
+                  </label>
+                  <select
+                    id="course"
+                    className="w-full rounded px-4 py-3 text-sm text-gray-700"
+                  >
+                    <option value="">Selecione um curso</option>
+                    <option value="curso1">CAS</option>
+                    <option value="curso2">CFP</option>
+                  </select>
+                </div> */}
                 <div className="space-y-1">
-              <label htmlFor="course" className="text-sm text-gray-200">
-                Selecione o curso
-              </label>
-              <select
-                id="course"
-                className="w-full rounded px-4 py-3 text-sm text-gray-700"
-              >
-                <option value="">Selecione um curso</option>
-                <option value="curso1">CAS</option>
-                <option value="curso2">CFP</option>
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="pole" className="text-sm text-gray-200">
-                Selecione o polo
-              </label>
-              <select
-                id="pole"
-                className="w-full rounded px-4 py-3 text-sm text-gray-700"
-              >
-                <option value="">Selecione um polo</option>
-                <option value="belém">Belém</option>
-                <option value="santarem">Santarém</option>
-              </select>
-            </div>
+                  <label htmlFor="pole" className="text-sm text-gray-200">
+                    Selecione o polo
+                  </label>
+                  <FormProvider {...addManagerForm}>
+                    <ListCoursePoles />
+                  </FormProvider>
+                </div>
+                {errors.poleId && (
+                  <span className="text-sm text-red-500">
+                    {errors.poleId.message}
+                  </span>
+                )}
               </div>
             </div>
 

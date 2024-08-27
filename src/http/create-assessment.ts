@@ -22,16 +22,20 @@ export async function createAssessment({
 }: CreateAssessmentProps) {
   const token = Cookies.get('token')
 
-  await api.post(`/disciplines/${disciplineId}/assessment`, {
-    courseId,
-    studentId,
-    vf,
-    avi,
-    avii,
-    vfe,
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
+  await api.post(
+    `/disciplines/${disciplineId}/assessment`,
+    {
+      courseId,
+      studentId,
+      vf,
+      avi,
+      avii,
+      vfe,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 }
