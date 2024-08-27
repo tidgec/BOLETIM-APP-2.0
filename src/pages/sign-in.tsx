@@ -21,8 +21,8 @@ const signInSchema = z.object({
     }),
   password: z
     .string()
-    .min(6, { message: 'The password cannot be less than 6 characters' })
-    .max(14, { message: 'The password cannot be bigger than 14 characters.' }),
+    .min(6, { message: 'A senha não pode ser menor que 6 caracteres.' })
+    .max(14, { message: 'A senha não pode ser maior que 14 caracteres.' }),
 })
 
 export type SignInSchema = z.infer<typeof signInSchema>
