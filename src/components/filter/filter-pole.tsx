@@ -1,10 +1,13 @@
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { Controller, useFormContext } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export function FilterPole() {
-  const { courseId } = useParams()
+  const [searchParams] = useSearchParams()
   const { control } = useFormContext()
+
+  const courseId = searchParams.get('courseId')
+
   const { poles, isLoading: isLoadingPoles } = useGetCoursePoles({
     courseId: String(courseId),
   })
