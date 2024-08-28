@@ -1,51 +1,46 @@
-import { FilterForm } from '@/components/filter/filter-form'
+import { Filter } from '@/components/filter'
 import { Pagination } from '@/components/pagination'
-import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { useGetAdmins } from '@/hooks/use-get-admins'
 import { formatCPF } from '@/utils/format-cpf'
 import { Link, useSearchParams } from 'react-router-dom'
 
 export function ListAdminsPage() {
   const [searchParams] = useSearchParams()
 
-  const courseId = searchParams.get('courseId')
-  const poleId = searchParams.get('poleId')
   const cpf = searchParams.get('cpf')
   const username = searchParams.get('username')
   const page = searchParams.get('page')
 
-  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
-    courseId: String(courseId),
+  const { admins, totalItems, pages, isLoading } = useGetAdmins({
     cpf: cpf ?? '',
     username: username ?? '',
     page: page ?? '1',
-    poleId: poleId ?? 'all',
   })
-
-  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
 
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Buscar alunos
+          Buscar administradores
         </h2>
 
-        <FilterForm />
+        <Filter.Root>
+          <Filter.UsernameInput />
+          <Filter.CPFInput />
+        </Filter.Root>
 
         <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
-            students?.map((student) => (
-              <Link to={`${currentUrl}/${student.id}`} key={student.id}>
+            admins?.map((admin) => (
+              <Link to={`/admins/update/${admin.id}`} key={admin.id}>
                 <ul className="space-y-2 rounded border p-4">
                   <li className="mb-4 text-lg font-semibold">
-                    Nome: {student.username}
+                    Nome: {admin.username}
                   </li>
-                  <li>CPF: {formatCPF(student.cpf)}</li>
-                  <li>Email: {student.email}</li>
-                  <li>Curso: {student.course.name}</li>
-                  <li>Polo: {student.pole.name}</li>
-                  <li>Inserido em: {student.createdAt}</li>
+                  <li>CPF: {formatCPF(admin.cpf)}</li>
+                  <li>Email: {admin.email}</li>
+                  <li>Inserido em: {admin.createdAt}</li>
                 </ul>
               </Link>
             ))}
@@ -53,7 +48,7 @@ export function ListAdminsPage() {
 
         <Pagination
           items={totalItems ?? 0}
-          page={page ? Number(page) : 1}
+          page={page ? Number(page) : 0}
           pages={pages ?? 0}
         />
       </section>

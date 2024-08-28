@@ -77,6 +77,10 @@ import { DeleteStudent } from './pages/delete-student'
 import { DeleteAdmin } from './pages/delete-admin'
 import { StudentBatchPage } from './pages/student-batch'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
+import { ListAdminsPage } from './pages/list-admins'
+import { NoteBatchPage } from './pages/note-batch'
+import { UpdateNotesBatch } from './pages/update-notes-batch'
+import { RemoveNotesBatch } from './pages/remove-notes-batch'
 
 export const router = createBrowserRouter([
   {
@@ -102,6 +106,18 @@ export const router = createBrowserRouter([
       {
         path: '/notes/add/disciplines/:disciplineId',
         element: <AddNotes />,
+      },
+      {
+        path: '/notes/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/notes/update',
+        element: <ListCourseDisciplinesPage />,
+      },
+      {
+        path: '/notes/update/disciplines/:disciplineId',
+        element: <UpdateNotes />,
       },
       {
         path: '/notes/search/',
@@ -133,7 +149,31 @@ export const router = createBrowserRouter([
       },
       {
         path: '/notes/batch',
+        element: <NoteBatchPage />,
+      },
+      {
+        path: '/notes/batch/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/notes/batch/add',
         element: <AddNotesBatch />,
+      },
+      {
+        path: '/notes/batch/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/notes/batch/update',
+        element: <UpdateNotesBatch />,
+      },
+      {
+        path: '/notes/batch/remove/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/notes/batch/remove',
+        element: <RemoveNotesBatch />,
       },
       {
         path: '/notes/remove/admin/:adminId/',
@@ -457,6 +497,10 @@ export const router = createBrowserRouter([
       },
       {
         path: '/admins/update',
+        element: <ListAdminsPage />,
+      },
+      {
+        path: '/admins/update/:id',
         element: <UpdateAdmins />,
       },
       {
