@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { FilterForm } from '@/components/filter/filter-form'
 
 export function SearchNotes() {
-  const [selectedFilter, setSelectedFilter] = useState('todos')
 
   return (
     <div className="w-full py-6">
@@ -9,34 +8,7 @@ export function SearchNotes() {
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Buscar alunos
         </h2>
-
-        <form className="my-8 flex flex-col items-center justify-center gap-6">
-          <h3 className="text-2xl font-bold">
-            Pesquise pelo nome do Aluno que deseja atualizar.
-          </h3>
-          <div className="flex w-full max-w-3xl items-center justify-center gap-4">
-            <input
-              type="text"
-              className="w-full rounded-sm p-3"
-              placeholder="John Doe..."
-            />
-            <button className="hidden">Buscar</button>
-          </div>
-          <div className="items-center">
-            <h2 className="font flex w-full justify-center py-2 font-semibold">
-              SELECIONE O POLO
-            </h2>
-            <select
-              id="filter_search_notes"
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-              className="focus:shadow-outline flex w-full rounded-lg border border-gray-500 px-5 py-1 leading-tight text-gray-700 shadow focus:outline-none"
-            >
-              <option value="todos">TODOS OS POLOS</option>
-              <option value="cfap">CFAP</option>
-            </select>
-          </div>
-        </form>
+        <FilterForm/>
       </section>
     </div>
   )
