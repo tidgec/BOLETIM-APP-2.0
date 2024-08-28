@@ -70,13 +70,15 @@ import { ListManagersEnabledPage } from './pages/list-managers-enabled'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { RemoveNotes } from './pages/remove-notes'
 import { UpdateNotes } from './pages/update-notes'
-import { SearchManagerToUpdateInfo } from './pages/search-for-update-to-update-info'
+import { SearchManagerToUpdateInfo } from './pages/select-for-update-to-update-info'
 import { ListStudentsPage } from './pages/list-students'
 import { UpdateStudent } from './pages/update-student'
 import { DeleteStudent } from './pages/delete-student'
 import { DeleteAdmin } from './pages/delete-admin'
 import { StudentBatchPage } from './pages/student-batch'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
+import { SelectCourseTheAverageByPole } from './pages/select-course-the-average-by-pole'
+import { AveragePole } from './pages/average-pole'
 
 export const router = createBrowserRouter([
   {
@@ -412,8 +414,16 @@ export const router = createBrowserRouter([
         element: <SearchDownloadHistory />,
       },
       {
+        path: '/classification/average-pole',
+        element: <AveragePole />,
+      },
+      {
         path: '/classification/the-classification-by-pole ',
         element: <SelectCourseTheClassificationByPole />,
+      },
+      {
+        path: '/classification/average-by-pole',
+        element: <SelectCourseTheAverageByPole />,
       },
       {
         path: '/classification/courses-search-general-classification',
