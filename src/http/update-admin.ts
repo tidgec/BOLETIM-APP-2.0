@@ -1,3 +1,6 @@
+import { api } from '@/lib/axios'
+import Cookies from 'js-cookie'
+
 interface UpdateAdminRequest {
   id: string
   username?: string
@@ -8,7 +11,7 @@ interface UpdateAdminRequest {
   civilId?: string
 }
 
-export function updateAdmin({
+export async function updateAdmin({
   id,
   username,
   cpf,
@@ -16,4 +19,23 @@ export function updateAdmin({
   password,
   birthday,
   civilId,
-}: UpdateAdminRequest) {}
+}: UpdateAdminRequest) {
+  const token = Cookies.get('token')
+
+  await api.put(
+    `/administrators/${id}`,
+    {
+      username,
+      cpf,
+      email,
+      password,
+      birthday,
+      civilId: civilId ? Number(civilId) : undefined,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+}
