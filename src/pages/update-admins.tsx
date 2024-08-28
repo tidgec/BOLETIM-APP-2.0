@@ -1,6 +1,9 @@
+import { useUpdateAdmin } from '@/hooks/use-update-admin'
 import { formatCPF } from '@/utils/format-cpf'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 const updateAdminSchema = z.object({
@@ -15,6 +18,8 @@ const updateAdminSchema = z.object({
 type UpdateAdminSchema = z.infer<typeof updateAdminSchema>
 
 export function UpdateAdmins() {
+  const { id } = useParams()
+
   const {
     handleSubmit,
     register,
@@ -32,6 +37,8 @@ export function UpdateAdmins() {
     },
   })
 
+  const { mutateAsync: updateAdminFn } = useUpdateAdmin()
+
   async function handleUpdateAdmin({
     username,
     cpf,
@@ -39,7 +46,27 @@ export function UpdateAdmins() {
     password,
     birthday,
     civilId,
-  }: UpdateAdminSchema) {}
+  }: UpdateAdminSchema) {
+    try {
+      await updateAdminFn({
+        id: String(id),
+        username: username || undefined,
+        cpf: cpf || undefined,
+        email: email || undefined,
+        password: password || undefined,
+        birthday: birthday || undefined,
+        civilId,
+      })
+
+      toast.success('Administrador atualizado com sucesso!', {
+        duration: 1000,
+      })
+
+      reset()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const cpf = watch('cpf') ? formatCPF(watch('cpf') ?? '') : ''
   return (
@@ -50,7 +77,10 @@ export function UpdateAdmins() {
         </h2>
 
         <div className="group relative my-8 rounded">
-          <form className="space-y-2">
+          <form
+            className="space-y-2"
+            onSubmit={handleSubmit(handleUpdateAdmin)}
+          >
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
