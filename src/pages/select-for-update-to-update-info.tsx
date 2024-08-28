@@ -1,6 +1,6 @@
 import { FilterForm } from '@/components/filter/filter-form'
 
-export function SearchNotes() {
+export function SearchManagerToUpdateInfo() {
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
