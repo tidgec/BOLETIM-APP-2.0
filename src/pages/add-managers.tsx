@@ -42,7 +42,7 @@ export function AddManagers() {
       civilId: '',
       cpf: '',
       email: '',
-      poleId: '',
+      poleId: 'none',
       birthday: '',
     },
   })
@@ -51,6 +51,7 @@ export function AddManagers() {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
     watch,
   } = addManagerForm
 
@@ -80,7 +81,11 @@ export function AddManagers() {
       toast.success('Gerente criado com sucesso!', {
         duration: 1000,
       })
+
+      reset()
     } catch (error) {
+      console.error(error)
+
       toast.error('Ocorreu um erro ao criar o gerente.', {
         duration: 1000,
         closeButton: true,
