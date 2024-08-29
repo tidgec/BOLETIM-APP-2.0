@@ -195,11 +195,11 @@ export const router = createBrowserRouter([
         element: <Behaviors />,
       },
       {
-        path: '/behaviors/add',
-        element: <AddBehaviors />,
+        path: '/behaviors/add/courses',
+        element: <ListCoursesPage />,
       },
       {
-        path: '/behaviors/add/courses/:courseId',
+        path: '/behaviors/add',
         element: <AddBehaviors />,
       },
       {

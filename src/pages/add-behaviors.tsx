@@ -1,7 +1,26 @@
-import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
+import { CreateBehaviorForm } from '@/components/create-behavior-form'
+import { FilterForm } from '@/components/filter/filter-form'
+import { Pagination } from '@/components/pagination'
+import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function AddBehaviors() {
-  const [selectedYear, setSelectedYear] = useState('2024')
+  const [searchParams] = useSearchParams()
+
+  const courseId = searchParams.get('courseId')
+  const poleId = searchParams.get('poleId')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
+  const page = searchParams.get('page')
+
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
+    courseId: String(courseId),
+    cpf: cpf ?? '',
+    username: username ?? '',
+    page: page ?? '1',
+    poleId: poleId ?? 'all',
+  })
 
   return (
     <div className="w-full py-6">
@@ -10,115 +29,30 @@ export function AddBehaviors() {
           Adicionar comportamento
         </h2>
 
-        <div className="mb-4 py-6">
-          <input
-            type="text"
-            placeholder="PESQUISE POR NOME, CPF"
-            className="w-full rounded border p-2"
-          />
-        </div>
+        <FilterForm />
 
-        <div className="mb-4">
-          <select className="w-full rounded border p-2">
-            <option>TODOS OS POLOS</option>
-            <option>BELÉM</option>
-            <option>SANTARÉM</option>
-            <option>CASTANHAL</option>
-          </select>
-        </div>
+        {isLoading && <p>Loading...</p>}
 
-        <div className="mb-4">
-          <select
-            className="w-full rounded border p-2"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-            <option value="2024">2024</option>
-          </select>
-        </div>
+        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+          {!isLoading &&
+            students?.map((student) => (
+              <div key={student.id} className="rounded border p-4">
+                <h2 className="mb-4 text-lg font-bold">
+                  Nome: {student.username}
+                </h2>
+                <p>Curso: {student.course.name}</p>
+                <p>Polo: {student.pole.name}</p>
 
-        <div className="mb-4 rounded border p-4">
-          <h2 className="mb-4 text-lg font-bold">
-            Nome: ADENOR DE OLIVEIRA ELIAS
-          </h2>
-          <p>Curso: CAS TURMA - 2024</p>
-          <p>Polo: SANTARÉM</p>
-
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            {[
-              'JANEIRO',
-              'FEVEREIRO',
-              'MARÇO',
-              'ABRIL',
-              'MAIO',
-              'JUNHO',
-              'JULHO',
-              'AGOSTO',
-              'SETEMBRO',
-              'OUTUBRO',
-              'NOVEMBRO',
-              'DEZEMBRO',
-            ].map((month) => (
-              <div key={month} className="flex flex-col items-center">
-                <label>{month}</label>
-                <input
-                  type="text"
-                  placeholder="0,00"
-                  className="w-full rounded border bg-pmpa-blue-500 p-2 text-center text-white"
-                />
+                <CreateBehaviorForm studentId={student.id} />
               </div>
             ))}
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
-            >
-              Adicionar
-            </button>
-          </div>
         </div>
 
-        {}
-        <div className="mb-4 rounded border p-4">
-          <h2 className="mb-4 text-lg font-bold">Nome: AGOSTINHO DE SOUZA</h2>
-          <p>Curso: CAS TURMA - 2024</p>
-          <p>Polo: CASTANHAL</p>
-
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            {[
-              'JANEIRO',
-              'FEVEREIRO',
-              'MARÇO',
-              'ABRIL',
-              'MAIO',
-              'JUNHO',
-              'JULHO',
-              'AGOSTO',
-              'SETEMBRO',
-              'OUTUBRO',
-              'NOVEMBRO',
-              'DEZEMBRO',
-            ].map((month) => (
-              <div key={month} className="flex flex-col items-center">
-                <label>{month}</label>
-                <input
-                  type="text"
-                  placeholder="0,00"
-                  className="w-full rounded  border bg-pmpa-blue-500 p-2 text-center text-white"
-                />
-              </div>
-            ))}
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="my-3 ml-auto block rounded bg-pmpa-blue-800 px-3 py-2 text-white hover:bg-pmpa-blue-500"
-            >
-              Adicionar
-            </button>
-          </div>
-        </div>
+        <Pagination
+          items={totalItems ?? 0}
+          page={page ? Number(page) : 1}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )
