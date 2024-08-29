@@ -251,10 +251,6 @@ export const router = createBrowserRouter([
         element: <Disciplines />,
       },
       {
-        path: '/courses/management/disciplines',
-        element: <Disciplines />,
-      },
-      {
         path: '/disciplines/add',
         element: <AddDiscipline />,
       },
