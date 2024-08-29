@@ -9,7 +9,7 @@ const courses = [
 export function AllCourses() {
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem]">
+      <section className="text-center sm:text-left px-2 mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Todos os cursos
         </h2>
