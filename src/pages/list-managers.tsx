@@ -28,7 +28,7 @@ export function ListManagersPage() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Buscar alunos
+          Buscar gerentes
         </h2>
 
         <FilterForm />
@@ -37,7 +37,10 @@ export function ListManagersPage() {
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             managers?.map((manager) => (
-              <Link to={`${currentUrl}/${manager.id}`} key={manager.id}>
+              <Link
+                to={`${currentUrl}/${manager.id}?courseId=${courseId}`}
+                key={manager.id}
+              >
                 <ul className="space-y-2 rounded border p-4">
                   <li className="mb-4 text-lg font-semibold">
                     Nome: {manager.username}

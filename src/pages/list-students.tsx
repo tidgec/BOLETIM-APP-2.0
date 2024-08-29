@@ -37,7 +37,10 @@ export function ListStudentsPage() {
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             students?.map((student) => (
-              <Link to={`${currentUrl}/${student.id}`} key={student.id}>
+              <Link
+                to={`${currentUrl}/${student.id}?courseId=${courseId}`}
+                key={student.id}
+              >
                 <ul className="space-y-2 rounded border p-4">
                   <li className="mb-4 text-lg font-semibold">
                     Nome: {student.username}
