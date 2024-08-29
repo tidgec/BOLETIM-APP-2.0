@@ -46,7 +46,7 @@ export function Students() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">Atualizar Alunos</span>
+          <span className="font-medium text-white">Atualizar Aluno</span>
         </Link>
         <Link
           to={'/students/enable/courses'}
@@ -57,7 +57,7 @@ export function Students() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">Ativar Alunos</span>
+          <span className="font-medium text-white">Ativar Aluno</span>
         </Link>
         <Link
           to={'/students/disable/courses'}
@@ -68,7 +68,7 @@ export function Students() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">Desativar Alunos</span>
+          <span className="font-medium text-white">Desativar Aluno</span>
         </Link>
         <Link
           to={'#'}
