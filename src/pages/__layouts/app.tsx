@@ -1,11 +1,13 @@
-import { Outlet, useNavigate } from 'react-router-dom'
-import { Header } from '../../components/header'
-import { Menu } from '@/components/menu'
-import { useEffect } from 'react'
-import Cookies from 'js-cookie'
-import { useDecode } from '@/auth'
-import { api } from '@/lib/axios'
 import { isAxiosError } from 'axios'
+import Cookies from 'js-cookie'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+
+import { useDecode } from '@/auth'
+import { Menu } from '@/components/menu'
+import { api } from '@/lib/axios'
+
+import { Header } from '../../components/header'
 
 export function AppLayout() {
   const navigate = useNavigate()

@@ -1,10 +1,11 @@
-import { useCreateAdmin } from '@/hooks/use-create-admin'
-import { formatCPF } from '@/utils/format-cpf'
-import { formatDate } from '@/utils/format-date'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { useCreateAdmin } from '@/hooks/use-create-admin'
+import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
 
 const addAdminSchema = z.object({
   username: z

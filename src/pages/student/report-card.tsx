@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 interface GradeProps {
-  disciplina: string;
-  vc1: number;
-  vc2: number;
-  vf: number;
-  vfe: number;
-  media: number;
-  status: string;
+  disciplina: string
+  vc1: number
+  vc2: number
+  vf: number
+  vfe: number
+  media: number
+  status: string
 }
 
 interface ComportamentoProps {
-  mes: string;
-  nota: number;
+  mes: string
+  nota: number
 }
 
 const grades: GradeProps[] = [
@@ -106,58 +106,61 @@ const grades: GradeProps[] = [
     media: 0,
     status: 'APROVADO',
   },
-];
+]
 
 const behaviorData: ComportamentoProps[] = [
-  { mes: 'Janeiro', nota: 8.000 },
-  { mes: 'Fevereiro', nota: 8.200 },
-  { mes: 'Março', nota: 8.500 },
-  { mes: 'Abril', nota: 8.300 },
-  { mes: 'Maio', nota: 8.400 },
-  { mes: 'Junho', nota: 8.600 },
-  { mes: 'Julho', nota: 8.700 },
-  { mes: 'Agosto', nota: 8.800 },
-  { mes: 'Setembro', nota: 8.500 },
-  { mes: 'Outubro', nota: 8.600 },
-  { mes: 'Novembro', nota: 8.700 },
-  { mes: 'Dezembro', nota: 8.800 },
-];
+  { mes: 'Janeiro', nota: 8.0 },
+  { mes: 'Fevereiro', nota: 8.2 },
+  { mes: 'Março', nota: 8.5 },
+  { mes: 'Abril', nota: 8.3 },
+  { mes: 'Maio', nota: 8.4 },
+  { mes: 'Junho', nota: 8.6 },
+  { mes: 'Julho', nota: 8.7 },
+  { mes: 'Agosto', nota: 8.8 },
+  { mes: 'Setembro', nota: 8.5 },
+  { mes: 'Outubro', nota: 8.6 },
+  { mes: 'Novembro', nota: 8.7 },
+  { mes: 'Dezembro', nota: 8.8 },
+]
 
 function GradeItem({ grade }: { grade: GradeProps }) {
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
-      <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">
         {grade.disciplina}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
         {grade.vc1}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
         {grade.vc2}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
         {grade.vf}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
         {grade.vfe}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
         {grade.media}
       </td>
-      <td className="px-4 py-3 text-sm text-lime-700 whitespace-nowrap">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-lime-700">
         {grade.status}
       </td>
     </tr>
-  );
+  )
 }
 
 function BehaviorTable() {
   return (
-    <table className="w-full table-auto mb-4">
+    <table className="mb-4 w-full table-auto">
       <thead>
-        <tr className="bg-gray-200 text-pmpa-blue-600 uppercase text-sm leading-normal">
+        <tr className="bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
           {behaviorData.map((comportamento) => (
-            <th key={comportamento.mes} className="px-4 py-3 text-left font-bold whitespace-nowrap">
+            <th
+              key={comportamento.mes}
+              className="whitespace-nowrap px-4 py-3 text-left font-bold"
+            >
               {comportamento.mes}
             </th>
           ))}
@@ -166,24 +169,29 @@ function BehaviorTable() {
       <tbody>
         <tr className="bg-gray-100">
           {behaviorData.map((comportamento) => (
-            <td key={comportamento.mes} className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
+            <td
+              key={comportamento.mes}
+              className="whitespace-nowrap px-4 py-3 text-sm text-gray-700"
+            >
               {comportamento.nota}
             </td>
           ))}
         </tr>
       </tbody>
     </table>
-  );
+  )
 }
 
 function ReportCard() {
-  const [showGrades, setShowGrades] = useState(false);
-  const [showBehavior, setShowBehavior] = useState(false);
+  const [showGrades, setShowGrades] = useState(false)
+  const [showBehavior, setShowBehavior] = useState(false)
 
   return (
-    <div className="container w-full mx-auto mt-10">
-      <h1 className="w-full py-3 border-b-2 border-b-black text-3xl font-bold mb-4">Boletim Online</h1>
-      <div className="bg-white shadow-md rounded-lg p-4">
+    <div className="container mx-auto mt-10 w-full">
+      <h1 className="mb-4 w-full border-b-2 border-b-black py-3 text-3xl font-bold">
+        Boletim Online
+      </h1>
+      <div className="rounded-lg bg-white p-4 shadow-md">
         <div className="mb-4">
           <h2 className="text-xl font-bold">Polo: CFAP</h2>
           <p className="text-gray-700">Nome: AFONSO RAIOL GONZAGA ΝΕΤΟ</p>
@@ -197,37 +205,37 @@ function ReportCard() {
           <h2 className="text-xl font-bold">MÉDIA GERAL: 9.261</h2>
           <p className="text-gray-700">STATUS GERAL: MUITO BOM</p>
         </div>
-        <div className="flex justify-start mb-4">
+        <div className="mb-4 flex justify-start">
           <button
-            className="bg-pmpa-blue-500 hover:bg-pmpa-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-pmpa-blue-500 px-4 py-2 font-bold text-white hover:bg-pmpa-blue-700"
             onClick={() => setShowGrades(!showGrades)}
           >
             {showGrades ? 'Ocultar Notas' : 'Ver Notas'}
           </button>
         </div>
         {showGrades && (
-          <table className="w-full table-auto mb-4">
+          <table className="mb-4 w-full table-auto">
             <thead>
-              <tr className="bg-gray-200 text-pmpa-blue-600 uppercase text-sm leading-normal">
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+              <tr className="bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   DISCIPLINA
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   1° VC
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   2° VC
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   VF
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   VFE
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   MÉDIA
                 </th>
-                <th className="px-4 py-3 text-left font-bold whitespace-nowrap">
+                <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
                   STATUS
                 </th>
               </tr>
@@ -239,9 +247,9 @@ function ReportCard() {
             </tbody>
           </table>
         )}
-        <div className="flex justify-start mb-4">
+        <div className="mb-4 flex justify-start">
           <button
-            className="bg-pmpa-blue-500 hover:bg-pmpa-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-pmpa-blue-500 px-4 py-2 font-bold text-white hover:bg-pmpa-blue-700"
             onClick={() => setShowBehavior(!showBehavior)}
           >
             {showBehavior ? 'Ocultar Comportamento' : 'Ver Comportamento'}
@@ -260,7 +268,7 @@ function ReportCard() {
         Imprimir
       </button>
     </div>
-  );
+  )
 }
 
-export default ReportCard;
+export default ReportCard

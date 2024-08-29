@@ -1,5 +1,6 @@
-import { changeStudentStatus } from '@/http/change-student-status'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
+import { changeStudentStatus } from '@/http/change-student-status'
 
 export function useChangeStudentStatus() {
   const queryClient = useQueryClient()

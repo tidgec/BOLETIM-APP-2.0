@@ -1,6 +1,7 @@
-import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { Controller, useFormContext } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
+
+import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 
 export function ListCoursePoles() {
   const [searchParams] = useSearchParams()

@@ -1,8 +1,9 @@
+import { Link, useSearchParams } from 'react-router-dom'
+
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { formatCPF } from '@/utils/format-cpf'
-import { Link, useSearchParams } from 'react-router-dom'
 
 export function ListStudentsPage() {
   const [searchParams] = useSearchParams()

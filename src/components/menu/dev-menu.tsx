@@ -1,15 +1,15 @@
 import {
-  LucideHome,
+  LucideBarChart2,
   LucideBookCopy,
-  LucideUsers,
-  LucideUserCog,
   LucideBoxes,
-  LucideSquareUser,
-  LucideScrollText,
   LucideBrain,
   LucideHistory,
+  LucideHome,
   LucideNotepadText,
-  LucideBarChart2,
+  LucideScrollText,
+  LucideSquareUser,
+  LucideUserCog,
+  LucideUsers,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 

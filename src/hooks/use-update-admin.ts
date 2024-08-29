@@ -1,5 +1,6 @@
-import { updateAdmin } from '@/http/update-admin'
 import { useMutation } from '@tanstack/react-query'
+
+import { updateAdmin } from '@/http/update-admin'
 
 export function useUpdateAdmin() {
   const mutation = useMutation({

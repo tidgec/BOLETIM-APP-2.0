@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
-import { getProfile } from '@/http/get-profile'
 import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+
+import { getProfile } from '@/http/get-profile'
 import { JWTPayload } from '@/types/jwt'
 
 export async function useAuth() {

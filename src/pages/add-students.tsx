@@ -1,12 +1,13 @@
-import { ListCoursePoles } from '@/components/list-course-poles'
-import { useCreateStudent } from '@/hooks/use-create-student'
-import { formatCPF } from '@/utils/format-cpf'
-import { formatDate } from '@/utils/format-date'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { ListCoursePoles } from '@/components/list-course-poles'
+import { useCreateStudent } from '@/hooks/use-create-student'
+import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
 
 const addStudentSchema = z.object({
   username: z

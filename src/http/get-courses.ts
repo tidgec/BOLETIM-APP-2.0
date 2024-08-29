@@ -1,7 +1,8 @@
-import { api } from '@/lib/axios'
-import { JWTPayload } from '@/types/jwt'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+
+import { api } from '@/lib/axios'
+import { JWTPayload } from '@/types/jwt'
 
 interface Course {
   id: string

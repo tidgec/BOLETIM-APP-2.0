@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
+
+import CASImage from '@/assets/cas-img-course.png'
 import CFOImage from '@/assets/cfo-img-curso.jpg'
 import CGSImage from '@/assets/cgs-img-course.png'
-import CASImage from '@/assets/cas-img-course.png'
 
 const courses = [
   { id: 1, title: 'CFO - 2023', imageURL: CFOImage },

@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom'
 import {
-  LucideHome,
+  LucideBarChart2,
   LucideBookCopy,
-  LucideUsers,
   LucideBoxes,
-  LucideScrollText,
   LucideBrain,
   LucideHistory,
-  LucideBarChart2,
-  LucideSquareUser,
+  LucideHome,
   LucideNotepadText,
+  LucideScrollText,
+  LucideSquareUser,
+  LucideUsers,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export function AdminMenu() {
   return (

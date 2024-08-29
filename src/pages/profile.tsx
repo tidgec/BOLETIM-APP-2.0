@@ -1,3 +1,6 @@
+import { Camera, Pencil } from 'lucide-react'
+import { ChangeEvent, useState } from 'react'
+
 import {
   Dialog,
   DialogContent,
@@ -7,8 +10,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useProfile } from '@/hooks/use-profile'
-import { Camera, Pencil } from 'lucide-react'
-import { ChangeEvent, useState } from 'react'
 
 export function Profile() {
   const [profileImage, setProfileImage] = useState<string | null>(null)

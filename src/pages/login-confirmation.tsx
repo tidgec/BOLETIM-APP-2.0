@@ -1,5 +1,6 @@
-import { Pie } from 'react-chartjs-2';
-import 'chart.js/auto';
+import 'chart.js/auto'
+
+import { Pie } from 'react-chartjs-2'
 
 export function LoginConfirmation() {
   const data = {
@@ -10,7 +11,7 @@ export function LoginConfirmation() {
         backgroundColor: ['#32CD32'],
       },
     ],
-  };
+  }
 
   const options = {
     responsive: true,
@@ -19,7 +20,7 @@ export function LoginConfirmation() {
         display: false,
       },
     },
-  };
+  }
 
   return (
     <div className="w-full py-6">
@@ -28,20 +29,21 @@ export function LoginConfirmation() {
           Confirmação de login
         </h2>
 
-        <div className="flex justify-between items-center mb-2  ">
-          <div className="flex items-center">
-          </div>
-          <div className="flex-1 py-10 items-center text-center">
-            <span className=" bg-pmpa-blue-500 text-white font-bold py-4 px-28 rounded">Gráfico de alunos</span>
+        <div className="mb-2 flex items-center justify-between  ">
+          <div className="flex items-center"></div>
+          <div className="flex-1 items-center py-10 text-center">
+            <span className=" rounded bg-pmpa-blue-500 px-28 py-4 font-bold text-white">
+              Gráfico de alunos
+            </span>
           </div>
         </div>
-        <div className=" bg-pmpa-blue-500 rounded-lg p-6">
-        <h2 className='text-white'>POLO CFAP:</h2>
+        <div className=" rounded-lg bg-pmpa-blue-500 p-6">
+          <h2 className="text-white">POLO CFAP:</h2>
           <div className="w-1/4">
             <Pie data={data} options={options} />
           </div>
         </div>
       </section>
     </div>
-  );
+  )
 }

@@ -1,15 +1,14 @@
-import { Eye, EyeOff } from 'lucide-react'
-import PMPALogo from '@/assets/pmpa.png'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSignIn } from '@/hooks/use-sign-in'
-
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-
 import Cookies from 'js-cookie'
+import { Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { z } from 'zod'
+
+import PMPALogo from '@/assets/pmpa.png'
+import { useSignIn } from '@/hooks/use-sign-in'
 import { formatCPF } from '@/utils/format-cpf'
 
 const signInSchema = z.object({

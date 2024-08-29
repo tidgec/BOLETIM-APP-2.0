@@ -1,5 +1,6 @@
-import { api } from "@/lib/axios";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
+
+import { api } from '@/lib/axios'
 
 interface GetReportsResponse {
   id: string
@@ -28,8 +29,8 @@ export async function getReports(): Promise<GetReportsResponse[]> {
 
   const response = await api.get<GetReportsAxiosResponse>('/reports', {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
 
   return response.data.reports

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import PlusIcon from '@/assets/add-plus-icon.png'
 import UpdateIcon from '@/assets/update-icon.png'
-import { Link } from 'react-router-dom'
 
 export function StudentBatchPage() {
   return (

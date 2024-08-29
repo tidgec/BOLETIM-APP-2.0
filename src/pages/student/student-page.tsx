@@ -1,7 +1,8 @@
-import QTS from '@/assets/qts-icon.png'
-import Info from '@/assets/info-icon.png'
-import Reportcard from '@/assets/reportcard-icon.png'
 import { Link } from 'react-router-dom'
+
+import Info from '@/assets/info-icon.png'
+import QTS from '@/assets/qts-icon.png'
+import Reportcard from '@/assets/reportcard-icon.png'
 
 export function StudentPage() {
   return (

@@ -1,8 +1,9 @@
+import { useSearchParams } from 'react-router-dom'
+
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { RemoveAssessmentGradeForm } from '@/components/remove-assessment-grade-form'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
-import { useSearchParams } from 'react-router-dom'
 
 export function RemoveNotes() {
   const [searchParams] = useSearchParams()

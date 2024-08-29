@@ -1,6 +1,8 @@
-import { Pie } from 'react-chartjs-2'
 import 'chart.js/auto'
+
 import { PDFDownloadLink } from '@react-pdf/renderer'
+import { Pie } from 'react-chartjs-2'
+
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 
 export function GeneralClassification() {

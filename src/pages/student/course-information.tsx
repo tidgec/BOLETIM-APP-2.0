@@ -1,9 +1,10 @@
+import { PDFDownloadLink } from '@react-pdf/renderer'
 import React, { useState } from 'react'
-import CFOImage from '@/assets/cfo-img-curso.jpg'
+
 import CASImage from '@/assets/cas-img-course.png'
+import CFOImage from '@/assets/cfo-img-curso.jpg'
 import CGSImage from '@/assets/cgs-img-course.png'
 import PDFViewer from '@/components/templates/subject-viewer'
-import { PDFDownloadLink } from '@react-pdf/renderer'
 
 const courses = [
   { id: 1, title: 'CFO - 2024', imageURL: CFOImage },

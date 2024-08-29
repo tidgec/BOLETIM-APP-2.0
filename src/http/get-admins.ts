@@ -1,5 +1,6 @@
-import { api } from '@/lib/axios'
 import Cookies from 'js-cookie'
+
+import { api } from '@/lib/axios'
 
 export interface GetAdminsRequest {
   username?: string

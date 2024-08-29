@@ -1,5 +1,6 @@
-import { getCourseStudents } from '@/http/get-course-students'
 import { useQuery } from '@tanstack/react-query'
+
+import { getCourseStudents } from '@/http/get-course-students'
 
 interface GetCourseStudentsProps {
   courseId: string

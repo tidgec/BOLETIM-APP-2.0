@@ -1,5 +1,6 @@
-import { getCourseManagers } from '@/http/get-course-managers'
 import { useQuery } from '@tanstack/react-query'
+
+import { getCourseManagers } from '@/http/get-course-managers'
 
 interface GetCourseManagersProps {
   courseId: string

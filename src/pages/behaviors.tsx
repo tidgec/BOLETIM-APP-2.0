@@ -1,8 +1,9 @@
-import PlusIcon from '@/assets/add-plus-icon.png'
-import AddLotIcon from '@/assets/add-lot-icon.png'
-import UpdateIcon from '@/assets/update-icon.png'
-import RemoveIcon from '@/assets/remove-icon.png'
 import { Link } from 'react-router-dom'
+
+import AddLotIcon from '@/assets/add-lot-icon.png'
+import PlusIcon from '@/assets/add-plus-icon.png'
+import RemoveIcon from '@/assets/remove-icon.png'
+import UpdateIcon from '@/assets/update-icon.png'
 
 export function Behaviors() {
   return (

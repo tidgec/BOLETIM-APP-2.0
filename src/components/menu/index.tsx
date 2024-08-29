@@ -1,11 +1,13 @@
 import { LucideCircleUser, LucideList, LucideX } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { DevMenu } from './dev-menu'
+import { Link } from 'react-router-dom'
+
+import { Role } from '@/types/enum-role-type'
+
 import { AdminMenu } from './admin-menu'
+import { DevMenu } from './dev-menu'
 import { ManagerMenu } from './manager-menu'
 import { StudentMenu } from './student-menu'
-import { Role } from '@/types/enum-role-type'
 
 interface MenuProps {
   role?: string

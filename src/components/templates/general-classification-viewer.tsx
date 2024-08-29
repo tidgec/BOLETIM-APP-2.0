@@ -1,13 +1,13 @@
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
   page: {
-    padding: 20, 
+    padding: 20,
     flexDirection: 'column',
     fontSize: 10,
   },
   title: {
-    fontSize: 14, 
+    fontSize: 14,
     marginBottom: 10,
     textAlign: 'center',
   },
@@ -42,26 +42,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 8,
   },
-});
+})
 
 interface DataRow {
-  class: string;
-  qav: string;
-  qc: string;
-  rg: string;
-  name: string;
-  average: string;
-  concept: string;
-  dob: string;
-  polo: string;
-  status: string;
+  class: string
+  qav: string
+  qc: string
+  rg: string
+  name: string
+  average: string
+  concept: string
+  dob: string
+  polo: string
+  status: string
 }
 
 interface GeneralClassificationViewerProps {
-  data: DataRow[];
+  data: DataRow[]
 }
 
-const GeneralClassificationViewer: React.FC<GeneralClassificationViewerProps> = ({ data }) => (
+const GeneralClassificationViewer: React.FC<
+  GeneralClassificationViewerProps
+> = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -97,6 +99,6 @@ const GeneralClassificationViewer: React.FC<GeneralClassificationViewerProps> = 
       </View>
     </Page>
   </Document>
-);
+)
 
-export default GeneralClassificationViewer;
+export default GeneralClassificationViewer

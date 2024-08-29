@@ -1,5 +1,6 @@
-import { getCourseDisciplines } from '@/http/get-course-disciplines'
 import { useQuery } from '@tanstack/react-query'
+
+import { getCourseDisciplines } from '@/http/get-course-disciplines'
 
 export function useGetCourseDisciplines(courseId: string) {
   const query = useQuery({

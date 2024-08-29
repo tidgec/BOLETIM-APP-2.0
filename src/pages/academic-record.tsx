@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
+
+import Download from '@/assets/download-icon.png'
 import EnableHistory from '@/assets/enable-history-icon.png'
 import RemoveIcon from '@/assets/remove-icon.png'
-import Download from '@/assets/download-icon.png'
-import { Link } from 'react-router-dom'
 
 export function AcademicRecord() {
   return (

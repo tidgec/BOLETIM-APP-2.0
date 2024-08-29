@@ -1,6 +1,7 @@
-import CoursesIcon from '@/assets/my-course-icon.png'
-import DisciplinesIcon from '@/assets/disciplines-icon.png'
 import { Link } from 'react-router-dom'
+
+import DisciplinesIcon from '@/assets/disciplines-icon.png'
+import CoursesIcon from '@/assets/my-course-icon.png'
 
 export function CourseManagement() {
   return (

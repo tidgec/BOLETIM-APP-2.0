@@ -1,6 +1,7 @@
-import { api } from '@/lib/axios'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+
+import { api } from '@/lib/axios'
 
 interface GetProfileResponse {
   cpf: string

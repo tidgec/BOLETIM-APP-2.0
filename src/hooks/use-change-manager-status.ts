@@ -1,5 +1,6 @@
-import { changeManagerStatus } from '@/http/change-manager-status'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
+import { changeManagerStatus } from '@/http/change-manager-status'
 
 export function useChangeManagerStatus() {
   const queryClient = useQueryClient()

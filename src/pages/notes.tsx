@@ -1,9 +1,10 @@
-import PlusIcon from '@/assets/add-plus-icon.png'
+import { Link } from 'react-router-dom'
+
 import AddLotIcon from '@/assets/add-lot-icon.png'
-import UpdateIcon from '@/assets/update-icon.png'
+import PlusIcon from '@/assets/add-plus-icon.png'
 import RemoveIcon from '@/assets/remove-icon.png'
 import SearchIcon from '@/assets/search-icon.png'
-import { Link } from 'react-router-dom'
+import UpdateIcon from '@/assets/update-icon.png'
 
 export function Notes() {
   return (

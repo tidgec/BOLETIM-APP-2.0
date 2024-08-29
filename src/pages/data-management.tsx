@@ -1,7 +1,8 @@
-import LoginConfirmation from '@/assets/login-confirmation-icon.png'
-import InfoStudent from '@/assets/info-student-icon.png'
-import Ementas from '@/assets/ementas-icon.png'
 import { Link } from 'react-router-dom'
+
+import Ementas from '@/assets/ementas-icon.png'
+import InfoStudent from '@/assets/info-student-icon.png'
+import LoginConfirmation from '@/assets/login-confirmation-icon.png'
 
 export function DataManagement() {
   return (

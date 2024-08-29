@@ -1,8 +1,9 @@
+import { Link, useSearchParams } from 'react-router-dom'
+
 import { Filter } from '@/components/filter'
 import { Pagination } from '@/components/pagination'
 import { useGetAdmins } from '@/hooks/use-get-admins'
 import { formatCPF } from '@/utils/format-cpf'
-import { Link, useSearchParams } from 'react-router-dom'
 
 export function ListAdminsPage() {
   const [searchParams] = useSearchParams()

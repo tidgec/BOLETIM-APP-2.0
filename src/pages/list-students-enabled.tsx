@@ -1,3 +1,6 @@
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
+
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import {
@@ -12,8 +15,6 @@ import {
 import { useChangeStudentStatus } from '@/hooks/use-change-student-status'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { formatCPF } from '@/utils/format-cpf'
-import { useSearchParams } from 'react-router-dom'
-import { toast } from 'sonner'
 
 export function ListStudentsEnabledPage() {
   const [searchParams] = useSearchParams()

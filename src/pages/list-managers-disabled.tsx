@@ -1,3 +1,7 @@
+import { AlertDialogTrigger } from '@radix-ui/react-alert-dialog'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
+
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import {
@@ -11,9 +15,6 @@ import {
 import { useChangeManagerStatus } from '@/hooks/use-change-manager-status'
 import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
 import { formatCPF } from '@/utils/format-cpf'
-import { AlertDialogTrigger } from '@radix-ui/react-alert-dialog'
-import { useSearchParams } from 'react-router-dom'
-import { toast } from 'sonner'
 
 export function ListManagersDisabledPage() {
   const [searchParams] = useSearchParams()

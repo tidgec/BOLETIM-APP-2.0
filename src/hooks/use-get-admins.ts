@@ -1,5 +1,6 @@
-import { getAdmins } from '@/http/get-admins'
 import { useQuery } from '@tanstack/react-query'
+
+import { getAdmins } from '@/http/get-admins'
 
 interface GetAdminsProps {
   username?: string

@@ -1,6 +1,7 @@
+import { useSearchParams } from 'react-router-dom'
+
 import { Discipline } from '@/components/discipline'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
-import { useSearchParams } from 'react-router-dom'
 
 export function ListCourseDisciplinesPage() {
   const [searchParams] = useSearchParams()

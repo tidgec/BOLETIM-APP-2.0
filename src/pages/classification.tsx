@@ -1,9 +1,10 @@
-import OverallRating from '@/assets/overall-rating-icon.png'
-import ClassificationByPole from '@/assets/classification-by-pole-icon.png'
+import { Link } from 'react-router-dom'
+
+import AverageBehavior from '@/assets/average-behavior-icon.png'
 // import Second from '@/assets/second-icon.png'
 import AverageNotes from '@/assets/average-notes-icon.png'
-import AverageBehavior from '@/assets/average-behavior-icon.png'
-import { Link } from 'react-router-dom'
+import ClassificationByPole from '@/assets/classification-by-pole-icon.png'
+import OverallRating from '@/assets/overall-rating-icon.png'
 
 export function Classification() {
   return (

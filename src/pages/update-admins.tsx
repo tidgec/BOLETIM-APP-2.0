@@ -1,10 +1,11 @@
-import { useUpdateAdmin } from '@/hooks/use-update-admin'
-import { formatCPF } from '@/utils/format-cpf'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { useUpdateAdmin } from '@/hooks/use-update-admin'
+import { formatCPF } from '@/utils/format-cpf'
 
 const updateAdminSchema = z.object({
   username: z.string().optional(),

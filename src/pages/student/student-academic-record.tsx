@@ -1,5 +1,6 @@
-import Course from '@/assets/my-course-icon.png'
 import { Link } from 'react-router-dom'
+
+import Course from '@/assets/my-course-icon.png'
 
 export function StudentAcademicRecord() {
   return (

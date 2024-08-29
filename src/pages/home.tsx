@@ -1,9 +1,10 @@
 import { useSearchParams } from 'react-router-dom'
+
+import { Pagination } from '@/components/pagination'
+import { SearchForm } from '@/components/search-form'
 import { useProfile } from '@/hooks/use-profile'
 import { useSearch } from '@/hooks/use-search'
 import { formatCPF } from '@/utils/format-cpf'
-import { Pagination } from '@/components/pagination'
-import { SearchForm } from '@/components/search-form'
 
 export function Home() {
   const [searchParams] = useSearchParams()

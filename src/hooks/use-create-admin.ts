@@ -1,5 +1,6 @@
-import { createAdmin } from '@/http/create-admin'
 import { useMutation } from '@tanstack/react-query'
+
+import { createAdmin } from '@/http/create-admin'
 
 export function useCreateAdmin() {
   const mutate = useMutation({

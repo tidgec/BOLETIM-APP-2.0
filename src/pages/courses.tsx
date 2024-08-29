@@ -1,10 +1,11 @@
-import PlusIcon from '@/assets/add-plus-icon.png'
-import UpdateIcon from '@/assets/update-icon.png'
-import RemoveIcon from '@/assets/remove-icon.png'
-import CourseManagement from '@/assets/course-management-icon.png'
-import QTS from '@/assets/import-icon.png'
-import Document from '@/assets/document-icon.png'
 import { Link } from 'react-router-dom'
+
+import PlusIcon from '@/assets/add-plus-icon.png'
+import CourseManagement from '@/assets/course-management-icon.png'
+import Document from '@/assets/document-icon.png'
+import QTS from '@/assets/import-icon.png'
+import RemoveIcon from '@/assets/remove-icon.png'
+import UpdateIcon from '@/assets/update-icon.png'
 
 export function Courses() {
   return (

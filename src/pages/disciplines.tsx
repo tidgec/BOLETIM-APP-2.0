@@ -1,7 +1,8 @@
-import PlusIcon from '@/assets/add-plus-icon.png'
-import UpdateIcon from '@/assets/update-icon.png'
-import RemoveIcon from '@/assets/remove-icon.png'
 import { Link } from 'react-router-dom'
+
+import PlusIcon from '@/assets/add-plus-icon.png'
+import RemoveIcon from '@/assets/remove-icon.png'
+import UpdateIcon from '@/assets/update-icon.png'
 
 export function Disciplines() {
   return (

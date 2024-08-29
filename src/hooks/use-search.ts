@@ -1,5 +1,6 @@
-import { search, type SearchProps } from '@/http/search'
 import { useQuery } from '@tanstack/react-query'
+
+import { search, type SearchProps } from '@/http/search'
 
 export function useSearch({ page, query: searchQuery }: SearchProps) {
   const query = useQuery({

@@ -1,20 +1,20 @@
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 
 interface DataRow {
-  class: string;
-  qav: string;
-  qc: string;
-  rg: string;
-  name: string;
-  average: string;
-  concept: string;
-  dob: string;
-  polo: string; 
-  status: string;
+  class: string
+  qav: string
+  qc: string
+  rg: string
+  name: string
+  average: string
+  concept: string
+  dob: string
+  polo: string
+  status: string
 }
 
 interface PoleClassificationViewerProps {
-  data: { [key: string]: DataRow[] };
+  data: { [key: string]: DataRow[] }
 }
 
 const styles = StyleSheet.create({
@@ -59,9 +59,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 8,
   },
-}); 
+})
 
-export function PoleClassificationViewer({ data }: PoleClassificationViewerProps) {
+export function PoleClassificationViewer({
+  data,
+}: PoleClassificationViewerProps) {
   return (
     <Document>
       <Page size={{ width: 800, height: 1200 }} style={styles.page}>
@@ -98,7 +100,7 @@ export function PoleClassificationViewer({ data }: PoleClassificationViewerProps
             </View>
           </View>
         ))}
-     </Page>
+      </Page>
     </Document>
-  );
+  )
 }

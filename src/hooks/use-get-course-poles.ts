@@ -1,5 +1,6 @@
-import { getCoursePoles } from '@/http/get-course-poles'
 import { useQuery } from '@tanstack/react-query'
+
+import { getCoursePoles } from '@/http/get-course-poles'
 
 interface GetCoursePolesProps {
   courseId: string

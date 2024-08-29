@@ -1,5 +1,6 @@
-import { getCourses } from '@/http/get-courses'
 import { useQuery } from '@tanstack/react-query'
+
+import { getCourses } from '@/http/get-courses'
 
 export function useGetCourses(page: number) {
   const query = useQuery({
