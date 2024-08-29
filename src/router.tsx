@@ -37,6 +37,7 @@ import { ImportDocumentsFile } from './pages/import-documents-file'
 import { ListAdminsPage } from './pages/list-admins'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { ListCoursesPage } from './pages/list-courses'
+import { ListManagersPage } from './pages/list-managers'
 import { ListManagersDisabledPage } from './pages/list-managers-disabled'
 import { ListManagersEnabledPage } from './pages/list-managers-enabled'
 import { ListStudentsPage } from './pages/list-students'
@@ -55,7 +56,6 @@ import { SearchDisableHistory } from './pages/search-disable-history'
 import { SearchDownloadHistory } from './pages/search-download-history'
 import { SearchNotes } from './pages/search-notes'
 import { SelectCourseTheAverageByPole } from './pages/select-course-the-average-by-pole'
-import { SearchManagerToUpdateInfo } from './pages/select-for-update-to-update-info'
 import { SignIn } from './pages/sign-in'
 import { CourseInformation } from './pages/student/course-information'
 import { CoursesAcademicRecord } from './pages/student/courses-academic-record'
@@ -69,7 +69,7 @@ import { Subjects } from './pages/subjects'
 import { UpdateAdmins } from './pages/update-admins'
 import { UpdateBehavior } from './pages/update-behavior'
 import { UpdateCourses } from './pages/update-courses'
-import { UpdateManagers } from './pages/update-managers'
+import { UpdateManager } from './pages/update-managers'
 import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
@@ -400,27 +400,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/managers/update',
-        element: <UpdateManagers />,
+        element: <ListManagersPage />,
       },
       {
         path: '/managers/update/:id',
-        element: <AddManagers />,
-      },
-      {
-        path: '/managers/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/managers/update',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/managers/update/info',
-        element: <SearchManagerToUpdateInfo />,
-      },
-      {
-        path: '/managers/update/courses/:courseId',
-        element: <UpdateManagers />,
+        element: <UpdateManager />,
       },
       {
         path: '/academic-record/courses-search-active',
