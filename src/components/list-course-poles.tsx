@@ -26,7 +26,7 @@ export function ListCoursePoles() {
             onChange={onChange}
             className="rounded border p-2"
           >
-            <option value={'none'}>Selecione um polo</option>
+            <option value={'none'}>Todos os polos</option>
 
             {isLoadingPoles && <option>Loading...</option>}
 
