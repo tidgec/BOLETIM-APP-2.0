@@ -29,7 +29,7 @@ export async function createManager({
       username,
       email,
       cpf,
-      civilId: Number(civilId),
+      civilId,
       courseId,
       poleId,
       birthday,

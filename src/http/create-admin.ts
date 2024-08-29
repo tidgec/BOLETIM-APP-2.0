@@ -28,7 +28,7 @@ export async function createAdmin({
       email,
       password,
       cpf,
-      civilId: Number(civilId),
+      civilId,
       birthday,
     },
     {

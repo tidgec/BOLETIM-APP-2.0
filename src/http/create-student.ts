@@ -29,7 +29,7 @@ export async function createStudent({
       username,
       email,
       cpf,
-      civilId: Number(civilId),
+      civilId,
       courseId,
       poleId,
       birthday,
