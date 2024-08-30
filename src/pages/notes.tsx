@@ -8,7 +8,7 @@ import UpdateIcon from '@/assets/update-icon.png'
 
 export function Notes() {
   return (
-    <section className="mx-auto w-full max-w-[90rem] px-2 py-10 md:py-6">
+    <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem] py-10 md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
         Notas
       </h2>
