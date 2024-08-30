@@ -8,6 +8,7 @@ interface Course {
   id: string
   name: string
   imageUrl: string
+  formula: string
 }
 
 export interface GetCoursesResponse {
