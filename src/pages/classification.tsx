@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom'
 
 import AverageBehavior from '@/assets/average-behavior-icon.png'
-// import Second from '@/assets/second-icon.png'
 import AverageNotes from '@/assets/average-notes-icon.png'
 import ClassificationByPole from '@/assets/classification-by-pole-icon.png'
 import OverallRating from '@/assets/overall-rating-icon.png'
 
-export function Classification() {
+export function Classifications() {
   return (
     <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem] py-10 md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-        Classificação
+        Classificações
       </h2>
 
       <div className="mx-auto my-6 grid w-full max-w-7xl grid-cols-1 justify-items-center gap-4 py-2 md:grid-cols-2 md:justify-items-start lg:grid-cols-3">
         <Link
-          to={'/classification/courses-search-general-classification'}
+          to={'/classifications/courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img

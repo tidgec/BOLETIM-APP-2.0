@@ -5,9 +5,9 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useCreateBehaviorsBatch } from '@/hooks/use-create-behaviors-batch'
+import { useUpdateBehaviorsBatch } from '@/hooks/use-update-behaviors-batch'
 
-const addBehaviorsBatchSchema = z.object({
+const updateBehaviorsBatchSchema = z.object({
   excel: z
     .instanceof(FileList)
     .transform((file) => file.item(0)!)
@@ -17,9 +17,9 @@ const addBehaviorsBatchSchema = z.object({
     ),
 })
 
-type AddBehaviorsBatchSchema = z.infer<typeof addBehaviorsBatchSchema>
+type UpdateBehaviorsBatchSchema = z.infer<typeof updateBehaviorsBatchSchema>
 
-export function AddBehaviorsBatch() {
+export function UpdateBehaviorsBatch() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
 
@@ -28,18 +28,20 @@ export function AddBehaviorsBatch() {
     register,
     reset,
     formState: { errors },
-  } = useForm<AddBehaviorsBatchSchema>({
-    resolver: zodResolver(addBehaviorsBatchSchema),
+  } = useForm<UpdateBehaviorsBatchSchema>({
+    resolver: zodResolver(updateBehaviorsBatchSchema),
   })
 
-  const { mutateAsync: createBehaviorsBatchFn } = useCreateBehaviorsBatch()
+  const { mutateAsync: updateBehaviorsBatchFn } = useUpdateBehaviorsBatch()
 
-  async function handleAddBehaviorsBatch({ excel }: AddBehaviorsBatchSchema) {
+  async function handleUpdateBehaviorsBatch({
+    excel,
+  }: UpdateBehaviorsBatchSchema) {
     const uploadFormData = new FormData()
     uploadFormData.set('excel', excel)
 
     try {
-      await createBehaviorsBatchFn({
+      await updateBehaviorsBatchFn({
         formData: uploadFormData,
         courseId: String(courseId),
       })
@@ -60,12 +62,12 @@ export function AddBehaviorsBatch() {
 
   return (
     <div className="w-full py-6">
-      <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem]">
+      <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar comportamentos em lote
         </h2>
 
-        <form onSubmit={handleSubmit(handleAddBehaviorsBatch)}>
+        <form onSubmit={handleSubmit(handleUpdateBehaviorsBatch)}>
           <div className="mb-4 py-8">
             <label
               htmlFor="file"
