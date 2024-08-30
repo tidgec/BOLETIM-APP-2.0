@@ -59,7 +59,7 @@ export function Notes() {
           <span className="font-medium text-white">Remover Notas</span>
         </Link>
         <Link
-          to={'/notes/search-course-notes'}
+          to={'/notes/search/courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
