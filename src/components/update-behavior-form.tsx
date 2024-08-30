@@ -4,9 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useCreateBehavior } from '@/hooks/use-create-behavior'
-
-const createBehaviorFormSchema = z.object({
+const updateBehaviorFormSchema = z.object({
   january: z.string().optional(),
   february: z.string().optional(),
   march: z.string().optional(),
@@ -21,28 +19,28 @@ const createBehaviorFormSchema = z.object({
   december: z.string().optional(),
 })
 
-type CreateBehaviorFormSchema = z.infer<typeof createBehaviorFormSchema>
+type UpdateBehaviorFormSchema = z.infer<typeof updateBehaviorFormSchema>
 
-interface CreateBehaviorFormProps {
+interface UpdateBehaviorFormProps {
   studentId: string
 }
 
-export function UpdateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
+export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
   const [searchParams] = useSearchParams()
 
   const courseId = searchParams.get('courseId')
 
-  const { mutateAsync: createBehaviorFn } = useCreateBehavior()
+  const { mutateAsync: updateBehaviorFn } = useUpdateBehavior()
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<CreateBehaviorFormSchema>({
-    resolver: zodResolver(createBehaviorFormSchema),
+  } = useForm<UpdateBehaviorFormSchema>({
+    resolver: zodResolver(updateBehaviorFormSchema),
   })
 
-  async function handleCreateBehavior({
+  async function handleUpdateBehavior({
     january,
     february,
     march,
@@ -55,9 +53,9 @@ export function UpdateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
     october,
     november,
     december,
-  }: CreateBehaviorFormSchema) {
+  }: UpdateBehaviorFormSchema) {
     try {
-      await createBehaviorFn({
+      await updateBehaviorFn({
         courseId: String(courseId),
         studentId,
         january: january !== undefined ? Number(january) : undefined,
@@ -86,7 +84,7 @@ export function UpdateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(handleCreateBehavior)}>
+    <form className="space-y-4" onSubmit={handleSubmit(handleUpdateBehavior)}>
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col items-center">
           <label>Janeiro</label>
