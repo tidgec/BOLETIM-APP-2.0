@@ -1,12 +1,12 @@
 export function AddCourses() {
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem]">
+      <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar Cursos
         </h2>
 
-        <div className="group relative mx-auto my-14 h-[40rem] max-h-screen max-w-4xl overflow-auto rounded bg-pmpa-blue-700">
+        <div className="group relative mx-auto my-14 h-[40rem] max-h-screen max-w-4xl overflow-auto rounded bg-pmpa-blue-700 ">
           <form className="w-full space-y-4 p-6">
             <div className="space-y-1">
               <label htmlFor="name" className="text-sm text-gray-200">
