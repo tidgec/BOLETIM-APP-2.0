@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom'
-
 import { NotFound } from './pages/__errors/404'
 import { AppLayout } from './pages/__layouts/app'
 import { AuthLayout } from './pages/__layouts/auth'
