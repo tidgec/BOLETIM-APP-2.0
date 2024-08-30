@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export function ClassificationPole() {
   return (
-    <section className="mx-auto w-full max-w-[90rem] px-2 py-2 md:py-6">
+    <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem] py-2 md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
         Selecione o Polo
       </h2>
