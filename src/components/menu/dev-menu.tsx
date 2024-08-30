@@ -90,11 +90,11 @@ export function DevMenu() {
       </li>
       <li className="flex gap-4">
         <Link
-          to={'/classification'}
+          to={'/classifications'}
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideBarChart2 size={20} />
-          Classificação
+          Classificações
         </Link>
       </li>
       <li className="flex gap-4">
