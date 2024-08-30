@@ -19,9 +19,11 @@ import { Admins } from './pages/admins'
 import { AllCourses } from './pages/all-courses'
 import { AveragePole } from './pages/average-pole'
 import { AverageScoresForPoles } from './pages/average-scores-for-poles'
+import { BehaviorBatchPage } from './pages/behavior-batch'
 import { BehaviorRemove } from './pages/behavior-remove'
 import { Behaviors } from './pages/behaviors'
-import { Classification } from './pages/classification'
+import { BoletimCard } from './pages/boletim-card'
+import { Classifications } from './pages/classification'
 import { ClassificationByPole } from './pages/classification-by-pole'
 import { ClassificationPole } from './pages/classification-poles'
 import { CourseManagement } from './pages/course-management'
@@ -59,7 +61,6 @@ import { SelectCourseTheAverageByPole } from './pages/select-course-the-average-
 import { SignIn } from './pages/sign-in'
 import { CourseInformation } from './pages/student/course-information'
 import { CoursesAcademicRecord } from './pages/student/courses-academic-record'
-import ReportCard from './pages/student/report-card'
 import { StudentAcademicRecord } from './pages/student/student-academic-record'
 import { StudentPage } from './pages/student/student-page'
 import { StudentBatchPage } from './pages/student-batch'
@@ -68,6 +69,7 @@ import { Students } from './pages/students'
 import { Subjects } from './pages/subjects'
 import { UpdateAdmins } from './pages/update-admins'
 import { UpdateBehavior } from './pages/update-behavior'
+import { UpdateBehaviorsBatch } from './pages/update-behaviors-batch'
 import { UpdateCourses } from './pages/update-courses'
 import { UpdateManager } from './pages/update-managers'
 import { UpdateNotes } from './pages/update-notes'
@@ -76,14 +78,11 @@ import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
 import { SelectCourseTheClassificationByPole } from './pages/ways/select-course-the-classification-by-pole'
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
-import { SelectCourseToAddBehaviors } from './pages/ways/select-course-to-add-behaviors'
-import { SelectCourseToBatchBehaviors } from './pages/ways/select-course-to-batch-behaviors'
 import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
 import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
 import { SelectCourseToGeneralClassification } from './pages/ways/select-course-to-general-classification'
 import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
 import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
-import { SelectCourseToUpdateBehaviors } from './pages/ways/select-course-to-update-behaviors'
 
 export const router = createBrowserRouter([
   {
@@ -123,9 +122,17 @@ export const router = createBrowserRouter([
         element: <UpdateNotes />,
       },
       {
-        path: '/notes/search/',
+        path: '/notes/search/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/notes/search',
         element: <SearchNotes />,
       },
+      // {
+      //   path: '/notes/search/:id',
+      //   element: <StudentGrades />,
+      // },
       {
         path: '/notes/update/courses',
         element: <ListCoursesPage />,
@@ -203,18 +210,6 @@ export const router = createBrowserRouter([
         element: <AddBehaviors />,
       },
       {
-        path: '/behaviors/courses-search-add-bahavior',
-        element: <SelectCourseToAddBehaviors />,
-      },
-      {
-        path: '/behaviors/courses-search-batch-bahavior',
-        element: <SelectCourseToBatchBehaviors />,
-      },
-      {
-        path: '/behaviors/courses-search-update-bahavior',
-        element: <SelectCourseToUpdateBehaviors />,
-      },
-      {
         path: '/behaviors/courses-search-remove-bahavior',
         element: <SelectCourseToRemoveBehaviors />,
       },
@@ -223,12 +218,32 @@ export const router = createBrowserRouter([
         element: <BehaviorRemove />,
       },
       {
-        path: '/behavior/update',
+        path: '/behaviors/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/behaviors/update',
         element: <UpdateBehavior />,
       },
       {
         path: '/behaviors/batch',
+        element: <BehaviorBatchPage />,
+      },
+      {
+        path: '/behaviors/batch/add/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/behaviors/batch/add',
         element: <AddBehaviorsBatch />,
+      },
+      {
+        path: '/behaviors/batch/update/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/behaviors/batch/update',
+        element: <UpdateBehaviorsBatch />,
       },
       {
         path: '/courses',
@@ -279,8 +294,8 @@ export const router = createBrowserRouter([
         element: <Students />,
       },
       {
-        path: '/student/report-card',
-        element: <ReportCard />,
+        path: '/boletim/:id',
+        element: <BoletimCard />,
       },
       {
         path: '/student-page/course-information',
@@ -467,8 +482,8 @@ export const router = createBrowserRouter([
         element: <AverageScoresForPoles />,
       },
       {
-        path: '/classification',
-        element: <Classification />,
+        path: '/classifications',
+        element: <Classifications />,
       },
       {
         path: '/classification/general-classification',
