@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+
 import { NotFound } from './pages/__errors/404'
 import { AppLayout } from './pages/__layouts/app'
 import { AuthLayout } from './pages/__layouts/auth'
@@ -22,7 +23,6 @@ import { BehaviorBatchPage } from './pages/behavior-batch'
 import { BehaviorRemove } from './pages/behavior-remove'
 import { Behaviors } from './pages/behaviors'
 import { BoletimCard } from './pages/boletim-card'
-import { Classifications } from './pages/classification'
 import { ClassificationByPole } from './pages/classification-by-pole'
 import { ClassificationPole } from './pages/classification-poles'
 import { CourseManagement } from './pages/course-management'
@@ -32,7 +32,6 @@ import { DeleteAdmin } from './pages/delete-admin'
 import { DeleteCourses } from './pages/delete-courses'
 import { DeleteStudent } from './pages/delete-student'
 import { Disciplines } from './pages/disciplines'
-import { GeneralClassification } from './pages/general-classification'
 import { Home } from './pages/home'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { ListAdminsPage } from './pages/list-admins'
@@ -48,6 +47,8 @@ import { LoginConfirmation } from './pages/login-confirmation'
 import { Managers } from './pages/managers'
 import { NoteBatchPage } from './pages/note-batch'
 import { Notes } from './pages/notes'
+import { OverallRating } from './pages/overall-rating'
+import { Overatings } from './pages/overatings'
 import { Profile } from './pages/profile'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
@@ -79,7 +80,6 @@ import { SelectCourseTheClassificationByPole } from './pages/ways/select-course-
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
 import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
 import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
-import { SelectCourseToGeneralClassification } from './pages/ways/select-course-to-general-classification'
 import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
 import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
 
@@ -128,10 +128,6 @@ export const router = createBrowserRouter([
         path: '/notes/search',
         element: <SearchNotes />,
       },
-      // {
-      //   path: '/notes/search/:id',
-      //   element: <StudentGrades />,
-      // },
       {
         path: '/notes/update/courses',
         element: <ListCoursesPage />,
@@ -289,7 +285,7 @@ export const router = createBrowserRouter([
         element: <Students />,
       },
       {
-        path: '/boletim/:id',
+        path: '/students/:id/boletim',
         element: <BoletimCard />,
       },
       {
@@ -461,10 +457,6 @@ export const router = createBrowserRouter([
         element: <SelectCourseTheAverageByPole />,
       },
       {
-        path: '/classification/courses-search-general-classification',
-        element: <SelectCourseToGeneralClassification />,
-      },
-      {
         path: '/classification/classification-poles',
         element: <ClassificationPole />,
       },
@@ -477,12 +469,16 @@ export const router = createBrowserRouter([
         element: <AverageScoresForPoles />,
       },
       {
-        path: '/classifications',
-        element: <Classifications />,
+        path: '/overatings',
+        element: <Overatings />,
       },
       {
-        path: '/classification/general-classification',
-        element: <GeneralClassification />,
+        path: '/overatings/overall/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/overatings/overall',
+        element: <OverallRating />,
       },
       {
         path: '/management/login-confirmation',
