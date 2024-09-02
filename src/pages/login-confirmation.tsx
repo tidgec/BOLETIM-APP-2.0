@@ -1,7 +1,3 @@
-import 'chart.js/auto'
-
-import { Pie } from 'react-chartjs-2'
-
 export function LoginConfirmation() {
   const data = {
     labels: ['Notas Muito Boas'],
@@ -40,7 +36,7 @@ export function LoginConfirmation() {
         <div className=" rounded-lg bg-pmpa-blue-500 p-6">
           <h2 className="text-white">POLO CFAP:</h2>
           <div className="w-1/4">
-            <Pie data={data} options={options} />
+            {/* <Pie data={data} options={options} /> */}
           </div>
         </div>
       </section>

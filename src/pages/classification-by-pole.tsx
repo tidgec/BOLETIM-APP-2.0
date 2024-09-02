@@ -1,7 +1,4 @@
-import 'chart.js/auto'
-
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { Pie } from 'react-chartjs-2'
 
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 
@@ -86,7 +83,7 @@ export function ClassificationByPole() {
 
   return (
     <div className="w-full py-6">
-      <section className="text-center sm:text-left px-4 mx-auto w-full max-w-[90rem]">
+      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
         <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Classificação
         </h2>
@@ -95,7 +92,7 @@ export function ClassificationByPole() {
             Notas Muito Boas e Ruins
           </div>
           <div className="w-1/4">
-            <Pie data={data} options={options} />
+            {/* <Pie data={data} options={options} /> */}
           </div>
         </div>
 

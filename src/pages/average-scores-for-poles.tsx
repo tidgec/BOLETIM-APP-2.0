@@ -1,7 +1,4 @@
-import 'chart.js/auto'
-
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { Pie } from 'react-chartjs-2'
 
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 
@@ -87,7 +84,7 @@ export function AverageScoresForPoles() {
             Notas Muito Boas
           </div>
           <div className="w-1/4">
-            <Pie data={data} options={options} />
+            {/* <Pie data={data} options={options} /> */}
           </div>
         </div>
 
