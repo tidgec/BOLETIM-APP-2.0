@@ -6,7 +6,7 @@ export function ListCoursesPage() {
 
   return (
     <div className="w-full py-6">
-      <section className="text-center sm:text-left px-2 mx-auto w-full max-w-[90rem]">
+      <section className="mx-auto w-full max-w-[90rem] px-2 text-center sm:text-left">
         <h2 className="w-full border-b-2 border-black text-xl font-semibold">
           Selecione o curso
         </h2>
