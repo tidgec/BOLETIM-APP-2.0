@@ -1,6 +1,36 @@
 import { useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
+
+import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
+import { useGetCourseStudent } from '@/hooks/use-get-course-student'
+import { useGetStudentBoletim } from '@/hooks/use-get-student-boletim'
+import { conceptMap, statusMap } from '@/utils/status-and-concept-mapper'
+import { verifyFormula } from '@/utils/verify-formula-type'
 
 export function BoletimCard() {
+  const [searchParams] = useSearchParams()
+  const { id: studentId } = useParams()
+  const courseId = searchParams.get('courseId')
+
+  const { student, isLoading: isLoadingCourseStudent } = useGetCourseStudent({
+    courseId: String(courseId),
+    studentId: String(studentId),
+  })
+
+  const formula = verifyFormula(student?.course.formula ?? '')
+
+  const { disciplines } = useGetCourseDisciplines(String(courseId))
+
+  const {
+    grades,
+    behaviorMonths,
+    isLoading: isLoadingStudentBoletim,
+  } = useGetStudentBoletim({
+    courseId: String(courseId),
+    studentId: String(studentId),
+    formula,
+  })
+
   const [showGrades, setShowGrades] = useState(false)
   const [showBehavior, setShowBehavior] = useState(false)
 
@@ -10,18 +40,56 @@ export function BoletimCard() {
         Boletim Online
       </h1>
       <div className="rounded-lg bg-white p-4 shadow-md">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold">Polo: CFAP</h2>
-          <p className="text-gray-700">Nome: AFONSO RAIOL GONZAGA ΝΕΤΟ</p>
-          <p className="text-gray-700">Curso: CAS TURMA II - 2023</p>
+        <div className="mb-4 flex flex-col gap-1">
+          {isLoadingCourseStudent ? (
+            <p>Loading...</p>
+          ) : (
+            <span className="text-xl font-bold text-gray-700">
+              Curso: {student?.course.name}
+            </span>
+          )}
+
+          {isLoadingCourseStudent ? (
+            <p>Loading...</p>
+          ) : (
+            <span className="font-medium text-gray-700">
+              Polo: {student?.pole.name}
+            </span>
+          )}
+
+          {isLoadingCourseStudent ? (
+            <p>Loading...</p>
+          ) : (
+            <span className="font-medium text-gray-700">
+              Nome: {student?.username}
+            </span>
+          )}
         </div>
         <div className="mb-4">
-          <h2 className="text-xl font-bold">DISCIPLINAS:</h2>
-          <p className="text-gray-700">11/10 LANÇADAS</p>
+          <h3 className="text-xl font-bold">DISCIPLINAS:</h3>
+          {isLoadingStudentBoletim ? (
+            <p>Loading...</p>
+          ) : (
+            <span className="font-medium text-gray-700">
+              {grades?.assessmentsCount || 'Sem notas lançadas'}
+            </span>
+          )}
         </div>
         <div className="mb-4">
-          <h2 className="text-xl font-bold">MÉDIA GERAL: 9.261</h2>
-          <p className="text-gray-700">STATUS GERAL: MUITO BOM</p>
+          {!grades ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <h3 className="text-xl font-bold">
+                MÉDIA GERAL:{' '}
+                {grades?.averageInform.geralAverage || 'Nota geral não lançada'}
+              </h3>
+              <p className="text-gray-700">
+                STATUS GERAL:{' '}
+                {conceptMap[grades.averageInform.studentAverageStatus.concept]}
+              </p>
+            </>
+          )}
         </div>
         <div className="mb-4 flex justify-start">
           <button
@@ -59,9 +127,24 @@ export function BoletimCard() {
               </tr>
             </thead>
             <tbody>
-              {grades.map((grade) => (
-                <GradeItem key={grade.disciplina} grade={grade} />
-              ))}
+              {disciplines ? (
+                disciplines.map((discipline, index) => (
+                  <GradeItem
+                    key={discipline.disciplineId}
+                    grade={{
+                      disciplina: discipline.name,
+                      vf: grades?.assessments[index]?.vf,
+                      vc1: grades?.assessments[index]?.avi,
+                      vc2: grades?.assessments[index]?.avii,
+                      vfe: grades?.assessments[index]?.vfe,
+                      average: grades?.assessments[index]?.average,
+                      status: statusMap[grades?.assessments[index]?.status],
+                    }}
+                  />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
             </tbody>
           </table>
         )}
@@ -73,17 +156,69 @@ export function BoletimCard() {
             {showBehavior ? 'Ocultar Comportamento' : 'Ver Comportamento'}
           </button>
         </div>
-        {showBehavior && <BehaviorTable />}
+        {showBehavior && (
+          <table className="mb-4 w-full table-auto">
+            <thead>
+              <tr className="bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
+                <th>Janeiro</th>
+                <th>Fevereiro</th>
+                <th>Março</th>
+                <th>Abril</th>
+                <th>Maio</th>
+                <th>Junho</th>
+                <th>Julho</th>
+                <th>Agosto</th>
+                <th>Setembro</th>
+                <th>Outubro</th>
+                <th>Novembro</th>
+                <th>Dezembro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {behaviorMonths ? (
+                behaviorMonths?.map((month, index) => (
+                  <tr className="bg-gray-100" key={index}>
+                    <td className="text-center text-sm">{month.january}</td>
+                    <td className="text-center text-sm">{month.february}</td>
+                    <td className="text-center text-sm">{month.march}</td>
+                    <td className="text-center text-sm">{month.april}</td>
+                    <td className="text-center text-sm">{month.may}</td>
+                    <td className="text-center text-sm">{month.jun}</td>
+                    <td className="text-center text-sm">{month.july}</td>
+                    <td className="text-center text-sm">{month.august}</td>
+                    <td className="text-center text-sm">{month.september}</td>
+                    <td className="text-center text-sm">{month.october}</td>
+                    <td className="text-center text-sm">{month.november}</td>
+                    <td className="text-center text-sm">{month.december}</td>
+                  </tr>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </tbody>
+          </table>
+        )}
         <div className="mb-4">
-          <h2 className="text-xl font-bold">MÉDIA COMPORTAMENTO: 8.500</h2>
-          <p className="text-gray-700">STATUS COMPORTAMENTO: APROVADO</p>
+          {grades ? (
+            <h3 className="text-xl font-bold">
+              MÉDIA DE COMPORTAMENTO:{' '}
+              {Array.isArray(grades.averageInform.behaviorAverageStatus)
+                ? grades.averageInform.behaviorAverageStatus.map(
+                    (item, index) => <p key={index}>{item.behaviorAverage}</p>,
+                  )
+                : grades.averageInform.behaviorAverageStatus.behaviorAverage}
+            </h3>
+          ) : (
+            <p>Loading...</p>
+          )}
+          <span className="text-gray-700">STATUS COMPORTAMENTO: APROVADO</span>
         </div>
       </div>
       <button
         className="my-3 ml-auto block rounded bg-pmpa-blue-500 px-4 py-2 font-semibold text-white hover:bg-pmpa-blue-700"
         onClick={() => window.print()}
       >
-        Baixa
+        Baixar
       </button>
     </div>
   )
@@ -95,122 +230,9 @@ interface GradeProps {
   vc2: number
   vf: number
   vfe: number
-  media: number
+  average: number
   status: string
 }
-
-interface ComportamentoProps {
-  mes: string
-  nota: number
-}
-
-const grades: GradeProps[] = [
-  {
-    disciplina: 'ARMAMENTO E TIRO POLICIAL',
-    vc1: 9500,
-    vc2: 9250,
-    vf: 9250,
-    vfe: 9375,
-    media: 9375,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'CHEFIA E LIDERANÇA',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'CORRESPONDENCIA POLICIAL MILITAR',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'DIREITO ADMINISTRATIVO',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'DIREITO PROCESSUAL PENAL MILITAR',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'GERENCIAMENTO DE CRISES E TÉCNICAS DE NEGOCIAÇÃO',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'LEGISLAÇÃO BASICA INSTITUCIONAL',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'POLICIAMENTO OSTENSIVO GERAL',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'PROCEDIMENTO E PROCESSOS CORREICIONAIS',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-  {
-    disciplina: 'TECNOLOGIA DA INFORMAÇÃO E TELECOMUNICAÇÕES',
-    vc1: 0,
-    vc2: 0,
-    vf: 0,
-    vfe: 0,
-    media: 0,
-    status: 'APROVADO',
-  },
-]
-
-const behaviorData: ComportamentoProps[] = [
-  { mes: 'Janeiro', nota: 8.0 },
-  { mes: 'Fevereiro', nota: 8.2 },
-  { mes: 'Março', nota: 8.5 },
-  { mes: 'Abril', nota: 8.3 },
-  { mes: 'Maio', nota: 8.4 },
-  { mes: 'Junho', nota: 8.6 },
-  { mes: 'Julho', nota: 8.7 },
-  { mes: 'Agosto', nota: 8.8 },
-  { mes: 'Setembro', nota: 8.5 },
-  { mes: 'Outubro', nota: 8.6 },
-  { mes: 'Novembro', nota: 8.7 },
-  { mes: 'Dezembro', nota: 8.8 },
-]
 
 function GradeItem({ grade }: { grade: GradeProps }) {
   return (
@@ -231,42 +253,11 @@ function GradeItem({ grade }: { grade: GradeProps }) {
         {grade.vfe}
       </td>
       <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
-        {grade.media}
+        {grade.average}
       </td>
       <td className="whitespace-nowrap px-4 py-3 text-sm text-lime-700">
         {grade.status}
       </td>
     </tr>
-  )
-}
-
-function BehaviorTable() {
-  return (
-    <table className="mb-4 w-full table-auto">
-      <thead>
-        <tr className="bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
-          {behaviorData.map((comportamento) => (
-            <th
-              key={comportamento.mes}
-              className="whitespace-nowrap px-4 py-3 text-left font-bold"
-            >
-              {comportamento.mes}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        <tr className="bg-gray-100">
-          {behaviorData.map((comportamento) => (
-            <td
-              key={comportamento.mes}
-              className="whitespace-nowrap px-4 py-3 text-sm text-gray-700"
-            >
-              {comportamento.nota}
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
   )
 }
