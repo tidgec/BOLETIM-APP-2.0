@@ -37,7 +37,7 @@ export function SearchNotes() {
           {!isLoading &&
             students?.map((student) => (
               <Link
-                to={`${currentUrl.origin}/boletim/${student.id}?studentId=${student.id}`}
+                to={`${currentUrl.origin}/students/${student.id}/boletim?courseId=${student.course.id}`}
                 key={student.id}
                 className="flex flex-col gap-2 rounded border p-4"
               >
