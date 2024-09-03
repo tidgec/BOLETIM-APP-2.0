@@ -3,49 +3,49 @@ import { useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
-import { useGetOverating } from '@/hooks/use-get-overating'
+import { useGetRanking } from '@/hooks/use-get-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
-export function OverallRating() {
+export function OverallRanking() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
 
-  const { overating, isLoading } = useGetOverating({
+  const { ranking, isLoading } = useGetRanking({
     courseId: String(courseId),
     page,
   })
 
-  const totalExcellentSize = overating?.filter(
+  const totalExcellentSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'excellent',
   )?.length
 
-  const totalVeryGoodSize = overating?.filter(
+  const totalVeryGoodSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'very good',
   )?.length
 
-  const totalGoodSize = overating?.filter(
+  const totalGoodSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept === 'good',
   )?.length
 
-  const totalRegularSize = overating?.filter(
+  const totalRegularSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'regular',
   )?.length
 
-  const totalInsufficientSize = overating?.filter(
+  const totalInsufficientSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'insufficient',
   )?.length
 
-  const totalNoIncomeSize = overating?.filter(
+  const totalNoIncomeSize = ranking?.filter(
     (item) =>
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
@@ -191,7 +191,7 @@ export function OverallRating() {
               {isLoading ? (
                 <p>Loading...</p>
               ) : (
-                overating?.map((item, index) => (
+                ranking?.map((item, index) => (
                   <tr key={index}>
                     <td className="px-4 py-2 text-sm text-slate-700">
                       {index + 1}º
