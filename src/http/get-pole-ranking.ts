@@ -2,12 +2,13 @@ import Cookies from 'js-cookie'
 
 import { api } from '@/lib/axios'
 
-export interface GetOveratingRequest {
+export interface GetPoleRankingRequest {
   courseId: string
+  poleId: string
   page: string
 }
 
-interface GetOveratingResponse {
+interface GetPoleRankingResponse {
   studentsWithAverage:
     | {
         studentAverage: {
@@ -117,10 +118,16 @@ interface GetOveratingResponse {
       }[]
 }
 
-export async function getOverating({ courseId, page }: GetOveratingRequest) {
+export async function getPoleRanking({
+  courseId,
+  poleId,
+  page,
+}: GetPoleRankingRequest) {
   const token = Cookies.get('token')
-  const response = await api.get<GetOveratingResponse>(
-    `/courses/${courseId}/classification`,
+  if (!token) throw new Error('Não autorizado.')
+
+  const response = await api.get<GetPoleRankingResponse>(
+    `/courses/${courseId}/poles/${poleId}/classification`,
     {
       params: {
         page,
@@ -133,6 +140,6 @@ export async function getOverating({ courseId, page }: GetOveratingRequest) {
   )
 
   return {
-    overating: response.data.studentsWithAverage,
+    ranking: response.data.studentsWithAverage,
   }
 }
