@@ -50,9 +50,9 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
         disciplineId: String(disciplineId),
         studentId,
         vf: Number(vf),
-        avi: avi !== undefined ? Number(avi) : undefined,
-        avii: avii !== undefined ? Number(avii) : undefined,
-        vfe: vfe !== undefined ? Number(vfe) : undefined,
+        avi: avi ? Number(avi) : undefined,
+        avii: avii ? Number(avii) : undefined,
+        vfe: vfe ? Number(vfe) : undefined,
       })
 
       toast.success('Notas adicionadas com sucesso!')
