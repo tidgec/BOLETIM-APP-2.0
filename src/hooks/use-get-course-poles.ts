@@ -8,7 +8,7 @@ interface GetCoursePolesProps {
 
 export function useGetCoursePoles({ courseId }: GetCoursePolesProps) {
   const query = useQuery({
-    queryKey: ['courses', 'poles'],
+    queryKey: ['course-poles', courseId],
     queryFn: () => getCoursePoles({ courseId }),
   })
 
