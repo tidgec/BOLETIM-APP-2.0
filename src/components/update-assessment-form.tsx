@@ -47,15 +47,15 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
         courseId: String(courseId),
         disciplineId: String(disciplineId),
         studentId,
-        vf: vf !== undefined ? Number(vf) : undefined,
-        avi: avi !== undefined ? Number(avi) : undefined,
-        avii: avii !== undefined ? Number(avii) : undefined,
-        vfe: vfe !== undefined ? Number(vfe) : undefined,
+        vf: vf ? Number(vf) : undefined,
+        avi: avi ? Number(avi) : undefined,
+        avii: avii ? Number(avii) : undefined,
+        vfe: vfe ? Number(vfe) : undefined,
       })
 
-      toast.success('Notas adicionadas com sucesso!')
+      toast.success('Notas atualizadas com sucesso!')
     } catch (error) {
-      toast.error('Ocorreu algum error ao criar a nota.', {
+      toast.error('Ocorreu um error ao atualizar a nota.', {
         duration: 2000,
         closeButton: true,
       })
@@ -118,7 +118,7 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
         type="submit"
         className="ml-auto block rounded bg-pmpa-blue-600 px-4 py-2 text-white hover:bg-pmpa-blue-500"
       >
-        Adicionar
+        Atualizar
       </button>
     </form>
   )

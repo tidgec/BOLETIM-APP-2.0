@@ -53,9 +53,11 @@ export function RemoveAssessmentGradeForm({
         avii: avii ? -1 : undefined,
         vfe: vfe ? -1 : undefined,
       })
-      toast.success('Notas adicionadas com sucesso!')
+      toast.success('Notas removidas com sucesso!', {
+        duration: 2000,
+      })
     } catch (error) {
-      toast.error('Ocorreu algum error ao criar a nota.', {
+      toast.error('Ocorreu um error ao remove nota.', {
         duration: 2000,
         closeButton: true,
       })
@@ -72,7 +74,7 @@ export function RemoveAssessmentGradeForm({
           <label htmlFor="vf">VF</label>
           <Controller
             name="vf"
-            defaultValue={true}
+            defaultValue={false}
             control={control}
             render={({ field: { name, onChange, value, disabled } }) => {
               return (
@@ -112,7 +114,7 @@ export function RemoveAssessmentGradeForm({
           <label htmlFor="avii">AVII</label>
           <Controller
             name="avii"
-            defaultValue={true}
+            defaultValue={false}
             control={control}
             render={({ field: { name, onChange, value, disabled } }) => {
               return (
@@ -132,7 +134,7 @@ export function RemoveAssessmentGradeForm({
           <label htmlFor="vfe">VFE</label>
           <Controller
             name="vfe"
-            defaultValue={true}
+            defaultValue={false}
             control={control}
             render={({ field: { name, onChange, value, disabled } }) => {
               return (
