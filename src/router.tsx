@@ -23,8 +23,6 @@ import { BehaviorBatchPage } from './pages/behavior-batch'
 import { BehaviorRemove } from './pages/behavior-remove'
 import { Behaviors } from './pages/behaviors'
 import { BoletimCard } from './pages/boletim-card'
-import { ClassificationByPole } from './pages/classification-by-pole'
-import { ClassificationPole } from './pages/classification-poles'
 import { CourseManagement } from './pages/course-management'
 import { Courses } from './pages/courses'
 import { DataManagement } from './pages/data-management'
@@ -36,6 +34,7 @@ import { Home } from './pages/home'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { ListAdminsPage } from './pages/list-admins'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
+import { ListCoursePolesPage } from './pages/list-course-poles'
 import { ListCoursesPage } from './pages/list-courses'
 import { ListManagersPage } from './pages/list-managers'
 import { ListManagersDisabledPage } from './pages/list-managers-disabled'
@@ -47,9 +46,10 @@ import { LoginConfirmation } from './pages/login-confirmation'
 import { Managers } from './pages/managers'
 import { NoteBatchPage } from './pages/note-batch'
 import { Notes } from './pages/notes'
-import { OverallRating } from './pages/overall-rating'
-import { Overatings } from './pages/overatings'
+import { OverallRanking } from './pages/overall-ranking'
+import { PoleRanking } from './pages/pole-ranking'
 import { Profile } from './pages/profile'
+import { Rankings } from './pages/rankings'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
@@ -457,28 +457,32 @@ export const router = createBrowserRouter([
         element: <SelectCourseTheAverageByPole />,
       },
       {
-        path: '/classification/classification-poles',
-        element: <ClassificationPole />,
+        path: '/rankings/poles/courses',
+        element: <ListCoursesPage />,
       },
       {
-        path: '/classification/classification-by-pole',
-        element: <ClassificationByPole />,
+        path: '/rankings/poles',
+        element: <ListCoursePolesPage />,
+      },
+      {
+        path: '/rankings/poles/:id',
+        element: <PoleRanking />,
       },
       {
         path: '/classification/average-scores-for-poles',
         element: <AverageScoresForPoles />,
       },
       {
-        path: '/overatings',
-        element: <Overatings />,
+        path: '/rankings',
+        element: <Rankings />,
       },
       {
-        path: '/overatings/overall/courses',
+        path: '/rankings/overall/courses',
         element: <ListCoursesPage />,
       },
       {
-        path: '/overatings/overall',
-        element: <OverallRating />,
+        path: '/rankings/overall',
+        element: <OverallRanking />,
       },
       {
         path: '/management/login-confirmation',
