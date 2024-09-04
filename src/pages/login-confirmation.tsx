@@ -1,23 +1,4 @@
 export function LoginConfirmation() {
-  const data = {
-    labels: ['Notas Muito Boas'],
-    datasets: [
-      {
-        data: [100],
-        backgroundColor: ['#32CD32'],
-      },
-    ],
-  }
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  }
-
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
