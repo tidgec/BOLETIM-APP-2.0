@@ -17,6 +17,7 @@ import { AddStudentsBatch } from './pages/add-student-batch'
 import { AddStudents } from './pages/add-students'
 import { Admins } from './pages/admins'
 import { AllCourses } from './pages/all-courses'
+import { AverageBehavior } from './pages/average-behavior'
 import { AveragePole } from './pages/average-pole'
 import { BehaviorBatchPage } from './pages/behavior-batch'
 import { BehaviorRemove } from './pages/behavior-remove'
@@ -472,6 +473,10 @@ export const router = createBrowserRouter([
       {
         path: '/rankings/note-poles/:id',
         element: <PoleNotesRanking />,
+      },
+      {
+        path: '/classification/average-behavior',
+        element: <AverageBehavior />,
       },
       {
         path: '/rankings/poles/courses',
