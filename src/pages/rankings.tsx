@@ -49,7 +49,7 @@ export function Rankings() {
           <span className="font-medium text-white">Média de notas - polos</span>
         </Link>
         <Link
-          to={'#'}
+          to={'/classification/the-classification-by-behavior'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
