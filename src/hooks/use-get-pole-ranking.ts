@@ -8,7 +8,7 @@ export function useGetPoleRanking({
   page,
 }: GetPoleRankingRequest) {
   const query = useQuery({
-    queryKey: ['pole-ranking', courseId, page],
+    queryKey: ['pole-ranking', courseId, poleId, page],
     queryFn: () => getPoleRanking({ courseId, poleId, page }),
   })
 

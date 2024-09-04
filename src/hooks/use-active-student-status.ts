@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { changeManagerStatus } from '@/http/change-manager-status'
+import { activeStudentStatus } from '@/http/active-student-status'
 
-export function useChangeManagerStatus() {
+export function useActiveStudentStatus() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: changeManagerStatus,
+    mutationFn: activeStudentStatus,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['manager-courses'],
+        queryKey: ['student-courses'],
       })
     },
   })
