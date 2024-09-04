@@ -38,7 +38,7 @@ export function Rankings() {
           </span>
         </Link>
         <Link
-          to={'/classification/average-by-pole'}
+          to={'/rankings/note-poles/courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
