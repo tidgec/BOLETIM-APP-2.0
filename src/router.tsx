@@ -17,6 +17,7 @@ import { AddStudentsBatch } from './pages/add-student-batch'
 import { AddStudents } from './pages/add-students'
 import { Admins } from './pages/admins'
 import { AllCourses } from './pages/all-courses'
+import { AverageBehavior } from './pages/average-behavior'
 import { AveragePole } from './pages/average-pole'
 import { AverageScoresForPoles } from './pages/average-scores-for-poles'
 import { BehaviorBatchPage } from './pages/behavior-batch'
@@ -76,6 +77,7 @@ import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
+import { SelectCourseTheBehaviorPole } from './pages/ways/select-course-the-behavior-pole'
 import { SelectCourseTheClassificationByPole } from './pages/ways/select-course-the-classification-by-pole'
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
 import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
@@ -449,8 +451,16 @@ export const router = createBrowserRouter([
         element: <AveragePole />,
       },
       {
+        path: '/classification/average-behavior',
+        element: <AverageBehavior />,
+      },
+      {
         path: '/classification/the-classification-by-pole ',
         element: <SelectCourseTheClassificationByPole />,
+      },
+      {
+        path: '/classification/the-classification-by-behavior ',
+        element: <SelectCourseTheBehaviorPole />,
       },
       {
         path: '/classification/average-by-pole',
