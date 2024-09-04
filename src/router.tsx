@@ -18,7 +18,6 @@ import { AddStudents } from './pages/add-students'
 import { Admins } from './pages/admins'
 import { AllCourses } from './pages/all-courses'
 import { AveragePole } from './pages/average-pole'
-import { AverageScoresForPoles } from './pages/average-scores-for-poles'
 import { BehaviorBatchPage } from './pages/behavior-batch'
 import { BehaviorRemove } from './pages/behavior-remove'
 import { Behaviors } from './pages/behaviors'
@@ -27,8 +26,11 @@ import { CourseManagement } from './pages/course-management'
 import { Courses } from './pages/courses'
 import { DataManagement } from './pages/data-management'
 import { DeleteAdmin } from './pages/delete-admin'
+import { DeleteAdmins } from './pages/delete-admins'
 import { DeleteCourses } from './pages/delete-courses'
+import { DeleteManagers } from './pages/delete-managers'
 import { DeleteStudent } from './pages/delete-student'
+import { DeleteStudents } from './pages/delete-students'
 import { Disciplines } from './pages/disciplines'
 import { Home } from './pages/home'
 import { ImportDocumentsFile } from './pages/import-documents-file'
@@ -37,16 +39,15 @@ import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { ListCoursePolesPage } from './pages/list-course-poles'
 import { ListCoursesPage } from './pages/list-courses'
 import { ListManagersPage } from './pages/list-managers'
-import { ListManagersDisabledPage } from './pages/list-managers-disabled'
-import { ListManagersEnabledPage } from './pages/list-managers-enabled'
 import { ListStudentsPage } from './pages/list-students'
-import { ListStudentsDisabledPage } from './pages/list-students-disabled'
-import { ListStudentsEnabledPage } from './pages/list-students-enabled'
 import { LoginConfirmation } from './pages/login-confirmation'
 import { Managers } from './pages/managers'
+import { ManagersDisabled } from './pages/managers-disabled'
+import { ManagersEnabled } from './pages/managers-enabled'
 import { NoteBatchPage } from './pages/note-batch'
 import { Notes } from './pages/notes'
 import { OverallRanking } from './pages/overall-ranking'
+import { PoleNotesRanking } from './pages/pole-notes-ranking'
 import { PoleRanking } from './pages/pole-ranking'
 import { Profile } from './pages/profile'
 import { Rankings } from './pages/rankings'
@@ -57,7 +58,6 @@ import { SearchActiveHistory } from './pages/search-active-history'
 import { SearchDisableHistory } from './pages/search-disable-history'
 import { SearchDownloadHistory } from './pages/search-download-history'
 import { SearchNotes } from './pages/search-notes'
-import { SelectCourseTheAverageByPole } from './pages/select-course-the-average-by-pole'
 import { SignIn } from './pages/sign-in'
 import { CourseInformation } from './pages/student/course-information'
 import { CoursesAcademicRecord } from './pages/student/courses-academic-record'
@@ -66,6 +66,8 @@ import { StudentPage } from './pages/student/student-page'
 import { StudentBatchPage } from './pages/student-batch'
 import { StudentInformation } from './pages/student-information'
 import { Students } from './pages/students'
+import { StudentsDisabled } from './pages/students-disabled'
+import { StudentsEnabled } from './pages/students-enabled'
 import { Subjects } from './pages/subjects'
 import { UpdateAdmins } from './pages/update-admins'
 import { UpdateBehavior } from './pages/update-behavior'
@@ -76,7 +78,6 @@ import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
-import { SelectCourseTheClassificationByPole } from './pages/ways/select-course-the-classification-by-pole'
 import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
 import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
 import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
@@ -302,7 +303,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/students/enable',
-        element: <ListStudentsDisabledPage />,
+        element: <StudentsDisabled />,
       },
       {
         path: '/students/update/courses',
@@ -362,11 +363,15 @@ export const router = createBrowserRouter([
       },
       {
         path: '/students/disable',
-        element: <ListStudentsEnabledPage />,
+        element: <StudentsEnabled />,
       },
       {
-        path: '/student/:studentId/',
-        element: <DeleteStudent />,
+        path: '/students/delete/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/students/delete',
+        element: <DeleteStudents />,
       },
       {
         path: '/import/documents',
@@ -382,7 +387,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/managers/enable',
-        element: <ListManagersDisabledPage />,
+        element: <ManagersDisabled />,
       },
       {
         path: '/managers/disable/courses',
@@ -390,7 +395,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/managers/disable',
-        element: <ListManagersEnabledPage />,
+        element: <ManagersEnabled />,
       },
       {
         path: '/managers/add/courses',
@@ -411,6 +416,14 @@ export const router = createBrowserRouter([
       {
         path: '/managers/update/:id',
         element: <UpdateManager />,
+      },
+      {
+        path: '/managers/delete/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/managers/delete',
+        element: <DeleteManagers />,
       },
       {
         path: '/academic-record/courses-search-active',
@@ -449,12 +462,16 @@ export const router = createBrowserRouter([
         element: <AveragePole />,
       },
       {
-        path: '/classification/the-classification-by-pole ',
-        element: <SelectCourseTheClassificationByPole />,
+        path: '/rankings/note-poles/courses',
+        element: <ListCoursesPage />,
       },
       {
-        path: '/classification/average-by-pole',
-        element: <SelectCourseTheAverageByPole />,
+        path: '/rankings/note-poles',
+        element: <ListCoursePolesPage />,
+      },
+      {
+        path: '/rankings/note-poles/:id',
+        element: <PoleNotesRanking />,
       },
       {
         path: '/rankings/poles/courses',
@@ -467,10 +484,6 @@ export const router = createBrowserRouter([
       {
         path: '/rankings/poles/:id',
         element: <PoleRanking />,
-      },
-      {
-        path: '/classification/average-scores-for-poles',
-        element: <AverageScoresForPoles />,
       },
       {
         path: '/rankings',
@@ -507,6 +520,14 @@ export const router = createBrowserRouter([
       {
         path: '/admins/update/:id',
         element: <UpdateAdmins />,
+      },
+      {
+        path: '/admins/delete/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/admins/delete',
+        element: <DeleteAdmins />,
       },
       {
         path: '/profile',
