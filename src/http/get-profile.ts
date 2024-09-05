@@ -11,8 +11,16 @@ interface GetProfileResponse {
   avatarUrl: string | null
   role: string
   birthday: Date
-  courses?: []
-  poles?: []
+  courses?: {
+    id: string
+    name: string
+    startAt: string
+    imageUrl: string
+  }[]
+  poles?: {
+    id: string
+    name: string
+  }[]
 }
 
 export async function getProfile(): Promise<GetProfileResponse> {
@@ -46,7 +54,7 @@ export async function getProfile(): Promise<GetProfileResponse> {
     return response.data.administrator
   }
 
-  if (payload.role === 'dev') {
+  if (payload.role === 'manager') {
     const response = await api.get('/managers/profile', {
       headers: {
         Authorization: `Bearer ${token}`,
