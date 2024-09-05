@@ -1,17 +1,27 @@
 import { useSearchParams } from 'react-router-dom'
 
-import { Course } from '@/components/course'
 import { Pagination } from '@/components/pagination'
-import { useGetCourses } from '@/hooks/use-get-courses'
+import { Student } from '@/components/student'
+import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function DownloadAcademicRecord() {
   const [searchParams] = useSearchParams()
-  const page = searchParams.get('page') ?? '1'
+  const courseId = searchParams.get('courseId')
+  const poleId = searchParams.get('poleId')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
+  const page = searchParams.get('page')
 
-  const { courses, totalItems, pages, isLoading } = useGetCourses(page)
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
+    courseId: String(courseId),
+    cpf: cpf ?? '',
+    username: username ?? '',
+    page: page ?? '1',
+    poleId: poleId ?? 'all',
+  })
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Baixar Histórico Escolar
@@ -20,23 +30,18 @@ export function DownloadAcademicRecord() {
           Para baixar o histórico, basta clicar no curso.
         </p>
 
-        {isLoading && <p>Loading...</p>}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-2 mb-4 mt-6 flex h-[36rem] flex-col gap-4 overflow-auto">
+          {isLoading && <p>Loading...</p>}
           {!isLoading &&
-            courses?.map((course) => (
-              <button
-                key={course.id}
-                className="m-10 w-80 bg-white py-1 shadow-md"
-              >
-                <Course course={course} />
-              </button>
+            students?.map((student) => (
+              <Student key={student.id} student={student} />
             ))}
         </div>
 
-        {courses && (
+        {students && (
           <Pagination
             items={totalItems ?? 0}
-            page={page ? Number(page) : 0}
+            page={page ? Number(page) : 1}
             pages={pages ?? 0}
           />
         )}
