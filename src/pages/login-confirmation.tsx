@@ -1,4 +1,17 @@
+import { useSearchParams } from 'react-router-dom'
+
+import { ChartLoginMetrics } from '@/components/chart-login-metrics'
+import { useGetLoginConfirmationMetrics } from '@/hooks/use-get-login-confirmation-metrics'
+
 export function LoginConfirmation() {
+  const [searchParams] = useSearchParams()
+  const courseId = searchParams.get('courseId') ?? ''
+
+  const { loginConfirmationMetrics, isLoading } =
+    useGetLoginConfirmationMetrics({
+      courseId,
+    })
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -14,11 +27,67 @@ export function LoginConfirmation() {
             </span>
           </div>
         </div>
-        <div className=" rounded-lg bg-pmpa-blue-500 p-6">
-          <h2 className="text-white">POLO CFAP:</h2>
-          <div className="w-1/4">
-            {/* <Pie data={data} options={options} /> */}
-          </div>
+        <div className="space-y-4">
+          {isLoading && <p>Loading...</p>}
+          {!isLoading &&
+            Array.isArray(loginConfirmationMetrics) &&
+            loginConfirmationMetrics.map((metric) => (
+              <div
+                className="rounded-lg bg-pmpa-blue-500 p-4"
+                key={metric.poleId}
+              >
+                <p className="font-medium text-white">POLO: {metric.pole}</p>
+                <div className="mx-auto w-96">
+                  <ChartLoginMetrics
+                    charts={[
+                      {
+                        status: 'confirmed',
+                        size: metric.metrics.totalConfirmedSize ?? 0,
+                        fill: 'var(--color-confirmed)',
+                      },
+                      {
+                        status: 'not-confirmed',
+                        size: metric.metrics.totalNotConfirmedSize ?? 0,
+                        fill: 'var(--color-not-confirmed)',
+                      },
+                    ]}
+                    chartMessage="Métricas de Login"
+                  />
+                </div>
+              </div>
+            ))}
+
+          {!isLoading && !Array.isArray(loginConfirmationMetrics) && (
+            <div
+              className="rounded-lg bg-pmpa-blue-500 p-4"
+              key={loginConfirmationMetrics?.poleId}
+            >
+              <p className="font-medium text-white">
+                POLO: {loginConfirmationMetrics?.pole}
+              </p>
+              <div className="mx-auto w-96">
+                <ChartLoginMetrics
+                  charts={[
+                    {
+                      status: 'confirmed',
+                      size:
+                        loginConfirmationMetrics?.metrics.totalConfirmedSize ??
+                        0,
+                      fill: 'var(--color-confirmed)',
+                    },
+                    {
+                      status: 'not-confirmed',
+                      size:
+                        loginConfirmationMetrics?.metrics
+                          .totalNotConfirmedSize ?? 0,
+                      fill: 'var(--color-not-confirmed)',
+                    },
+                  ]}
+                  chartMessage="Métricas de Login"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>

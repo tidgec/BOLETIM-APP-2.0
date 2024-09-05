@@ -1,45 +1,53 @@
-import CFO from '@/assets/cfo-img-curso.jpg'
+import { useSearchParams } from 'react-router-dom'
 
-const courses = [
-  { id: 1, title: 'CAS - 2023' },
-  { id: 2, title: 'CAS TURMA I - 2024' },
-  { id: 3, title: 'CAS TURMA II - 2023' },
-]
+import { Pagination } from '@/components/pagination'
+import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { formatCPF } from '@/utils/format-cpf'
 
 export function StudentInformation() {
+  const [searchParams] = useSearchParams()
+  const courseId = searchParams.get('courseId') ?? ''
+  const page = searchParams.get('page') ?? '1'
+
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
+    courseId,
+    page,
+  })
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Informação de estudante
+          Informação dos estudantes
         </h2>
 
-        <div className="flex flex-wrap justify-center">
-          {courses.map((course) => (
-            <div key={course.id} className="m-10 w-80 bg-white py-1 shadow-md">
-              <div className="flex flex-col items-center">
-                <img src={CFO} alt="Polícia Militar" className="mb-4" />
-                <h3 className="mb-2 text-xl">{course.title}</h3>
-                <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                  Baixar
-                </button>
+        <div className="mt-4 grid grid-cols-2 gap-4 px-4">
+          {isLoading && <p>Loading...</p>}
+          {!isLoading &&
+            students?.map((student) => (
+              <div key={student.id}>
+                <ul className="space-y-2 rounded border p-4">
+                  <li className="mb-4 text-lg font-semibold">
+                    Nome: {student.username}
+                  </li>
+                  <li>CPF: {formatCPF(student.cpf)}</li>
+                  <li>Email: {student.email}</li>
+                  <li>Curso: {student.course.name}</li>
+                  <li>Polo: {student.pole.name}</li>
+                  <li>Inserido em: {student.createdAt}</li>
+                  <li>Inserido em: {student.createdAt}</li>
+                </ul>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
-        <div className="flex flex-wrap justify-center">
-          {courses.map((course) => (
-            <div key={course.id} className="m-10 w-80 bg-white py-1 shadow-md">
-              <div className="flex flex-col items-center">
-                <img src={CFO} alt="Polícia Militar" className="mb-4" />
-                <h3 className="mb-2 text-xl">{course.title}</h3>
-                <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                  Baixar
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+
+        {students && (
+          <Pagination
+            pages={pages ?? 0}
+            page={Number(page) ?? 0}
+            items={totalItems ?? 0}
+          />
+        )}
       </section>
     </div>
   )

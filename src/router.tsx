@@ -4,6 +4,7 @@ import { NotFound } from './pages/__errors/404'
 import { AppLayout } from './pages/__layouts/app'
 import { AuthLayout } from './pages/__layouts/auth'
 import { AcademicRecord } from './pages/academic-record'
+import { AddAcademicRecord } from './pages/add-academic-record'
 import { AddAdmins } from './pages/add-admins'
 import { AddBehaviors } from './pages/add-behaviors'
 import { AddBehaviorsBatch } from './pages/add-behaviors-batch'
@@ -33,6 +34,7 @@ import { DeleteManagers } from './pages/delete-managers'
 import { DeleteStudent } from './pages/delete-student'
 import { DeleteStudents } from './pages/delete-students'
 import { Disciplines } from './pages/disciplines'
+import { DownloadAcademicRecord } from './pages/download-academic-record'
 import { Home } from './pages/home'
 import { ImportDocumentsFile } from './pages/import-documents-file'
 import { ListAdminsPage } from './pages/list-admins'
@@ -52,12 +54,10 @@ import { PoleNotesRanking } from './pages/pole-notes-ranking'
 import { PoleRanking } from './pages/pole-ranking'
 import { Profile } from './pages/profile'
 import { Rankings } from './pages/rankings'
+import { RemoveAcademicRecord } from './pages/remove-academic-record'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
-import { SearchActiveHistory } from './pages/search-active-history'
-import { SearchDisableHistory } from './pages/search-disable-history'
-import { SearchDownloadHistory } from './pages/search-download-history'
 import { SearchNotes } from './pages/search-notes'
 import { SignIn } from './pages/sign-in'
 import { CourseInformation } from './pages/student/course-information'
@@ -79,11 +79,6 @@ import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
-import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
-import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
-import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
-import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
-import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
 
 export const router = createBrowserRouter([
   {
@@ -205,10 +200,6 @@ export const router = createBrowserRouter([
       {
         path: '/behaviors/add',
         element: <AddBehaviors />,
-      },
-      {
-        path: '/behaviors/courses-search-remove-bahavior',
-        element: <SelectCourseToRemoveBehaviors />,
       },
       {
         path: '/behaviors/behaviors-remove',
@@ -427,36 +418,24 @@ export const router = createBrowserRouter([
         element: <DeleteManagers />,
       },
       {
-        path: '/academic-record/courses-search-active',
-        element: <SelectCourseToActiveHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-disable',
-        element: <SelectCourseToDisableHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-download',
-        element: <SelectCourseToDownloadHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-login-management',
-        element: <SelectCourseToLoginManagement />,
-      },
-      {
         path: '/academic-record',
         element: <AcademicRecord />,
       },
       {
-        path: '/academic-record/active-search',
-        element: <SearchActiveHistory />,
+        path: '/academic-record/add/courses',
+        element: <ListCoursesPage />,
       },
       {
-        path: '/academic-record/disable-search',
-        element: <SearchDisableHistory />,
+        path: '/academic-record/add',
+        element: <AddAcademicRecord />,
       },
       {
-        path: '/academic-record/download-search',
-        element: <SearchDownloadHistory />,
+        path: '/academic-record/remove',
+        element: <RemoveAcademicRecord />,
+      },
+      {
+        path: '/academic-record/download',
+        element: <DownloadAcademicRecord />,
       },
       {
         path: '/classification/average-pole',

@@ -13,15 +13,15 @@ interface Course {
 
 export interface GetCoursesResponse {
   courses: Course[]
-  pages: number
-  totalItems: number
+  pages?: number
+  totalItems?: number
 }
 
 interface CourseRoleAdminOrDev {
   course: Course
 }
 
-export async function getCourses(page: number): Promise<GetCoursesResponse> {
+export async function getCourses(page?: string): Promise<GetCoursesResponse> {
   const token = Cookies.get('token')
   if (!token) throw new Error('Não autorizado.')
 
