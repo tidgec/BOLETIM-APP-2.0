@@ -311,6 +311,10 @@ export const router = createBrowserRouter([
         element: <CoursesAcademicRecord />,
       },
       {
+        path: '/management/student-info',
+        element: <StudentInformation />,
+      },
+      {
         path: '/students/page',
         element: <StudentPage />,
       },
@@ -414,7 +418,6 @@ export const router = createBrowserRouter([
         path: '/academic-record',
         element: <AcademicRecord />,
       },
-
       {
         path: '/classification/average-pole',
         element: <AveragePole />,
@@ -460,24 +463,12 @@ export const router = createBrowserRouter([
         element: <OverallRanking />,
       },
       {
-        path: '/management',
-        element: <DataManagement />,
-      },
-      {
-        path: '/management/login-confirmation/courses',
-        element: <ListCoursesPage />,
-      },
-      {
         path: '/management/login-confirmation',
         element: <LoginConfirmation />,
       },
       {
-        path: '/management/students/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/management/students',
-        element: <StudentInformation />,
+        path: '/management',
+        element: <DataManagement />,
       },
       {
         path: '/admins',
