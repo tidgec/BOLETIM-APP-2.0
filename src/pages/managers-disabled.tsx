@@ -106,7 +106,7 @@ export function ManagersDisabled() {
 
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Deseja desativar esse aluno?</DialogTitle>
+                      <DialogTitle>Deseja ativar esse gerente?</DialogTitle>
                     </DialogHeader>
 
                     <form
@@ -128,7 +128,7 @@ export function ManagersDisabled() {
                           className="rounded bg-pmpa-blue-500 px-4 py-2 hover:bg-pmpa-blue-600"
                           variant={'default'}
                         >
-                          Desativar
+                          Ativar
                         </Button>
                       </DialogFooter>
                     </form>

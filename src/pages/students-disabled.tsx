@@ -114,7 +114,7 @@ export function StudentsDisabled() {
 
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Deseja desativar esse aluno?</DialogTitle>
+                      <DialogTitle>Deseja ativar esse aluno?</DialogTitle>
                     </DialogHeader>
 
                     <form
@@ -136,7 +136,7 @@ export function StudentsDisabled() {
                           className="rounded bg-pmpa-blue-500 px-4 py-2 hover:bg-pmpa-blue-600"
                           variant={'default'}
                         >
-                          Desativar
+                          Ativar
                         </Button>
                       </DialogFooter>
                     </form>
