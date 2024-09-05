@@ -55,9 +55,6 @@ import { Rankings } from './pages/rankings'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
-import { SearchActiveHistory } from './pages/search-active-history'
-import { SearchDisableHistory } from './pages/search-disable-history'
-import { SearchDownloadHistory } from './pages/search-download-history'
 import { SearchNotes } from './pages/search-notes'
 import { SignIn } from './pages/sign-in'
 import { CourseInformation } from './pages/student/course-information'
@@ -79,11 +76,6 @@ import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
-import { SelectCourseToActiveHistory } from './pages/ways/select-course-to-active-history'
-import { SelectCourseToDisableHistory } from './pages/ways/select-course-to-disable-history'
-import { SelectCourseToDownloadHistory } from './pages/ways/select-course-to-download-history'
-import { SelectCourseToLoginManagement } from './pages/ways/select-course-to-login-management'
-import { SelectCourseToRemoveBehaviors } from './pages/ways/select-course-to-remove-behaviors'
 
 export const router = createBrowserRouter([
   {
@@ -207,10 +199,6 @@ export const router = createBrowserRouter([
         element: <AddBehaviors />,
       },
       {
-        path: '/behaviors/courses-search-remove-bahavior',
-        element: <SelectCourseToRemoveBehaviors />,
-      },
-      {
         path: '/behaviors/behaviors-remove',
         element: <BehaviorRemove />,
       },
@@ -323,10 +311,6 @@ export const router = createBrowserRouter([
         element: <CoursesAcademicRecord />,
       },
       {
-        path: '/management/student-info',
-        element: <StudentInformation />,
-      },
-      {
         path: '/students/page',
         element: <StudentPage />,
       },
@@ -427,37 +411,10 @@ export const router = createBrowserRouter([
         element: <DeleteManagers />,
       },
       {
-        path: '/academic-record/courses-search-active',
-        element: <SelectCourseToActiveHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-disable',
-        element: <SelectCourseToDisableHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-download',
-        element: <SelectCourseToDownloadHistory />,
-      },
-      {
-        path: '/academic-record/courses-search-login-management',
-        element: <SelectCourseToLoginManagement />,
-      },
-      {
         path: '/academic-record',
         element: <AcademicRecord />,
       },
-      {
-        path: '/academic-record/active-search',
-        element: <SearchActiveHistory />,
-      },
-      {
-        path: '/academic-record/disable-search',
-        element: <SearchDisableHistory />,
-      },
-      {
-        path: '/academic-record/download-search',
-        element: <SearchDownloadHistory />,
-      },
+
       {
         path: '/classification/average-pole',
         element: <AveragePole />,
@@ -503,12 +460,24 @@ export const router = createBrowserRouter([
         element: <OverallRanking />,
       },
       {
+        path: '/management',
+        element: <DataManagement />,
+      },
+      {
+        path: '/management/login-confirmation/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/management/login-confirmation',
         element: <LoginConfirmation />,
       },
       {
-        path: '/management',
-        element: <DataManagement />,
+        path: '/management/students/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/management/students',
+        element: <StudentInformation />,
       },
       {
         path: '/admins',
