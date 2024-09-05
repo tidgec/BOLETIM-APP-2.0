@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { getCourses } from '@/http/get-courses'
 
-export function useGetCourses(page: number) {
+export function useGetCourses(page?: string) {
   const query = useQuery({
     queryKey: ['courses'],
     queryFn: () => getCourses(page),
