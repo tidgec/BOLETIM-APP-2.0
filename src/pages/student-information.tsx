@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 
+import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { formatCPF } from '@/utils/format-cpf'
@@ -8,34 +9,71 @@ export function StudentInformation() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId') ?? ''
   const page = searchParams.get('page') ?? '1'
+  const poleId = searchParams.get('poleId')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
 
   const { students, totalItems, pages, isLoading } = useGetCourseStudents({
     courseId,
     page,
+    poleId: poleId ?? 'all',
+    cpf: cpf ?? '',
+    username: username ?? '',
   })
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Informação dos estudantes
         </h2>
 
-        <div className="mt-4 grid grid-cols-2 gap-4 px-4">
-          {isLoading && <p>Loading...</p>}
+        <FilterForm />
+
+        {isLoading && <p>Loading...</p>}
+        <div className="mb-2 mt-4 flex h-[28rem] flex-col gap-4 overflow-y-auto px-4 md:grid md:grid-cols-2">
           {!isLoading &&
             students?.map((student) => (
               <div key={student.id}>
-                <ul className="space-y-2 rounded border p-4">
-                  <li className="mb-4 text-lg font-semibold">
+                <ul className="flex flex-col gap-2 rounded border p-4">
+                  <li className="mb-4 text-base font-semibold md:text-lg">
                     Nome: {student.username}
                   </li>
-                  <li>CPF: {formatCPF(student.cpf)}</li>
-                  <li>Email: {student.email}</li>
-                  <li>Curso: {student.course.name}</li>
-                  <li>Polo: {student.pole.name}</li>
-                  <li>Inserido em: {student.createdAt}</li>
-                  <li>Inserido em: {student.createdAt}</li>
+                  <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+                    <li className="text-sm md:text-base">
+                      CPF: {formatCPF(student.cpf)}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Email: {student.email}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      RG Civil: {student.civilId}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      RG Militar: {student.militaryId}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Estado: {student.state}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Munícipio: {student.county}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Nome da Mãe: {student.motherName}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Nome do Pai: {student.fatherName}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Data de nascimento: {student.birthday}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Curso: {student.course.name}
+                    </li>
+                    <li className="text-sm md:text-base">
+                      Polo: {student.pole.name}
+                    </li>
+                  </div>
                 </ul>
               </div>
             ))}
