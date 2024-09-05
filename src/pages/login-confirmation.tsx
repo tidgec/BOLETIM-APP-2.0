@@ -13,18 +13,18 @@ export function LoginConfirmation() {
     })
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Confirmação de login
         </h2>
 
-        <div className="mb-2 flex items-center justify-between  ">
+        <div className="mb-2 flex items-center justify-between">
           <div className="flex items-center"></div>
           <div className="flex-1 items-center py-10 text-center">
-            <span className=" rounded bg-pmpa-blue-500 px-28 py-4 font-bold text-white">
+            <p className="mx-auto w-full max-w-72 rounded bg-pmpa-blue-500 py-4 font-bold text-white">
               Gráfico de alunos
-            </span>
+            </p>
           </div>
         </div>
         <div className="space-y-4">
@@ -33,11 +33,11 @@ export function LoginConfirmation() {
             Array.isArray(loginConfirmationMetrics) &&
             loginConfirmationMetrics.map((metric) => (
               <div
-                className="rounded-lg bg-pmpa-blue-500 p-4"
+                className="space-y-2 rounded-lg bg-pmpa-blue-500 p-4"
                 key={metric.poleId}
               >
                 <p className="font-medium text-white">POLO: {metric.pole}</p>
-                <div className="mx-auto w-96">
+                <div className="mx-auto w-full max-w-96">
                   <ChartLoginMetrics
                     charts={[
                       {
@@ -59,7 +59,7 @@ export function LoginConfirmation() {
 
           {!isLoading && !Array.isArray(loginConfirmationMetrics) && (
             <div
-              className="rounded-lg bg-pmpa-blue-500 p-4"
+              className="space-y-2 rounded-lg bg-pmpa-blue-500 p-4"
               key={loginConfirmationMetrics?.poleId}
             >
               <p className="font-medium text-white">

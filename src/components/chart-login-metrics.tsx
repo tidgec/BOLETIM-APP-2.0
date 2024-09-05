@@ -31,9 +31,12 @@ interface ChartProps {
 
 export function ChartLoginMetrics({ charts, chartMessage }: ChartProps) {
   return (
-    <Card className="flex flex-col border-none bg-pmpa-blue-700">
+    <Card className="mx-auto flex max-w-72 flex-col border-none bg-pmpa-blue-700">
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[250px]"
+        >
           <PieChart>
             <ChartTooltip
               cursor={false}

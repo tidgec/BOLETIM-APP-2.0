@@ -44,11 +44,11 @@ export function AppLayout() {
 
   const decoded = useDecode()
   return (
-    <div className="h-full min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Header isLogged />
-      <div className="relative flex h-[48.5rem] w-full bg-slate-100 md:h-[55rem]">
+      <div className="relative flex w-full flex-1 bg-slate-100">
         <Menu role={decoded?.user.role} />
-        <div className="w-full overflow-y-auto">
+        <div className="w-full">
           <Outlet />
         </div>
       </div>
