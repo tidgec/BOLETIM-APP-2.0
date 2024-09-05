@@ -1,8 +1,12 @@
+import { Link } from 'react-router-dom'
+
 import { Course } from '@/components/course'
 import { useGetCourses } from '@/hooks/use-get-courses'
 
 export function ListCoursesPage() {
-  const { courses, isLoading } = useGetCourses(1)
+  const { courses, isLoading } = useGetCourses()
+
+  const currentUrl = window.location.href.replace('/courses', '')
 
   return (
     <div className="w-full py-6">
@@ -19,7 +23,12 @@ export function ListCoursesPage() {
                 key={course.id}
                 className="m-10 w-80 bg-white py-1 shadow-md"
               >
-                <Course course={course} />
+                <Link
+                  to={`${currentUrl}?courseId=${course.id}`}
+                  className="block"
+                >
+                  <Course course={course} />
+                </Link>
               </div>
             ))}
         </div>
