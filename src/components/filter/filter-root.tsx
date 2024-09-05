@@ -63,14 +63,16 @@ export function FilterRoot({ children }: FilterRootProps) {
   return (
     <form
       onSubmit={handleSubmit(handleFilter)}
-      className="mb-4 mt-4 flex w-full justify-between gap-2"
+      className="mb-4 mt-4 flex w-full flex-col items-start gap-4 md:flex-row md:gap-2"
     >
-      <div className="flex w-full max-w-3xl gap-2">
+      <div className="flex w-full flex-col gap-2 md:flex-grow md:flex-row">
         <FormProvider {...studentsFilterForm}>{children}</FormProvider>
       </div>
-      <button className="rounded bg-pmpa-blue-600 px-4 text-white hover:bg-pmpa-blue-500">
-        Filtrar
-      </button>
+      <div className="flex w-full justify-center md:justify-end">
+        <button className="rounded bg-pmpa-blue-600 px-4 py-2 text-white hover:bg-pmpa-blue-500 md:w-auto">
+          Filtrar
+        </button>
+      </div>
     </form>
   )
 }
