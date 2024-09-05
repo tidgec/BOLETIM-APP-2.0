@@ -434,6 +434,10 @@ export const router = createBrowserRouter([
         element: <RemoveAcademicRecord />,
       },
       {
+        path: '/academic-record/download/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/academic-record/download',
         element: <DownloadAcademicRecord />,
       },
@@ -486,12 +490,28 @@ export const router = createBrowserRouter([
         element: <OverallRanking />,
       },
       {
+        path: '/management',
+        element: <DataManagement />,
+      },
+      {
+        path: '/management/login-confirmation/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/management/login-confirmation',
         element: <LoginConfirmation />,
       },
       {
-        path: '/management',
-        element: <DataManagement />,
+        path: '/management/students/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/management/students',
+        element: <StudentInformation />,
+      },
+      {
+        path: '/management/login-confirmation/courses',
+        element: <ListCoursesPage />,
       },
       {
         path: '/admins',
