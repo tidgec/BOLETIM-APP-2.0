@@ -25,15 +25,23 @@ export function SearchNotes() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem]">
-        <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
+      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
+        <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Buscar notas
         </h2>
-        <FilterForm />
+
+        <div className="mb-6 flex flex-col gap-4 md:flex-row md:gap-8">
+          <div className="flex-1">
+            <FilterForm />
+          </div>
+        </div>
 
         {isLoading && <p>Loading...</p>}
 
-        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+        <div
+          className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto
+        "
+        >
           {!isLoading &&
             students?.map((student) => (
               <Link
@@ -41,7 +49,7 @@ export function SearchNotes() {
                 key={student.id}
                 className="flex flex-col gap-2 rounded border p-4"
               >
-                <span className="mb-4 text-lg font-semibold">
+                <span className="mb-6 text-lg font-semibold">
                   Nome: {student.username}
                 </span>
                 <span className="font-medium">CPF: {student.cpf}</span>
