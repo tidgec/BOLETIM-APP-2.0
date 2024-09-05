@@ -483,6 +483,10 @@ export const router = createBrowserRouter([
         element: <ListCoursesPage />,
       },
       {
+        path: '/rankings/behavior/courses',
+        element: <ListCoursesPage />,
+      },
+      {
         path: '/rankings/poles',
         element: <ListCoursePolesPage />,
       },
