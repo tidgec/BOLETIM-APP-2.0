@@ -17,7 +17,14 @@ export interface GetCourseStudentsResponse {
     username: string
     email: string
     cpf: string
+    civilId: string
     createdAt: string
+    birthday?: string
+    militaryId?: string
+    fatherName?: string
+    motherName?: string
+    state?: string
+    county?: string
     course: {
       id: string
       name: string
@@ -37,7 +44,14 @@ export interface GetCourseStudentsAxiosResponseByPole {
     username: string
     email: string
     cpf: string
+    civilId: string
+    birthday?: string
     createdAt: string
+    militaryId?: string
+    fatherName?: string
+    motherName?: string
+    state?: string
+    county?: string
     pole: {
       id: string
       name: string
