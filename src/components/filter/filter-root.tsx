@@ -4,6 +4,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
+import { Button } from '../ui/button'
+
 const studentFiltersSchema = z.object({
   username: z.string().optional(),
   cpf: z.string().optional(),
@@ -69,9 +71,9 @@ export function FilterRoot({ children }: FilterRootProps) {
         <FormProvider {...studentsFilterForm}>{children}</FormProvider>
       </div>
       <div className="flex w-full justify-center md:justify-end">
-        <button className="rounded bg-pmpa-blue-600 px-4 py-2 text-white hover:bg-pmpa-blue-500 md:w-auto">
+        <Button type="submit" className="h-12 w-full md:w-20">
           Filtrar
-        </button>
+        </Button>
       </div>
     </form>
   )
