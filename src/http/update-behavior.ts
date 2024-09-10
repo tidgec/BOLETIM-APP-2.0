@@ -3,8 +3,7 @@ import Cookies from 'js-cookie'
 import { api } from '@/lib/axios'
 
 interface UpdateBehaviorRequest {
-  courseId: string
-  studentId: string
+  id: string
   january?: number | null
   february?: number | null
   march?: number | null
@@ -20,8 +19,7 @@ interface UpdateBehaviorRequest {
 }
 
 export async function updateBehavior({
-  courseId,
-  studentId,
+  id,
   january,
   february,
   march,
@@ -38,9 +36,8 @@ export async function updateBehavior({
   const token = Cookies.get('token')
 
   await api.put(
-    `/courses/${courseId}/behavior`,
+    `/behaviors/${id}`,
     {
-      studentId,
       january,
       february,
       march,
