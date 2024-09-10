@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { useUpdateBehavior } from '@/hooks/use-update-behavior'
 
 const updateBehaviorFormSchema = z.object({
   january: z.string().optional(),
@@ -23,13 +24,25 @@ type UpdateBehaviorFormSchema = z.infer<typeof updateBehaviorFormSchema>
 
 interface UpdateBehaviorFormProps {
   studentId: string
+  behavior: {
+    id: string
+    studentId: string
+    january?: number | null
+    february?: number | null
+    march?: number | null
+    april?: number | null
+    may?: number | null
+    jun?: number | null
+    july?: number | null
+    august?: number | null
+    september?: number | null
+    october?: number | null
+    november?: number | null
+    december?: number | null
+  }
 }
 
-export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
-  const [searchParams] = useSearchParams()
-
-  const courseId = searchParams.get('courseId')
-
+export function UpdateBehaviorForm({ behavior }: UpdateBehaviorFormProps) {
   const { mutateAsync: updateBehaviorFn } = useUpdateBehavior()
 
   const {
@@ -38,6 +51,20 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
     formState: { errors },
   } = useForm<UpdateBehaviorFormSchema>({
     resolver: zodResolver(updateBehaviorFormSchema),
+    defaultValues: {
+      january: behavior.january ? String(behavior.january) : undefined,
+      february: behavior.february ? String(behavior.february) : undefined,
+      march: behavior.march ? String(behavior.march) : undefined,
+      april: behavior.april ? String(behavior.april) : undefined,
+      may: behavior.may ? String(behavior.may) : undefined,
+      jun: behavior.jun ? String(behavior.jun) : undefined,
+      july: behavior.july ? String(behavior.july) : undefined,
+      august: behavior.august ? String(behavior.august) : undefined,
+      september: behavior.september ? String(behavior.september) : undefined,
+      october: behavior.october ? String(behavior.october) : undefined,
+      november: behavior.november ? String(behavior.november) : undefined,
+      december: behavior.august ? String(behavior.august) : undefined,
+    },
   })
 
   async function handleUpdateBehavior({
@@ -56,23 +83,22 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
   }: UpdateBehaviorFormSchema) {
     try {
       await updateBehaviorFn({
-        courseId: String(courseId),
-        studentId,
-        january: january !== undefined ? Number(january) : undefined,
-        february: february !== undefined ? Number(february) : undefined,
-        march: march !== undefined ? Number(march) : undefined,
-        april: april !== undefined ? Number(april) : undefined,
-        may: may !== undefined ? Number(may) : undefined,
-        jun: jun !== undefined ? Number(jun) : undefined,
-        july: july !== undefined ? Number(july) : undefined,
-        august: august !== undefined ? Number(august) : undefined,
-        september: september !== undefined ? Number(september) : undefined,
-        october: october !== undefined ? Number(october) : undefined,
-        november: november !== undefined ? Number(november) : undefined,
-        december: december !== undefined ? Number(december) : undefined,
+        id: behavior.id,
+        january: january ? Number(january) : undefined,
+        february: february ? Number(february) : undefined,
+        march: march ? Number(march) : undefined,
+        april: april ? Number(april) : undefined,
+        may: may ? Number(may) : undefined,
+        jun: jun ? Number(jun) : undefined,
+        july: july ? Number(july) : undefined,
+        august: august ? Number(august) : undefined,
+        september: september ? Number(september) : undefined,
+        october: october ? Number(october) : undefined,
+        november: november ? Number(november) : undefined,
+        december: december ? Number(december) : undefined,
       })
 
-      toast.success('Notas de comportamento adicionadas com sucesso!', {
+      toast.success('Notas de comportamento atualizadas com sucesso!', {
         duration: 1000,
       })
     } catch (error) {
@@ -87,7 +113,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
     <form className="space-y-4" onSubmit={handleSubmit(handleUpdateBehavior)}>
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col items-center">
-          <label>Janeiro</label>
+          <label className="text-sm md:text-base">Janeiro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -102,7 +128,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Fevereiro</label>
+          <label className="text-sm md:text-base">Fevereiro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -117,7 +143,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Março</label>
+          <label className="text-sm md:text-base">Março</label>
           <input
             type="text"
             placeholder="0,00"
@@ -130,7 +156,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Abril</label>
+          <label className="text-sm md:text-base">Abril</label>
           <input
             type="text"
             placeholder="0,00"
@@ -143,7 +169,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Maio</label>
+          <label className="text-sm md:text-base">Maio</label>
           <input
             type="text"
             placeholder="0,00"
@@ -156,7 +182,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Junho</label>
+          <label className="text-sm md:text-base">Junho</label>
           <input
             type="text"
             placeholder="0,00"
@@ -169,7 +195,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Julho</label>
+          <label className="text-sm md:text-base">Julho</label>
           <input
             type="text"
             placeholder="0,00"
@@ -182,7 +208,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Agosto</label>
+          <label className="text-sm md:text-base">Agosto</label>
           <input
             type="text"
             placeholder="0,00"
@@ -197,7 +223,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Setembro</label>
+          <label className="text-sm md:text-base">Setembro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -212,7 +238,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Outubro</label>
+          <label className="text-sm md:text-base">Outubro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -227,7 +253,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Novembro</label>
+          <label className="text-sm md:text-base">Novembro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -242,7 +268,7 @@ export function UpdateBehaviorForm({ studentId }: UpdateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Dezembro</label>
+          <label className="text-sm md:text-base">Dezembro</label>
           <input
             type="text"
             placeholder="0,00"

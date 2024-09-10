@@ -89,7 +89,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
     <form className="space-y-4" onSubmit={handleSubmit(handleCreateBehavior)}>
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col items-center">
-          <label>Janeiro</label>
+          <label className="text-sm sm:text-base">Janeiro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -104,7 +104,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Fevereiro</label>
+          <label className="text-sm sm:text-base">Fevereiro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -119,7 +119,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Março</label>
+          <label className="text-sm sm:text-base">Março</label>
           <input
             type="text"
             placeholder="0,00"
@@ -132,7 +132,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Abril</label>
+          <label className="text-sm sm:text-base">Abril</label>
           <input
             type="text"
             placeholder="0,00"
@@ -145,7 +145,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Maio</label>
+          <label className="text-sm sm:text-base">Maio</label>
           <input
             type="text"
             placeholder="0,00"
@@ -158,7 +158,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Junho</label>
+          <label className="text-sm sm:text-base">Junho</label>
           <input
             type="text"
             placeholder="0,00"
@@ -171,7 +171,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Julho</label>
+          <label className="text-sm sm:text-base">Julho</label>
           <input
             type="text"
             placeholder="0,00"
@@ -184,7 +184,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Agosto</label>
+          <label className="text-sm sm:text-base">Agosto</label>
           <input
             type="text"
             placeholder="0,00"
@@ -199,7 +199,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Setembro</label>
+          <label className="text-sm sm:text-base">Setembro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -214,7 +214,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Outubro</label>
+          <label className="text-sm sm:text-base">Outubro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -229,7 +229,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Novembro</label>
+          <label className="text-sm sm:text-base">Novembro</label>
           <input
             type="text"
             placeholder="0,00"
@@ -244,7 +244,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         </div>
 
         <div className="flex flex-col items-center">
-          <label>Dezembro</label>
+          <label className="text-sm sm:text-base">Dezembro</label>
           <input
             type="text"
             placeholder="0,00"

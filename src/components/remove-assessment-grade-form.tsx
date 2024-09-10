@@ -9,7 +9,7 @@ import { useRemoveAssessmentGrade } from '@/hooks/use-remove-assessment-grade'
 import { Checkbox } from './ui/checkbox'
 
 const removeAssessmentGradeFormSchema = z.object({
-  vf: z.boolean(),
+  vf: z.boolean().optional(),
   avi: z.boolean().optional(),
   avii: z.boolean().optional(),
   vfe: z.boolean().optional(),

@@ -2,11 +2,11 @@ import { useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
-import { UpdateBehaviorForm } from '@/components/update-behavior-form'
+import { RemoveBehaviorGradeForm } from '@/components/remove-behavior-grade-form'
 import { useGetCourseBehaviors } from '@/hooks/use-get-course-behaviors'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
-export function UpdateBehavior() {
+export function RemoveBehaviors() {
   const [searchParams] = useSearchParams()
 
   const courseId = searchParams.get('courseId')
@@ -15,12 +15,7 @@ export function UpdateBehavior() {
   const username = searchParams.get('username')
   const page = searchParams.get('page')
 
-  const {
-    students,
-    totalItems,
-    pages,
-    isLoading: isLoadingGetCourseStudents,
-  } = useGetCourseStudents({
+  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
     courseId: String(courseId),
     cpf: cpf ?? '',
     username: username ?? '',
@@ -35,15 +30,14 @@ export function UpdateBehavior() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black py-4 text-xl font-semibold">
-          Atualizar comportamento
+          Remover Notas de Comportamentos
         </h2>
 
         <FilterForm />
 
-        {isLoadingGetCourseStudents && <p>Loading...</p>}
-
+        {isLoading && <p>Loading...</p>}
         <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoadingGetCourseStudents &&
+          {!isLoading &&
             students?.map((student) => {
               if (!behaviors) {
                 return <p key={student.id}>Loading...</p>
@@ -54,12 +48,12 @@ export function UpdateBehavior() {
               )
 
               return (
-                <div key={student.id} className="rounded border p-4">
+                <div key={student.id} className="rounded border px-4 py-2">
                   <h2 className="mb-4 text-lg font-bold">
                     Nome: {student.username}
                   </h2>
                   <p>Curso: {student.course.name}</p>
-                  <p className="mb-2">Polo: {student.pole.name}</p>
+                  <p>Polo: {student.pole.name}</p>
 
                   {!isLoadingGetCourseBehaviors &&
                     !studentBehaviors?.length && (
@@ -69,10 +63,9 @@ export function UpdateBehavior() {
                   {!isLoadingGetCourseBehaviors &&
                     studentBehaviors.length > 0 &&
                     studentBehaviors?.map((studentBehavior) => (
-                      <UpdateBehaviorForm
+                      <RemoveBehaviorGradeForm
                         key={studentBehavior.id}
-                        studentId={student.id}
-                        behavior={studentBehavior}
+                        id={studentBehavior.id}
                       />
                     ))}
                 </div>

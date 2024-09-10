@@ -2,23 +2,23 @@ import Cookies from 'js-cookie'
 
 import { api } from '@/lib/axios'
 
-interface UpdateBehaviorRequest {
+interface RemoveBehaviorGradeProps {
   id: string
-  january?: number | null
-  february?: number | null
-  march?: number | null
-  april?: number | null
-  may?: number | null
-  jun?: number | null
-  july?: number | null
-  august?: number | null
-  september?: number | null
-  october?: number | null
-  november?: number | null
-  december?: number | null
+  january?: number
+  february?: number
+  march?: number
+  april?: number
+  may?: number
+  jun?: number
+  july?: number
+  august?: number
+  september?: number
+  october?: number
+  november?: number
+  december?: number
 }
 
-export async function updateBehavior({
+export async function removeBehaviorGrade({
   id,
   january,
   february,
@@ -32,11 +32,11 @@ export async function updateBehavior({
   october,
   november,
   december,
-}: UpdateBehaviorRequest) {
+}: RemoveBehaviorGradeProps) {
   const token = Cookies.get('token')
 
-  await api.put(
-    `/behaviors/${id}`,
+  await api.patch(
+    `/behaviors/${id}/remove`,
     {
       january,
       february,
