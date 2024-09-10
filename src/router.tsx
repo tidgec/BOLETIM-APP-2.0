@@ -69,7 +69,7 @@ import { StudentInformation } from './pages/student-information'
 import { Students } from './pages/students'
 import { StudentsDisabled } from './pages/students-disabled'
 import { StudentsEnabled } from './pages/students-enabled'
-import { Subjects } from './pages/subjects'
+import { Summary } from './pages/summary'
 import { UpdateAdmins } from './pages/update-admins'
 import { UpdateBehavior } from './pages/update-behavior'
 import { UpdateBehaviorsBatch } from './pages/update-behaviors-batch'
@@ -186,8 +186,8 @@ export const router = createBrowserRouter([
         element: <DeleteStudent />,
       },
       {
-        path: '/subjects',
-        element: <Subjects />,
+        path: '/summary',
+        element: <Summary />,
       },
       {
         path: '/behaviors',
