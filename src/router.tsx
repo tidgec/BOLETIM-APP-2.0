@@ -21,17 +21,14 @@ import { AllCourses } from './pages/all-courses'
 import { AverageBehavior } from './pages/average-behavior'
 import { AveragePole } from './pages/average-pole'
 import { BehaviorBatchPage } from './pages/behavior-batch'
-import { BehaviorRemove } from './pages/behavior-remove'
 import { Behaviors } from './pages/behaviors'
 import { BoletimCard } from './pages/boletim-card'
 import { CourseManagement } from './pages/course-management'
 import { Courses } from './pages/courses'
 import { DataManagement } from './pages/data-management'
-import { DeleteAdmin } from './pages/delete-admin'
 import { DeleteAdmins } from './pages/delete-admins'
 import { DeleteCourses } from './pages/delete-courses'
 import { DeleteManagers } from './pages/delete-managers'
-import { DeleteStudent } from './pages/delete-student'
 import { DeleteStudents } from './pages/delete-students'
 import { Disciplines } from './pages/disciplines'
 import { DownloadAcademicRecord } from './pages/download-academic-record'
@@ -55,6 +52,7 @@ import { PoleRanking } from './pages/pole-ranking'
 import { Profile } from './pages/profile'
 import { Rankings } from './pages/rankings'
 import { RemoveAcademicRecord } from './pages/remove-academic-record'
+import { RemoveBehaviors } from './pages/remove-behaviors'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
@@ -178,14 +176,6 @@ export const router = createBrowserRouter([
         element: <RemoveNotesBatch />,
       },
       {
-        path: '/notes/remove/admin/:adminId/',
-        element: <DeleteAdmin />,
-      },
-      {
-        path: '/notes/remove/manager/:managertId/',
-        element: <DeleteStudent />,
-      },
-      {
         path: '/summary',
         element: <Summary />,
       },
@@ -202,8 +192,12 @@ export const router = createBrowserRouter([
         element: <AddBehaviors />,
       },
       {
-        path: '/behaviors/behaviors-remove',
-        element: <BehaviorRemove />,
+        path: '/behaviors/remove/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/behaviors/remove',
+        element: <RemoveBehaviors />,
       },
       {
         path: '/behaviors/update/courses',
