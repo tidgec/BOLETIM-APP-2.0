@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { UpdateBehaviorForm } from '@/components/update-behavior-form'
+import { useGetCourseBehaviors } from '@/hooks/use-get-course-behaviors'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function UpdateBehavior() {
@@ -14,13 +15,21 @@ export function UpdateBehavior() {
   const username = searchParams.get('username')
   const page = searchParams.get('page')
 
-  const { students, totalItems, pages, isLoading } = useGetCourseStudents({
+  const {
+    students,
+    totalItems,
+    pages,
+    isLoading: isLoadingGetCourseStudents,
+  } = useGetCourseStudents({
     courseId: String(courseId),
     cpf: cpf ?? '',
     username: username ?? '',
     page: page ?? '1',
     poleId: poleId ?? 'all',
   })
+
+  const { behaviors, isLoading: isLoadingGetCourseBehaviors } =
+    useGetCourseBehaviors(courseId ?? '')
 
   return (
     <div className="w-full py-6">
@@ -31,21 +40,44 @@ export function UpdateBehavior() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
+        {isLoadingGetCourseStudents && <p>Loading...</p>}
 
         <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoading &&
-            students?.map((student) => (
-              <div key={student.id} className="rounded border p-4">
-                <h2 className="mb-4 text-lg font-bold">
-                  Nome: {student.username}
-                </h2>
-                <p>Curso: {student.course.name}</p>
-                <p>Polo: {student.pole.name}</p>
+          {!isLoadingGetCourseStudents &&
+            students?.map((student) => {
+              if (!behaviors) {
+                return <p key={student.id}>Loading...</p>
+              }
 
-                <UpdateBehaviorForm studentId={student.id} />
-              </div>
-            ))}
+              const studentBehaviors = behaviors.filter(
+                (behavior) => behavior.studentId === student.id,
+              )
+
+              return (
+                <div key={student.id} className="rounded border p-4">
+                  <h2 className="mb-4 text-lg font-bold">
+                    Nome: {student.username}
+                  </h2>
+                  <p>Curso: {student.course.name}</p>
+                  <p className="mb-2">Polo: {student.pole.name}</p>
+
+                  {!isLoadingGetCourseBehaviors &&
+                    !studentBehaviors?.length && (
+                      <p>O aluno não possui comportamento!</p>
+                    )}
+
+                  {!isLoadingGetCourseBehaviors &&
+                    studentBehaviors.length > 0 &&
+                    studentBehaviors?.map((studentBehavior) => (
+                      <UpdateBehaviorForm
+                        key={studentBehavior.id}
+                        studentId={student.id}
+                        behavior={studentBehavior}
+                      />
+                    ))}
+                </div>
+              )
+            })}
         </div>
 
         <Pagination
