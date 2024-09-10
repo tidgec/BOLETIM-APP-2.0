@@ -4,6 +4,7 @@ import AverageBehavior from '@/assets/average-behavior-icon.png'
 import AverageNotes from '@/assets/average-notes-icon.png'
 import ClassificationByPole from '@/assets/classification-by-pole-icon.png'
 import OverallRanking from '@/assets/overall-rating-icon.png'
+import RankingNoBehavior from '@/assets/ranking-no-behavior.png'
 
 export function Rankings() {
   return (
@@ -35,6 +36,19 @@ export function Rankings() {
           />
           <span className="font-medium text-white">
             Classificação por polos
+          </span>
+        </Link>
+        <Link
+          to={'/rankings/note-poles/courses'}
+          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+        >
+          <img
+            src={RankingNoBehavior}
+            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+            alt=""
+          />
+          <span className="font-medium text-white">
+            Classificação - sem comportamento
           </span>
         </Link>
         <Link
