@@ -35,7 +35,7 @@ export function DataManagement() {
           <span className="font-medium text-white">Informações do Aluno</span>
         </Link>
         <Link
-          to={'/subjects'}
+          to={'/summary'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
