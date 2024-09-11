@@ -6,6 +6,7 @@ export interface GetPoleRankingRequest {
   courseId: string
   poleId: string
   page: string
+  hasBehavior?: string
 }
 
 interface GetPoleRankingResponse {
@@ -122,6 +123,7 @@ export async function getPoleRanking({
   courseId,
   poleId,
   page,
+  hasBehavior,
 }: GetPoleRankingRequest) {
   const token = Cookies.get('token')
   if (!token) throw new Error('Não autorizado.')
@@ -131,7 +133,7 @@ export async function getPoleRanking({
     {
       params: {
         page,
-        hasBehavior: 'true',
+        hasBehavior,
       },
 
       headers: {
