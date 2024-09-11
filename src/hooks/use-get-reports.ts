@@ -1,15 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getReports } from '@/http/get-reports'
+import { getReports, GetReportsRequest } from '@/http/get-reports'
 
-export function useGetReports() {
+export function useGetReports({ action, page }: GetReportsRequest) {
   const query = useQuery({
-    queryKey: ['reports'],
-    queryFn: () => getReports(),
+    queryKey: ['reports', action, page],
+    queryFn: () => getReports({ action, page }),
   })
 
   return {
     ...query,
-    reports: query.data,
+    reports: query.data?.reports,
+    pages: query.data?.pages,
+    totalItems: query.data?.totalItems,
   }
 }

@@ -31,6 +31,7 @@ export function useGetCourseStudents({
     ],
     queryFn: () =>
       getCourseStudents({ courseId, poleId, cpf, username, page, isEnabled }),
+    staleTime: Infinity,
   })
 
   return {

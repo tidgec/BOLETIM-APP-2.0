@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { deleteStudent } from '@/http/delete-student'
-import type { GetCourseStudentsResponse } from '@/http/get-course-students'
+import { deleteDiscipline } from '@/http/delete-discipline'
+import { GetDisciplinesResponse } from '@/http/get-disciplines'
 
-export function useDeleteStudent() {
+export function useDeleteDiscipline() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: deleteStudent,
+    mutationFn: deleteDiscipline,
     onSuccess: async (_, { id }) => {
-      const courseStudentsCache =
-        queryClient.getQueriesData<GetCourseStudentsResponse>({
-          queryKey: ['student-courses'],
+      const courseManagersCache =
+        queryClient.getQueriesData<GetDisciplinesResponse>({
+          queryKey: ['disciplines'],
         })
 
-      courseStudentsCache.forEach(([cacheKey, cached]) => {
+      courseManagersCache.forEach(([cacheKey, cached]) => {
         if (!cached) return
 
         let pages: number = 1
@@ -28,10 +28,10 @@ export function useDeleteStudent() {
             ? cached.pages
             : cached.pages - 1
 
-        queryClient.setQueryData<GetCourseStudentsResponse>(cacheKey, {
+        queryClient.setQueryData<GetDisciplinesResponse>(cacheKey, {
           ...cached,
-          students: cached.students.filter((student) => {
-            return student.id !== id
+          disciplines: cached.disciplines.filter((discipline) => {
+            return discipline.id !== id
           }),
           totalItems: cached.totalItems - 1,
           pages,

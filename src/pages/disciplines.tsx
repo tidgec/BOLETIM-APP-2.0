@@ -24,7 +24,7 @@ export function Disciplines() {
           <span className="font-medium text-white">Adicionar disciplina</span>
         </Link>
         <Link
-          to={'#'}
+          to={'/disciplines/list?method=update'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -35,7 +35,7 @@ export function Disciplines() {
           <span className="font-medium text-white">Atualizar disciplina</span>
         </Link>
         <Link
-          to={'#'}
+          to={'/disciplines/delete'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
