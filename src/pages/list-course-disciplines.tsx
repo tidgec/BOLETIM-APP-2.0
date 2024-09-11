@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { Discipline } from '@/components/discipline'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
@@ -9,6 +9,8 @@ export function ListCourseDisciplinesPage() {
   const courseId = searchParams.get('courseId')
 
   const { disciplines, isLoading } = useGetCourseDisciplines(String(courseId))
+
+  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
 
   return (
     <div className="container mx-auto w-full p-4">
@@ -28,12 +30,17 @@ export function ListCourseDisciplinesPage() {
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             disciplines?.map((discipline) => (
-              <Discipline
+              <Link
                 key={discipline.disciplineId}
-                courseId={String(courseId)}
-                disciplineId={discipline.disciplineId}
-                name={discipline.name}
-              />
+                to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
+              >
+                <Discipline
+                  key={discipline.disciplineId}
+                  courseId={String(courseId)}
+                  disciplineId={discipline.disciplineId}
+                  name={discipline.name}
+                />
+              </Link>
             ))}
         </div>
       </section>
