@@ -1,19 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { deleteAdmin } from '@/http/delete-admin'
-import { GetAdminsResponse } from '@/http/get-admins'
+import { deleteDiscipline } from '@/http/delete-discipline'
+import { GetDisciplinesResponse } from '@/http/get-disciplines'
 
-export function useDeleteAdmin() {
+export function useDeleteDiscipline() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: deleteAdmin,
+    mutationFn: deleteDiscipline,
     onSuccess: async (_, { id }) => {
-      const courseManagersCache = queryClient.getQueriesData<GetAdminsResponse>(
-        {
-          queryKey: ['admins'],
-        },
-      )
+      const courseManagersCache =
+        queryClient.getQueriesData<GetDisciplinesResponse>({
+          queryKey: ['disciplines'],
+        })
 
       courseManagersCache.forEach(([cacheKey, cached]) => {
         if (!cached) return
@@ -29,10 +28,10 @@ export function useDeleteAdmin() {
             ? cached.pages
             : cached.pages - 1
 
-        queryClient.setQueryData<GetAdminsResponse>(cacheKey, {
+        queryClient.setQueryData<GetDisciplinesResponse>(cacheKey, {
           ...cached,
-          admins: cached.admins.filter((admin) => {
-            return admin.id !== id
+          disciplines: cached.disciplines.filter((discipline) => {
+            return discipline.id !== id
           }),
           totalItems: cached.totalItems - 1,
           pages,
