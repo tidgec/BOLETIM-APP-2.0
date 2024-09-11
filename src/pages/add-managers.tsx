@@ -96,16 +96,16 @@ export function AddManagers() {
   const cpf = watch('cpf') ? formatCPF(watch('cpf')) : ''
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
-        <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
+        <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar Supervisores
         </h2>
 
-        <div className="group relative my-8 rounded">
-          <form className="space-y-2" onSubmit={handleSubmit(handleAddManager)}>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
+        <div className="group relative rounded bg-white p-4 shadow-md">
+          <form className="space-y-4" onSubmit={handleSubmit(handleAddManager)}>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-4 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
                   <label htmlFor="name" className="text-sm text-gray-200">
                     Nome completo:
@@ -113,7 +113,7 @@ export function AddManagers() {
                   <input
                     type="text"
                     id="name"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu nome completo..."
                     {...register('username')}
                   />
@@ -130,7 +130,7 @@ export function AddManagers() {
                   <input
                     type="text"
                     id="cpf"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu CPF..."
                     value={cpf}
                     maxLength={14}
@@ -150,7 +150,7 @@ export function AddManagers() {
                   <input
                     type="email"
                     id="email"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu email..."
                     {...register('email')}
                   />
@@ -162,37 +162,15 @@ export function AddManagers() {
                 </div>
               </div>
 
-              <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
-                {/* <div className="space-y-1">
-                  <label htmlFor="pai" className="text-sm text-gray-200">
-                    Nome do pai:
-                  </label>
-                  <input
-                    type="text"
-                    id="pai"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
-                    placeholder="Digite o nome completo do pai..."
-                  />
-                </div> */}
-                {/* <div className="space-y-1">
-                  <label htmlFor="mãe" className="text-sm text-gray-200">
-                    Nome da mãe:
-                  </label>
-                  <input
-                    type="text"
-                    id="mãe"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
-                    placeholder="Digite o nome completo da mãe..."
-                  />
-                </div> */}
+              <div className="space-y-4 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
                   <label htmlFor="civilId" className="text-sm text-gray-200">
                     RG Civil:
                   </label>
                   <input
                     type="text"
-                    id="civil"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    id="civilId"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG CIVIL..."
                     {...register('civilId')}
                   />
@@ -202,25 +180,14 @@ export function AddManagers() {
                     </span>
                   )}
                 </div>
-                {/* <div className="space-y-1">
-                  <label htmlFor="civil" className="text-sm text-gray-200">
-                    RG Militar:
-                  </label>
-                  <input
-                    type="text"
-                    id="militar"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
-                    placeholder="Digite seu RG MILITAR..."
-                  />
-                </div> */}
                 <div className="space-y-1">
-                  <label htmlFor="data" className="text-sm text-gray-200">
+                  <label htmlFor="birthday" className="text-sm text-gray-200">
                     Data de nascimento:
                   </label>
                   <input
                     type="date"
-                    id="data"
-                    className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
+                    id="birthday"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite sua data de nascimento..."
                     {...register('birthday')}
                   />
@@ -230,19 +197,6 @@ export function AddManagers() {
                     </span>
                   )}
                 </div>
-                {/* <div className="space-y-1">
-                  <label htmlFor="course" className="text-sm text-gray-200">
-                    Selecione o curso
-                  </label>
-                  <select
-                    id="course"
-                    className="w-full rounded px-4 py-3 text-sm text-gray-700"
-                  >
-                    <option value="">Selecione um curso</option>
-                    <option value="curso1">CAS</option>
-                    <option value="curso2">CFP</option>
-                  </select>
-                </div> */}
                 <div className="space-y-1">
                   <label htmlFor="pole" className="text-sm text-gray-200">
                     Selecione o polo
@@ -261,7 +215,7 @@ export function AddManagers() {
 
             <button
               type="submit"
-              className="ml-auto block rounded bg-pmpa-blue-500 px-3 py-2 text-white hover:bg-pmpa-blue-700"
+              className="mt-4 w-full rounded bg-pmpa-blue-500 px-4 py-2 text-white hover:bg-pmpa-blue-700 md:w-auto"
             >
               Adicionar
             </button>
