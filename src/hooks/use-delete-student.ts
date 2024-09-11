@@ -8,28 +8,35 @@ export function useDeleteStudent() {
 
   const mutation = useMutation({
     mutationFn: deleteStudent,
-    onSuccess: (_, { id }) => {
-      const cached = queryClient.getQueryData<GetCourseStudentsResponse>([
-        'student-courses',
-      ])
+    onSuccess: async (_, { id }) => {
+      const courseStudentsCache =
+        queryClient.getQueriesData<GetCourseStudentsResponse>({
+          queryKey: ['student-courses'],
+        })
 
-      console.log(cached)
+      courseStudentsCache.forEach(([cacheKey, cached]) => {
+        if (!cached) return
 
-      if (cached) {
-        queryClient.setQueryData<GetCourseStudentsResponse>(
-          ['student-courses'],
-          {
-            ...cached,
-            students: cached.students.filter((student) => {
-              return student.id === id
-            }),
-            totalItems: cached.totalItems - 1,
-            pages: cached.pages - 1,
-          },
-        )
-      }
+        let pages: number = 1
 
-      return cached
+        if (cached.totalItems > 10) {
+          pages = cached.pages
+        }
+
+        pages =
+          cached.totalItems <= 10 && cached.pages === 1
+            ? cached.pages
+            : cached.pages - 1
+
+        queryClient.setQueryData<GetCourseStudentsResponse>(cacheKey, {
+          ...cached,
+          students: cached.students.filter((student) => {
+            return student.id !== id
+          }),
+          totalItems: cached.totalItems - 1,
+          pages,
+        })
+      })
     },
   })
 
