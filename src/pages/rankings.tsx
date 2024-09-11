@@ -5,8 +5,11 @@ import AverageNotes from '@/assets/average-notes-icon.png'
 import ClassificationByPole from '@/assets/classification-by-pole-icon.png'
 import OverallRanking from '@/assets/overall-rating-icon.png'
 import RankingNoBehavior from '@/assets/ranking-no-behavior.png'
+import { useDecode } from '@/auth'
 
 export function Rankings() {
+  const decoded = useDecode()
+
   return (
     <section className="mx-auto w-full max-w-[90rem] px-4 py-10 text-center sm:text-left md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
@@ -25,56 +28,65 @@ export function Rankings() {
           />
           <span className="font-medium text-white">Classificação geral</span>
         </Link>
-        <Link
-          to={'/rankings/poles/courses'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={ClassificationByPole}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">
-            Classificação por polos
-          </span>
-        </Link>
-        <Link
-          to={'/rankings/note-poles/courses'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={RankingNoBehavior}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">
-            Classificação - sem comportamento
-          </span>
-        </Link>
-        <Link
-          to={'/rankings/note-poles/courses'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={AverageNotes}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">Média de notas - polos</span>
-        </Link>
-        <Link
-          to={'/classification/the-classification-by-behavior'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={AverageBehavior}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">
-            Média de comportamento - polos
-          </span>
-        </Link>
+
+        {['admin', 'dev'].includes(decoded?.user.role ?? 'dev') && (
+          <>
+            <Link
+              to={'/rankings/poles/courses'}
+              className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+            >
+              <img
+                src={ClassificationByPole}
+                className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+                alt=""
+              />
+              <span className="font-medium text-white">
+                Classificação por polos
+              </span>
+            </Link>
+
+            <Link
+              to={'/rankings/poles/no-behavior/courses'}
+              className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+            >
+              <img
+                src={RankingNoBehavior}
+                className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+                alt=""
+              />
+              <span className="font-medium text-white">
+                Classificação - sem comportamento
+              </span>
+            </Link>
+
+            <Link
+              to={'/rankings/poles-average/courses'}
+              className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+            >
+              <img
+                src={AverageNotes}
+                className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+                alt=""
+              />
+              <span className="font-medium text-white">
+                Média de notas - polos
+              </span>
+            </Link>
+            <Link
+              to={'/rankings/average-behavior-poles/courses'}
+              className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+            >
+              <img
+                src={AverageBehavior}
+                className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+                alt=""
+              />
+              <span className="font-medium text-white">
+                Média de comportamento - polos
+              </span>
+            </Link>
+          </>
+        )}
         {/* <Link
           to={'#'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
