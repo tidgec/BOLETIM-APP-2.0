@@ -1,7 +1,58 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
+
+import { Pagination } from '@/components/pagination'
+import { Button } from '@/components/ui/button'
 import { useGetReports } from '@/hooks/use-get-reports'
 
+const reportFiltersSchema = z.object({
+  username: z.string().optional(),
+  action: z.string().optional(),
+})
+
+type ReportFiltersSchema = z.infer<typeof reportFiltersSchema>
+
 export function Reports() {
-  const { reports, isLoading } = useGetReports()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const action = searchParams.get('action') ?? 'all'
+  const username = searchParams.get('username') ?? ''
+  const page = searchParams.get('page') ?? '1'
+
+  const { handleSubmit, register, control } = useForm<ReportFiltersSchema>({
+    resolver: zodResolver(reportFiltersSchema),
+    defaultValues: {
+      action,
+      username,
+    },
+  })
+
+  const { reports, totalItems, pages, isLoading } = useGetReports({
+    action,
+    page,
+  })
+
+  function handleFilter({ action, username }: ReportFiltersSchema) {
+    setSearchParams((state) => {
+      if (action) {
+        state.set('action', action)
+      } else {
+        state.delete('action')
+      }
+
+      if (username) {
+        state.set('username', username)
+      } else {
+        state.delete('username')
+      }
+
+      state.set('page', '1')
+
+      return state
+    })
+  }
 
   return (
     <div className="w-full py-6">
@@ -12,45 +63,52 @@ export function Reports() {
 
         <div className="group relative mx-auto my-8 h-[46rem] max-h-screen  max-w-6xl overflow-auto rounded bg-white p-4 shadow-md">
           <div className="mb-8 flex items-center justify-between">
-            <div className="flex w-full max-w-3xl items-center gap-4 rounded-full bg-white px-2 py-2">
-              <input
-                type="text"
-                placeholder="Busque pelo nome ..."
-                className="roundend-lg wpx-4 flex-1 rounded-lg border border-gray-500 bg-transparent px-4 py-2 focus:border-pmpa-blue-500 focus:outline-none "
-              />
-              <button className="hidden"></button>
-            </div>
-            <div className="flex items-center space-x-4">
-              <label htmlFor="filter" className="block font-bold text-black ">
-                Filtrar Por:
-              </label>
-              <select
-                id="filter"
-                className=" roundend-lg focus:shadow-outline  w-full flex-1 rounded-lg border border-gray-500 px-5 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              >
-                <option value="Aluno">Aluno</option>
-                <option value="Gestor">Gestor</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button className="rounded bg-pmpa-blue-700 px-10 py-2 font-bold text-white ">
-              TODOS OS RELATÓRIOS
-            </button>
-
-            <div className="flex-1 items-center py-2">
-              <select
-                id="filter_reports"
-                className="roundend-lg focus:shadow-outline rounded-lg border border-gray-500 px-4 py-2 text-center leading-tight text-gray-700 shadow focus:outline-none "
-              >
-                <option value="Todos">TODOS</option>
-                <option value="Adições">ADIÇÕES</option>
-                <option value="Remoções">REMOÇÕES</option>
-                <option value="Alterações">ALTERAÇÕES</option>
-                <option value="Login">LOGIN</option>
-              </select>
-            </div>
+            <form
+              onSubmit={handleSubmit(handleFilter)}
+              className="mb-4 mt-4 flex w-full flex-col items-start gap-4 md:flex-row md:gap-2"
+            >
+              <div className="flex w-full flex-col gap-2 md:flex-grow md:flex-row">
+                <input
+                  type="text"
+                  placeholder="Digite seu nome..."
+                  className="w-full flex-1 rounded border p-2"
+                  {...register('username')}
+                />
+                <div>
+                  <Controller
+                    name="action"
+                    defaultValue="all"
+                    control={control}
+                    render={({
+                      field: { name, onChange, value, disabled },
+                    }) => {
+                      return (
+                        <select
+                          name={name}
+                          value={value}
+                          disabled={disabled}
+                          onChange={onChange}
+                          className="rounded border p-2 text-center"
+                        >
+                          <option value={'all'}>TODOS</option>
+                          <option value={'add'}>Adições</option>
+                          <option value={'remove'}>Remoções</option>
+                          <option value={'update'}>Atualizações</option>
+                          <option value={'login confirmed'}>
+                            Confirmação de login
+                          </option>
+                        </select>
+                      )
+                    }}
+                  ></Controller>
+                </div>
+              </div>
+              <div className="flex w-full justify-center md:justify-end">
+                <Button type="submit" className="h-12 w-full md:w-20">
+                  Filtrar
+                </Button>
+              </div>
+            </form>
           </div>
 
           {isLoading && <p>Loading...</p>}
@@ -60,6 +118,14 @@ export function Reports() {
               return <div key={report.id}>{report.content}</div>
             })}
         </div>
+
+        {reports && (
+          <Pagination
+            items={totalItems ?? 0}
+            page={page ? Number(page) : 1}
+            pages={pages ?? 0}
+          />
+        )}
       </section>
     </div>
   )
