@@ -109,7 +109,7 @@ export function OverallRanking() {
           Classificação
         </h2>
         <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
-          <div className="w-1/4">
+          <div>
             <Chart
               charts={[
                 {
