@@ -1,5 +1,6 @@
+import Cookies from 'js-cookie'
 import { LucideLogOut } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import LogoBoletim from '@/assets/dgec.png'
 
@@ -8,6 +9,13 @@ interface HeaderProps {
 }
 
 export function Header({ isLogged }: HeaderProps) {
+  const navigate = useNavigate()
+
+  function handleSignOut() {
+    Cookies.remove('token')
+    navigate('/sign-in')
+  }
+
   return (
     <header className="flex flex-col items-center justify-center border-b-[1px] border-red-600 bg-white px-2 py-2 md:h-16 md:flex-row md:items-center md:justify-between md:py-0">
       <Link to={'/'} className="flex items-center md:gap-4">
@@ -18,7 +26,10 @@ export function Header({ isLogged }: HeaderProps) {
       </Link>
 
       {isLogged && (
-        <button className="ml-auto flex items-center gap-1 rounded text-red-500">
+        <button
+          className="ml-auto flex items-center gap-1 rounded text-red-500"
+          onClick={handleSignOut}
+        >
           <LucideLogOut size={20} />
           Sair
         </button>
