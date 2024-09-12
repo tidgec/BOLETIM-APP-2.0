@@ -1,7 +1,15 @@
 import { useSearchParams } from 'react-router-dom'
 
+import { Course } from '@/components/course'
 import { Pagination } from '@/components/pagination'
 import { SearchForm } from '@/components/search-form'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSearch } from '@/hooks/use-search'
 import { formatCPF } from '@/utils/format-cpf'
@@ -70,14 +78,34 @@ export function Home() {
                         </div>
                       </div>
                     )}
+
+                    <Dialog>
+                      <div className="mt-2 flex justify-between">
+                        <div className="space-x-2">
+                          <DialogTrigger asChild>
+                            <Button size={'sm'}>Ver mais</Button>
+                          </DialogTrigger>
+                          <Button size={'sm'}>Editar</Button>
+                        </div>
+                        <Button size={'sm'} variant={'destructive'}>
+                          Deletar
+                        </Button>
+                      </div>
+
+                      <DialogContent>
+                        <DialogHeader>
+                          <span>See more user information</span>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 ))
               ) : (
                 <>
-                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
                 </>
               )}
             </div>
