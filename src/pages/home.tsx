@@ -2,13 +2,12 @@ import { useSearchParams } from 'react-router-dom'
 
 import { Pagination } from '@/components/pagination'
 import { SearchForm } from '@/components/search-form'
-import { useProfile } from '@/hooks/use-profile'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useSearch } from '@/hooks/use-search'
 import { formatCPF } from '@/utils/format-cpf'
 
 export function Home() {
   const [searchParams] = useSearchParams()
-  const { user } = useProfile()
 
   const query = searchParams.get('query')
   const page = searchParams.get('page')
@@ -18,36 +17,23 @@ export function Home() {
     query: query ?? '',
   })
 
-  const isStudent = user?.role === 'student'
-
   return (
     <div className="h-full w-full py-6">
-      {isStudent && (
-        <div className="mx-auto w-full max-w-[90rem]">
-          <main>
-            <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-              BEM-VINDO(A), {user.username}
-            </h2>
-            <div className="flex flex-wrap justify-center"></div>
-          </main>
-        </div>
-      )}
+      <div className="flex h-full items-center">
+        <main className="flex flex-1 flex-col items-center justify-center gap-8 px-2">
+          <h1 className="text-center text-4xl font-bold text-blue-950">
+            O que você deseja buscar?
+          </h1>
+          <span className="text-sm font-medium text-blue-950">
+            Encontre os alunos pela pesquisa global
+          </span>
 
-      {!isStudent && (
-        <div className="flex h-full items-center">
-          <main className="flex flex-1 flex-col items-center justify-center gap-8 px-2">
-            <h1 className="text-center text-4xl font-bold text-blue-950">
-              O que você deseja buscar?
-            </h1>
-            <span className="text-sm font-medium text-blue-950">
-              Encontre os alunos pela pesquisa global
-            </span>
+          <SearchForm />
 
-            <SearchForm />
-
-            <section className="w-full max-w-5xl space-y-4">
-              <div className="grid w-full grid-cols-2 gap-4">
-                {users?.map((user) => (
+          <section className="w-full max-w-5xl space-y-4">
+            <div className="grid w-full grid-cols-2 gap-4">
+              {users ? (
+                users?.map((user) => (
                   <div
                     key={user.id}
                     className="w-full space-y-2 rounded border border-gray-300 px-2 py-1"
@@ -85,18 +71,25 @@ export function Home() {
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
+                ))
+              ) : (
+                <>
+                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-20 space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                </>
+              )}
+            </div>
 
-              <Pagination
-                items={totalItems ?? 0}
-                page={page ? Number(page) : 1}
-                pages={pages ?? 0}
-              />
-            </section>
-          </main>
-        </div>
-      )}
+            <Pagination
+              items={totalItems ?? 0}
+              page={page ? Number(page) : 1}
+              pages={pages ?? 0}
+            />
+          </section>
+        </main>
+      </div>
     </div>
   )
 }
