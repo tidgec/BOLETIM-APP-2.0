@@ -1,7 +1,6 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useSearchParams } from 'react-router-dom'
 
-import { Chart } from '@/components/chart'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 import { useGetAverageBehaviorPolesRanking } from '@/hooks/use-get-average-behavior-poles-ranking'
 
@@ -14,16 +13,6 @@ export function AverageBehaviorPolesRanking() {
     courseId: String(courseId),
     page,
   })
-
-  const totalApprovedSize = ranking?.filter(
-    (item) =>
-      item.behaviorAverageByPole.behaviorAverageStatus.status === 'approved',
-  )?.length
-
-  const totalDisapprovedSize = ranking?.filter(
-    (item) =>
-      item.behaviorAverageByPole.behaviorAverageStatus.status === 'disapproved',
-  )?.length
 
   const pdfData = [
     {
@@ -82,24 +71,6 @@ export function AverageBehaviorPolesRanking() {
         <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Classificação de média de comportamento dos polos
         </h2>
-        <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
-          <div className="w-1/4">
-            <Chart
-              charts={[
-                {
-                  status: 'excellent',
-                  size: totalApprovedSize ?? 0,
-                  fill: 'var(--color-excellent)',
-                },
-                {
-                  status: 'no income',
-                  size: totalDisapprovedSize ?? 0,
-                  fill: 'var(--color-no-income)',
-                },
-              ]}
-            />
-          </div>
-        </div>
 
         <div className="mb-6 text-center font-bold">
           <span className="text-black">Classificação Geral: CAS - 2023</span>
@@ -130,10 +101,10 @@ export function AverageBehaviorPolesRanking() {
                       {index + 1}º
                     </td>
                     <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.behaviorAverageByPole.name}
+                      {item.poleAverage.name}
                     </td>
                     <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.behaviorAverageByPole.average}
+                      {item.poleAverage.average}
                     </td>
                   </tr>
                 ))

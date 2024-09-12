@@ -1,7 +1,6 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useSearchParams } from 'react-router-dom'
 
-import { Chart } from '@/components/chart'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 import { useGetPolesAverageRanking } from '@/hooks/use-get-poles-average-ranking'
 
@@ -14,37 +13,6 @@ export function PolesAverageRanking() {
     courseId: String(courseId),
     page,
   })
-
-  const totalExcellentSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept === 'excellent',
-  )?.length
-
-  const totalVeryGoodSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept === 'very good',
-  )?.length
-
-  const totalGoodSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept === 'good',
-  )?.length
-
-  const totalRegularSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept === 'regular',
-  )?.length
-
-  const totalInsufficientSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept ===
-      'insufficient',
-  )?.length
-
-  const totalNoIncomeSize = ranking?.filter(
-    (item) =>
-      item.assessmentAverageByPole.studentAverageStatus.concept === 'no income',
-  )?.length
 
   const pdfData = [
     {
@@ -103,44 +71,6 @@ export function PolesAverageRanking() {
         <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Classificação de média dos polos
         </h2>
-        <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
-          <div className="w-1/4">
-            <Chart
-              charts={[
-                {
-                  status: 'excellent',
-                  size: totalExcellentSize ?? 0,
-                  fill: 'var(--color-excellent)',
-                },
-                {
-                  status: 'very good',
-                  size: totalVeryGoodSize ?? 0,
-                  fill: 'var(--color-very-good)',
-                },
-                {
-                  status: 'good',
-                  size: totalGoodSize ?? 0,
-                  fill: 'var(--color-good)',
-                },
-                {
-                  status: 'regular',
-                  size: totalRegularSize ?? 0,
-                  fill: 'var(--color-regular)',
-                },
-                {
-                  status: 'insufficient',
-                  size: totalInsufficientSize ?? 0,
-                  fill: 'var(--color-insufficient)',
-                },
-                {
-                  status: 'no income',
-                  size: totalNoIncomeSize ?? 0,
-                  fill: 'var(--color-no-income)',
-                },
-              ]}
-            />
-          </div>
-        </div>
 
         <div className="mb-6 text-center font-bold">
           <span className="text-black">Classificação Geral: CAS - 2023</span>
@@ -171,10 +101,10 @@ export function PolesAverageRanking() {
                       {index + 1}º
                     </td>
                     <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.assessmentAverageByPole.name}
+                      {item.poleAverage.name}
                     </td>
                     <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.assessmentAverageByPole.average}
+                      {item.poleAverage.average}
                     </td>
                   </tr>
                 ))
