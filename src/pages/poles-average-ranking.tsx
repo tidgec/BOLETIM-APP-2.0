@@ -99,12 +99,12 @@ export function PolesAverageRanking() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
-        <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
+      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
+        <h2 className="mb-4 border-b-2 border-b-black text-xl font-semibold">
           Classificação de média dos polos
         </h2>
-        <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
-          <div className="w-1/4">
+        <div className="mb-4 flex flex-col items-center justify-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
+          <div className="w-full sm:w-1/4">
             <Chart
               charts={[
                 {
