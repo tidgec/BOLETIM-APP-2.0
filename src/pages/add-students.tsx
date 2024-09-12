@@ -91,15 +91,15 @@ export function AddStudents() {
   const cpf = watch('cpf') ? formatCPF(watch('cpf')) : ''
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
-        <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
+        <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar Estudante
         </h2>
 
-        <div className="group relative my-8 rounded">
+        <div className="group relative my-8 rounded p-4">
           <form className="space-y-2" onSubmit={handleSubmit(handleAddStudent)}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
                   <label htmlFor="name" className="text-sm text-gray-200">

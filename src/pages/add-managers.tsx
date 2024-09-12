@@ -104,7 +104,7 @@ export function AddManagers() {
 
         <div className="group relative my-8 rounded">
           <form className="space-y-2" onSubmit={handleSubmit(handleAddManager)}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
                   <label htmlFor="name" className="text-sm text-gray-200">
