@@ -9,14 +9,10 @@ export interface GetAverageBehaviorPolesRankingRequest {
 
 interface GetAverageBehaviorPolesRankingResponse {
   behaviorAverageGroupedByPole: {
-    behaviorAverageByPole: {
+    poleAverage: {
       poleId: string
       name: string
       average: number
-      behaviorAverageStatus: {
-        behaviorAverage: number
-        status: 'disapproved' | 'approved'
-      }
     }
   }[]
 }
