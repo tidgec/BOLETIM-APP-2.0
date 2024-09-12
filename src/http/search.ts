@@ -12,10 +12,12 @@ interface SearchResponse {
     email: string
     username: string
     courses: {
+      userOnCourseId: string
       id: string
       name: string
     }[]
     poles: {
+      userCourseOnPoleId: string
       id: string
       name: string
     }[]
