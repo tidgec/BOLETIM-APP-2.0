@@ -6,8 +6,11 @@ import Document from '@/assets/document-icon.png'
 import QTS from '@/assets/import-icon.png'
 import RemoveIcon from '@/assets/remove-icon.png'
 import UpdateIcon from '@/assets/update-icon.png'
+import { useDecode } from '@/auth'
 
 export function Courses() {
+  const decoded = useDecode()
+
   return (
     <section className=" mx-auto w-full max-w-[90rem] px-4 py-10 text-center sm:text-left md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
@@ -37,17 +40,21 @@ export function Courses() {
           />
           <span className="font-medium text-white">Atualizar Curso</span>
         </Link>
-        <Link
-          to={'/courses/delete'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={RemoveIcon}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">Remover curso</span>
-        </Link>
+
+        {decoded?.user.role === 'dev' && (
+          <Link
+            to={'/courses/delete'}
+            className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+          >
+            <img
+              src={RemoveIcon}
+              className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+              alt=""
+            />
+            <span className="font-medium text-white">Remover curso</span>
+          </Link>
+        )}
+
         <Link
           to={'/courses/management'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
