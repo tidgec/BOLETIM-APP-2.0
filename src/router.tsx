@@ -55,6 +55,7 @@ import { Profile } from './pages/profile'
 import { Rankings } from './pages/rankings'
 import { RemoveAcademicRecord } from './pages/remove-academic-record'
 import { RemoveBehaviors } from './pages/remove-behaviors'
+import { RemoveBehaviorsBatch } from './pages/remove-behaviors-batch'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
@@ -229,6 +230,14 @@ export const router = createBrowserRouter([
       {
         path: '/behaviors/batch/update',
         element: <UpdateBehaviorsBatch />,
+      },
+      {
+        path: '/behaviors/batch/remove/courses',
+        element: <ListCoursesPage />,
+      },
+      {
+        path: '/behaviors/batch/remove',
+        element: <RemoveBehaviorsBatch />,
       },
       {
         path: '/courses',
