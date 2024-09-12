@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import { NotFound } from './pages/__errors/404'
 import { AppLayout } from './pages/__layouts/app'
 import { AuthLayout } from './pages/__layouts/auth'
+import { ProtectedLayout } from './pages/__layouts/protected'
 import { AcademicRecord } from './pages/academic-record'
 import { AddAcademicRecord } from './pages/add-academic-record'
 import { AddAdmins } from './pages/add-admins'
@@ -61,11 +62,10 @@ import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
 import { SearchNotes } from './pages/search-notes'
 import { SignIn } from './pages/sign-in'
-import { CourseInformation } from './pages/student/course-information'
 import { CoursesAcademicRecord } from './pages/student/courses-academic-record'
-import { StudentAcademicRecord } from './pages/student/student-academic-record'
-import { StudentPage } from './pages/student/student-page'
+import { StudentHome } from './pages/student/student-home'
 import { StudentBatchPage } from './pages/student-batch'
+import { StudentConfirm } from './pages/student-confirm'
 import { StudentInformation } from './pages/student-information'
 import { Students } from './pages/students'
 import { StudentsDisabled } from './pages/students-disabled'
@@ -89,479 +89,911 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev', 'manager']}>
+            <Home />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/home',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <StudentHome />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes',
-        element: <Notes />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <Notes />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/add',
-        element: <ListCourseDisciplinesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCourseDisciplinesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/add/disciplines/:disciplineId',
-        element: <AddNotes />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddNotes />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/update/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/update',
-        element: <ListCourseDisciplinesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCourseDisciplinesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/update/disciplines/:disciplineId',
-        element: <UpdateNotes />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateNotes />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/search/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/search',
-        element: <SearchNotes />,
-      },
-      {
-        path: '/notes/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/notes/update',
-        element: <ListCourseDisciplinesPage />,
-      },
-      {
-        path: '/notes/update/disciplines/:disciplineId',
-        element: <UpdateNotes />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <SearchNotes />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/remove/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/remove',
-        element: <ListCourseDisciplinesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCourseDisciplinesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/remove/disciplines/:disciplineId',
-        element: <RemoveNotes />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <RemoveNotes />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch',
-        element: <NoteBatchPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <NoteBatchPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/add',
-        element: <AddNotesBatch />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddNotesBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/update/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/update',
-        element: <UpdateNotesBatch />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateNotesBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/remove/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/notes/batch/remove',
-        element: <RemoveNotesBatch />,
-      },
-      {
-        path: '/summary',
-        element: <Summary />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <RemoveNotesBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors',
-        element: <Behaviors />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <Behaviors />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/add',
-        element: <AddBehaviors />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddBehaviors />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/remove/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/remove',
-        element: <RemoveBehaviors />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <RemoveBehaviors />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/update/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/update',
-        element: <UpdateBehavior />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateBehavior />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch',
-        element: <BehaviorBatchPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <BehaviorBatchPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/add',
-        element: <AddBehaviorsBatch />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddBehaviorsBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/update/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/update',
-        element: <UpdateBehaviorsBatch />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateBehaviorsBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/remove/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/behaviors/batch/remove',
-        element: <RemoveBehaviorsBatch />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <RemoveBehaviorsBatch />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/courses',
-        element: <Courses />,
-      },
-      {
-        path: '/courses/QTS',
-        element: <AddQTSFile />,
-      },
-      {
-        path: '/courses/management',
-        element: <CourseManagement />,
-      },
-      {
-        path: '/courses/management/all',
-        element: <AllCourses />,
-      },
-      {
-        path: '/courses/management/disciplines',
-        element: <Disciplines />,
-      },
-      {
-        path: '/disciplines/add',
-        element: <AddDiscipline />,
-      },
-      {
-        path: '/disciplines/list',
-        element: <ListDisciplinesPage />,
-      },
-      {
-        path: '/disciplines/:id/update',
-        element: <UpdateDiscipline />,
-      },
-      {
-        path: '/disciplines/delete',
-        element: <DeleteDisciplines />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <Courses />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/courses/add',
-        element: <AddCourses />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddCourses />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/courses/update',
-        element: <UpdateCourses />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <UpdateCourses />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/courses/delete',
-        element: <DeleteCourses />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <DeleteCourses />
+          </ProtectedLayout>
+        ),
       },
       {
-        path: '/students',
-        element: <Students />,
+        path: '/courses/QTS',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddQTSFile />
+          </ProtectedLayout>
+        ),
       },
       {
-        path: '/students/:id/boletim',
-        element: <BoletimCard />,
+        path: '/courses/management',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <CourseManagement />
+          </ProtectedLayout>
+        ),
       },
       {
-        path: '/student-page/course-information',
-        element: <CourseInformation />,
+        path: '/courses/management/all',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AllCourses />
+          </ProtectedLayout>
+        ),
       },
       {
-        path: '/student/academic-record',
-        element: <StudentAcademicRecord />,
-      },
-      {
-        path: '/students/enable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/enable',
-        element: <StudentsDisabled />,
-      },
-      {
-        path: '/students/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/update',
-        element: <ListStudentsPage />,
-      },
-      {
-        path: '/students/update/:id',
-        element: <UpdateStudent />,
-      },
-      {
-        path: '/student/academic-record/courses',
-        element: <CoursesAcademicRecord />,
-      },
-      {
-        path: '/management/student-info',
-        element: <StudentInformation />,
-      },
-      {
-        path: '/students/page',
-        element: <StudentPage />,
-      },
-      {
-        path: '/students/add/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/add',
-        element: <AddStudents />,
-      },
-      {
-        path: '/students/batch',
-        element: <StudentBatchPage />,
-      },
-      {
-        path: '/students/batch/add/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/batch/add',
-        element: <AddStudentsBatch />,
-      },
-      {
-        path: '/students/batch/update/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/batch/update',
-        element: <UpdateStudentsBatch />,
-      },
-      {
-        path: '/students/disable/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/disable',
-        element: <StudentsEnabled />,
-      },
-      {
-        path: '/students/delete/courses',
-        element: <ListCoursesPage />,
-      },
-      {
-        path: '/students/delete',
-        element: <DeleteStudents />,
+        path: '/courses/management/disciplines',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <Disciplines />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/import/documents',
         element: <ImportDocumentsFile />,
       },
       {
+        path: '/disciplines/add',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddDiscipline />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/disciplines/list',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListDisciplinesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/disciplines/:id/update',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <UpdateDiscipline />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/disciplines/delete',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <DeleteDisciplines />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <Students />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/:id/boletim',
+        element: (
+          <ProtectedLayout roles={['student', 'manager', 'admin', 'dev']}>
+            <BoletimCard />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student-page/course-information',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/academic-record',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/enable/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/enable',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <StudentsDisabled />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/update/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/update',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListStudentsPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/update/:id',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateStudent />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/academic-record/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <CoursesAcademicRecord />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/add/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/add',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddStudents />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/batch',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <StudentBatchPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/batch/add/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/batch/add',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <AddStudentsBatch />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/batch/update/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/batch/update',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <UpdateStudentsBatch />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/disable/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/disable',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <StudentsEnabled />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/delete/courses',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/delete',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <DeleteStudents />
+          </ProtectedLayout>
+        ),
+      },
+      {
         path: '/managers',
-        element: <Managers />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <Managers />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/enable/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/enable',
-        element: <ManagersDisabled />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ManagersDisabled />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/disable/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/disable',
-        element: <ManagersEnabled />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ManagersEnabled />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/add',
-        element: <AddManagers />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddManagers />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/update/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/update',
-        element: <ListManagersPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListManagersPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/update/:id',
-        element: <UpdateManager />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <UpdateManager />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/delete/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/managers/delete',
-        element: <DeleteManagers />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <DeleteManagers />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record',
-        element: <AcademicRecord />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AcademicRecord />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record/add/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record/add',
-        element: <AddAcademicRecord />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddAcademicRecord />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record/remove',
-        element: <RemoveAcademicRecord />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <RemoveAcademicRecord />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record/download/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/academic-record/download',
-        element: <DownloadAcademicRecord />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <DownloadAcademicRecord />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings',
-        element: <Rankings />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <Rankings />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/overall/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/overall',
-        element: <OverallRanking />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <OverallRanking />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles',
-        element: <ListCoursePolesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursePolesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles/:id',
-        element: <PoleRanking />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <PoleRanking />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles/no-behavior/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles/no-behavior',
-        element: <ListCoursePolesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursePolesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles/no-behavior/:id',
-        element: <PoleRankingWithoutBehavior />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <PoleRankingWithoutBehavior />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles-average/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/poles-average',
-        element: <PolesAverageRanking />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <PolesAverageRanking />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/average-behavior-poles/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/rankings/average-behavior-poles',
-        element: <AverageBehaviorPolesRanking />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AverageBehaviorPolesRanking />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/management',
-        element: <DataManagement />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <DataManagement />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/summary',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <Summary />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/management/login-confirmation/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/management/login-confirmation',
-        element: <LoginConfirmation />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <LoginConfirmation />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/management/students/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/management/students',
-        element: <StudentInformation />,
-      },
-      {
-        path: '/management/login-confirmation/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <StudentInformation />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins',
-        element: <Admins />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <Admins />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins/add',
-        element: <AddAdmins />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddAdmins />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins/update',
-        element: <ListAdminsPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListAdminsPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins/update/:id',
-        element: <UpdateAdmins />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <UpdateAdmins />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins/delete/courses',
-        element: <ListCoursesPage />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/admins/delete',
-        element: <DeleteAdmins />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <DeleteAdmins />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/profile',
-        element: <Profile />,
+        element: (
+          <ProtectedLayout roles={['student', 'manager', 'admin', 'dev']}>
+            <Profile />
+          </ProtectedLayout>
+        ),
       },
       {
         path: '/reports',
-        element: <Reports />,
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <Reports />
+          </ProtectedLayout>
+        ),
       },
     ],
   },
@@ -572,6 +1004,10 @@ export const router = createBrowserRouter([
       {
         path: '/sign-in',
         element: <SignIn />,
+      },
+      {
+        path: '/students/confirm',
+        element: <StudentConfirm />,
       },
     ],
   },
