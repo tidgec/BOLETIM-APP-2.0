@@ -44,7 +44,7 @@ export function AddBehaviorsBatch() {
         courseId: String(courseId),
       })
 
-      toast.success('Comportamentos adicionados com sucesso!', {
+      toast.success('Notas de comportamento adicionados com sucesso!', {
         duration: 1000,
       })
 

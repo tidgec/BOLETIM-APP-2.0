@@ -46,7 +46,7 @@ export function UpdateBehaviorsBatch() {
         courseId: String(courseId),
       })
 
-      toast.success('Comportamentos adicionados com sucesso!', {
+      toast.success('Notas de comportamento atualizadas com sucesso!', {
         duration: 1000,
       })
 
@@ -64,7 +64,7 @@ export function UpdateBehaviorsBatch() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Adicionar comportamentos em lote
+          Atualizar comportamentos em lote
         </h2>
 
         <form onSubmit={handleSubmit(handleUpdateBehaviorsBatch)}>
@@ -93,7 +93,7 @@ export function UpdateBehaviorsBatch() {
               type="submit"
               className="focus:shadow-outline rounded bg-pmpa-blue-500 px-4 py-2 font-bold text-white hover:bg-pmpa-blue-700 focus:outline-none"
             >
-              Inserir
+              Atualizar
             </button>
           </div>
         </form>
