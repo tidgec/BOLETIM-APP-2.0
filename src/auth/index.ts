@@ -31,6 +31,7 @@ export function useDecode() {
     navigate('/sign-in')
     return null
   }
+
   const { payload }: JWTPayload = jwtDecode(token)
 
   return {
