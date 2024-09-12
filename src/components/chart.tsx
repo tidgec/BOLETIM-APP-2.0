@@ -46,7 +46,7 @@ interface ChartProps {
 
 export function Chart({ charts }: ChartProps) {
   return (
-    <Card className="flex flex-col">
+    <Card className="flex w-full max-w-72 flex-col">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
