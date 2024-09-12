@@ -45,7 +45,7 @@ export function SignIn() {
   async function handleSignIn({ cpf, password }: SignInSchema) {
     try {
       const data = await signInFn({ cpf, password })
-      const { token } = data
+      const { token, redirect } = data
 
       const expiresIn1Hour = new Date(
         new Date().getTime() + 15 * 60 * 1000 * 60,
@@ -54,6 +54,10 @@ export function SignIn() {
       Cookies.set('token', token, {
         expires: expiresIn1Hour,
       })
+
+      if (redirect) {
+        return navigate('/students/confirm')
+      }
 
       toast.success('Login realizado com sucesso!', {
         action: {
