@@ -97,10 +97,10 @@ export function AddStudents() {
           Adicionar Estudante
         </h2>
 
-        <div className="group relative rounded bg-white p-4 shadow-md">
-          <form className="space-y-4" onSubmit={handleSubmit(handleAddStudent)}>
+        <div className="group relative my-8 rounded p-4">
+          <form className="space-y-2" onSubmit={handleSubmit(handleAddStudent)}>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="space-y-4 rounded bg-pmpa-blue-700 p-4">
+              <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
                 <div className="space-y-1">
                   <label htmlFor="name" className="text-sm text-gray-200">
                     Nome completo:

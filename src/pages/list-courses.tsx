@@ -10,19 +10,16 @@ export function ListCoursesPage() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-2 text-center sm:text-left">
+      <section className="mx-auto w-full max-w-[90rem] text-center sm:text-left">
         <h2 className="w-full border-b-2 border-black text-xl font-semibold">
           Selecione o curso
         </h2>
 
-        <div className="flex flex-wrap justify-center">
+        <div className="flex justify-center">
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             courses?.map((course) => (
-              <div
-                key={course.id}
-                className="m-10 w-80 bg-white py-1 shadow-md"
-              >
+              <div key={course.id} className="m-10 bg-white shadow-md">
                 <Link
                   to={`${currentUrl}?courseId=${course.id}`}
                   className="block"

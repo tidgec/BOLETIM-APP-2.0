@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
 
 import { api } from '@/lib/axios'
+import { JWTPayload } from '@/types/jwt'
 
 export interface GetCourseStudentsRequest {
   courseId: string
@@ -37,32 +39,6 @@ export interface GetCourseStudentsResponse {
   pages: number
   totalItems: number
 }
-
-export interface GetCourseStudentsAxiosResponseByPole {
-  students: {
-    id: string
-    username: string
-    email: string
-    cpf: string
-    civilId: string
-    birthday?: string
-    createdAt: string
-    militaryId?: string
-    fatherName?: string
-    motherName?: string
-    state?: string
-    county?: string
-    pole: {
-      id: string
-      name: string
-    }
-  }[]
-  course: string
-  courseId: string
-  pages: number
-  totalItems: number
-}
-
 export async function getCourseStudents({
   courseId,
   poleId,
@@ -73,8 +49,35 @@ export async function getCourseStudents({
 }: GetCourseStudentsRequest): Promise<GetCourseStudentsResponse> {
   const token = Cookies.get('token')
 
+  if (!token) throw new Error('Não autorizado.')
+
+  const { payload }: JWTPayload = jwtDecode(token)
+
+  if (payload.role === 'manager') {
+    const response = await api.get<GetCourseStudentsResponse>(
+      `/courses/${courseId}/poles/${poleId}/manager/students`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          username: username ?? '',
+          cpf: cpf ?? '',
+          page,
+          isEnabled: isEnabled ?? true,
+        },
+      },
+    )
+
+    return {
+      students: response.data.students,
+      pages: response.data.pages,
+      totalItems: response.data.totalItems,
+    }
+  }
+
   if (poleId && poleId !== 'all') {
-    const response = await api.get<GetCourseStudentsAxiosResponseByPole>(
+    const response = await api.get<GetCourseStudentsResponse>(
       `/courses/${courseId}/poles/${poleId}/students`,
       {
         headers: {
@@ -90,13 +93,7 @@ export async function getCourseStudents({
     )
 
     return {
-      students: response.data.students.map((student) => ({
-        ...student,
-        course: {
-          id: response.data.courseId,
-          name: response.data.course,
-        },
-      })),
+      students: response.data.students,
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }

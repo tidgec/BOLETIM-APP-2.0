@@ -5,9 +5,9 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useCreateBehaviorsBatch } from '@/hooks/use-create-behaviors-batch'
+import { useRemoveBehaviorsGradeBatch } from '@/hooks/use-remove-behaviors-grade-batch'
 
-const addBehaviorsBatchSchema = z.object({
+const removeBehaviorsBatchSchema = z.object({
   excel: z
     .instanceof(FileList)
     .transform((file) => file.item(0)!)
@@ -17,9 +17,9 @@ const addBehaviorsBatchSchema = z.object({
     ),
 })
 
-type AddBehaviorsBatchSchema = z.infer<typeof addBehaviorsBatchSchema>
+type RemoveBehaviorsBatchSchema = z.infer<typeof removeBehaviorsBatchSchema>
 
-export function AddBehaviorsBatch() {
+export function RemoveBehaviorsBatch() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
 
@@ -28,23 +28,28 @@ export function AddBehaviorsBatch() {
     register,
     reset,
     formState: { errors },
-  } = useForm<AddBehaviorsBatchSchema>({
-    resolver: zodResolver(addBehaviorsBatchSchema),
+  } = useForm<RemoveBehaviorsBatchSchema>({
+    resolver: zodResolver(removeBehaviorsBatchSchema),
   })
 
-  const { mutateAsync: createBehaviorsBatchFn } = useCreateBehaviorsBatch()
+  const { mutateAsync: removeBehaviorsGradeBatchFn } =
+    useRemoveBehaviorsGradeBatch()
 
-  async function handleAddBehaviorsBatch({ excel }: AddBehaviorsBatchSchema) {
+  async function handleRemoveBehaviorsBatch({
+    excel,
+  }: RemoveBehaviorsBatchSchema) {
+    if (!courseId) return
+
     const uploadFormData = new FormData()
     uploadFormData.set('excel', excel)
 
     try {
-      await createBehaviorsBatchFn({
+      await removeBehaviorsGradeBatchFn({
         formData: uploadFormData,
-        courseId: String(courseId),
+        courseId,
       })
 
-      toast.success('Notas de comportamento adicionados com sucesso!', {
+      toast.success('Notas de comportamento removidas com sucesso!', {
         duration: 1000,
       })
 
@@ -60,12 +65,12 @@ export function AddBehaviorsBatch() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
+      <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Adicionar comportamentos em lote
+          Remover comportamentos em lote
         </h2>
 
-        <form onSubmit={handleSubmit(handleAddBehaviorsBatch)}>
+        <form onSubmit={handleSubmit(handleRemoveBehaviorsBatch)}>
           <div className="mb-4 py-8">
             <label
               htmlFor="file"
@@ -91,7 +96,7 @@ export function AddBehaviorsBatch() {
               type="submit"
               className="focus:shadow-outline rounded bg-pmpa-blue-500 px-4 py-2 font-bold text-white hover:bg-pmpa-blue-700 focus:outline-none"
             >
-              Inserir
+              Remover
             </button>
           </div>
         </form>

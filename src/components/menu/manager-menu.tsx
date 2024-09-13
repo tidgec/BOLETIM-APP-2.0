@@ -1,9 +1,7 @@
 import {
   LucideBarChart2,
-  LucideBookCopy,
   LucideBoxes,
   LucideBrain,
-  LucideHistory,
   LucideHome,
   LucideScrollText,
   LucideUsers,
@@ -20,15 +18,6 @@ export function ManagerMenu() {
         >
           <LucideHome size={20} />
           Home
-        </Link>
-      </li>
-      <li className="flex gap-4">
-        <Link
-          to={'/courses'}
-          className="flex items-center justify-center gap-4 md:justify-start"
-        >
-          <LucideBookCopy size={20} />
-          Cursos
         </Link>
       </li>
       <li className="flex gap-4">
@@ -74,15 +63,6 @@ export function ManagerMenu() {
         >
           <LucideBoxes size={20} />
           Gerenciamento de dados
-        </Link>
-      </li>
-      <li className="flex gap-4">
-        <Link
-          to={'/academic-record'}
-          className="flex items-center justify-center gap-4 md:justify-start"
-        >
-          <LucideHistory size={20} />
-          Histórico Escolar
         </Link>
       </li>
     </ul>

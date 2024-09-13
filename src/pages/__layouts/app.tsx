@@ -23,6 +23,8 @@ export function AppLayout() {
           const code = error.response?.data.message
 
           if (status === 401 && code === 'Unathourized.') {
+            Cookies.remove('token')
+
             navigate('/sign-in', { replace: true })
           } else {
             throw error

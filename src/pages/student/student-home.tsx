@@ -4,7 +4,7 @@ import Info from '@/assets/info-icon.png'
 import QTS from '@/assets/qts-icon.png'
 import Reportcard from '@/assets/reportcard-icon.png'
 
-export function StudentPage() {
+export function StudentHome() {
   return (
     <section className="mx-auto w-full max-w-[90rem] px-2 py-10 md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">

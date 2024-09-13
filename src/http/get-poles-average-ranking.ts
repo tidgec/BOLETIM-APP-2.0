@@ -9,25 +9,10 @@ export interface GetPolesAverageRankingRequest {
 
 interface GetPolesAverageRankingResponse {
   assessmentAverageGroupedByPole: {
-    assessmentAverageByPole: {
+    poleAverage: {
       poleId: string
       name: string
       average: number
-      studentAverageStatus: {
-        concept:
-          | 'excellent'
-          | 'very good'
-          | 'good'
-          | 'regular'
-          | 'insufficient'
-          | 'no income'
-        status:
-          | 'approved'
-          | 'disapproved'
-          | 'approved second season'
-          | 'disapproved second season'
-          | 'second season'
-      }
     }
   }[]
 }

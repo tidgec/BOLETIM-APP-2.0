@@ -28,7 +28,7 @@ export async function getCourses(page?: string): Promise<GetCoursesResponse> {
   const { payload }: JWTPayload = jwtDecode(token)
 
   if (payload.role === 'manager') {
-    const response = await api.get(`/managers/courses?page=${page}`, {
+    const response = await api.get(`/managers/courses?page=1`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

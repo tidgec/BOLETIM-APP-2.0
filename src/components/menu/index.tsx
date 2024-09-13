@@ -50,10 +50,10 @@ export function Menu({ role }: MenuProps) {
           </button>
 
           <nav className="flex items-start justify-center md:block">
-            {role === Role.DEV && <DevMenu />}
-            {role === Role.ADMIN && <AdminMenu />}
-            {role === Role.MANAGER && <ManagerMenu />}
-            {role === Role.STUDENT && <StudentMenu />}
+            {role === 'dev' && <DevMenu />}
+            {role === 'admin' && <AdminMenu />}
+            {role === 'manager' && <ManagerMenu />}
+            {role === 'student' && <StudentMenu />}
           </nav>
           <div className="flex items-start border-y-2 py-4 md:block">
             <Link

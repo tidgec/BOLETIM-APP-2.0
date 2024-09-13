@@ -5,8 +5,11 @@ import PlusIcon from '@/assets/add-plus-icon.png'
 import BinIcon from '@/assets/bin-icon.png'
 import RemoveIcon from '@/assets/remove-icon.png'
 import UpdateIcon from '@/assets/update-icon.png'
+import { useDecode } from '@/auth'
 
 export function Managers() {
+  const decoded = useDecode()
+
   return (
     <section className="mx-auto w-full max-w-[90rem] px-2 py-10 md:py-6">
       <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
@@ -58,17 +61,20 @@ export function Managers() {
           />
           <span className="font-medium text-white">Desativar Gestor</span>
         </Link>
-        <Link
-          to={'/managers/delete/courses'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={BinIcon}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white">Excluir Gestor</span>
-        </Link>
+
+        {decoded?.user.role === 'dev' && (
+          <Link
+            to={'/managers/delete/courses'}
+            className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
+          >
+            <img
+              src={BinIcon}
+              className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
+              alt=""
+            />
+            <span className="font-medium text-white">Excluir Gestor</span>
+          </Link>
+        )}
       </div>
     </section>
   )
