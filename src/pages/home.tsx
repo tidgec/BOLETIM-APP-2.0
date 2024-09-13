@@ -1,4 +1,6 @@
-import { useSearchParams } from 'react-router-dom'
+import { AxiosError } from 'axios'
+import { Link, useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { Course } from '@/components/course'
 import { Pagination } from '@/components/pagination'
@@ -11,6 +13,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useDeleteUser } from '@/hooks/use-delete-user'
 import { useSearch } from '@/hooks/use-search'
 import { formatCPF } from '@/utils/format-cpf'
 
@@ -24,6 +27,27 @@ export function Home() {
     page: page ?? '1',
     query: query ?? '',
   })
+
+  const { mutateAsync: deleteUserFn } = useDeleteUser()
+
+  async function handleDeleteStudent(id: string, role: string) {
+    try {
+      await deleteUserFn({
+        id,
+        role,
+      })
+
+      toast.success('Estudante deletado com sucesso!', {
+        duration: 1000,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+
+      toast.error(err.response?.data.message, {
+        duration: 1000,
+      })
+    }
+  }
 
   return (
     <div className="h-full w-full py-6">
@@ -82,22 +106,57 @@ export function Home() {
                     <Dialog>
                       <div className="mt-2 flex justify-between">
                         <div className="space-x-2">
-                          <DialogTrigger asChild>
-                            <Button size={'sm'}>Ver mais</Button>
-                          </DialogTrigger>
-                          <Button size={'sm'}>Editar</Button>
+                          {user.role !== 'DEV' && (
+                            <DialogTrigger asChild>
+                              <Button size={'sm'}>Ver mais</Button>
+                            </DialogTrigger>
+                          )}
                         </div>
-                        <Button size={'sm'} variant={'destructive'}>
-                          Deletar
-                        </Button>
                       </div>
 
-                      <DialogContent>
+                      <DialogContent className="w-full max-w-3xl">
                         <DialogHeader>
                           <span>See more user information</span>
                         </DialogHeader>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                          {user.courses.map((course) => (
+                            <div
+                              key={course.id}
+                              className="flex w-full items-start gap-1"
+                            >
+                              <Course
+                                course={{
+                                  ...course,
+                                  imageUrl:
+                                    'https://github.com/igorabreu29.png',
+                                }}
+                              />
+
+                              <div className="flex flex-col gap-2">
+                                <Button variant={'link'} size={'sm'}>
+                                  <Link
+                                    to={`/students/update/${user.id}?courseId=${course.id}`}
+                                  >
+                                    Editar
+                                  </Link>
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </DialogContent>
                     </Dialog>
+
+                    {user.role !== 'DEV' && (
+                      <Button
+                        variant={'destructive'}
+                        size={'sm'}
+                        onClick={() => handleDeleteStudent(user.id, user.role)}
+                      >
+                        Deletar
+                      </Button>
+                    )}
                   </div>
                 ))
               ) : (
