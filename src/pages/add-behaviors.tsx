@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { CreateBehaviorForm } from '@/components/create-behavior-form'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function AddBehaviors() {
@@ -31,11 +32,18 @@ export function AddBehaviors() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
+        {isLoading && (
+          <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
+          </div>
+        )}
 
-        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoading &&
-            students?.map((student) => (
+        {!isLoading && (
+          <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+            {students?.map((student) => (
               <div key={student.id} className="rounded border p-4">
                 <h2 className="mb-4 text-lg font-bold">
                   Nome: {student.username}
@@ -46,7 +54,8 @@ export function AddBehaviors() {
                 <CreateBehaviorForm studentId={student.id} />
               </div>
             ))}
-        </div>
+          </div>
+        )}
 
         <Pagination
           items={totalItems ?? 0}
