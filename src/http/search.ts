@@ -4,16 +4,18 @@ import { jwtDecode } from 'jwt-decode'
 import { api } from '@/lib/axios'
 import { JWTPayload } from '@/types/jwt'
 
-interface SearchResponse {
+export interface SearchResponse {
   searchs: {
     id: string
     cpf: string
     civilId: string
     email: string
     username: string
+    role: string
     courses: {
       id: string
       name: string
+      imageUrl: string
     }[]
     poles: {
       id: string
