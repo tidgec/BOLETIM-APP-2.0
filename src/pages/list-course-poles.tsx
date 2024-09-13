@@ -1,32 +1,79 @@
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
-import { Pole } from '@/components/pole'
-import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
+import { FilterForm } from '@/components/filter/filter-form'
+import { Pagination } from '@/components/pagination'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
+import { formatCPF } from '@/utils/format-cpf'
 
-export function ListCoursePolesPage() {
+export function ListManagersPage() {
   const [searchParams] = useSearchParams()
-  const courseId = searchParams.get('courseId')
 
-  const { poles, isLoading: isLoadingPoles } = useGetCoursePoles({
+  const courseId = searchParams.get('courseId')
+  const poleId = searchParams.get('poleId')
+  const cpf = searchParams.get('cpf')
+  const username = searchParams.get('username')
+  const page = searchParams.get('page')
+
+  const { managers, totalItems, pages, isLoading } = useGetCourseManagers({
     courseId: String(courseId),
+    cpf: cpf ?? '',
+    username: username ?? '',
+    page: page ?? '1',
+    poleId: poleId ?? 'all',
   })
+
+  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-2 text-center sm:text-left">
-        <h2 className="w-full border-b-2 border-black text-xl font-semibold">
-          Selecione o polo
+      <section className="mx-auto w-full max-w-[90rem]">
+        <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
+          Buscar gerentes
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-4 py-6">
-          {isLoadingPoles && <p>Loading...</p>}
-          {!isLoadingPoles &&
-            poles?.map((pole) => (
-              <div key={pole.id}>
-                <Pole pole={pole} courseId={courseId ?? ''} />
-              </div>
-            ))}
+        <FilterForm />
+
+        <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
+          {isLoading ? (
+            <>
+              {[1, 2, 3, 4].map((_, index) => (
+                <div key={index} className="space-y-2 rounded border p-4">
+                  <Skeleton className="mb-4 h-6 w-3/4" />
+                  <Skeleton className="mb-2 h-4 w-1/2" />
+                  <Skeleton className="mb-2 h-4 w-2/3" />
+                  <Skeleton className="mb-2 h-4 w-1/2" />
+                  <Skeleton className="mb-2 h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ))}
+            </>
+          ) : (
+            managers?.map((manager) => (
+              <Link
+                to={`${currentUrl}/${manager.id}?courseId=${courseId}`}
+                key={manager.id}
+              >
+                <ul className="space-y-2 rounded border p-4">
+                  <li className="mb-4 text-lg font-semibold">
+                    Nome: {manager.username}
+                  </li>
+                  <li>CPF: {formatCPF(manager.cpf)}</li>
+                  <li>Email: {manager.email}</li>
+                  <li>Curso: {manager.course.name}</li>
+                  <li>Polo: {manager.pole.name}</li>
+                  <li>Inserido em: {manager.createdAt}</li>
+                </ul>
+              </Link>
+            ))
+          )}
         </div>
+
+        <Pagination
+          items={totalItems ?? 0}
+          page={page ? Number(page) : 1}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )

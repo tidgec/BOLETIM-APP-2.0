@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { Course } from '@/components/course'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourses } from '@/hooks/use-get-courses'
 
 export function ListCoursesPage() {
@@ -16,8 +17,15 @@ export function ListCoursesPage() {
         </h2>
 
         <div className="flex justify-center">
-          {isLoading && <p>Loading...</p>}
-          {!isLoading &&
+          {isLoading ? (
+            <>
+              {[1, 2, 3].map((_, index) => (
+                <div key={index} className="m-10 bg-white shadow-md">
+                  <Skeleton className="h-40 w-64" />
+                </div>
+              ))}
+            </>
+          ) : (
             courses?.map((course) => (
               <div key={course.id} className="m-10 bg-white shadow-md">
                 <Link
@@ -27,7 +35,8 @@ export function ListCoursesPage() {
                   <Course course={course} />
                 </Link>
               </div>
-            ))}
+            ))
+          )}
         </div>
       </section>
     </div>
