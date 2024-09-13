@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useUpdateStudent } from '@/hooks/use-update-student'
 import { formatCPF } from '@/utils/format-cpf'
@@ -76,7 +77,7 @@ export function UpdateStudent() {
 
       toast.success('Estudante atualizado com sucesso!')
     } catch (error) {
-      toast.error('Ocorreu algum error')
+      toast.error('Ocorreu algum erro')
     }
   }
 
@@ -221,12 +222,16 @@ export function UpdateStudent() {
                 <label htmlFor="poleId" className="text-sm text-gray-200">
                   Polos:
                 </label>
-                <Controller
-                  name="poleId"
-                  defaultValue="all"
-                  control={control}
-                  render={({ field: { name, onChange, value, disabled } }) => {
-                    return (
+                {isLoadingPoles ? (
+                  <Skeleton className="h-10 w-full rounded border bg-slate-300 p-2" />
+                ) : (
+                  <Controller
+                    name="poleId"
+                    defaultValue="all"
+                    control={control}
+                    render={({
+                      field: { name, onChange, value, disabled },
+                    }) => (
                       <select
                         name={name}
                         id="poleId"
@@ -236,19 +241,15 @@ export function UpdateStudent() {
                         className="w-full rounded border p-2"
                       >
                         <option value={'all'}>Todos</option>
-
-                        {isLoadingPoles && <option>Loading...</option>}
-
-                        {!isLoadingPoles &&
-                          poles?.map((pole) => (
-                            <option key={pole.id} value={pole.id}>
-                              {pole.name}
-                            </option>
-                          ))}
+                        {poles?.map((pole) => (
+                          <option key={pole.id} value={pole.id}>
+                            {pole.name}
+                          </option>
+                        ))}
                       </select>
-                    )
-                  }}
-                ></Controller>
+                    )}
+                  />
+                )}
               </div>
             </div>
 
