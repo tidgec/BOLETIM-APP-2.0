@@ -107,12 +107,13 @@ export function PoleRankingWithoutBehavior() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
-        <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
+      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
+        <h2 className="mb-4 border-b-2 border-b-black text-xl font-semibold">
           Classificação por polo sem comportamento
         </h2>
-        <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
-          <div className="w-1/4">
+
+        <div className="mb-4 flex flex-col items-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
+          <div className="w-full sm:w-1/4">
             <Chart
               charts={[
                 {
@@ -154,7 +155,7 @@ export function PoleRankingWithoutBehavior() {
           <span className="text-black">Classificação Geral: CAS - 2023</span>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white shadow-md">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-md">
           <table className="min-w-full">
             <thead>
               <tr className="border-b bg-pmpa-blue-500">

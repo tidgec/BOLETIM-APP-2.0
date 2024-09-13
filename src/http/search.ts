@@ -13,11 +13,13 @@ export interface SearchResponse {
     username: string
     role: string
     courses: {
+      userOnCourseId: string
       id: string
       name: string
       imageUrl: string
     }[]
     poles: {
+      userCourseOnPoleId: string
       id: string
       name: string
     }[]

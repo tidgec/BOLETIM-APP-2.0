@@ -87,7 +87,7 @@ export function Home() {
                           <span className="font-medium uppercase">Cursos:</span>
                           <ul className="ml-2 list-inside list-disc">
                             {user.courses.map((item) => (
-                              <li key={item.id}>{item.name}</li>
+                              <li key={item.userOnCourseId}>{item.name}</li>
                             ))}
                           </ul>
                         </div>
@@ -96,7 +96,7 @@ export function Home() {
                           <span className="font-medium uppercase">Polos:</span>
                           <ul className="list-inside list-disc">
                             {user.poles.map((item) => (
-                              <li key={item.id}>{item.name}</li>
+                              <li key={item.userCourseOnPoleId}>{item.name}</li>
                             ))}
                           </ul>
                         </div>
