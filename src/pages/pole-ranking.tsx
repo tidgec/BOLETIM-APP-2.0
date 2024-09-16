@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -66,42 +67,6 @@ export function PoleRanking() {
       polo: 'SANTARÉM',
       status: 'APROVADO',
     },
-    {
-      class: '2º',
-      qav: '30/30',
-      qc: '8/10',
-      rg: '23751',
-      name: 'Mariana Souza Ferreira',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '3º',
-      qav: '27/30',
-      qc: '9/10',
-      rg: '23751',
-      name: 'Eduardo Alves Lima',
-      average: '9.700',
-      concept: 'Muito Bom',
-      dob: '01/01/2000',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '4º',
-      qav: '20/30',
-      qc: '5/10',
-      rg: '23751',
-      name: 'Camila Rocha Costa',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
   ]
 
   return (
@@ -110,42 +75,47 @@ export function PoleRanking() {
         <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Classificação por polo
         </h2>
+
         <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4">
           <div className="w-1/4">
-            <Chart
-              charts={[
-                {
-                  status: 'excellent',
-                  size: totalExcellentSize ?? 0,
-                  fill: 'var(--color-excellent)',
-                },
-                {
-                  status: 'very good',
-                  size: totalVeryGoodSize ?? 0,
-                  fill: 'var(--color-very-good)',
-                },
-                {
-                  status: 'good',
-                  size: totalGoodSize ?? 0,
-                  fill: 'var(--color-good)',
-                },
-                {
-                  status: 'regular',
-                  size: totalRegularSize ?? 0,
-                  fill: 'var(--color-regular)',
-                },
-                {
-                  status: 'insufficient',
-                  size: totalInsufficientSize ?? 0,
-                  fill: 'var(--color-insufficient)',
-                },
-                {
-                  status: 'no income',
-                  size: totalNoIncomeSize ?? 0,
-                  fill: 'var(--color-no-income)',
-                },
-              ]}
-            />
+            {isLoading ? (
+              <Skeleton className="h-40 w-full" />
+            ) : (
+              <Chart
+                charts={[
+                  {
+                    status: 'excellent',
+                    size: totalExcellentSize ?? 0,
+                    fill: 'var(--color-excellent)',
+                  },
+                  {
+                    status: 'very good',
+                    size: totalVeryGoodSize ?? 0,
+                    fill: 'var(--color-very-good)',
+                  },
+                  {
+                    status: 'good',
+                    size: totalGoodSize ?? 0,
+                    fill: 'var(--color-good)',
+                  },
+                  {
+                    status: 'regular',
+                    size: totalRegularSize ?? 0,
+                    fill: 'var(--color-regular)',
+                  },
+                  {
+                    status: 'insufficient',
+                    size: totalInsufficientSize ?? 0,
+                    fill: 'var(--color-insufficient)',
+                  },
+                  {
+                    status: 'no income',
+                    size: totalNoIncomeSize ?? 0,
+                    fill: 'var(--color-no-income)',
+                  },
+                ]}
+              />
+            )}
           </div>
         </div>
 
@@ -154,46 +124,51 @@ export function PoleRanking() {
         </div>
 
         <div className="rounded-lg border border-gray-200 bg-white shadow-md">
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b bg-pmpa-blue-500">
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  CLASS
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  Q.AV
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  Q.C
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  RG
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  NOME COMPLETO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  MÉDIA FINAL
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  CONCEITO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  DATA DE NASCIMENTO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  POLO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  STATUS
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : (
-                ranking?.map((item, index) => (
+          {isLoading ? (
+            <div className="p-4">
+              <Skeleton className="mb-2 h-6 w-full" />
+              <Skeleton className="mb-2 h-6 w-full" />
+              <Skeleton className="mb-2 h-6 w-full" />
+              <Skeleton className="mb-2 h-6 w-full" />
+            </div>
+          ) : (
+            <table className="min-w-full">
+              <thead>
+                <tr className="border-b bg-pmpa-blue-500">
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    CLASS
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    Q.AV
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    Q.C
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    RG
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    NOME COMPLETO
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    MÉDIA FINAL
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    CONCEITO
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    DATA DE NASCIMENTO
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    POLO
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                    STATUS
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ranking?.map((item, index) => (
                   <tr key={index}>
                     <td className="px-4 py-2 text-sm text-slate-700">
                       {index + 1}º
@@ -236,10 +211,10 @@ export function PoleRanking() {
                       }
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         <div className="mt-4 text-center">
