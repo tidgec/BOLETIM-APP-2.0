@@ -16,7 +16,7 @@ export function ListCoursePolesPage() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Selecione o pólo
+          Selecione o polo
         </h2>
 
         <FilterForm />
