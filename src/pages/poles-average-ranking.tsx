@@ -2,6 +2,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useSearchParams } from 'react-router-dom'
 
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
+import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Skeleton
 import { useGetPolesAverageRanking } from '@/hooks/use-get-poles-average-ranking'
 
 export function PolesAverageRanking() {
@@ -93,7 +94,12 @@ export function PolesAverageRanking() {
             </thead>
             <tbody>
               {isLoading ? (
-                <p>Loading...</p>
+                // Linha de carregamento do Skeleton
+                <tr>
+                  <td colSpan={3} className="px-4 py-2">
+                    <Skeleton className="h-8 w-full rounded-lg" />
+                  </td>
+                </tr>
               ) : (
                 ranking?.map((item, index) => (
                   <tr key={index}>
