@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
+import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Skeleton
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -114,40 +115,46 @@ export function PoleRankingWithoutBehavior() {
 
         <div className="mb-4 flex flex-col items-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
           <div className="w-full sm:w-1/4">
-            <Chart
-              charts={[
-                {
-                  status: 'excellent',
-                  size: totalExcellentSize ?? 0,
-                  fill: 'var(--color-excellent)',
-                },
-                {
-                  status: 'very good',
-                  size: totalVeryGoodSize ?? 0,
-                  fill: 'var(--color-very-good)',
-                },
-                {
-                  status: 'good',
-                  size: totalGoodSize ?? 0,
-                  fill: 'var(--color-good)',
-                },
-                {
-                  status: 'regular',
-                  size: totalRegularSize ?? 0,
-                  fill: 'var(--color-regular)',
-                },
-                {
-                  status: 'insufficient',
-                  size: totalInsufficientSize ?? 0,
-                  fill: 'var(--color-insufficient)',
-                },
-                {
-                  status: 'no income',
-                  size: totalNoIncomeSize ?? 0,
-                  fill: 'var(--color-no-income)',
-                },
-              ]}
-            />
+            {isLoading ? (
+              <div className="h-64 w-full">
+                <Skeleton className="h-full w-full rounded-lg" />
+              </div>
+            ) : (
+              <Chart
+                charts={[
+                  {
+                    status: 'excellent',
+                    size: totalExcellentSize ?? 0,
+                    fill: 'var(--color-excellent)',
+                  },
+                  {
+                    status: 'very good',
+                    size: totalVeryGoodSize ?? 0,
+                    fill: 'var(--color-very-good)',
+                  },
+                  {
+                    status: 'good',
+                    size: totalGoodSize ?? 0,
+                    fill: 'var(--color-good)',
+                  },
+                  {
+                    status: 'regular',
+                    size: totalRegularSize ?? 0,
+                    fill: 'var(--color-regular)',
+                  },
+                  {
+                    status: 'insufficient',
+                    size: totalInsufficientSize ?? 0,
+                    fill: 'var(--color-insufficient)',
+                  },
+                  {
+                    status: 'no income',
+                    size: totalNoIncomeSize ?? 0,
+                    fill: 'var(--color-no-income)',
+                  },
+                ]}
+              />
+            )}
           </div>
         </div>
 
@@ -193,7 +200,11 @@ export function PoleRankingWithoutBehavior() {
             </thead>
             <tbody>
               {isLoading ? (
-                <p>Loading...</p>
+                <tr>
+                  <td colSpan={10} className="py-4 text-center">
+                    <Skeleton className="h-8 w-full" />
+                  </td>
+                </tr>
               ) : (
                 ranking?.map((item, index) => (
                   <tr key={index}>
