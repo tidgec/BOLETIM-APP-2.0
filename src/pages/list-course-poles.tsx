@@ -1,3 +1,6 @@
+import 'react-loading-skeleton/dist/skeleton.css'
+
+import Skeleton from 'react-loading-skeleton'
 import { useSearchParams } from 'react-router-dom'
 
 import { Pole } from '@/components/pole'
@@ -19,13 +22,17 @@ export function ListCoursePolesPage() {
         </h2>
 
         <div className="mx-2 mb-4 mt-4 flex h-[36rem] flex-col gap-4 overflow-auto">
-          {isLoadingPoles && <p>Loading...</p>}
-          {!isLoadingPoles &&
+          {isLoadingPoles ? (
+            <div className="flex flex-col gap-4">
+              <Skeleton height={50} count={1} />
+            </div>
+          ) : (
             poles?.map((pole) => (
               <div key={pole.id}>
                 <Pole pole={pole} courseId={courseId ?? ''} />
               </div>
-            ))}
+            ))
+          )}
         </div>
       </section>
     </div>
