@@ -50,7 +50,7 @@ export function AppLayout() {
       <Header isLogged />
       <div className="relative flex w-full flex-1 bg-slate-100">
         <Menu role={decoded?.user.role} />
-        <div className="w-full px-4">
+        <div className="w-full px-4 print:px-0">
           <Outlet />
         </div>
       </div>
