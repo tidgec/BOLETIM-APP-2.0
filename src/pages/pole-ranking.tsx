@@ -2,6 +2,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
+import { RankingSkeleton } from '@/components/skeletons/ranking-skeleton'
 import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
@@ -124,51 +125,52 @@ export function PoleRanking() {
         </div>
 
         <div className="rounded-lg border border-gray-200 bg-white shadow-md">
-          {isLoading ? (
-            <div className="p-4">
-              <Skeleton className="mb-2 h-6 w-full" />
-              <Skeleton className="mb-2 h-6 w-full" />
-              <Skeleton className="mb-2 h-6 w-full" />
-              <Skeleton className="mb-2 h-6 w-full" />
-            </div>
-          ) : (
-            <table className="min-w-full">
-              <thead>
-                <tr className="border-b bg-pmpa-blue-500">
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    CLASS
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    Q.AV
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    Q.C
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    RG
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    NOME COMPLETO
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    MÉDIA FINAL
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    CONCEITO
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    DATA DE NASCIMENTO
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    POLO
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                    STATUS
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {ranking?.map((item, index) => (
+          <table className="min-w-full">
+            <thead>
+              <tr className="border-b bg-pmpa-blue-500">
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  CLASS
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  Q.AV
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  Q.C
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  RG
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  NOME COMPLETO
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  MÉDIA FINAL
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  CONCEITO
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  DATA DE NASCIMENTO
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  POLO
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                  STATUS
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <>
+                  <RankingSkeleton />
+                  <RankingSkeleton />
+                  <RankingSkeleton />
+                  <RankingSkeleton />
+                  <RankingSkeleton />
+                </>
+              ) : (
+                ranking?.map((item, index) => (
                   <tr key={index}>
                     <td className="px-4 py-2 text-sm text-slate-700">
                       {index + 1}º
@@ -211,10 +213,55 @@ export function PoleRanking() {
                       }
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                ))
+              )}
+
+              {ranking?.map((item, index) => (
+                <tr key={index}>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {index + 1}º
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentAverage.assessmentsCount}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentAverage.averageInform.behaviorsCount}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentCivilID}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentPole}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentAverage.averageInform.geralAverage}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {
+                      conceptMap[
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .concept
+                      ]
+                    }
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentBirthday}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {item.studentPole}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-slate-700">
+                    {
+                      overallStatusMap[
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status
+                      ]
+                    }
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         <div className="mt-4 text-center">
