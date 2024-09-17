@@ -14,7 +14,6 @@ import { AddDiscipline } from './pages/add-discipline'
 import { AddManagers } from './pages/add-managers'
 import { AddNotes } from './pages/add-notes'
 import { AddNotesBatch } from './pages/add-notes-batch'
-import { AddQTSFile } from './pages/add-qts-file'
 import { AddStudentsBatch } from './pages/add-student-batch'
 import { AddStudents } from './pages/add-students'
 import { Admins } from './pages/admins'
@@ -34,7 +33,6 @@ import { DeleteStudents } from './pages/delete-students'
 import { Disciplines } from './pages/disciplines'
 import { DownloadAcademicRecord } from './pages/download-academic-record'
 import { Home } from './pages/home'
-import { ImportDocumentsFile } from './pages/import-documents-file'
 import { ListAdminsPage } from './pages/list-admins'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { ListCoursePolesPage } from './pages/list-course-poles'
@@ -399,14 +397,14 @@ export const router = createBrowserRouter([
           </ProtectedLayout>
         ),
       },
-      {
-        path: '/courses/QTS',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <AddQTSFile />
-          </ProtectedLayout>
-        ),
-      },
+      // {
+      //   path: '/courses/QTS',
+      //   element: (
+      //     <ProtectedLayout roles={['admin', 'dev']}>
+      //       <AddQTSFile />
+      //     </ProtectedLayout>
+      //   ),
+      // },
       {
         path: '/courses/management',
         element: (
@@ -431,10 +429,10 @@ export const router = createBrowserRouter([
           </ProtectedLayout>
         ),
       },
-      {
-        path: '/import/documents',
-        element: <ImportDocumentsFile />,
-      },
+      // {
+      //   path: '/import/documents',
+      //   element: <ImportDocumentsFile />,
+      // },
       {
         path: '/disciplines/add',
         element: (

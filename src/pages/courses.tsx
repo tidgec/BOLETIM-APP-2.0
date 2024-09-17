@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 
 import PlusIcon from '@/assets/add-plus-icon.png'
 import CourseManagement from '@/assets/course-management-icon.png'
-import Document from '@/assets/document-icon.png'
-import QTS from '@/assets/import-icon.png'
 import RemoveIcon from '@/assets/remove-icon.png'
 import UpdateIcon from '@/assets/update-icon.png'
 import { useDecode } from '@/auth'
@@ -66,7 +64,7 @@ export function Courses() {
           />
           <span className="font-medium text-white">Gerenciamento de curso</span>
         </Link>
-        <Link
+        {/* <Link
           to={'/courses/QTS'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
@@ -87,7 +85,7 @@ export function Courses() {
             alt=""
           />
           <span className="font-medium text-white">Importar Documentos</span>
-        </Link>
+        </Link> */}
       </div>
     </section>
   )
