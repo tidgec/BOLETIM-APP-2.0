@@ -27,42 +27,6 @@ export function AverageBehaviorPolesRanking() {
       polo: 'SANTARÉM',
       status: 'APROVADO',
     },
-    {
-      class: '2º',
-      qav: '30/30',
-      qc: '8/10',
-      rg: '23751',
-      name: 'Mariana Souza Ferreira',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '3º',
-      qav: '27/30',
-      qc: '9/10',
-      rg: '23751',
-      name: 'Eduardo Alves Lima',
-      average: '9.700',
-      concept: 'Muito Bom',
-      dob: '01/01/2000',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '4º',
-      qav: '20/30',
-      qc: '5/10',
-      rg: '23751',
-      name: 'Camila Rocha Costa',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
   ]
 
   return (
@@ -93,7 +57,15 @@ export function AverageBehaviorPolesRanking() {
             </thead>
             <tbody>
               {isLoading ? (
-                <p>Loading...</p>
+                <>
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <tr key={index} className="animate-pulse">
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                    </tr>
+                  ))}
+                </>
               ) : (
                 ranking?.map((item, index) => (
                   <tr key={index}>
