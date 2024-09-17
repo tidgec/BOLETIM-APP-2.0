@@ -1,6 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
 
-import { FilterForm } from '@/components/filter/filter-form'
 import { Pole } from '@/components/pole'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 
@@ -19,9 +18,7 @@ export function ListCoursePolesPage() {
           Selecione o polo
         </h2>
 
-        <FilterForm />
-
-        <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
+        <div className="mx-2 mb-4 mt-4 flex h-[36rem] flex-col gap-4 overflow-auto">
           {isLoadingPoles && <p>Loading...</p>}
           {!isLoadingPoles &&
             poles?.map((pole) => (
