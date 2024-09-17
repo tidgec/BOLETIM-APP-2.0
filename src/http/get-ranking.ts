@@ -6,7 +6,7 @@ import { JWTPayload } from '@/types/jwt'
 
 export interface GetRankingRequest {
   courseId: string
-  page: string
+  page?: string
 }
 
 interface GetRankingResponse {
