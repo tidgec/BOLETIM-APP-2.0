@@ -27,7 +27,7 @@ export function Header({ isLogged }: HeaderProps) {
 
       {isLogged && (
         <button
-          className="ml-auto flex items-center gap-1 rounded text-red-500"
+          className="ml-auto flex items-center gap-1 rounded text-red-500 print:hidden"
           onClick={handleSignOut}
         >
           <LucideLogOut size={20} />

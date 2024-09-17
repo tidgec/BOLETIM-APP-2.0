@@ -2,8 +2,6 @@ import { LucideCircleUser, LucideList, LucideX } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Role } from '@/types/enum-role-type'
-
 import { AdminMenu } from './admin-menu'
 import { DevMenu } from './dev-menu'
 import { ManagerMenu } from './manager-menu'
@@ -34,7 +32,7 @@ export function Menu({ role }: MenuProps) {
       </aside>
 
       <button
-        className="absolute left-2 top-2 md:hidden"
+        className="absolute left-2 top-2 md:hidden print:hidden"
         onClick={() => setIsOpenMenu(true)}
       >
         <LucideList size={25} />
