@@ -60,7 +60,8 @@ import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
 import { SearchNotes } from './pages/search-notes'
 import { SignIn } from './pages/sign-in'
-import { CoursesAcademicRecord } from './pages/student/courses-academic-record'
+import { StudentAcademicRecord } from './pages/student/student-academic-record'
+import { StudentDownloadAcademicRecord } from './pages/student/student-download-academic-record'
 import { StudentHome } from './pages/student/student-home'
 import { StudentBatchPage } from './pages/student-batch'
 import { StudentConfirm } from './pages/student-confirm'
@@ -98,6 +99,38 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['student']}>
             <StudentHome />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/students/:id/boletim/courses',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/course-information',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <ListCoursesPage />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/academic-record',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <StudentAcademicRecord />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/student/academic-record/download',
+        element: (
+          <ProtectedLayout roles={['student']}>
+            <StudentDownloadAcademicRecord />
           </ProtectedLayout>
         ),
       },
@@ -482,22 +515,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/student-page/course-information',
-        element: (
-          <ProtectedLayout roles={['student']}>
-            <ListCoursesPage />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/student/academic-record',
-        element: (
-          <ProtectedLayout roles={['student']}>
-            <ListCoursesPage />
-          </ProtectedLayout>
-        ),
-      },
-      {
         path: '/students/enable/courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
@@ -534,14 +551,6 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <UpdateStudent />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/student/academic-record/courses',
-        element: (
-          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
-            <CoursesAcademicRecord />
           </ProtectedLayout>
         ),
       },
