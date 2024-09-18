@@ -7,7 +7,8 @@ interface CreateAdminProps {
   email: string
   cpf: string
   password: string
-  civilId: string
+  civilId?: string
+  militaryId?: string
   birthday: string
 }
 
@@ -17,6 +18,7 @@ export async function createAdmin({
   cpf,
   password,
   civilId,
+  militaryId,
   birthday,
 }: CreateAdminProps) {
   const token = Cookies.get('token')
@@ -29,6 +31,7 @@ export async function createAdmin({
       password,
       cpf,
       civilId,
+      militaryId,
       birthday,
     },
     {

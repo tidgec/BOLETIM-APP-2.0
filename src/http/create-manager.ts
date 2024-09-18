@@ -6,7 +6,8 @@ interface CreateManagerProps {
   username: string
   email: string
   cpf: string
-  civilId: string
+  civilId?: string
+  militaryId?: string
   birthday: string
   courseId: string
   poleId: string
@@ -17,6 +18,7 @@ export async function createManager({
   email,
   cpf,
   civilId,
+  militaryId,
   birthday,
   courseId,
   poleId,
@@ -30,6 +32,7 @@ export async function createManager({
       email,
       cpf,
       civilId,
+      militaryId,
       courseId,
       poleId,
       birthday,
