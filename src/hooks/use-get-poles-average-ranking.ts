@@ -7,11 +7,10 @@ import {
 
 export function useGetPolesAverageRanking({
   courseId,
-  page,
 }: GetPolesAverageRankingRequest) {
   const query = useQuery({
-    queryKey: ['poles-assessment-ranking', courseId, page],
-    queryFn: () => getPolesAverageRanking({ courseId, page }),
+    queryKey: ['poles-average-ranking', courseId],
+    queryFn: () => getPolesAverageRanking({ courseId }),
   })
 
   return {
