@@ -1,31 +1,36 @@
 import { Camera, Pencil } from 'lucide-react'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
+import { toast } from 'sonner'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
+import { UpdateProfile } from '@/components/update-profile'
 import { useProfile } from '@/hooks/use-profile'
+import { useUpdateProfileAvatar } from '@/hooks/use-update-profile-avatar'
 
 export function Profile() {
-  const [profileImage, setProfileImage] = useState<string | null>(null)
-
   const { user, isLoading: isLoadingProfile } = useProfile()
 
-  function handleOnFileSelected(e: ChangeEvent<HTMLInputElement>) {
+  const { mutateAsync: updateProfileAvatarFn } = useUpdateProfileAvatar()
+
+  async function handleOnFileSelected(e: ChangeEvent<HTMLInputElement>) {
     const { files } = e.target
+    if (!files) return
 
-    if (!files) {
-      return null
+    const file = files[0]
+
+    try {
+      await updateProfileAvatarFn({
+        file,
+      })
+
+      toast.success('Imagem de perfil atualizada!', {
+        duration: 1000,
+      })
+    } catch (error) {
+      console.error(error)
     }
-
-    const fileURL = URL.createObjectURL(files[0])
-    setProfileImage(fileURL)
   }
 
   return (
@@ -47,17 +52,18 @@ export function Profile() {
                   onChange={handleOnFileSelected}
                   className="hidden"
                   id="file"
-                  accept="image/jpeg,image/png"
+                  name="profile"
+                  accept="image/jpeg, image/png"
                 />
               </label>
-              {profileImage ? (
+              {user?.avatarUrl ? (
                 <img
-                  src={profileImage}
+                  src={user?.avatarUrl}
                   alt="Profile"
                   className="h-full w-full rounded-3xl object-cover"
                 />
               ) : (
-                <span className="text-4xl font-medium md:text-7xl">RS</span>
+                ''
               )}
             </div>
             <p className="text-md mt-2 text-center font-medium md:text-lg">
@@ -68,83 +74,24 @@ export function Profile() {
           <div className="flex w-full flex-col md:w-2/3">
             <div className="w-full space-y-4 text-white">
               <div className="flex items-center justify-between">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <button className="text-white hover:text-gray-300">
-                      <Pencil size={25} />
-                    </button>
-                  </DialogTrigger>
-
-                  <DialogContent className="h-[38rem] w-full max-w-3xl overflow-auto bg-pmpa-blue-700 p-0 text-white">
-                    <DialogHeader className="h-20 bg-pmpa-blue-900 px-4 py-8">
-                      <DialogTitle>Atualizar perfil</DialogTitle>
-                    </DialogHeader>
-
-                    <form className="relative flex flex-col items-center space-y-4 px-6 py-4">
-                      <div className="w-full space-y-4">
-                        <div className="flex flex-col gap-2">
-                          <label htmlFor="name" className="text-sm">
-                            Nome Completo:
-                          </label>
-                          <input
-                            type="text"
-                            id="name"
-                            placeholder="John Doe"
-                            className="rounded px-4 py-3 text-black"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <label htmlFor="email" className="text-sm">
-                            E-mail:
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            placeholder="john@example.com"
-                            className="rounded px-4 py-3 text-black"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <label htmlFor="password" className="text-sm">
-                            Senha:
-                          </label>
-                          <input
-                            type="password"
-                            id="password"
-                            placeholder="********"
-                            className="rounded px-4 py-3 text-black"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <label htmlFor="birthday" className="text-sm">
-                            Data de nascimento:
-                          </label>
-                          <input
-                            type="text"
-                            id="birthday"
-                            placeholder="20/12/2022"
-                            className="rounded px-4 py-3 text-black"
-                          />
-                        </div>
-                      </div>
-
-                      <DialogFooter className="sticky bottom-0 left-0 w-full bg-pmpa-blue-900 px-8 py-4">
-                        <button
-                          type="submit"
-                          className="rounded px-4 py-2 hover:bg-pmpa-blue-500"
-                        >
-                          Atualizar
-                        </button>
-                      </DialogFooter>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-
                 <div className="mt-4 w-full md:mt-0">
                   <p className="text-2xl font-bold md:text-4xl">
                     {user?.username.toUpperCase()}
                   </p>
                 </div>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant={'ghost'}
+                      className="text-white hover:bg-pmpa-blue-400 hover:text-gray-300"
+                    >
+                      <Pencil size={25} />
+                    </Button>
+                  </DialogTrigger>
+
+                  <UpdateProfile />
+                </Dialog>
               </div>
 
               <ul className="space-y-2">
