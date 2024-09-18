@@ -4,7 +4,6 @@ import { api } from '@/lib/axios'
 
 export interface GetAverageBehaviorPolesRankingRequest {
   courseId: string
-  page: string
 }
 
 interface GetAverageBehaviorPolesRankingResponse {
@@ -19,7 +18,6 @@ interface GetAverageBehaviorPolesRankingResponse {
 
 export async function getAverageBehaviorPolesRanking({
   courseId,
-  page,
 }: GetAverageBehaviorPolesRankingRequest) {
   const token = Cookies.get('token')
   if (!token) throw new Error('Não autorizado.')
@@ -27,9 +25,6 @@ export async function getAverageBehaviorPolesRanking({
   const response = await api.get<GetAverageBehaviorPolesRankingResponse>(
     `/courses/${courseId}/classification/behaviors`,
     {
-      params: {
-        page,
-      },
       headers: {
         Authorization: `Bearer ${token}`,
       },

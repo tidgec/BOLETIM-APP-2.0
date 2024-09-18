@@ -4,11 +4,10 @@ import { api } from '@/lib/axios'
 
 export interface GetPolesAverageRankingRequest {
   courseId: string
-  page: string
 }
 
 interface GetPolesAverageRankingResponse {
-  assessmentAverageGroupedByPole: {
+  studentsAverageGroupedByPole: {
     poleAverage: {
       poleId: string
       name: string
@@ -19,17 +18,13 @@ interface GetPolesAverageRankingResponse {
 
 export async function getPolesAverageRanking({
   courseId,
-  page,
 }: GetPolesAverageRankingRequest) {
   const token = Cookies.get('token')
   if (!token) throw new Error('Não autorizado.')
 
   const response = await api.get<GetPolesAverageRankingResponse>(
-    `/courses/${courseId}/classification/assessments`,
+    `/courses/${courseId}/classification/average`,
     {
-      params: {
-        page,
-      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -37,6 +32,6 @@ export async function getPolesAverageRanking({
   )
 
   return {
-    ranking: response.data.assessmentAverageGroupedByPole,
+    ranking: response.data.studentsAverageGroupedByPole,
   }
 }
