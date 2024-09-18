@@ -4,7 +4,7 @@ import { getCourses } from '@/http/get-courses'
 
 export function useGetCourses(page?: string) {
   const query = useQuery({
-    queryKey: ['courses'],
+    queryKey: ['courses', page],
     queryFn: () => getCourses(page),
   })
 

@@ -135,6 +135,8 @@ interface GetRankingResponse {
         studentCivilID?: string
         studentPole?: string
       }[]
+  pages?: number
+  totalItems?: number
 }
 
 export async function getRanking({ courseId, page }: GetRankingRequest) {
@@ -177,5 +179,7 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
 
   return {
     ranking: response.data.studentsWithAverage,
+    pages: response.data.pages,
+    totalItems: response.data.totalItems,
   }
 }
