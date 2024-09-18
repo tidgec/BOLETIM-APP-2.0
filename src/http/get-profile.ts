@@ -3,7 +3,8 @@ import { jwtDecode } from 'jwt-decode'
 
 import { api } from '@/lib/axios'
 
-interface GetProfileResponse {
+export interface GetProfileResponse {
+  id: string
   cpf: string
   email: string
   civilId: string
