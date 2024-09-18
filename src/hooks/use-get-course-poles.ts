@@ -10,6 +10,7 @@ export function useGetCoursePoles({ courseId }: GetCoursePolesProps) {
   const query = useQuery({
     queryKey: ['course-poles', courseId],
     queryFn: () => getCoursePoles({ courseId }),
+    staleTime: Infinity,
   })
 
   return {

@@ -31,6 +31,7 @@ export function useGetCourseManagers({
     ],
     queryFn: () =>
       getCourseManagers({ courseId, poleId, cpf, username, page, isEnabled }),
+    staleTime: Infinity,
   })
 
   return {

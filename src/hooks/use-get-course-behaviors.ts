@@ -6,6 +6,7 @@ export function useGetCourseBehaviors(courseId: string) {
   const query = useQuery({
     queryKey: ['courses', courseId, 'behaviors'],
     queryFn: () => getCourseBehaviors({ courseId }),
+    staleTime: Infinity,
   })
 
   return {

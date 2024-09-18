@@ -8,9 +8,12 @@ import {
 export function useGetLoginConfirmationMetrics({
   courseId,
 }: GetLoginConfirmationMetricsRequest) {
+  const expiresIn = 1000 * 60 * 60
+
   const query = useQuery({
     queryKey: ['students-metrics'],
     queryFn: () => getLoginConfirmationMetrics({ courseId }),
+    staleTime: expiresIn,
   })
 
   return {

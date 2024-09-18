@@ -6,6 +6,7 @@ export function useGetCourses(page?: string) {
   const query = useQuery({
     queryKey: ['courses', page],
     queryFn: () => getCourses(page),
+    staleTime: Infinity,
   })
 
   return {

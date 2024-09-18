@@ -14,6 +14,7 @@ export function useGetCourseStudent({
   const query = useQuery({
     queryKey: ['student-course', courseId, studentId],
     queryFn: () => getCourseStudent({ courseId, studentId }),
+    staleTime: Infinity,
   })
 
   return {

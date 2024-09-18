@@ -6,6 +6,7 @@ export function useGetDisciplines({ page }: GetDisciplinesRequest) {
   const query = useQuery({
     queryKey: ['disciplines', page],
     queryFn: () => getDisciplines({ page }),
+    staleTime: Infinity,
   })
 
   return {

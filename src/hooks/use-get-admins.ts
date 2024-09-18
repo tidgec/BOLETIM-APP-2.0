@@ -12,6 +12,7 @@ export function useGetAdmins({ cpf, username, page }: GetAdminsProps) {
   const query = useQuery({
     queryKey: ['admins', cpf, username, page],
     queryFn: () => getAdmins({ cpf, username, page }),
+    staleTime: Infinity,
   })
 
   return {

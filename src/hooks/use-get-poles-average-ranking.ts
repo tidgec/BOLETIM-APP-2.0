@@ -8,9 +8,12 @@ import {
 export function useGetPolesAverageRanking({
   courseId,
 }: GetPolesAverageRankingRequest) {
+  const expiresIn = 1000 * 60 * 60 // 1hr
+
   const query = useQuery({
     queryKey: ['poles-average-ranking', courseId],
     queryFn: () => getPolesAverageRanking({ courseId }),
+    staleTime: expiresIn,
   })
 
   return {

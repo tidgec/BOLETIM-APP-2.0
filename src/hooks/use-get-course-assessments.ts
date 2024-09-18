@@ -9,9 +9,12 @@ interface GetCourseAssessmentsProps {
 export function useGetCourseAssessments({
   courseId,
 }: GetCourseAssessmentsProps) {
+  const expiresIn = 1000 * 60 * 60 // 1hr
+
   const query = useQuery({
     queryKey: ['course-assessments', courseId],
     queryFn: () => getCourseAssessments({ courseId }),
+    staleTime: expiresIn,
   })
 
   return {

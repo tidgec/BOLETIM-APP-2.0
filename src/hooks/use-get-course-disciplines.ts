@@ -6,6 +6,7 @@ export function useGetCourseDisciplines(courseId: string) {
   const query = useQuery({
     queryKey: ['courses', courseId, 'disciplines'],
     queryFn: () => getCourseDisciplines({ courseId }),
+    staleTime: Infinity,
   })
 
   return {
