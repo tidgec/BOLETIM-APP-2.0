@@ -11,5 +11,7 @@ export function useGetRanking({ courseId, page }: GetRankingRequest) {
   return {
     ...query,
     ranking: query.data?.ranking,
+    pages: query.data?.pages,
+    totalItems: query.data?.totalItems,
   }
 }

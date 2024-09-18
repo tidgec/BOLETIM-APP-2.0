@@ -16,5 +16,7 @@ export function useGetPoleRanking({
   return {
     ...query,
     ranking: query.data?.ranking,
+    pages: query.data?.pages,
+    totalItems: query.data?.totalItems,
   }
 }

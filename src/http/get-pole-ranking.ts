@@ -5,7 +5,7 @@ import { api } from '@/lib/axios'
 export interface GetPoleRankingRequest {
   courseId: string
   poleId: string
-  page: string
+  page?: string
   hasBehavior?: string
 }
 
@@ -64,6 +64,7 @@ interface GetPoleRankingResponse {
         studentBirthday?: string
         studentCivilID?: string
         studentPole?: string
+        studentName?: string
       }[]
     | {
         studentAverage: {
@@ -116,7 +117,10 @@ interface GetPoleRankingResponse {
         studentBirthday?: string
         studentCivilID?: string
         studentPole?: string
+        studentName?: string
       }[]
+  pages?: number
+  totalItems?: number
 }
 
 export async function getPoleRanking({
@@ -144,5 +148,7 @@ export async function getPoleRanking({
 
   return {
     ranking: response.data.studentsWithAverage,
+    pages: response.data.pages,
+    totalItems: response.data.totalItems,
   }
 }
