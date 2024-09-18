@@ -1,7 +1,10 @@
+import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
+import { Pagination } from '@/components/pagination'
 import { RankingSkeleton } from '@/components/skeletons/ranking-skeleton'
+import { RankingViewer } from '@/components/templates/ranking-viewer'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -13,6 +16,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
+import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetRanking } from '@/hooks/use-get-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -21,7 +25,11 @@ export function OverallRanking() {
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
 
-  const { ranking, isLoading } = useGetRanking({
+  const { course, isLoading: isLoadingGetCourse } = useGetCourse({
+    courseId: String(courseId),
+  })
+
+  const { ranking, pages, totalItems, isLoading } = useGetRanking({
     courseId: String(courseId),
     page,
   })
@@ -130,42 +138,48 @@ export function OverallRanking() {
           </div>
         </div>
 
-        <div className="mb-6 text-center font-bold">
-          <span className="text-black">Classificação Geral: CAS - 2023</span>
+        <div className="mb-6 flex items-center justify-center font-bold">
+          {isLoadingGetCourse ? (
+            <Skeleton className="h-4 w-44 bg-slate-300" />
+          ) : (
+            <span className="text-black">
+              Classificação Geral: {course?.name}
+            </span>
+          )}
         </div>
 
         <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-md print:overflow-hidden">
           <Table className="min-w-full table-auto">
             <TableHeader>
               <TableRow className="border-b bg-pmpa-blue-500 print:flex print:justify-start">
-                <TableHead className="w-10 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   CLASS
                 </TableHead>
-                <TableHead className="w-10 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   Q.AV
                 </TableHead>
-                <TableHead className="w-10 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   Q.C
                 </TableHead>
-                <TableHead className="w-20 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-20 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   RG
                 </TableHead>
-                <TableHead className="w-[340px] px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-[340px] py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   NOME COMPLETO
                 </TableHead>
-                <TableHead className="w-32 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   MÉDIA FINAL
                 </TableHead>
-                <TableHead className="w-32 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   CONCEITO
                 </TableHead>
-                <TableHead className="w-32 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   DATA DE NASCIMENTO
                 </TableHead>
-                <TableHead className="w-24 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   POLO
                 </TableHead>
-                <TableHead className="w-24 px-4 py-2 text-center text-sm font-semibold text-white print:w-auto print:py-0 print:text-xs">
+                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   STATUS
                 </TableHead>
               </TableRow>
@@ -181,7 +195,7 @@ export function OverallRanking() {
                 </>
               ) : (
                 ranking?.map((item, index) => (
-                  <TableRow key={index}>
+                  <TableRow key={item.studentName}>
                     <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {index + 1}º
                     </TableCell>
@@ -226,60 +240,60 @@ export function OverallRanking() {
                 ))
               )}
             </TableBody>
-
-            <TableBody className="hidden print:table">
-              {rankingToPrint?.map((item, index) => (
-                <TableRow key={index} className="print:table-row">
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {index + 1}º
-                  </TableCell>
-                  <TableCell className="px-8 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentAverage.assessmentsCount}
-                  </TableCell>
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentAverage.averageInform.behaviorsCount}
-                  </TableCell>
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentCivilID}
-                  </TableCell>
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentName}
-                  </TableCell>
-                  <TableCell className="pl-14 text-right text-xs text-slate-700 print:w-auto">
-                    0
-                  </TableCell>
-                  <TableCell className="pl-10 text-center text-xs text-slate-700 print:w-auto">
-                    {
-                      conceptMap[
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .concept
-                      ]
-                    }
-                  </TableCell>
-                  <TableCell className="pl-8 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentBirthday}
-                  </TableCell>
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {item.studentPole}
-                  </TableCell>
-                  <TableCell className="px-4 text-center text-xs text-slate-700 print:w-auto">
-                    {
-                      overallStatusMap[
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .status
-                      ]
-                    }
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
           </Table>
         </div>
 
         <div className="mt-4 space-x-2 text-center print:hidden">
-          <Button onClick={() => window.print()}>Download PDF</Button>
+          <PDFDownloadLink
+            document={
+              <RankingViewer
+                courseName={course?.name ?? ''}
+                ranking={
+                  rankingToPrint
+                    ? rankingToPrint.map((item, index) => ({
+                        classification: index + 1,
+                        average: Number(
+                          item.studentAverage.averageInform.geralAverage,
+                        ),
+                        concept:
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ],
+                        name: item.studentName ?? '',
+                        pole: item.studentPole ?? '',
+                        qav: item.studentAverage.assessmentsCount,
+                        qc: item.studentAverage.averageInform.behaviorsCount,
+                        civilId: item.studentCivilID ?? '',
+                        birthday: item.studentBirthday ?? '',
+                        status:
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ],
+                      }))
+                    : []
+                }
+              />
+            }
+            fileName="classificacao-geral-2023.pdf"
+          >
+            {({ loading }) =>
+              loading ? (
+                'Preparando documento...'
+              ) : (
+                <Button>Download PDF</Button>
+              )
+            }
+          </PDFDownloadLink>
           <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
+
+        <Pagination
+          items={totalItems ?? 0}
+          page={Number(page)}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )

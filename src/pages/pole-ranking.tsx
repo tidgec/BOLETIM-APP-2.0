@@ -3,8 +3,18 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import { RankingSkeleton } from '@/components/skeletons/ranking-skeleton'
-import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
+import { RankingViewer } from '@/components/templates/ranking-viewer'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -19,6 +29,28 @@ export function PoleRanking() {
     poleId: String(id),
     page,
   })
+
+  const { ranking: rankingToPrint } = useGetPoleRanking({
+    courseId: String(courseId),
+    poleId: String(id),
+    page,
+  })
+
+  const { mutateAsync: createPoleRankingSheet } = useCreatePoleRankingSheet()
+
+  async function handleDownloadExcel() {
+    try {
+      const response = await createPoleRankingSheet({
+        courseId: String(courseId),
+        poleId: String(id),
+        hasBehavior: 'true',
+      })
+
+      window.location.href = response.fileUrl
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const totalExcellentSize = ranking?.filter(
     (item) =>
@@ -54,21 +86,6 @@ export function PoleRanking() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
-
-  const pdfData = [
-    {
-      class: '1º',
-      qav: '30/30',
-      qc: '10/10',
-      rg: '23826',
-      name: 'Lucas Pereira da Silva',
-      average: '9.784',
-      concept: 'Muito Bom',
-      dob: '01/01/1975',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-  ]
 
   return (
     <div className="w-full py-6">
@@ -125,42 +142,42 @@ export function PoleRanking() {
         </div>
 
         <div className="rounded-lg border border-gray-200 bg-white shadow-md">
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b bg-pmpa-blue-500">
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+          <Table className="min-w-full table-auto">
+            <TableHeader>
+              <TableRow className="border-b bg-pmpa-blue-500 print:flex print:justify-start">
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   CLASS
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   Q.AV
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   Q.C
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-20 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   RG
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-[340px] py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   NOME COMPLETO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   MÉDIA FINAL
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   CONCEITO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   DATA DE NASCIMENTO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   POLO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   STATUS
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="print:hidden">
               {isLoading ? (
                 <>
                   <RankingSkeleton />
@@ -171,114 +188,97 @@ export function PoleRanking() {
                 </>
               ) : (
                 ranking?.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                  <TableRow key={item.studentName}>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {index + 1}º
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentAverage.assessmentsCount}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentAverage.averageInform.behaviorsCount}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentCivilID}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentPole}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      {item.studentName}
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentAverage.averageInform.geralAverage}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {
                         conceptMap[
                           item.studentAverage.averageInform.studentAverageStatus
                             .concept
                         ]
                       }
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentBirthday}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.studentPole}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {
                         overallStatusMap[
                           item.studentAverage.averageInform.studentAverageStatus
                             .status
                         ]
                       }
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))
               )}
-
-              {ranking?.map((item, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {index + 1}º
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentAverage.assessmentsCount}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentAverage.averageInform.behaviorsCount}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentCivilID}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentPole}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentAverage.averageInform.geralAverage}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {
-                      conceptMap[
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .concept
-                      ]
-                    }
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentBirthday}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {item.studentPole}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-slate-700">
-                    {
-                      overallStatusMap[
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .status
-                      ]
-                    }
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
         <div className="mt-4 text-center">
           <PDFDownloadLink
-            document={<GeneralClassificationViewer data={pdfData} />}
+            document={
+              <RankingViewer
+                ranking={
+                  rankingToPrint
+                    ? rankingToPrint.map((item, index) => ({
+                        classification: index + 1,
+                        average: Number(
+                          item.studentAverage.averageInform.geralAverage,
+                        ),
+                        concept:
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ],
+                        name: item.studentName ?? '',
+                        pole: item.studentPole ?? '',
+                        qav: item.studentAverage.assessmentsCount,
+                        qc: item.studentAverage.averageInform.behaviorsCount,
+                        civilId: item.studentCivilID ?? '',
+                        birthday: item.studentBirthday ?? '',
+                        status:
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ],
+                      }))
+                    : []
+                }
+              />
+            }
             fileName="classificacao-geral-2023.pdf"
           >
             {({ loading }) =>
               loading ? (
-                'Preparing document...'
+                'Preparando documento...'
               ) : (
-                <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                  Download PDF
-                </button>
+                <Button>Download PDF</Button>
               )
             }
           </PDFDownloadLink>
+          <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
       </section>
     </div>

@@ -2,8 +2,12 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
-import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
+import { Pagination } from '@/components/pagination'
+import { RankingViewer } from '@/components/templates/ranking-viewer'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Skeleton
+import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
+import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -13,12 +17,43 @@ export function PoleRankingWithoutBehavior() {
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
 
+  const { course, isLoading: isLoadingGetCourse } = useGetCourse({
+    courseId: String(courseId),
+  })
+
   const { ranking, isLoading } = useGetPoleRanking({
     courseId: String(courseId),
     poleId: String(id),
     page,
     hasBehavior: 'false',
   })
+
+  const {
+    ranking: rankingToPrint,
+    pages,
+    totalItems,
+  } = useGetPoleRanking({
+    courseId: String(courseId),
+    poleId: String(id),
+    hasBehavior: 'false',
+  })
+
+  const { mutateAsync: createPoleRankingWithoutBehaviorSheetFn } =
+    useCreatePoleRankingSheet()
+
+  async function handleDownloadExcel() {
+    try {
+      const response = await createPoleRankingWithoutBehaviorSheetFn({
+        courseId: String(courseId),
+        poleId: String(id),
+        hasBehavior: 'false',
+      })
+
+      window.location.href = response.fileUrl
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const totalExcellentSize = ranking?.filter(
     (item) =>
@@ -54,57 +89,6 @@ export function PoleRankingWithoutBehavior() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
-
-  const pdfData = [
-    {
-      class: '1º',
-      qav: '30/30',
-      qc: '10/10',
-      rg: '23826',
-      name: 'Lucas Pereira da Silva',
-      average: '9.784',
-      concept: 'Muito Bom',
-      dob: '01/01/1975',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '2º',
-      qav: '30/30',
-      qc: '8/10',
-      rg: '23751',
-      name: 'Mariana Souza Ferreira',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '3º',
-      qav: '27/30',
-      qc: '9/10',
-      rg: '23751',
-      name: 'Eduardo Alves Lima',
-      average: '9.700',
-      concept: 'Muito Bom',
-      dob: '01/01/2000',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '4º',
-      qav: '20/30',
-      qc: '5/10',
-      rg: '23751',
-      name: 'Camila Rocha Costa',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-  ]
 
   return (
     <div className="w-full py-6">
@@ -158,8 +142,14 @@ export function PoleRankingWithoutBehavior() {
           </div>
         </div>
 
-        <div className="mb-6 text-center font-bold">
-          <span className="text-black">Classificação Geral: CAS - 2023</span>
+        <div className="mb-6 flex items-center justify-center font-bold">
+          {isLoadingGetCourse ? (
+            <Skeleton className="h-4 w-44 bg-slate-300" />
+          ) : (
+            <span className="text-black">
+              Classificação Geral: {course?.name}
+            </span>
+          )}
         </div>
 
         <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-md">
@@ -255,22 +245,57 @@ export function PoleRankingWithoutBehavior() {
           </table>
         </div>
 
-        <div className="mt-4 text-center">
+        <div className="mt-4 space-x-2 text-center print:hidden">
           <PDFDownloadLink
-            document={<GeneralClassificationViewer data={pdfData} />}
+            document={
+              <RankingViewer
+                courseName={course?.name ?? ''}
+                ranking={
+                  rankingToPrint
+                    ? rankingToPrint.map((item, index) => ({
+                        classification: index + 1,
+                        average: Number(
+                          item.studentAverage.averageInform.geralAverage,
+                        ),
+                        concept:
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ],
+                        name: item.studentName ?? '',
+                        pole: item.studentPole ?? '',
+                        qav: item.studentAverage.assessmentsCount,
+                        qc: item.studentAverage.averageInform.behaviorsCount,
+                        civilId: item.studentCivilID ?? '',
+                        birthday: item.studentBirthday ?? '',
+                        status:
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ],
+                      }))
+                    : []
+                }
+              />
+            }
             fileName="classificacao-geral-2023.pdf"
           >
             {({ loading }) =>
               loading ? (
-                'Preparing document...'
+                'Preparando documento...'
               ) : (
-                <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                  Download PDF
-                </button>
+                <Button>Download PDF</Button>
               )
             }
           </PDFDownloadLink>
+          <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
+
+        <Pagination
+          items={totalItems ?? 0}
+          page={Number(page)}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )

@@ -1,70 +1,48 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useSearchParams } from 'react-router-dom'
 
-import GeneralClassificationViewer from '@/components/templates/general-classification-viewer'
-import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Skeleton
+import { RankingAverageViewer } from '@/components/templates/ranking-average-viewer'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { useCreatePolesAverageRankingSheet } from '@/hooks/use-create-poles-average-ranking-sheet'
+import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPolesAverageRanking } from '@/hooks/use-get-poles-average-ranking'
 
 export function PolesAverageRanking() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
-  const page = searchParams.get('page') ?? '1'
 
   const { ranking, isLoading } = useGetPolesAverageRanking({
     courseId: String(courseId),
-    page,
   })
 
-  const pdfData = [
-    {
-      class: '1º',
-      qav: '30/30',
-      qc: '10/10',
-      rg: '23826',
-      name: 'Lucas Pereira da Silva',
-      average: '9.784',
-      concept: 'Muito Bom',
-      dob: '01/01/1975',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '2º',
-      qav: '30/30',
-      qc: '8/10',
-      rg: '23751',
-      name: 'Mariana Souza Ferreira',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '3º',
-      qav: '27/30',
-      qc: '9/10',
-      rg: '23751',
-      name: 'Eduardo Alves Lima',
-      average: '9.700',
-      concept: 'Muito Bom',
-      dob: '01/01/2000',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-    {
-      class: '4º',
-      qav: '20/30',
-      qc: '5/10',
-      rg: '23751',
-      name: 'Camila Rocha Costa',
-      average: '9.724',
-      concept: 'Muito Bom',
-      dob: '01/01/1924',
-      polo: 'SANTARÉM',
-      status: 'APROVADO',
-    },
-  ]
+  const { course, isLoading: isLoadingGetCourse } = useGetCourse({
+    courseId: String(courseId),
+  })
+
+  const { mutateAsync: createPolesAverageRankingSheetFn } =
+    useCreatePolesAverageRankingSheet()
+
+  async function handleDownloadExcel() {
+    try {
+      const response = await createPolesAverageRankingSheetFn({
+        courseId: String(courseId),
+        hasBehavior: 'true',
+      })
+
+      window.location.href = response.fileUrl
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className="w-full py-6">
@@ -73,67 +51,88 @@ export function PolesAverageRanking() {
           Classificação de média dos polos
         </h2>
 
-        <div className="mb-6 text-center font-bold">
-          <span className="text-black">Classificação Geral: CAS - 2023</span>
+        <div className="mb-6 flex items-center justify-center font-bold">
+          {isLoadingGetCourse ? (
+            <Skeleton className="h-4 w-44 bg-slate-300" />
+          ) : (
+            <span className="text-black">
+              Classificação Geral: {course?.name}
+            </span>
+          )}
         </div>
 
         <div className="rounded-lg border border-gray-200 bg-white shadow-md">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b bg-pmpa-blue-500">
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+          <Table className="min-w-full table-auto">
+            <TableHeader>
+              <TableRow className="border-b bg-pmpa-blue-500 print:flex print:justify-start">
+                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   CLASS
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   POLO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
                   MÉDIA
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {isLoading ? (
-                // Linha de carregamento do Skeleton
-                <tr>
-                  <td colSpan={3} className="px-4 py-2">
-                    <Skeleton className="h-8 w-full rounded-lg" />
-                  </td>
-                </tr>
+                <>
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <tr key={index} className="animate-pulse">
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                      <td className="bg-gray-200 px-4 py-2 text-sm"></td>
+                    </tr>
+                  ))}
+                </>
               ) : (
                 ranking?.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                  <TableRow key={item.poleAverage.name}>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {index + 1}º
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.poleAverage.name}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                       {item.poleAverage.average}
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))
               )}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
-        <div className="mt-4 text-center">
+        <div className="mt-4 space-x-2 text-center">
           <PDFDownloadLink
-            document={<GeneralClassificationViewer data={pdfData} />}
+            document={
+              <RankingAverageViewer
+                courseName={course?.name ?? ''}
+                ranking={
+                  ranking
+                    ? ranking.map((item, index) => ({
+                        classification: index + 1,
+                        average: item.poleAverage.average,
+                        pole: item.poleAverage.name ?? '',
+                      }))
+                    : []
+                }
+              />
+            }
             fileName="classificacao-geral-2023.pdf"
           >
             {({ loading }) =>
               loading ? (
-                'Preparing document...'
+                'Preparando documento...'
               ) : (
-                <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                  Download PDF
-                </button>
+                <Button>Download PDF</Button>
               )
             }
           </PDFDownloadLink>
+          <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
       </section>
     </div>
