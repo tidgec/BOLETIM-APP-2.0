@@ -11,14 +11,23 @@ interface Course {
   formula: string
 }
 
-export interface GetCoursesResponse {
-  courses: Course[]
+interface GetCourseUserResponse {
+  courses: {
+    course: {
+      id: string
+      name: string
+      imageUrl: string
+      formula: string
+    }
+  }[]
   pages?: number
   totalItems?: number
 }
 
-interface CourseRoleAdminOrDev {
-  course: Course
+export interface GetCoursesResponse {
+  courses: Course[]
+  pages?: number
+  totalItems?: number
 }
 
 export async function getCourses(page?: string): Promise<GetCoursesResponse> {
@@ -28,30 +37,38 @@ export async function getCourses(page?: string): Promise<GetCoursesResponse> {
   const { payload }: JWTPayload = jwtDecode(token)
 
   if (payload.role === 'manager') {
-    const response = await api.get(`/managers/courses?page=1`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await api.get<GetCourseUserResponse>(
+      `/managers/courses?page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
+    )
 
     return {
-      courses: response.data.courses.map((item: CourseRoleAdminOrDev) => ({
-        ...item.course,
-      })),
+      courses: response.data.courses.map((item) => {
+        return item.course
+      }),
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }
   }
 
   if (payload.role === 'student') {
-    const response = await api.get(`/students/courses?page=${page}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await api.get<GetCourseUserResponse>(
+      `/students/courses?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
+    )
 
     return {
-      courses: response.data.courses,
+      courses: response.data.courses.map((item) => {
+        return item.course
+      }),
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }
