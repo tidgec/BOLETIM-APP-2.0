@@ -45,7 +45,7 @@ export function StudentConfirm() {
       toast.success('Login confirmado!', {
         duration: 1000,
         onAutoClose: () => {
-          navigate('/', {
+          navigate('/student/home', {
             replace: true,
           })
         },
