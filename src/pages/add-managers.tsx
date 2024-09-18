@@ -21,9 +21,8 @@ const addManagerSchema = z.object({
       message: 'Formato do CPF inválido.',
     }),
   email: z.string().email({ message: 'Email inválido' }),
-  civilId: z
-    .string()
-    .length(5, { message: 'O RG civil deve conter 5 caracteres' }),
+  civilId: z.string().optional(),
+  militaryId: z.string().optional(),
   birthday: z.string(),
   poleId: z.string(),
 })
@@ -39,7 +38,6 @@ export function AddManagers() {
     resolver: zodResolver(addManagerSchema),
     defaultValues: {
       username: '',
-      civilId: '',
       cpf: '',
       email: '',
       poleId: 'none',
@@ -62,6 +60,7 @@ export function AddManagers() {
     cpf,
     email,
     civilId,
+    militaryId,
     birthday,
     poleId,
   }: AddManagerSchema) {
@@ -73,6 +72,7 @@ export function AddManagers() {
         cpf,
         email,
         civilId,
+        militaryId,
         birthday: formatDate(birthday),
         courseId,
         poleId,
@@ -180,6 +180,25 @@ export function AddManagers() {
                     </span>
                   )}
                 </div>
+
+                <div className="space-y-1">
+                  <label htmlFor="militaryId" className="text-sm text-gray-200">
+                    RG Militar:
+                  </label>
+                  <input
+                    type="text"
+                    id="militaryId"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
+                    placeholder="Digite seu RG MILITAR..."
+                    {...register('militaryId')}
+                  />
+                  {errors.militaryId && (
+                    <span className="text-sm text-red-500">
+                      {errors.militaryId.message}
+                    </span>
+                  )}
+                </div>
+
                 <div className="space-y-1">
                   <label htmlFor="birthday" className="text-sm text-gray-200">
                     Data de nascimento:

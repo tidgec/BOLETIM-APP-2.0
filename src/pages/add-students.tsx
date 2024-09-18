@@ -21,9 +21,8 @@ const addStudentSchema = z.object({
       message: 'Formato do CPF inválido.',
     }),
   email: z.string().email({ message: 'Email inválido' }),
-  civilId: z
-    .string()
-    .length(5, { message: 'O RG civil deve conter 5 caracteres' }),
+  civilId: z.string().optional(),
+  militaryId: z.string().optional(),
   birthday: z.string(),
   poleId: z.string(),
 })
@@ -39,7 +38,6 @@ export function AddStudents() {
     resolver: zodResolver(addStudentSchema),
     defaultValues: {
       username: '',
-      civilId: '',
       cpf: '',
       email: '',
       poleId: '',
@@ -51,6 +49,7 @@ export function AddStudents() {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
     watch,
   } = addStudentForm
 
@@ -61,6 +60,7 @@ export function AddStudents() {
     cpf,
     email,
     civilId,
+    militaryId,
     birthday,
     poleId,
   }: AddStudentSchema) {
@@ -72,6 +72,7 @@ export function AddStudents() {
         cpf,
         email,
         civilId,
+        militaryId,
         birthday: formatDate(birthday),
         courseId,
         poleId,
@@ -80,6 +81,8 @@ export function AddStudents() {
       toast.success('Estudante criado com sucesso!', {
         duration: 500,
       })
+
+      reset()
     } catch (error) {
       toast.error('Ocorreu um erro ao criar o estudante.', {
         duration: 1000,
@@ -164,7 +167,7 @@ export function AddStudents() {
                   </label>
                   <input
                     type="text"
-                    id="civil"
+                    id="civilId"
                     className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG CIVIL..."
                     {...register('civilId')}
@@ -175,6 +178,25 @@ export function AddStudents() {
                     </span>
                   )}
                 </div>
+
+                <div className="space-y-1">
+                  <label htmlFor="militaryId" className="text-sm text-gray-200">
+                    RG Militar:
+                  </label>
+                  <input
+                    type="text"
+                    id="militaryId"
+                    className="w-full rounded-sm border border-gray-300 px-4 py-3 text-sm text-gray-700"
+                    placeholder="Digite seu RG MILITAR..."
+                    {...register('militaryId')}
+                  />
+                  {errors.militaryId && (
+                    <span className="text-sm text-red-500">
+                      {errors.militaryId.message}
+                    </span>
+                  )}
+                </div>
+
                 <div className="space-y-1">
                   <label htmlFor="birthday" className="text-sm text-gray-200">
                     Data de nascimento:
