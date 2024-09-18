@@ -30,7 +30,7 @@ export function UpdateManager() {
 
   const courseId = searchParams.get('courseId')
 
-  const { handleSubmit, register, watch, control } =
+  const { handleSubmit, register, watch, control, reset } =
     useForm<UpdateManagerSchema>({
       resolver: zodResolver(updateManagerSchema),
       defaultValues: {
@@ -75,6 +75,7 @@ export function UpdateManager() {
       })
 
       toast.success('Gerente atualizado com sucesso!')
+      reset()
     } catch (error) {
       console.log(error)
       toast.error('Ocorreu algum error')

@@ -31,7 +31,7 @@ export function UpdateStudent() {
 
   const courseId = searchParams.get('courseId')
 
-  const { handleSubmit, register, watch, control } =
+  const { handleSubmit, register, watch, control, reset } =
     useForm<UpdateStudentSchema>({
       resolver: zodResolver(updateStudentSchema),
       defaultValues: {
@@ -76,6 +76,7 @@ export function UpdateStudent() {
       })
 
       toast.success('Estudante atualizado com sucesso!')
+      reset()
     } catch (error) {
       toast.error('Ocorreu algum erro')
     }
