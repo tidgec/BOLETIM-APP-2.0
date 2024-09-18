@@ -42,8 +42,24 @@ interface GetRankingResponse {
             }
           }
 
-          assessments: {
+          assessmentsPerPeriod: {
             [x: string]: {
+              vf: number
+              avi: number | null
+              avii: number | null
+              vfe?: number | null
+              average: number
+              status:
+                | 'approved'
+                | 'disapproved'
+                | 'approved second season'
+                | 'second season'
+              isRecovering: boolean
+              id: string
+              module: number
+            }[]
+
+            assessments: {
               vf: number
               avi: number | null
               avii: number | null
@@ -62,6 +78,7 @@ interface GetRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
+        studentName?: string
         studentCivilID?: string
         studentPole?: string
       }[]
@@ -114,6 +131,7 @@ interface GetRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
+        studentName?: string
         studentCivilID?: string
         studentPole?: string
       }[]
