@@ -1,7 +1,9 @@
 import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { Pagination } from '@/components/pagination'
 import { Student } from '@/components/student'
+import { useDownloadAcademicRecord } from '@/hooks/use-download-academic-record'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function DownloadAcademicRecord() {
@@ -20,6 +22,25 @@ export function DownloadAcademicRecord() {
     poleId: poleId ?? 'all',
   })
 
+  const { mutateAsync: downloadAcademicRecordFn } = useDownloadAcademicRecord()
+
+  async function handleDownloadAcademicRecord(studentId: string) {
+    try {
+      const { fileUrl } = await downloadAcademicRecordFn({
+        courseId: String(courseId),
+        studentId,
+      })
+
+      toast.success('Histórico baixado com sucesso!', {
+        duration: 1000,
+      })
+
+      console.log(fileUrl)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="w-full px-4 py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -34,7 +55,13 @@ export function DownloadAcademicRecord() {
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             students?.map((student) => (
-              <Student key={student.id} student={student} />
+              <div
+                key={student.id}
+                className="cursor-pointer"
+                onClick={() => handleDownloadAcademicRecord(student.id)}
+              >
+                <Student student={student} />
+              </div>
             ))}
         </div>
 
