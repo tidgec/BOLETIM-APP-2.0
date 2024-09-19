@@ -115,7 +115,11 @@ export function Reports() {
 
           {!isLoading &&
             reports?.map((report) => {
-              return <div key={report.id}>{report.content}</div>
+              return (
+                <div key={report.id}>
+                  <pre>{report.content.trim()}</pre>
+                </div>
+              )
             })}
         </div>
 
