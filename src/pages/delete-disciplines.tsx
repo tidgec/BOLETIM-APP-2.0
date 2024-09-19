@@ -16,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useDeleteDiscipline } from '@/hooks/use-delete-discipline'
 import { useGetDisciplines } from '@/hooks/use-get-disciplines'
 
@@ -58,38 +59,43 @@ export function DeleteDisciplines() {
         </h2>
 
         <div className="mb-6 mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoadingGetDisciplines && <p>Loading...</p>}
-          {!isLoadingGetDisciplines &&
-            disciplines?.map((discipline) => (
-              <AlertDialog key={discipline.id}>
-                <AlertDialogTrigger className="text-start">
-                  <Discipline name={discipline.name} />
-                </AlertDialogTrigger>
+          {isLoadingGetDisciplines
+            ? [1, 2, 3, 4, 5, 6].map((_, index) => (
+                <div key={index} className="m-2">
+                  <Skeleton className="h-12 w-full" />
+                </div>
+              ))
+            : disciplines?.map((discipline) => (
+                <AlertDialog key={discipline.id}>
+                  <AlertDialogTrigger className="text-start">
+                    <Discipline name={discipline.name} />
+                  </AlertDialogTrigger>
 
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Deseja remover essa disciplina?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Esta ação não pode ser desfeita. Caso clique em continuar,
-                      todos os registros dessa disciplina serão deletados.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Deseja remover essa disciplina?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Caso clique em
+                        continuar, todos os registros dessa disciplina serão
+                        deletados.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
 
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Não</AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Button
-                        onClick={() => handleDeleteDiscipline(discipline.id)}
-                      >
-                        Sim
-                      </Button>
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            ))}
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Não</AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Button
+                          onClick={() => handleDeleteDiscipline(discipline.id)}
+                        >
+                          Sim
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ))}
         </div>
 
         {disciplines && (
