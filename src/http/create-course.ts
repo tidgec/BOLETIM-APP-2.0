@@ -2,26 +2,33 @@ import Cookies from 'js-cookie'
 
 import { api } from '@/lib/axios'
 
-interface CreateCourseProps {
+interface CreateCourseRequest {
   name: string
   formula: 'CAS' | 'CGS' | 'CFP' | 'CHO' | 'CFO' | 'none'
+  startAt?: string
   endsAt: string
   imageUrl: string
+}
+
+interface CreateCourseResponse {
+  id: string
 }
 
 export async function createCourse({
   name,
   formula,
+  startAt,
   endsAt,
   imageUrl,
-}: CreateCourseProps) {
+}: CreateCourseRequest) {
   const token = Cookies.get('token')
 
-  await api.post(
+  const response = await api.post<CreateCourseResponse>(
     '/courses',
     {
       name,
       formula,
+      startAt,
       endsAt,
       imageUrl,
     },
@@ -31,4 +38,8 @@ export async function createCourse({
       },
     },
   )
+
+  return {
+    id: response.data.id,
+  }
 }
