@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { Course } from '@/components/course'
 import { Pagination } from '@/components/pagination'
@@ -25,18 +25,19 @@ export function AllCourses() {
 
         <div className="flex flex-wrap justify-center">
           {isLoadingGetCourses
-            ? [1, 2, 3, 4].map((_, index) => (
+            ? [1, 2, 3].map((_, index) => (
                 <div key={index} className="m-10 w-80 bg-white py-1 shadow-md">
                   <Skeleton className="h-40 w-full" />
                 </div>
               ))
             : courses?.map((course) => (
-                <div
+                <Link
+                  to={`/courses/management/${course.id}`}
                   key={course.id}
                   className="m-10 w-80 bg-white py-1 shadow-md"
                 >
                   <Course course={course} />
-                </div>
+                </Link>
               ))}
         </div>
 
