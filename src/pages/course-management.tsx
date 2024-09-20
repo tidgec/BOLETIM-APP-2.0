@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 
-import DisciplinesIcon from '@/assets/disciplines-icon.png'
 import CoursesIcon from '@/assets/my-course-icon.png'
 
 export function CourseManagement() {
@@ -21,17 +20,6 @@ export function CourseManagement() {
             alt=""
           />
           <span className="font-medium text-white">Todos os cursos</span>
-        </Link>
-        <Link
-          to={'/courses/management/disciplines'}
-          className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
-        >
-          <img
-            src={DisciplinesIcon}
-            className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
-            alt=""
-          />
-          <span className="font-medium text-white"> Disciplinas</span>
         </Link>
       </div>
     </section>
