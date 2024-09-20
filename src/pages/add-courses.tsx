@@ -84,7 +84,7 @@ export function AddCourses() {
         duration: 1000,
       })
 
-      navigate(`/courses/add/poles?courseId=${id}`)
+      navigate(`/courses/management/${id}/poles`)
     } catch (error) {
       console.error(error)
     }
@@ -94,7 +94,7 @@ export function AddCourses() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Adicionar Cursos
+          Adicionar Curso
         </h2>
 
         <div className="mx-auto my-12 max-w-4xl rounded bg-pmpa-blue-700">
