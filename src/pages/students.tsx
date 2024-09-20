@@ -19,7 +19,7 @@ export function Students() {
 
       <div className="mx-auto my-6 grid w-full max-w-7xl grid-cols-1 justify-items-center gap-4 py-2 md:grid-cols-2 md:justify-items-start lg:grid-cols-3">
         <Link
-          to={'/students/add/courses'}
+          to={'/students/add/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -41,7 +41,7 @@ export function Students() {
           <span className="font-medium text-white">Alunos em Lote</span>
         </Link>
         <Link
-          to={'/students/update/courses'}
+          to={'/students/update/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -52,7 +52,7 @@ export function Students() {
           <span className="font-medium text-white">Atualizar Aluno</span>
         </Link>
         <Link
-          to={'/students/enable/courses'}
+          to={'/students/enable/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -63,7 +63,7 @@ export function Students() {
           <span className="font-medium text-white">Ativar Aluno</span>
         </Link>
         <Link
-          to={'/students/disable/courses'}
+          to={'/students/disable/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -75,7 +75,7 @@ export function Students() {
         </Link>
         {decoded?.user.role === 'dev' && (
           <Link
-            to={'/students/delete/courses'}
+            to={'/students/delete/list-courses'}
             className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
           >
             <img

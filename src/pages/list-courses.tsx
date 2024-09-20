@@ -7,7 +7,7 @@ import { useGetCourses } from '@/hooks/use-get-courses'
 export function ListCoursesPage() {
   const { courses, isLoading } = useGetCourses()
 
-  const currentUrl = window.location.href.replace('/courses', '')
+  const currentUrl = window.location.href.replace('/list-courses', '')
 
   return (
     <div className="w-full py-6">

@@ -18,7 +18,7 @@ export function Managers() {
 
       <div className="mx-auto my-6 grid w-full max-w-7xl grid-cols-1 justify-items-center gap-4 py-2 md:grid-cols-2 md:justify-items-start lg:grid-cols-3">
         <Link
-          to={'/managers/add/courses'}
+          to={'/managers/add/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -29,7 +29,7 @@ export function Managers() {
           <span className="font-medium text-white">Adicionar Gestor</span>
         </Link>
         <Link
-          to={'/managers/update/courses'}
+          to={'/managers/update/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -40,7 +40,7 @@ export function Managers() {
           <span className="font-medium text-white">Atualizar Gestor</span>
         </Link>
         <Link
-          to={'/managers/enable/courses'}
+          to={'/managers/enable/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -51,7 +51,7 @@ export function Managers() {
           <span className="font-medium text-white">Ativar Gestor</span>
         </Link>
         <Link
-          to={'/managers/disable/courses'}
+          to={'/managers/disable/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -64,7 +64,7 @@ export function Managers() {
 
         {decoded?.user.role === 'dev' && (
           <Link
-            to={'/managers/delete/courses'}
+            to={'/managers/delete/list-courses'}
             className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
           >
             <img
