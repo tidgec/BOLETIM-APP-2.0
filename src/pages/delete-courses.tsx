@@ -1,52 +1,97 @@
-import CFO from '@/assets/cfo-img-curso.jpg'
-import { Skeleton } from '@/components/ui/skeleton'
+import { AxiosError } from 'axios'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
-const courses = [
-  { id: 1, title: 'CAS - 2023' },
-  { id: 2, title: 'CAS TURMA I - 2024' },
-  { id: 3, title: 'CAS TURMA II - 2023' },
-]
+import { Course } from '@/components/course'
+import { Pagination } from '@/components/pagination'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { useDeleteCourse } from '@/hooks/use-delete-course'
+import { useGetCourses } from '@/hooks/use-get-courses'
 
 export function DeleteCourses() {
-  const isLoading = false
+  const [searchParams] = useSearchParams()
+
+  const page = searchParams.get('page')
+
+  const { courses, totalItems, pages, isLoading } = useGetCourses(page ?? '1')
+
+  const { mutateAsync: deleteCouseFn } = useDeleteCourse()
+
+  async function handleDeleteCourse(id: string) {
+    try {
+      await deleteCouseFn({
+        id,
+      })
+
+      toast.success('Curso deletado com sucesso!', {
+        duration: 1000,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+
+      toast.error(err.response?.data.message, {
+        duration: 1000,
+      })
+    }
+  }
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
+      <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Deletar cursos
+          Deletar Curso
         </h2>
 
-        <div className="flex flex-wrap justify-center">
-          {isLoading ? (
-            <>
-              {[1, 2, 3].map((_, index) => (
-                <div key={index} className="m-10 w-80 bg-white py-1 shadow-md">
-                  <div className="flex flex-col items-center">
-                    <Skeleton className="mb-4 h-40 w-full" />
-                    <Skeleton className="mb-2 h-6 w-3/4" />
-                    <Skeleton className="h-8 w-1/2 rounded bg-pmpa-blue-500 px-4 py-2 text-white" />
+        <div className="mx-2 mb-4 mt-4 grid grid-cols-2 gap-4 overflow-auto md:grid-cols-4">
+          {isLoading && <p>Loading...</p>}
+          {!isLoading &&
+            courses?.map((course) => (
+              <AlertDialog key={course.id}>
+                <AlertDialogTrigger className="text-start">
+                  <div key={course.id} className="m-10 bg-white shadow-md">
+                    <Course course={course} />
                   </div>
-                </div>
-              ))}
-            </>
-          ) : (
-            courses.map((course) => (
-              <div
-                key={course.id}
-                className="m-10 w-80 bg-white py-1 shadow-md"
-              >
-                <div className="flex flex-col items-center">
-                  <img src={CFO} alt="Polícia Militar" className="mb-4" />
-                  <h3 className="mb-2 text-xl">{course.title}</h3>
-                  <button className="rounded bg-pmpa-blue-500 px-4 py-2 text-white">
-                    Deletar
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
+                </AlertDialogTrigger>
+
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Deseja remover esse curso?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta ação não pode ser desfeita. Caso clique em continuar,
+                      todos os registros desse curso serão deletados.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Não</AlertDialogCancel>
+                    <AlertDialogAction asChild>
+                      <Button onClick={() => handleDeleteCourse(course.id)}>
+                        Sim
+                      </Button>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ))}
         </div>
+        <Pagination
+          items={totalItems ?? 0}
+          page={page ? Number(page) : 1}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )
