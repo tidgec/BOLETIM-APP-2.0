@@ -13,7 +13,7 @@ export async function uploadAttachment({ file }: UploadAttachmentRequest) {
   const token = Cookies.get('token')
 
   const uploadFormData = new FormData()
-  uploadFormData.set('avatar', file)
+  uploadFormData.set('attachment', file)
 
   const response = await api.post<UploadAttachmentResponse>(
     '/upload',

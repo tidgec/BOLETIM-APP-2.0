@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChangeEvent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -15,13 +16,14 @@ const addCourseSchema = z.object({
     .min(3, { message: 'O nome do curso deve ter no mínimo 3 caracteres' })
     .max(30, { message: 'O nome do curso deve ter no máximo 30 caracteres' }),
   formula: z.enum(['CAS', 'CGS', 'CFP', 'CHO', 'CFO', 'none']),
-  startAt: z.string(),
+  startAt: z.string().optional(),
   endsAt: z.string(),
 })
 
 type AddCourseSchema = z.infer<typeof addCourseSchema>
 
 export function AddCourses() {
+  const navigate = useNavigate()
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   const {
@@ -60,6 +62,7 @@ export function AddCourses() {
   async function handleCreateCourse({
     name,
     formula,
+    startAt,
     endsAt,
   }: AddCourseSchema) {
     if (!previewUrl) {
@@ -69,9 +72,10 @@ export function AddCourses() {
     }
 
     try {
-      await createCourseFn({
+      const { id } = await createCourseFn({
         name,
         formula,
+        startAt: startAt ? formatDate(startAt) : undefined,
         endsAt: formatDate(endsAt),
         imageUrl: String(previewUrl),
       })
@@ -79,6 +83,8 @@ export function AddCourses() {
       toast.success('Curso criado com sucesso!', {
         duration: 1000,
       })
+
+      navigate(`/courses/add/poles?courseId=${id}`)
     } catch (error) {
       console.error(error)
     }

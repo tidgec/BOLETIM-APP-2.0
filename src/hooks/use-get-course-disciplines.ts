@@ -4,7 +4,7 @@ import { getCourseDisciplines } from '@/http/get-course-disciplines'
 
 export function useGetCourseDisciplines(courseId: string) {
   const query = useQuery({
-    queryKey: ['courses', courseId, 'disciplines'],
+    queryKey: ['course-disciplines', courseId],
     queryFn: () => getCourseDisciplines({ courseId }),
     staleTime: Infinity,
   })
