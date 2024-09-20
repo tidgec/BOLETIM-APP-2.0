@@ -9,6 +9,8 @@ import { AddAcademicRecord } from './pages/add-academic-record'
 import { AddAdmins } from './pages/add-admins'
 import { AddBehaviors } from './pages/add-behaviors'
 import { AddBehaviorsBatch } from './pages/add-behaviors-batch'
+import { AddCourseDiscipline } from './pages/add-course-discipline'
+import { AddCoursePole } from './pages/add-course-pole'
 import { AddCourses } from './pages/add-courses'
 import { AddDiscipline } from './pages/add-discipline'
 import { AddManagers } from './pages/add-managers'
@@ -411,6 +413,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <AddCourses />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/courses/add/poles',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddCoursePole />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/courses/add/disciplines',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AddCourseDiscipline />
           </ProtectedLayout>
         ),
       },
