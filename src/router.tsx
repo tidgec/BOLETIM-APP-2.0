@@ -9,8 +9,6 @@ import { AddAcademicRecord } from './pages/add-academic-record'
 import { AddAdmins } from './pages/add-admins'
 import { AddBehaviors } from './pages/add-behaviors'
 import { AddBehaviorsBatch } from './pages/add-behaviors-batch'
-import { AddCourseDiscipline } from './pages/add-course-discipline'
-import { AddCoursePole } from './pages/add-course-pole'
 import { AddCourses } from './pages/add-courses'
 import { AddDiscipline } from './pages/add-discipline'
 import { AddManagers } from './pages/add-managers'
@@ -24,22 +22,22 @@ import { AverageBehaviorPolesRanking } from './pages/average-behavior-poles-rank
 import { BehaviorBatchPage } from './pages/behavior-batch'
 import { Behaviors } from './pages/behaviors'
 import { BoletimCard } from './pages/boletim-card'
+import { CourseDiscipline } from './pages/course-discipline'
+import { CourseManagementInformation } from './pages/course-information'
 import { CourseManagement } from './pages/course-management'
+import { CoursePole } from './pages/course-pole'
 import { Courses } from './pages/courses'
 import { DataManagement } from './pages/data-management'
 import { DeleteAdmins } from './pages/delete-admins'
 import { DeleteCourses } from './pages/delete-courses'
-import { DeleteDisciplines } from './pages/delete-disciplines'
 import { DeleteManagers } from './pages/delete-managers'
 import { DeleteStudents } from './pages/delete-students'
-import { Disciplines } from './pages/disciplines'
 import { DownloadAcademicRecord } from './pages/download-academic-record'
 import { Home } from './pages/home'
 import { ListAdminsPage } from './pages/list-admins'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
 import { ListCoursePolesPage } from './pages/list-course-poles'
 import { ListCoursesPage } from './pages/list-courses'
-import { ListDisciplinesPage } from './pages/list-disciplines'
 import { ListManagersPage } from './pages/list-managers'
 import { ListStudentsPage } from './pages/list-students'
 import { LoginConfirmation } from './pages/login-confirmation'
@@ -76,7 +74,6 @@ import { UpdateAdmins } from './pages/update-admins'
 import { UpdateBehavior } from './pages/update-behavior'
 import { UpdateBehaviorsBatch } from './pages/update-behaviors-batch'
 import { UpdateCourses } from './pages/update-courses'
-import { UpdateDiscipline } from './pages/update-discipline'
 import { UpdateManager } from './pages/update-managers'
 import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
@@ -417,18 +414,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/courses/add/poles',
+        path: '/courses/update/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
-            <AddCoursePole />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/courses/add/disciplines',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <AddCourseDiscipline />
+            <ListCoursesPage />
           </ProtectedLayout>
         ),
       },
@@ -473,10 +462,26 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/courses/management/disciplines',
+        path: '/courses/management/:id',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
-            <Disciplines />
+            <CourseManagementInformation />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/courses/management/:id/disciplines',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <CourseDiscipline />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/courses/management/:id/poles',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <CoursePole />
           </ProtectedLayout>
         ),
       },
@@ -489,30 +494,6 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <AddDiscipline />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/disciplines/list',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <ListDisciplinesPage />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/disciplines/:id/update',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <UpdateDiscipline />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/disciplines/delete',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <DeleteDisciplines />
           </ProtectedLayout>
         ),
       },
@@ -533,7 +514,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/enable/courses',
+        path: '/students/enable/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -549,7 +530,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/update/courses',
+        path: '/students/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -573,7 +554,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/add/courses',
+        path: '/students/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -597,7 +578,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/batch/add/courses',
+        path: '/students/batch/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -613,7 +594,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/batch/update/courses',
+        path: '/students/batch/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -629,7 +610,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/disable/courses',
+        path: '/students/disable/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -645,7 +626,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/delete/courses',
+        path: '/students/delete/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -669,7 +650,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/managers/enable/courses',
+        path: '/managers/enable/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -685,7 +666,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/managers/disable/courses',
+        path: '/managers/disable/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -701,7 +682,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/managers/add/courses',
+        path: '/managers/add/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -717,7 +698,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/managers/update/courses',
+        path: '/managers/update/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -741,7 +722,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/managers/delete/courses',
+        path: '/managers/delete/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -765,7 +746,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/academic-record/add/courses',
+        path: '/academic-record/add/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -789,7 +770,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/academic-record/download/courses',
+        path: '/academic-record/download/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -813,7 +794,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/overall/courses',
+        path: '/rankings/overall/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -829,7 +810,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/poles/courses',
+        path: '/rankings/poles/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -853,7 +834,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/poles/no-behavior/courses',
+        path: '/rankings/poles/no-behavior/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -877,7 +858,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/poles-average/courses',
+        path: '/rankings/poles-average/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -893,7 +874,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/average-behavior-poles/courses',
+        path: '/rankings/average-behavior-poles/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -925,7 +906,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/management/login-confirmation/courses',
+        path: '/management/login-confirmation/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -941,7 +922,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/management/students/courses',
+        path: '/management/students/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -985,14 +966,6 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <UpdateAdmins />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/admins/delete/courses',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <ListCoursesPage />
           </ProtectedLayout>
         ),
       },
