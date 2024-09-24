@@ -989,14 +989,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/delete/courses',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <ListCoursesPage />
-          </ProtectedLayout>
-        ),
-      },
-      {
         path: '/admins/delete',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
