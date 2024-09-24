@@ -6,6 +6,7 @@ export interface GetAdminsRequest {
   username?: string
   cpf?: string
   page?: string
+  isEnabled?: string
 }
 
 export interface GetAdminsAxiosResponse {
@@ -36,6 +37,7 @@ export async function getAdmins({
   cpf,
   username,
   page,
+  isEnabled,
 }: GetAdminsRequest): Promise<GetAdminsResponse> {
   const token = Cookies.get('token')
 
@@ -47,6 +49,7 @@ export async function getAdmins({
       username,
       cpf,
       page,
+      isEnabled: isEnabled ?? true,
     },
   })
 
