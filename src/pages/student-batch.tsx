@@ -12,7 +12,7 @@ export function StudentBatchPage() {
 
       <div className="mx-auto my-6 grid w-full max-w-7xl grid-cols-1 justify-items-center gap-4 py-2 md:grid-cols-2 md:justify-items-start lg:grid-cols-3">
         <Link
-          to={'/students/batch/add/courses'}
+          to={'/students/batch/add/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
@@ -23,7 +23,7 @@ export function StudentBatchPage() {
           <span className="font-medium text-white">Adicionar Alunos</span>
         </Link>
         <Link
-          to={'/students/batch/update/courses'}
+          to={'/students/batch/update/list-courses'}
           className="relative flex h-52 w-full max-w-80 justify-end rounded bg-pmpa-blue-700 px-6 py-4"
         >
           <img
