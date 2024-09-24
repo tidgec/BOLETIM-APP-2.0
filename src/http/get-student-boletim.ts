@@ -9,103 +9,49 @@ export interface GetStudentBoletimRequest {
 }
 
 interface GetStudentBoletimResponse {
-  grades:
-    | {
-        averageInform: {
-          geralAverage: number | string
-          behaviorAverageStatus:
-            | {
-                behaviorAverage: number
-                status: 'disapproved' | 'approved'
-              }[]
-            | {
-                behaviorAverage: number
-                status: 'disapproved' | 'approved'
-              }
-          behaviorsCount: number
-          studentAverageStatus: {
-            concept:
-              | 'excellent'
-              | 'very good'
-              | 'good'
-              | 'regular'
-              | 'insufficient'
-              | 'no income'
-            status:
-              | 'approved'
-              | 'disapproved'
-              | 'approved second season'
-              | 'disapproved second season'
-              | 'second season'
-          }
-        }
+  grades: {
+    averageInform: {
+      geralAverage: number | string
+      behaviorAverageStatus: {
+        behaviorAverage: number
+        status: 'disapproved' | 'approved'
+      }[]
 
-        assessments: {
-          [x: string]: {
-            vf: number
-            avi: number | null
-            avii: number | null
-            vfe?: number | null
-            average: number
-            status:
-              | 'approved'
-              | 'disapproved'
-              | 'approved second season'
-              | 'second season'
-            isRecovering: boolean
-            id: string
-            module: number
-          }[]
-        }
-        assessmentsCount: number
+      behaviorsCount: number
+      studentAverageStatus: {
+        concept:
+          | 'excellent'
+          | 'very good'
+          | 'good'
+          | 'regular'
+          | 'insufficient'
+          | 'no income'
+        status:
+          | 'approved'
+          | 'disapproved'
+          | 'approved second season'
+          | 'disapproved second season'
+          | 'second season'
       }
-    | {
-        averageInform: {
-          geralAverage: number | string
-          behaviorAverageStatus:
-            | {
-                behaviorAverage: number
-                status: 'disapproved' | 'approved'
-              }[]
-            | {
-                behaviorAverage: number
-                status: 'disapproved' | 'approved'
-              }
-          behaviorsCount: number
-          studentAverageStatus: {
-            concept:
-              | 'excellent'
-              | 'very good'
-              | 'good'
-              | 'regular'
-              | 'insufficient'
-              | 'no income'
-            status:
-              | 'approved'
-              | 'disapproved'
-              | 'approved second season'
-              | 'disapproved second season'
-              | 'second season'
-          }
-        }
+    }
 
-        assessments: ({
-          vf: number
-          avi: number | null
-          avii: number | null
-          vfe?: number | null
-          average: number
-          status:
-            | 'approved'
-            | 'disapproved'
-            | 'approved second season'
-            | 'second season'
-          isRecovering: boolean
-          id: string
-          module: number
-        } | null)[]
-        assessmentsCount: number
-      }
+    assessments: ({
+      vf: number
+      avi: number | null
+      avii: number | null
+      vfe?: number | null
+      average: number
+      status:
+        | 'approved'
+        | 'disapproved'
+        | 'approved second season'
+        | 'second season'
+      isRecovering: boolean
+      id: string
+      module: number
+    } | null)[]
+    assessmentsCount: number
+  }
 
   behaviorMonths: {
     january?: number | null
