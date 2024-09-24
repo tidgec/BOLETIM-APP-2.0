@@ -10,7 +10,7 @@ interface DeleteUserProps {
 export async function deleteUser({ id, role }: DeleteUserProps) {
   const token = Cookies.get('token')
 
-  if (role === 'admin') {
+  if (role === 'ADMIN') {
     return await api.delete(`/administrators/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,7 +18,7 @@ export async function deleteUser({ id, role }: DeleteUserProps) {
     })
   }
 
-  if (role === 'manager') {
+  if (role === 'MANAGER') {
     return await api.delete(`/managers/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
