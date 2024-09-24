@@ -17,6 +17,8 @@ import { AddNotesBatch } from './pages/add-notes-batch'
 import { AddStudentsBatch } from './pages/add-student-batch'
 import { AddStudents } from './pages/add-students'
 import { Admins } from './pages/admins'
+import { AdminsDisabled } from './pages/admins-disabled'
+import { AdminsEnabled } from './pages/admins-enabled'
 import { AllCourses } from './pages/all-courses'
 import { AverageBehaviorPolesRanking } from './pages/average-behavior-poles-ranking'
 import { BehaviorBatchPage } from './pages/behavior-batch'
@@ -47,6 +49,8 @@ import { ManagersEnabled } from './pages/managers-enabled'
 import { NoteBatchPage } from './pages/note-batch'
 import { Notes } from './pages/notes'
 import { OverallRanking } from './pages/overall-ranking'
+import { OverallSubPoleRanking } from './pages/overall-sub-pole-ranking'
+import { OverallSubRanking } from './pages/overall-sub-ranking'
 import { PoleRanking } from './pages/pole-ranking'
 import { PoleRankingWithoutBehavior } from './pages/pole-ranking-without-behavior'
 import { PolesAverageRanking } from './pages/poles-average-ranking'
@@ -79,6 +83,7 @@ import { UpdateNotes } from './pages/update-notes'
 import { UpdateNotesBatch } from './pages/update-notes-batch'
 import { UpdateStudent } from './pages/update-student'
 import { UpdateStudentsBatch } from './pages/update-students-batch'
+import { ValidateDocument } from './pages/validate-document'
 
 export const router = createBrowserRouter([
   {
@@ -142,7 +147,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/add/courses',
+        path: '/notes/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -166,7 +171,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/update/courses',
+        path: '/notes/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -190,7 +195,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/search/courses',
+        path: '/notes/search/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -206,7 +211,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/remove/courses',
+        path: '/notes/remove/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -238,7 +243,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/batch/add/courses',
+        path: '/notes/batch/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -254,7 +259,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/batch/update/courses',
+        path: '/notes/batch/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -270,7 +275,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/notes/batch/remove/courses',
+        path: '/notes/batch/remove/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -294,7 +299,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/add/courses',
+        path: '/behaviors/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -310,7 +315,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/remove/courses',
+        path: '/behaviors/remove/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -326,7 +331,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/update/courses',
+        path: '/behaviors/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -350,7 +355,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/batch/add/courses',
+        path: '/behaviors/batch/add/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -366,7 +371,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/batch/update/courses',
+        path: '/behaviors/batch/update/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -382,7 +387,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/behaviors/batch/remove/courses',
+        path: '/behaviors/batch/remove/list-courses',
         element: (
           <ProtectedLayout roles={['manager', 'admin', 'dev']}>
             <ListCoursesPage />
@@ -810,6 +815,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/rankings/overall/sub-ranking',
+        element: (
+          <ProtectedLayout roles={['manager', 'admin', 'dev']}>
+            <OverallSubRanking />
+          </ProtectedLayout>
+        ),
+      },
+      {
         path: '/rankings/poles/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
@@ -830,6 +843,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <PoleRanking />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/rankings/poles/:id/sub-ranking',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <OverallSubPoleRanking />
           </ProtectedLayout>
         ),
       },
@@ -978,6 +999,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/admins/enable',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AdminsEnabled />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/admins/disable',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <AdminsDisabled />
+          </ProtectedLayout>
+        ),
+      },
+      {
         path: '/profile',
         element: (
           <ProtectedLayout roles={['student', 'manager', 'admin', 'dev']}>
@@ -1006,6 +1043,10 @@ export const router = createBrowserRouter([
       {
         path: '/students/confirm',
         element: <StudentConfirm />,
+      },
+      {
+        path: '/validate-document',
+        element: <ValidateDocument />,
       },
     ],
   },
