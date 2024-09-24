@@ -151,6 +151,7 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
       {
         params: {
           page,
+          hasBehavior: 'true',
         },
 
         headers: {
@@ -169,6 +170,7 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
     {
       params: {
         page,
+        hasBehavior: 'true',
       },
 
       headers: {
