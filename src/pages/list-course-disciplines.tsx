@@ -1,20 +1,18 @@
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { Discipline } from '@/components/discipline'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 
 export function ListCourseDisciplinesPage() {
   const [searchParams] = useSearchParams()
-
   const courseId = searchParams.get('courseId')
-
   const { disciplines, isLoading } = useGetCourseDisciplines(String(courseId))
-
   const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
 
   return (
     <div className="container mx-auto w-full p-4">
-      <section className="max-w[90rem] mx-auto w-full">
+      <section className="mx-auto w-full max-w-[90rem]">
         <h2 className="w-full border-b-2 border-black py-4 text-xl font-semibold">
           Disciplinas
         </h2>
@@ -27,21 +25,25 @@ export function ListCourseDisciplinesPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoading && <p>Loading...</p>}
-          {!isLoading &&
-            disciplines?.map((discipline) => (
-              <Link
-                key={discipline.disciplineId}
-                to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
-              >
-                <Discipline
+          {isLoading
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="w-full">
+                  <Skeleton className="mb-2 h-16 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                </div>
+              ))
+            : disciplines?.map((discipline) => (
+                <Link
                   key={discipline.disciplineId}
-                  courseId={String(courseId)}
-                  disciplineId={discipline.disciplineId}
-                  name={discipline.name}
-                />
-              </Link>
-            ))}
+                  to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
+                >
+                  <Discipline
+                    courseId={String(courseId)}
+                    disciplineId={discipline.disciplineId}
+                    name={discipline.name}
+                  />
+                </Link>
+              ))}
         </div>
       </section>
     </div>
