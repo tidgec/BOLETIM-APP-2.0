@@ -6,12 +6,18 @@ interface GetAdminsProps {
   username?: string
   cpf?: string
   page?: string
+  isEnabled?: string
 }
 
-export function useGetAdmins({ cpf, username, page }: GetAdminsProps) {
+export function useGetAdmins({
+  cpf,
+  username,
+  page,
+  isEnabled,
+}: GetAdminsProps) {
   const query = useQuery({
-    queryKey: ['admins', cpf, username, page],
-    queryFn: () => getAdmins({ cpf, username, page }),
+    queryKey: ['admins', cpf, username, page, isEnabled],
+    queryFn: () => getAdmins({ cpf, username, page, isEnabled }),
     staleTime: Infinity,
   })
 
