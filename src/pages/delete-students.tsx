@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -67,7 +68,13 @@ export function DeleteStudents() {
         <FilterForm />
 
         <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
-          {isLoading && <p>Loading...</p>}
+          {isLoading && (
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
+          )}
           {!isLoading &&
             students?.map((student) => (
               <AlertDialog key={student.id}>

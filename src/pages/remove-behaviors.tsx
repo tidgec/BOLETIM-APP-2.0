@@ -49,7 +49,7 @@ export function RemoveBehaviors() {
           <div className="space-y-2">
             {students?.map((student) => {
               if (!behaviors) {
-                return <p key={student.id}>Loading...</p>
+                return <p key={student.id}>Carregando...</p>
               }
 
               const studentBehaviors = behaviors.filter(

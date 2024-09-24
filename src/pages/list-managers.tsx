@@ -2,7 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
-import { Skeleton } from '@/components/ui/skeleton'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
 import { formatCPF } from '@/utils/format-cpf'
 
@@ -36,18 +36,11 @@ export function ListManagersPage() {
 
         <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
           {isLoading ? (
-            <>
-              {[1, 2, 3, 4].map((_, index) => (
-                <div key={index} className="space-y-2 rounded border p-4">
-                  <Skeleton className="mb-4 h-6 w-3/4" />
-                  <Skeleton className="mb-2 h-4 w-1/2" />
-                  <Skeleton className="mb-2 h-4 w-2/3" />
-                  <Skeleton className="mb-2 h-4 w-1/2" />
-                  <Skeleton className="mb-2 h-4 w-1/2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              ))}
-            </>
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
           ) : (
             managers?.map((manager) => (
               <Link

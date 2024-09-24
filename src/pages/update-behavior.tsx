@@ -54,7 +54,7 @@ export function UpdateBehavior() {
           <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
             {students?.map((student) => {
               if (!behaviors) {
-                return <p key={student.id}>Loading...</p>
+                return <p key={student.id}>Carregando...</p>
               }
 
               const studentBehaviors = behaviors.filter(

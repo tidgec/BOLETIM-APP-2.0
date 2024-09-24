@@ -2,7 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 
 import { Filter } from '@/components/filter'
 import { Pagination } from '@/components/pagination'
-import { Skeleton } from '@/components/ui/skeleton'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { useGetAdmins } from '@/hooks/use-get-admins'
 import { formatCPF } from '@/utils/format-cpf'
 
@@ -32,24 +32,26 @@ export function ListAdminsPage() {
         </Filter.Root>
 
         <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
-          {isLoading
-            ? [1, 2, 3].map((_, index) => (
-                <div key={index} className="mb-4">
-                  <Skeleton className="h-16 w-full" />
-                </div>
-              ))
-            : admins?.map((admin) => (
-                <Link to={`/admins/update/${admin.id}`} key={admin.id}>
-                  <ul className="space-y-2 rounded border p-4">
-                    <li className="mb-4 text-lg font-semibold">
-                      Nome: {admin.username}
-                    </li>
-                    <li>CPF: {formatCPF(admin.cpf)}</li>
-                    <li>Email: {admin.email}</li>
-                    <li>Inserido em: {admin.createdAt}</li>
-                  </ul>
-                </Link>
-              ))}
+          {isLoading ? (
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
+          ) : (
+            admins?.map((admin) => (
+              <Link to={`/admins/update/${admin.id}`} key={admin.id}>
+                <ul className="space-y-2 rounded border p-4">
+                  <li className="mb-4 text-lg font-semibold">
+                    Nome: {admin.username}
+                  </li>
+                  <li>CPF: {formatCPF(admin.cpf)}</li>
+                  <li>Email: {admin.email}</li>
+                  <li>Inserido em: {admin.createdAt}</li>
+                </ul>
+              </Link>
+            ))
+          )}
         </div>
 
         <Pagination

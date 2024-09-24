@@ -7,6 +7,7 @@ import { z } from 'zod'
 
 import { Filter } from '@/components/filter'
 import { Pagination } from '@/components/pagination'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -18,7 +19,6 @@ import {
 } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
 import { useActiveAdminStatus } from '@/hooks/use-active-admin-status'
-import { useDisableAdminStatus } from '@/hooks/use-disable-admin-status'
 import { useGetAdmins } from '@/hooks/use-get-admins'
 import { formatCPF } from '@/utils/format-cpf'
 
@@ -94,7 +94,13 @@ export function AdminsDisabled() {
         </Filter.Root>
 
         <div className="mx-2 mb-4 flex h-[36rem] flex-col gap-4 overflow-auto">
-          {isLoading && <p>Loading...</p>}
+          {isLoading && (
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
+          )}
           {!isLoading &&
             admins?.map((admin) => (
               <Dialog key={admin.id}>
