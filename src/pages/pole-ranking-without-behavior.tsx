@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Ske
 import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
+import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function PoleRankingWithoutBehavior() {
@@ -21,18 +22,14 @@ export function PoleRankingWithoutBehavior() {
     courseId: String(courseId),
   })
 
-  const { ranking, isLoading } = useGetPoleRanking({
+  const { ranking, isLoading, pages, totalItems } = useGetPoleRanking({
     courseId: String(courseId),
     poleId: String(id),
     page,
     hasBehavior: 'false',
   })
 
-  const {
-    ranking: rankingToPrint,
-    pages,
-    totalItems,
-  } = useGetPoleRanking({
+  const { ranking: rankingToPrint } = useGetPoleRanking({
     courseId: String(courseId),
     poleId: String(id),
     hasBehavior: 'false',
@@ -89,6 +86,8 @@ export function PoleRankingWithoutBehavior() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
+
+  console.log(pages)
 
   return (
     <div className="w-full py-6">
@@ -196,50 +195,54 @@ export function PoleRankingWithoutBehavior() {
                   </td>
                 </tr>
               ) : (
-                ranking?.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {index + 1}º
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentAverage.assessmentsCount}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentAverage.averageInform.behaviorsCount}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentCivilID}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentPole}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentAverage.averageInform.geralAverage}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {
-                        conceptMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .concept
-                        ]
-                      }
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentBirthday}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {item.studentPole}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-slate-700">
-                      {
-                        overallStatusMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status
-                        ]
-                      }
-                    </td>
-                  </tr>
-                ))
+                ranking?.map((item, index) => {
+                  const classification = getClassificationPosition(index, page)
+
+                  return (
+                    <tr key={index}>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {classification}º
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentAverage.assessmentsCount}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentAverage.averageInform.behaviorsCount}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentCivilID}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentPole}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentAverage.averageInform.geralAverage}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ]
+                        }
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentBirthday}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentPole}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ]
+                        }
+                      </td>
+                    </tr>
+                  )
+                })
               )}
             </tbody>
           </table>

@@ -2,6 +2,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
+import { Pagination } from '@/components/pagination'
 import { RankingSkeleton } from '@/components/skeletons/ranking-skeleton'
 import { RankingViewer } from '@/components/templates/ranking-viewer'
 import { Button } from '@/components/ui/button'
@@ -15,7 +16,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
+import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
+import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function PoleRanking() {
@@ -24,7 +27,11 @@ export function PoleRanking() {
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
 
-  const { ranking, isLoading } = useGetPoleRanking({
+  const { course, isLoading: isLoadingGetCourse } = useGetCourse({
+    courseId: String(courseId),
+  })
+
+  const { ranking, isLoading, totalItems, pages } = useGetPoleRanking({
     courseId: String(courseId),
     poleId: String(id),
     page,
@@ -137,8 +144,14 @@ export function PoleRanking() {
           </div>
         </div>
 
-        <div className="mb-6 text-center font-bold">
-          <span className="text-black">Classificação Geral: CAS - 2023</span>
+        <div className="mb-6 flex items-center justify-center font-bold">
+          {isLoadingGetCourse ? (
+            <Skeleton className="h-4 w-44 bg-slate-300" />
+          ) : (
+            <span className="text-black">
+              Classificação Geral: {course?.name}
+            </span>
+          )}
         </div>
 
         <div className="rounded-lg border border-gray-200 bg-white shadow-md">
@@ -187,50 +200,54 @@ export function PoleRanking() {
                   <RankingSkeleton />
                 </>
               ) : (
-                ranking?.map((item, index) => (
-                  <TableRow key={item.studentName}>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {index + 1}º
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.assessmentsCount}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.averageInform.behaviorsCount}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentCivilID}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentName}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.averageInform.geralAverage}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {
-                        conceptMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .concept
-                        ]
-                      }
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentBirthday}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentPole}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {
-                        overallStatusMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status
-                        ]
-                      }
-                    </TableCell>
-                  </TableRow>
-                ))
+                ranking?.map((item, index) => {
+                  const classification = getClassificationPosition(index, page)
+
+                  return (
+                    <TableRow key={item.studentName}>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {classification}º
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.assessmentsCount}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.averageInform.behaviorsCount}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentCivilID}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentName}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.averageInform.geralAverage}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ]
+                        }
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentBirthday}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentPole}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ]
+                        }
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
               )}
             </TableBody>
           </Table>
@@ -240,6 +257,7 @@ export function PoleRanking() {
           <PDFDownloadLink
             document={
               <RankingViewer
+                courseName={course?.name ?? ''}
                 ranking={
                   rankingToPrint
                     ? rankingToPrint.map((item, index) => ({
@@ -280,6 +298,12 @@ export function PoleRanking() {
           </PDFDownloadLink>
           <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
+
+        <Pagination
+          items={totalItems ?? 0}
+          page={Number(page)}
+          pages={pages ?? 0}
+        />
       </section>
     </div>
   )
