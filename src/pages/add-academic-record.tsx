@@ -19,7 +19,6 @@ const addAcademicRecordSchema = z.object({
   finishDate: z.string(),
   speechs: z.number(),
   internships: z.number(),
-  totalHours: z.number(),
   divisionBoss: z
     .string()
     .min(3, { message: 'O nome deve conter no mínimo 3 caracters' })
@@ -48,7 +47,6 @@ export function AddAcademicRecord() {
       divisionBoss: '',
       commander: '',
       internships: 0,
-      totalHours: 0,
       speechs: 0,
     },
   })
@@ -61,7 +59,6 @@ export function AddAcademicRecord() {
     finishDate,
     speechs,
     internships,
-    totalHours,
     commander,
     divisionBoss,
   }: AddAcademicRecordSchema) {
@@ -94,9 +91,9 @@ export function AddAcademicRecord() {
           Adicionar Histórico Escolar
         </h2>
 
-        <div className="group relative mx-auto my-8 rounded px-4">
+        <div className="group relative mx-auto my-8 rounded px-1 md:px-4">
           <form
-            className="mx-auto max-w-[50rem] space-y-4 rounded bg-pmpa-blue-600 p-6"
+            className="mx-auto max-w-[50rem] space-y-4 rounded bg-pmpa-blue-600 p-4 md:p-6"
             onSubmit={handleSubmit(handleAddAcademicRecord)}
           >
             <div className="space-y-2">
