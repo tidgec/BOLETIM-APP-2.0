@@ -53,13 +53,16 @@ export function DeleteCourses() {
           Deletar Curso
         </h2>
 
-        <div className="mx-2 mb-4 mt-4 grid grid-cols-2 gap-4 overflow-auto md:grid-cols-4">
+        <div className="mx-2 my-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
           {isLoading && <p>Loading...</p>}
           {!isLoading &&
             courses?.map((course) => (
               <AlertDialog key={course.id}>
-                <AlertDialogTrigger className="text-start">
-                  <div key={course.id} className="m-10 bg-white shadow-md">
+                <AlertDialogTrigger>
+                  <div
+                    key={course.id}
+                    className="bg-white text-center shadow-md"
+                  >
                     <Course course={course} />
                   </div>
                 </AlertDialogTrigger>
