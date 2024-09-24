@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { CreateAssessmentForm } from '@/components/create-assessment-form'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function AddNotes() {
@@ -31,7 +32,17 @@ export function AddNotes() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
+        {isLoading && (
+          <div className="space-y-4">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="rounded border p-4">
+                <Skeleton className="mb-2 h-6 w-3/4" />
+                <Skeleton className="mb-1 h-4 w-1/2" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
           {!isLoading &&
