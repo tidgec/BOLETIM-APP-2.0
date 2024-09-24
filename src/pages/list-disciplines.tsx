@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 
 import { Discipline } from '@/components/discipline'
 import { Pagination } from '@/components/pagination'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetDisciplines } from '@/hooks/use-get-disciplines'
 
 export function ListDisciplinesPage() {
@@ -31,16 +32,21 @@ export function ListDisciplinesPage() {
         </div>
 
         <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoadingGetDisciplines && <p>Loading...</p>}
-          {!isLoadingGetDisciplines &&
-            disciplines?.map((discipline) => (
-              <Link
-                key={discipline.id}
-                to={`/disciplines/${discipline.id}/${method}?discipline=${discipline.name}`}
-              >
-                <Discipline name={discipline.name} />
-              </Link>
-            ))}
+          {isLoadingGetDisciplines
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="w-full">
+                  <Skeleton className="mb-2 h-16 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                </div>
+              ))
+            : disciplines?.map((discipline) => (
+                <Link
+                  key={discipline.id}
+                  to={`/disciplines/${discipline.id}/${method}?discipline=${discipline.name}`}
+                >
+                  <Discipline name={discipline.name} />
+                </Link>
+              ))}
         </div>
 
         {disciplines && (
