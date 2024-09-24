@@ -37,7 +37,7 @@ export function Home() {
         role,
       })
 
-      toast.success('Estudante deletado com sucesso!', {
+      toast.success('Usuário deletado com sucesso!', {
         duration: 1000,
       })
     } catch (error) {
