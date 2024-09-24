@@ -18,8 +18,9 @@ export async function downloadAcademicRecord({
   const token = Cookies.get('token')
 
   const response = await api.post<DownloadAcademicRecordResponse>(
-    `/courses/${courseId}/download-historic`,
+    `/historics/download`,
     {
+      courseId,
       studentId,
     },
     {
