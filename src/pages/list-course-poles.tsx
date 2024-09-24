@@ -1,9 +1,7 @@
-import 'react-loading-skeleton/dist/skeleton.css'
-
-import Skeleton from 'react-loading-skeleton'
 import { useSearchParams } from 'react-router-dom'
 
 import { Pole } from '@/components/pole'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 
 export function ListCoursePolesPage() {
@@ -21,16 +19,20 @@ export function ListCoursePolesPage() {
           Selecione o polo
         </h2>
 
-        <div className="mx-2 mb-4 mt-4 flex h-[36rem] flex-col gap-4 overflow-auto">
+        <div className="mx-2 my-4 flex flex-col items-center justify-center gap-4 md:flex-row">
           {isLoadingPoles ? (
-            <div className="flex flex-col gap-4">
-              <Skeleton height={50} count={1} />
+            <div className="flex w-full justify-center gap-8">
+              <Skeleton className="h-16 w-64 bg-slate-300" />
+              <Skeleton className="h-16 w-64 bg-slate-300" />
+              <Skeleton className="h-16 w-64 bg-slate-300" />
             </div>
           ) : (
             poles?.map((pole) => (
-              <div key={pole.id}>
-                <Pole pole={pole} courseId={courseId ?? ''} />
-              </div>
+              <>
+                <div key={pole.id} className="flex gap-8">
+                  <Pole pole={pole} courseId={courseId ?? ''} />
+                </div>
+              </>
             ))
           )}
         </div>

@@ -151,8 +151,8 @@ export function PoleRankingWithoutBehavior() {
           )}
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-md">
-          <table className="min-w-full">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
+          <table className="hidden min-w-full">
             <thead>
               <tr className="border-b bg-pmpa-blue-500">
                 <th className="px-4 py-2 text-left text-sm font-semibold text-white">
@@ -246,9 +246,68 @@ export function PoleRankingWithoutBehavior() {
               )}
             </tbody>
           </table>
+
+          <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
+            {isLoading
+              ? ''
+              : ranking?.map((item, index) => {
+                  const classification = getClassificationPosition(index, page)
+
+                  return (
+                    <ol
+                      key={item.studentName}
+                      className="flex flex-col items-center border-2 border-slate-300"
+                    >
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        Classificação: {classification}ª
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        Q.AV: {item.studentAverage.assessmentsCount}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        Q.C {item.studentAverage.averageInform.behaviorsCount}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        RG: {item.studentCivilID}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        NOME COMPLETO: {item.studentName}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        MÉDIA FINAL:{' '}
+                        {item.studentAverage.averageInform.geralAverage}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        CONCEITO:{' '}
+                        {
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ]
+                        }
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        DATA DE NASCIMENTO: {item.studentBirthday}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        PÓLO: {item.studentPole}
+                      </li>
+                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        STATUS:{' '}
+                        {
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ]
+                        }
+                      </li>
+                    </ol>
+                  )
+                })}
+          </div>
         </div>
 
-        <div className="mt-4 space-x-2 text-center print:hidden">
+        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer

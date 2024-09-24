@@ -63,14 +63,14 @@ export function Home() {
           <SearchForm />
 
           <section className="w-full max-w-5xl space-y-4">
-            <div className="grid w-full grid-cols-2 gap-4">
+            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
               {users ? (
                 users?.map((user) => (
                   <div
                     key={user.id}
                     className="w-full space-y-2 rounded border border-gray-300 px-2 py-1"
                   >
-                    <div className="flex items-center justify-between gap-2 font-semibold">
+                    <div className="flex flex-col items-center gap-2 font-semibold md:flex-row md:items-center md:justify-between">
                       <span className="text-lg">{user.username}</span>
                       <span>{formatCPF(user.cpf)}</span>
                     </div>
@@ -82,17 +82,17 @@ export function Home() {
                     )}
 
                     {user.courses.length !== 0 && user.poles.length !== 0 && (
-                      <div className="flex items-center justify-between gap-2 text-sm">
-                        <div className="ml-2">
+                      <div className="flex flex-col items-center gap-2 text-sm md:flex-row md:items-center md:justify-between">
+                        <div className="md:ml-2">
                           <span className="font-medium uppercase">Cursos:</span>
-                          <ul className="ml-2 list-inside list-disc">
+                          <ul className="list-inside list-disc md:ml-2">
                             {user.courses.map((item) => (
                               <li key={item.userOnCourseId}>{item.name}</li>
                             ))}
                           </ul>
                         </div>
 
-                        <div className="mr-2">
+                        <div className="md:mr-2">
                           <span className="font-medium uppercase">Polos:</span>
                           <ul className="list-inside list-disc">
                             {user.poles.map((item) => (
@@ -103,60 +103,64 @@ export function Home() {
                       </div>
                     )}
 
-                    <Dialog>
-                      <div className="mt-2 flex justify-between">
-                        <div className="space-x-2">
-                          {user.role !== 'DEV' && (
-                            <DialogTrigger asChild>
-                              <Button size={'sm'}>Ver mais</Button>
-                            </DialogTrigger>
-                          )}
+                    <div className="flex items-end justify-center gap-2">
+                      <Dialog>
+                        <div className="mt-2 flex justify-between">
+                          <div className="space-x-2">
+                            {user.role !== 'DEV' && (
+                              <DialogTrigger asChild>
+                                <Button size={'sm'}>Ver mais</Button>
+                              </DialogTrigger>
+                            )}
+                          </div>
                         </div>
-                      </div>
 
-                      <DialogContent className="w-full max-w-3xl">
-                        <DialogHeader>
-                          <span>See more user information</span>
-                        </DialogHeader>
+                        <DialogContent className="w-full max-w-3xl">
+                          <DialogHeader>
+                            <span>See more user information</span>
+                          </DialogHeader>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                          {user.courses.map((course) => (
-                            <div
-                              key={course.id}
-                              className="flex w-full items-start gap-1"
-                            >
-                              <Course
-                                course={{
-                                  ...course,
-                                  imageUrl:
-                                    'https://github.com/igorabreu29.png',
-                                }}
-                              />
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                            {user.courses.map((course) => (
+                              <div
+                                key={course.id}
+                                className="flex w-full items-start gap-1"
+                              >
+                                <Course
+                                  course={{
+                                    ...course,
+                                    imageUrl:
+                                      'https://github.com/igorabreu29.png',
+                                  }}
+                                />
 
-                              <div className="flex flex-col gap-2">
-                                <Button variant={'link'} size={'sm'}>
-                                  <Link
-                                    to={`/students/update/${user.id}?courseId=${course.id}`}
-                                  >
-                                    Editar
-                                  </Link>
-                                </Button>
+                                <div className="flex flex-col gap-2">
+                                  <Button variant={'link'} size={'sm'}>
+                                    <Link
+                                      to={`/students/update/${user.id}?courseId=${course.id}`}
+                                    >
+                                      Editar
+                                    </Link>
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                            ))}
+                          </div>
+                        </DialogContent>
+                      </Dialog>
 
-                    {user.role !== 'DEV' && (
-                      <Button
-                        variant={'destructive'}
-                        size={'sm'}
-                        onClick={() => handleDeleteStudent(user.id, user.role)}
-                      >
-                        Deletar
-                      </Button>
-                    )}
+                      {user.role !== 'DEV' && (
+                        <Button
+                          variant={'destructive'}
+                          size={'sm'}
+                          onClick={() =>
+                            handleDeleteStudent(user.id, user.role)
+                          }
+                        >
+                          Deletar
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 ))
               ) : (

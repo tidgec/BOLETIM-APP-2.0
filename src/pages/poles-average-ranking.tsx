@@ -106,7 +106,7 @@ export function PolesAverageRanking() {
           </Table>
         </div>
 
-        <div className="mt-4 space-x-2 text-center">
+        <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
           <PDFDownloadLink
             document={
               <RankingAverageViewer

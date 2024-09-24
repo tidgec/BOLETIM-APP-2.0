@@ -16,18 +16,18 @@ export function ListCoursesPage() {
           Selecione o curso
         </h2>
 
-        <div className="flex justify-center">
+        <div className="mt-4 flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start">
           {isLoading ? (
             <>
               {[1, 2, 3].map((_, index) => (
-                <div key={index} className="m-10 bg-white shadow-md">
+                <div key={index} className="bg-white shadow-md">
                   <Skeleton className="h-40 w-64" />
                 </div>
               ))}
             </>
           ) : (
             courses?.map((course) => (
-              <div key={course.id} className="m-10 bg-white shadow-md">
+              <div key={course.id} className="bg-white shadow-md">
                 <Link
                   to={`${currentUrl}?courseId=${course.id}`}
                   className="block"

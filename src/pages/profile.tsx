@@ -39,9 +39,9 @@ export function Profile() {
         <Skeleton className="h-80 w-full max-w-4xl bg-slate-300" />
       )}
       {!isLoadingProfile && (
-        <article className="flex w-full max-w-4xl flex-col gap-8 rounded bg-pmpa-blue-500 p-4 md:flex-row md:p-8">
+        <article className="flex w-full max-w-4xl flex-col items-center gap-8 rounded bg-pmpa-blue-500 p-4 md:p-8 lg:flex-row lg:items-start">
           <div className="flex w-full flex-col items-center text-white md:w-1/3">
-            <div className="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-3xl bg-pmpa-blue-800 md:h-52 md:w-52">
+            <div className="relative flex h-52 w-52 items-center justify-center overflow-hidden rounded-3xl bg-pmpa-blue-800">
               <label
                 htmlFor="file"
                 className="absolute inset-0 flex w-full cursor-pointer items-center justify-center opacity-0 group-hover:bg-black/20 group-hover:opacity-100"
