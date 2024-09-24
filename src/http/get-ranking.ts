@@ -5,7 +5,7 @@ import { api } from '@/lib/axios'
 import { JWTPayload } from '@/types/jwt'
 
 export interface GetRankingRequest {
-  courseId: string
+  courseId?: string
   page?: string
 }
 

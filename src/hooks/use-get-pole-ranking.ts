@@ -14,6 +14,7 @@ export function useGetPoleRanking({
     queryKey: ['pole-ranking', courseId, poleId, page, hasBehavior],
     queryFn: () => getPoleRanking({ courseId, poleId, page, hasBehavior }),
     staleTime: expiresIn,
+    enabled: !!courseId,
   })
 
   return {

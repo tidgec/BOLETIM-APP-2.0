@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { api } from '@/lib/axios'
 
 export interface GetPoleRankingRequest {
-  courseId: string
+  courseId?: string
   poleId: string
   page?: string
   hasBehavior?: string
