@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import { Pagination } from '@/components/pagination'
 import { Student } from '@/components/student'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useDownloadAcademicRecord } from '@/hooks/use-download-academic-record'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
@@ -52,17 +53,24 @@ export function DownloadAcademicRecord() {
         </p>
 
         <div className="mx-2 mb-4 mt-6 flex h-[36rem] flex-col gap-4 overflow-auto">
-          {isLoading && <p>Loading...</p>}
-          {!isLoading &&
-            students?.map((student) => (
-              <div
-                key={student.id}
-                className="cursor-pointer"
-                onClick={() => handleDownloadAcademicRecord(student.id)}
-              >
-                <Student student={student} />
-              </div>
-            ))}
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, index) => (
+                <div key={index} className="cursor-pointer">
+                  <div className="rounded border p-4">
+                    <Skeleton className="mb-2 h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                </div>
+              ))
+            : students?.map((student) => (
+                <div
+                  key={student.id}
+                  className="cursor-pointer"
+                  onClick={() => handleDownloadAcademicRecord(student.id)}
+                >
+                  <Student student={student} />
+                </div>
+              ))}
         </div>
 
         {students && (
