@@ -18,6 +18,7 @@ import {
 import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetRanking } from '@/hooks/use-get-ranking'
+import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function OverallRanking() {
@@ -194,50 +195,54 @@ export function OverallRanking() {
                   <RankingSkeleton />
                 </>
               ) : (
-                ranking?.map((item, index) => (
-                  <TableRow key={item.studentName}>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {index + 1}º
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.assessmentsCount}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.averageInform.behaviorsCount}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentCivilID}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentName}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentAverage.averageInform.geralAverage}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {
-                        conceptMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .concept
-                        ]
-                      }
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentBirthday}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.studentPole}
-                    </TableCell>
-                    <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {
-                        overallStatusMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status
-                        ]
-                      }
-                    </TableCell>
-                  </TableRow>
-                ))
+                ranking?.map((item, index) => {
+                  const classification = getClassificationPosition(index, page)
+
+                  return (
+                    <TableRow key={item.studentName}>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {classification}ª
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.assessmentsCount}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.averageInform.behaviorsCount}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentCivilID}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentName}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentAverage.averageInform.geralAverage}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {
+                          conceptMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.concept
+                          ]
+                        }
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentBirthday}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {item.studentPole}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                        {
+                          overallStatusMap[
+                            item.studentAverage.averageInform
+                              .studentAverageStatus.status
+                          ]
+                        }
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
               )}
             </TableBody>
           </Table>
