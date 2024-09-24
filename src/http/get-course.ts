@@ -11,6 +11,7 @@ interface GetCourseResponse {
     id: string
     name: string
     imageUrl: string
+    formula: string
   }
 }
 
