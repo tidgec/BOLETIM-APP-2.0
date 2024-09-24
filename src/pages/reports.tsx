@@ -1,5 +1,8 @@
+import 'react-loading-skeleton/dist/skeleton.css'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
+import Skeleton from 'react-loading-skeleton'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
@@ -61,7 +64,7 @@ export function Reports() {
           Relatórios
         </h2>
 
-        <div className="group relative mx-auto my-8 h-[46rem] max-h-screen  max-w-6xl overflow-auto rounded bg-white p-4 shadow-md">
+        <div className="group relative mx-auto my-8 h-[46rem] max-h-screen max-w-6xl overflow-auto rounded bg-white p-4 shadow-md">
           <div className="mb-8 flex items-center justify-between">
             <form
               onSubmit={handleSubmit(handleFilter)}
@@ -81,26 +84,24 @@ export function Reports() {
                     control={control}
                     render={({
                       field: { name, onChange, value, disabled },
-                    }) => {
-                      return (
-                        <select
-                          name={name}
-                          value={value}
-                          disabled={disabled}
-                          onChange={onChange}
-                          className="rounded border p-2 text-center"
-                        >
-                          <option value={'all'}>TODOS</option>
-                          <option value={'add'}>Adições</option>
-                          <option value={'remove'}>Remoções</option>
-                          <option value={'update'}>Atualizações</option>
-                          <option value={'login confirmed'}>
-                            Confirmação de login
-                          </option>
-                        </select>
-                      )
-                    }}
-                  ></Controller>
+                    }) => (
+                      <select
+                        name={name}
+                        value={value}
+                        disabled={disabled}
+                        onChange={onChange}
+                        className="rounded border p-2 text-center"
+                      >
+                        <option value={'all'}>TODOS</option>
+                        <option value={'add'}>Adições</option>
+                        <option value={'remove'}>Remoções</option>
+                        <option value={'update'}>Atualizações</option>
+                        <option value={'login confirmed'}>
+                          Confirmação de login
+                        </option>
+                      </select>
+                    )}
+                  />
                 </div>
               </div>
               <div className="flex w-full justify-center md:justify-end">
@@ -111,16 +112,21 @@ export function Reports() {
             </form>
           </div>
 
-          {isLoading && <p>Loading...</p>}
-
-          {!isLoading &&
-            reports?.map((report) => {
-              return (
-                <div key={report.id}>
-                  <pre>{report.content.trim()}</pre>
-                </div>
-              )
-            })}
+          {isLoading ? (
+            <div>
+              <Skeleton height={40} className="mb-4" />
+              <Skeleton height={40} className="mb-4" />
+              <Skeleton height={40} className="mb-4" />
+              <Skeleton height={40} className="mb-4" />
+              <Skeleton height={40} className="mb-4" />
+            </div>
+          ) : (
+            reports?.map((report) => (
+              <div key={report.id}>
+                <pre>{report.content.trim()}</pre>
+              </div>
+            ))
+          )}
         </div>
 
         {reports && (
