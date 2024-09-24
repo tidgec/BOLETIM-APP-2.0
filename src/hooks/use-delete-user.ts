@@ -9,11 +9,11 @@ export function useDeleteUser() {
   const mutation = useMutation({
     mutationFn: deleteUser,
     onSuccess: async (_, { id }) => {
-      const courseStudentsCache = queryClient.getQueriesData<SearchResponse>({
-        queryKey: ['searchs'],
+      const searchCache = queryClient.getQueriesData<SearchResponse>({
+        queryKey: ['search'],
       })
 
-      courseStudentsCache.forEach(([cacheKey, cached]) => {
+      searchCache.forEach(([cacheKey, cached]) => {
         if (!cached) return
 
         let pages: number = 1
