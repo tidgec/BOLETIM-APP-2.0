@@ -34,10 +34,10 @@ export function AddBehaviors() {
 
         {isLoading && (
           <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
-            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
-            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
-            <Skeleton className="h-24 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
           </div>
         )}
 

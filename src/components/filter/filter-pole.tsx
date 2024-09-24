@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 
+import { Skeleton } from '../ui/skeleton'
+
 export function FilterPole() {
   const [searchParams] = useSearchParams()
   const { control } = useFormContext()
@@ -14,32 +16,36 @@ export function FilterPole() {
   })
 
   return (
-    <Controller
-      name="poleId"
-      defaultValue="all"
-      control={control}
-      render={({ field: { name, onChange, value, disabled } }) => {
-        return (
-          <select
-            name={name}
-            value={value}
-            disabled={disabled}
-            onChange={onChange}
-            className="rounded border p-2"
-          >
-            <option value={'all'}>TODOS</option>
+    <>
+      {isLoadingPoles && <Skeleton className="h-10 w-36" />}
 
-            {isLoadingPoles && <option>Loading...</option>}
+      {!isLoadingPoles && (
+        <Controller
+          name="poleId"
+          defaultValue="all"
+          control={control}
+          render={({ field: { name, onChange, value, disabled } }) => {
+            return (
+              <select
+                name={name}
+                value={value}
+                disabled={disabled}
+                onChange={onChange}
+                className="rounded border p-2"
+              >
+                <option value={'none'}>Todos os polos</option>
 
-            {!isLoadingPoles &&
-              poles?.map((pole) => (
-                <option key={pole.id} value={pole.id}>
-                  {pole.name}
-                </option>
-              ))}
-          </select>
-        )
-      }}
-    ></Controller>
+                {!isLoadingPoles &&
+                  poles?.map((pole) => (
+                    <option key={pole.id} value={pole.id}>
+                      {pole.name}
+                    </option>
+                  ))}
+              </select>
+            )
+          }}
+        />
+      )}
+    </>
   )
 }

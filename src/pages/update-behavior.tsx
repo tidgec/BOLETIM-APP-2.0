@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { Skeleton } from '@/components/ui/skeleton'
 import { UpdateBehaviorForm } from '@/components/update-behavior-form'
 import { useGetCourseBehaviors } from '@/hooks/use-get-course-behaviors'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
@@ -40,11 +41,18 @@ export function UpdateBehavior() {
 
         <FilterForm />
 
-        {isLoadingGetCourseStudents && <p>Loading...</p>}
+        {isLoadingGetCourseStudents && (
+          <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+          </div>
+        )}
 
-        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoadingGetCourseStudents &&
-            students?.map((student) => {
+        {!isLoadingGetCourseStudents && (
+          <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+            {students?.map((student) => {
               if (!behaviors) {
                 return <p key={student.id}>Loading...</p>
               }
@@ -78,7 +86,8 @@ export function UpdateBehavior() {
                 </div>
               )
             })}
-        </div>
+          </div>
+        )}
 
         <Pagination
           items={totalItems ?? 0}

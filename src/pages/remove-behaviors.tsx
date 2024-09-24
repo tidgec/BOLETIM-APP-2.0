@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { RemoveBehaviorGradeForm } from '@/components/remove-behavior-grade-form'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseBehaviors } from '@/hooks/use-get-course-behaviors'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
@@ -35,10 +36,18 @@ export function RemoveBehaviors() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
-        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoading &&
-            students?.map((student) => {
+        {isLoading && (
+          <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+            <Skeleton className="h-48 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-48 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-48 w-full rounded border bg-slate-300 p-4" />
+            <Skeleton className="h-48 w-full rounded border bg-slate-300 p-4" />
+          </div>
+        )}
+
+        {!isLoading && (
+          <div className="space-y-2">
+            {students?.map((student) => {
               if (!behaviors) {
                 return <p key={student.id}>Loading...</p>
               }
@@ -71,7 +80,8 @@ export function RemoveBehaviors() {
                 </div>
               )
             })}
-        </div>
+          </div>
+        )}
 
         <Pagination
           items={totalItems ?? 0}
