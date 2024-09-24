@@ -9,6 +9,7 @@ export function useGetRanking({ courseId, page }: GetRankingRequest) {
     queryKey: ['ranking', courseId, page],
     queryFn: () => getRanking({ courseId, page }),
     staleTime: expiresIn,
+    enabled: !!courseId,
   })
 
   return {
