@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useUpdateManager } from '@/hooks/use-update-manager'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const updateManagerSchema = z.object({
@@ -77,9 +78,8 @@ export function UpdateManager() {
 
       toast.success('Gerente atualizado com sucesso!')
       reset()
-    } catch (error) {
-      console.log(error)
-      toast.error('Ocorreu algum error')
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -37,11 +37,7 @@ export function ListCourseDisciplinesPage() {
                   key={discipline.disciplineId}
                   to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
                 >
-                  <Discipline
-                    courseId={String(courseId)}
-                    disciplineId={discipline.disciplineId}
-                    name={discipline.name}
-                  />
+                  <Discipline name={discipline.name} />
                 </Link>
               ))}
         </div>

@@ -15,6 +15,7 @@ import {
 import { useCreateAverageBehaviorPolesRankingSheet } from '@/hooks/use-create-average-behavior-poles-ranking-sheet'
 import { useGetAverageBehaviorPolesRanking } from '@/hooks/use-get-average-behavior-poles-ranking'
 import { useGetCourse } from '@/hooks/use-get-course'
+import { fail } from '@/utils/fail'
 
 export function AverageBehaviorPolesRanking() {
   const [searchParams] = useSearchParams()
@@ -39,8 +40,8 @@ export function AverageBehaviorPolesRanking() {
       })
 
       window.location.href = response.fileUrl
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

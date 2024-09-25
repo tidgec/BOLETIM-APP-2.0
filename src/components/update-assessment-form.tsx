@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useUpdateAssessment } from '@/hooks/use-update-assessment'
+import { fail } from '@/utils/fail'
 
 const updateAssessmentFormSchema = z.object({
   vf: z.string().optional(),
@@ -54,11 +55,8 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
       })
 
       toast.success('Notas atualizadas com sucesso!')
-    } catch (error) {
-      toast.error('Ocorreu um error ao atualizar a nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

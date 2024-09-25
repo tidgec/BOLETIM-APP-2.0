@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { ListCoursePoles } from '@/components/list-course-poles'
 import { useCreateStudent } from '@/hooks/use-create-student'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 import { formatDate } from '@/utils/format-date'
 
@@ -83,11 +84,8 @@ export function AddStudents() {
       })
 
       reset()
-    } catch (error) {
-      toast.error('Ocorreu um erro ao criar o estudante.', {
-        duration: 1000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

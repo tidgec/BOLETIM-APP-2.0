@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourses } from '@/hooks/use-get-courses'
 
 export function ListBehaviorPage() {
-  const { courses, isLoading } = useGetCourses(1)
+  const { courses, isLoading } = useGetCourses()
 
   return (
     <div className="w-full py-6">

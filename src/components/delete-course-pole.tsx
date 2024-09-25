@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { useDeleteCoursePole } from '@/hooks/use-delete-course-pole'
+import { fail } from '@/utils/fail'
 
 import { Button } from './ui/button'
 
@@ -30,8 +31,8 @@ export function DeleteCoursePole({ pole }: DeleteCoursePoleProps) {
       toast.success('Polo deletado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

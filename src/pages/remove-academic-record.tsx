@@ -6,6 +6,7 @@ import { Pagination } from '@/components/pagination'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourses } from '@/hooks/use-get-courses'
 import { useRemoveAcademicRecord } from '@/hooks/use-remove-academic-record'
+import { fail } from '@/utils/fail'
 
 export function RemoveAcademicRecord() {
   const [searchParams] = useSearchParams()
@@ -23,8 +24,8 @@ export function RemoveAcademicRecord() {
       toast.success('Histórico do curso removido com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

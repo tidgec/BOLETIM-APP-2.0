@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { useCreateDiscipline } from '@/hooks/use-create-discipline'
+import { fail } from '@/utils/fail'
 
 const createDisciplineSchema = z.object({
   name: z
@@ -41,8 +42,8 @@ export function AddDiscipline() {
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

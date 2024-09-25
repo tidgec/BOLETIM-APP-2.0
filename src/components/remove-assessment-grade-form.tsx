@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useRemoveAssessmentGrade } from '@/hooks/use-remove-assessment-grade'
+import { fail } from '@/utils/fail'
 
 import { Checkbox } from './ui/checkbox'
 
@@ -56,11 +57,8 @@ export function RemoveAssessmentGradeForm({
       toast.success('Notas removidas com sucesso!', {
         duration: 2000,
       })
-    } catch (error) {
-      toast.error('Ocorreu um error ao remove nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

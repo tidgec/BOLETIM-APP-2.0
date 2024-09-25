@@ -6,6 +6,7 @@ import { Student } from '@/components/student'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDownloadAcademicRecord } from '@/hooks/use-download-academic-record'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { fail } from '@/utils/fail'
 
 export function DownloadAcademicRecord() {
   const [searchParams] = useSearchParams()
@@ -36,9 +37,9 @@ export function DownloadAcademicRecord() {
         duration: 1000,
       })
 
-      console.log(fileUrl)
-    } catch (error) {
-      console.error(error)
+      window.location.href = fileUrl
+    } catch (err) {
+      fail(err)
     }
   }
 

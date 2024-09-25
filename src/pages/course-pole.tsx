@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateCoursePole } from '@/hooks/use-create-course-pole'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useGetPoles } from '@/hooks/use-get-poles'
+import { fail } from '@/utils/fail'
 
 export function CoursePole() {
   const navigate = useNavigate()
@@ -32,8 +33,8 @@ export function CoursePole() {
       toast.success('Polo adicionado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useCreateCourseDiscipline } from '@/hooks/use-create-course-discipline'
+import { fail } from '@/utils/fail'
 
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
@@ -76,8 +77,8 @@ export function CreateCourseDisciplineForm({
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

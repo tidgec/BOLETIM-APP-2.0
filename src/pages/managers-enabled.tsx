@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -20,6 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { useDisableManagerStatus } from '@/hooks/use-disable-manager-status'
 import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const disableManagerSchema = z.object({
@@ -76,12 +76,8 @@ export function ManagersEnabled() {
       })
 
       reset()
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

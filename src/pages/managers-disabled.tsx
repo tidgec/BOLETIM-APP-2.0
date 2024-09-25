@@ -19,6 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { useActiveManagerStatus } from '@/hooks/use-active-manager-status'
 import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const activeManagerSchema = z.object({
@@ -76,7 +77,9 @@ export function ManagersDisabled() {
       })
 
       reset()
-    } catch (error) {}
+    } catch (err) {
+      fail(err)
+    }
   }
 
   return (

@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useRemoveBehaviorGrade } from '@/hooks/use-remove-behavior-grade'
+import { fail } from '@/utils/fail'
 
 import { Checkbox } from './ui/checkbox'
 
@@ -73,11 +74,8 @@ export function RemoveBehaviorGradeForm({ id }: RemoveBehaviorGradeFormProps) {
       })
 
       reset()
-    } catch (error) {
-      toast.error('Ocorreu um error ao remove nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

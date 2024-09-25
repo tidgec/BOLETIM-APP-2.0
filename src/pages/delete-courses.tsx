@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -19,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDeleteCourse } from '@/hooks/use-delete-course'
 import { useGetCourses } from '@/hooks/use-get-courses'
+import { fail } from '@/utils/fail'
 
 export function DeleteCourses() {
   const [searchParams] = useSearchParams()
@@ -36,12 +36,8 @@ export function DeleteCourses() {
       toast.success('Curso deletado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

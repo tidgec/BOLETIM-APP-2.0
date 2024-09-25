@@ -18,6 +18,7 @@ import {
 import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
+import { fail } from '@/utils/fail'
 import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -54,8 +55,8 @@ export function OverallPoleRanking() {
       })
 
       window.location.href = response.fileUrl
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

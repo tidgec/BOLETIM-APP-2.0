@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useCreateBehaviorsBatch } from '@/hooks/use-create-behaviors-batch'
+import { fail } from '@/utils/fail'
 
 const addBehaviorsBatchSchema = z.object({
   excel: z
@@ -49,12 +49,8 @@ export function AddBehaviorsBatch() {
       })
 
       reset()
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data?.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

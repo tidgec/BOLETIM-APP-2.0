@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useUpdateCourse } from '@/hooks/use-update-course'
 import { useUploadAttachment } from '@/hooks/use-upload-attachment'
+import { fail } from '@/utils/fail'
 import { formatDate } from '@/utils/format-date'
 
 const updateCourseSchema = z.object({
@@ -54,8 +55,8 @@ export function UpdateCourses() {
       await uploadAttachmentFn({
         file,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 
@@ -82,8 +83,8 @@ export function UpdateCourses() {
       })
 
       navigate(`/courses/management/${course.id}/poles`)
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

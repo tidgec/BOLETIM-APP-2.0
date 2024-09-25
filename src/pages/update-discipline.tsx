@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { useUpdateDiscipline } from '@/hooks/use-update-discipline'
+import { fail } from '@/utils/fail'
 
 const updateDisciplineSchema = z.object({
   name: z
@@ -49,8 +50,8 @@ export function UpdateDiscipline() {
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

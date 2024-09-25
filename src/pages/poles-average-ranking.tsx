@@ -15,6 +15,7 @@ import {
 import { useCreatePolesAverageRankingSheet } from '@/hooks/use-create-poles-average-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPolesAverageRanking } from '@/hooks/use-get-poles-average-ranking'
+import { fail } from '@/utils/fail'
 
 export function PolesAverageRanking() {
   const [searchParams] = useSearchParams()
@@ -39,8 +40,8 @@ export function PolesAverageRanking() {
       })
 
       window.location.href = response.fileUrl
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

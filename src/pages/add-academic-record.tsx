@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { useCreateAcademicRecord } from '@/hooks/use-create-academic-record'
+import { fail } from '@/utils/fail'
 import { formatDate } from '@/utils/format-date'
 
 const addAcademicRecordSchema = z.object({
@@ -79,8 +80,8 @@ export function AddAcademicRecord() {
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { UpdateProfile } from '@/components/update-profile'
 import { useProfile } from '@/hooks/use-profile'
 import { useUpdateProfileAvatar } from '@/hooks/use-update-profile-avatar'
+import { fail } from '@/utils/fail'
 
 export function Profile() {
   const { user, isLoading: isLoadingProfile } = useProfile()
@@ -28,8 +29,8 @@ export function Profile() {
       toast.success('Imagem de perfil atualizada!', {
         duration: 1000,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

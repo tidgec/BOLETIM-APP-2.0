@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useUpdateStudent } from '@/hooks/use-update-student'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const updateStudentSchema = z.object({
@@ -77,8 +78,8 @@ export function UpdateStudent() {
 
       toast.success('Estudante atualizado com sucesso!')
       reset()
-    } catch (error) {
-      toast.error('Ocorreu algum erro')
+    } catch (err) {
+      fail(err)
     }
   }
 

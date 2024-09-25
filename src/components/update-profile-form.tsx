@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useUpdateProfile } from '@/hooks/use-update-profile'
+import { fail } from '@/utils/fail'
 
 import { DialogFooter } from './ui/dialog'
 
@@ -65,8 +66,8 @@ export function UpdateProfileForm() {
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useRemoveAssessmentGradesBatch } from '@/hooks/use-remove-assessment-grades-batch'
+import { fail } from '@/utils/fail'
 
 const removeNotesBatchSchema = z.object({
   excel: z
@@ -50,12 +50,8 @@ export function RemoveNotesBatch() {
       })
 
       reset()
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data?.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

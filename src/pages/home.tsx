@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -15,6 +14,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDeleteUser } from '@/hooks/use-delete-user'
 import { useSearch } from '@/hooks/use-search'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 export function Home() {
@@ -40,12 +40,8 @@ export function Home() {
       toast.success('Usuário deletado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

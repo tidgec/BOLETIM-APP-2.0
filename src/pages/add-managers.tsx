@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { ListCoursePoles } from '@/components/list-course-poles'
 import { useCreateManager } from '@/hooks/use-create-manager'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 import { formatDate } from '@/utils/format-date'
 
@@ -83,13 +84,8 @@ export function AddManagers() {
       })
 
       reset()
-    } catch (error) {
-      console.error(error)
-
-      toast.error('Ocorreu um erro ao criar o gerente.', {
-        duration: 1000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

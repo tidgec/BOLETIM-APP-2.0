@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -19,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useDeleteAdmin } from '@/hooks/use-delete-admin'
 import { useGetAdmins } from '@/hooks/use-get-admins'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 export function DeleteAdmins() {
@@ -45,12 +45,8 @@ export function DeleteAdmins() {
       toast.success('Administrador deletado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

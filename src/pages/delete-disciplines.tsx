@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -19,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDeleteDiscipline } from '@/hooks/use-delete-discipline'
 import { useGetDisciplines } from '@/hooks/use-get-disciplines'
+import { fail } from '@/utils/fail'
 
 export function DeleteDisciplines() {
   const [searchParams] = useSearchParams()
@@ -42,12 +42,8 @@ export function DeleteDisciplines() {
       toast.success('Disciplina deletada com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

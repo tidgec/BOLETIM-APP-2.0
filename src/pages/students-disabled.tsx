@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -21,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useActiveStudentStatus } from '@/hooks/use-active-student-status'
 // import { useChangeStudentStatus } from '@/hooks/use-change-student-status'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const activeStudentSchema = z.object({
@@ -78,12 +78,8 @@ export function StudentsDisabled() {
       })
 
       reset()
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

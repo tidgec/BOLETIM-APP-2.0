@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useCreateAssessment } from '@/hooks/use-create-assessment'
+import { fail } from '@/utils/fail'
 
 const createAssessmentFormSchema = z.object({
   vf: z.string(),
@@ -56,11 +57,8 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
       })
 
       toast.success('Notas adicionadas com sucesso!')
-    } catch (error) {
-      toast.error('Ocorreu algum error ao criar a nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

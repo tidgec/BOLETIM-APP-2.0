@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useUpdateAdmin } from '@/hooks/use-update-admin'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const updateAdminSchema = z.object({
@@ -64,8 +65,8 @@ export function UpdateAdmins() {
       })
 
       reset()
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -19,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useDeleteManager } from '@/hooks/use-delete-manager'
 import { useGetCourseManagers } from '@/hooks/use-get-course-managers'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 export function DeleteManagers() {
@@ -49,12 +49,8 @@ export function DeleteManagers() {
       toast.success('Gerente deletado com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

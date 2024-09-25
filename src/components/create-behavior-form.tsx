@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useCreateBehavior } from '@/hooks/use-create-behavior'
+import { fail } from '@/utils/fail'
 
 const createBehaviorFormSchema = z.object({
   january: z.string().optional(),
@@ -77,11 +78,8 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
       toast.success('Notas de comportamento adicionadas com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      toast.error('Ocorreu algum error ao criar a nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

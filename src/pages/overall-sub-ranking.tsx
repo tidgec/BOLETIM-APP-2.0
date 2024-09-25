@@ -18,6 +18,7 @@ import {
 import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetSubRanking } from '@/hooks/use-get-sub-ranking'
+import { fail } from '@/utils/fail'
 import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -52,8 +53,8 @@ export function OverallSubRanking() {
       })
 
       window.location.href = response.fileUrl
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 

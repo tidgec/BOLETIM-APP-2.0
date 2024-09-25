@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -20,6 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { useActiveAdminStatus } from '@/hooks/use-active-admin-status'
 import { useGetAdmins } from '@/hooks/use-get-admins'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const activeAdminSchema = z.object({
@@ -72,12 +72,8 @@ export function AdminsDisabled() {
       })
 
       reset()
-    } catch (error) {
-      const err = error as AxiosError
-
-      toast.error(err.response?.data.message, {
-        duration: 1000,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useUpdateBehavior } from '@/hooks/use-update-behavior'
+import { fail } from '@/utils/fail'
 
 const updateBehaviorFormSchema = z.object({
   january: z.string().optional(),
@@ -101,11 +102,8 @@ export function UpdateBehaviorForm({ behavior }: UpdateBehaviorFormProps) {
       toast.success('Notas de comportamento atualizadas com sucesso!', {
         duration: 1000,
       })
-    } catch (error) {
-      toast.error('Ocorreu algum error ao criar a nota.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 

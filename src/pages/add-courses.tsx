@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { useCreateCourse } from '@/hooks/use-create-course'
 import { useUploadAttachment } from '@/hooks/use-upload-attachment'
+import { fail } from '@/utils/fail'
 import { formatDate } from '@/utils/format-date'
 
 const addCourseSchema = z.object({
@@ -54,8 +55,8 @@ export function AddCourses() {
       })
 
       setPreviewUrl(fileUrl)
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 
@@ -85,8 +86,8 @@ export function AddCourses() {
       })
 
       navigate(`/courses/management/${id}/poles`)
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      fail(err)
     }
   }
 
