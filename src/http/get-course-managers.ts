@@ -70,7 +70,7 @@ export async function getCourseManagers({
           username: username ?? '',
           cpf: cpf ?? '',
           page,
-          isEnabled: isEnabled ?? true,
+          isEnabled,
         },
       },
     )

@@ -8,7 +8,7 @@ interface GetCourseStudentsProps {
   username?: string
   cpf?: string
   page?: string
-  isEnabled?: boolean
+  isEnabled?: string
 }
 
 export function useGetCourseStudents({

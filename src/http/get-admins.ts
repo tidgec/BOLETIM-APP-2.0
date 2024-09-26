@@ -49,7 +49,7 @@ export async function getAdmins({
       username,
       cpf,
       page,
-      isEnabled: isEnabled ?? true,
+      isEnabled,
     },
   })
 

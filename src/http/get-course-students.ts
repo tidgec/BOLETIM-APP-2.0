@@ -10,7 +10,7 @@ export interface GetCourseStudentsRequest {
   username?: string
   cpf?: string
   page?: string
-  isEnabled?: boolean
+  isEnabled?: string
 }
 
 export interface GetCourseStudentsResponse {
@@ -64,7 +64,7 @@ export async function getCourseStudents({
           username: username ?? '',
           cpf: cpf ?? '',
           page,
-          isEnabled: isEnabled ?? true,
+          isEnabled,
         },
       },
     )
@@ -87,7 +87,7 @@ export async function getCourseStudents({
           username: username ?? '',
           cpf: cpf ?? '',
           page,
-          isEnabled: isEnabled ?? true,
+          isEnabled,
         },
       },
     )
