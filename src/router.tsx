@@ -881,6 +881,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/rankings/poles/no-beahvior/:id/sub-ranking',
+        element: (
+          <ProtectedLayout roles={['admin', 'dev']}>
+            <OverallSubPoleRanking />
+          </ProtectedLayout>
+        ),
+      },
+      {
         path: '/rankings/poles-average/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
