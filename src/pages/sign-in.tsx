@@ -9,6 +9,7 @@ import { z } from 'zod'
 
 import PMPALogo from '@/assets/pmpa.png'
 import { useSignIn } from '@/hooks/use-sign-in'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 const signInSchema = z.object({
@@ -76,11 +77,8 @@ export function SignIn() {
         duration: 500,
       })
       reset()
-    } catch (error) {
-      toast.error('CPF ou senha incorretos.', {
-        duration: 2000,
-        closeButton: true,
-      })
+    } catch (err) {
+      fail(err)
     }
   }
 
@@ -152,7 +150,7 @@ export function SignIn() {
           </div>
 
           <div className="flex flex-col px-4 sm:flex-row sm:justify-between sm:px-6">
-            <Link to={'#'} className="mb-2 text-xs sm:mb-0 sm:text-sm">
+            <Link to={'/forgot'} className="mb-2 text-xs sm:mb-0 sm:text-sm">
               Esqueceu a senha?
             </Link>
             <button className="rounded px-4 py-2 font-bold transition-colors hover:bg-white hover:text-black">
