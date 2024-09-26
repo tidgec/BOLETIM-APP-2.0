@@ -23,7 +23,12 @@ export function ListManagersPage() {
     poleId: poleId ?? 'all',
   })
 
-  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
+  const currentUrl = window.location.href
+    .replace(`?courseId=${courseId}`, '')
+    .replace(`&poleId=${poleId}`, '')
+    .replace(`&cpf=${cpf}`, '')
+    .replace(`&username=${username}`, '')
+    .replace(`&page=${page}`, '')
 
   return (
     <div className="w-full py-6">

@@ -17,6 +17,12 @@ export function ListDisciplinesPage() {
     isLoading: isLoadingGetDisciplines,
   } = useGetDisciplines({ page })
 
+  const currentUrl = window.location.href
+    .replace(`?page=${page}`, '')
+    .replace(`&page=${page}`, '')
+    .replace(`?method=${method}`, '')
+    .replace(`&method=${method}`, '')
+
   return (
     <div className="container mx-auto w-full p-4">
       <section className="max-w[90rem] mx-auto w-full">
@@ -42,7 +48,7 @@ export function ListDisciplinesPage() {
             disciplines?.map((discipline) => (
               <Link
                 key={discipline.id}
-                to={`/disciplines/${discipline.id}/${method}?discipline=${discipline.name}`}
+                to={`/${currentUrl}/${discipline.id}/${method}?discipline=${discipline.name}`}
               >
                 <Discipline name={discipline.name} />
               </Link>

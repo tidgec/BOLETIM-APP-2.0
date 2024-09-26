@@ -7,8 +7,10 @@ import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 export function ListCourseDisciplinesPage() {
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
+
   const { disciplines, isLoading } = useGetCourseDisciplines(String(courseId))
-  const currentUrl = window.location.href.replace(`?courseId=${courseId}`, '')
+
+  const currentUrl = new URL(window.location.href)
 
   return (
     <div className="container mx-auto w-full p-4">
@@ -35,7 +37,7 @@ export function ListCourseDisciplinesPage() {
             disciplines?.map((discipline) => (
               <Link
                 key={discipline.disciplineId}
-                to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
+                to={`${currentUrl.origin}/notes/update/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
               >
                 <Discipline name={discipline.name} />
               </Link>

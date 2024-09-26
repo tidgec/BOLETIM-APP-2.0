@@ -19,6 +19,14 @@ export function ListAdminsPage() {
     page: page ?? '1',
   })
 
+  const currentUrl = window.location.href
+    .replace(`?username=${username}`, '')
+    .replace(`&username=${username}`, '')
+    .replace(`?cpf=${cpf}`, '')
+    .replace(`&cpf=${cpf}`, '')
+    .replace(`?page=${page}`, '')
+    .replace(`&page=${page}`, '')
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
@@ -40,7 +48,7 @@ export function ListAdminsPage() {
             </div>
           ) : (
             admins?.map((admin) => (
-              <Link to={`/admins/update/${admin.id}`} key={admin.id}>
+              <Link to={`${currentUrl}/${admin.id}`} key={admin.id}>
                 <ul className="space-y-2 rounded border p-4">
                   <li className="mb-4 text-lg font-semibold">
                     Nome: {admin.username}
