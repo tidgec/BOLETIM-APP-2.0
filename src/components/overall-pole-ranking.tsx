@@ -159,7 +159,7 @@ export function OverallPoleRanking() {
         </div>
 
         <div className="rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
-          <Table className="hidden min-w-full table-auto">
+          <Table className="hidden min-w-full table-auto lg:table">
             <TableHeader>
               <TableRow className="border-b bg-pmpa-blue-500 print:flex print:justify-start">
                 <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
@@ -321,7 +321,7 @@ export function OverallPoleRanking() {
           </div>
         </div>
 
-        <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
+        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
