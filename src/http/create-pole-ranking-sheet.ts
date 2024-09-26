@@ -28,7 +28,7 @@ export async function createPoleRankingSheet({
       },
 
       params: {
-        hasBehavior,
+        hasBehavior: hasBehavior ?? 'true',
       },
     },
   )
