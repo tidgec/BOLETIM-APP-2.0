@@ -16,18 +16,20 @@ export function Menu({ role }: MenuProps) {
 
   return (
     <>
-      <aside className="hidden w-full max-w-60 space-y-8 bg-pmpa-blue-700 px-4 py-8 text-white md:block">
-        <nav>
-          {role === 'dev' && <DevMenu />}
-          {role === 'admin' && <AdminMenu />}
-          {role === 'manager' && <ManagerMenu />}
-          {role === 'student' && <StudentMenu />}
-        </nav>
-        <div className="border-y-2 py-4">
-          <Link to={'/profile'} className="flex gap-4 text-sm tracking-wider">
-            <LucideCircleUser size={20} />
-            Perfil
-          </Link>
+      <aside className="relative hidden w-full max-w-60 bg-pmpa-blue-700 px-4 py-8 text-white md:block">
+        <div className="fixed space-y-8">
+          <nav>
+            {role === 'dev' && <DevMenu />}
+            {role === 'admin' && <AdminMenu />}
+            {role === 'manager' && <ManagerMenu />}
+            {role === 'student' && <StudentMenu />}
+          </nav>
+          <div className="border-y-2 py-4">
+            <Link to={'/profile'} className="flex gap-4 text-sm tracking-wider">
+              <LucideCircleUser size={20} />
+              Perfil
+            </Link>
+          </div>
         </div>
       </aside>
 
