@@ -137,7 +137,7 @@ export async function getPoleRanking({
     {
       params: {
         page,
-        hasBehavior: hasBehavior ? 'true' : 'false',
+        hasBehavior: hasBehavior ?? 'true',
       },
 
       headers: {
