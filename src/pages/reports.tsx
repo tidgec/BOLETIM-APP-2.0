@@ -1,13 +1,11 @@
-import 'react-loading-skeleton/dist/skeleton.css'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
-import Skeleton from 'react-loading-skeleton'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetReports } from '@/hooks/use-get-reports'
 
 const reportFiltersSchema = z.object({
@@ -73,7 +71,7 @@ export function Reports() {
               <div className="flex w-full flex-col gap-2 md:flex-grow md:flex-row">
                 <input
                   type="text"
-                  placeholder="Digite seu nome..."
+                  placeholder="Digite um nome..."
                   className="w-full flex-1 rounded border p-2"
                   {...register('username')}
                 />
@@ -113,19 +111,18 @@ export function Reports() {
           </div>
 
           {isLoading ? (
-            <div>
-              <Skeleton height={40} className="mb-4" />
-              <Skeleton height={40} className="mb-4" />
-              <Skeleton height={40} className="mb-4" />
-              <Skeleton height={40} className="mb-4" />
-              <Skeleton height={40} className="mb-4" />
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <Skeleton className="h-64 w-[520px]" />
+              <Skeleton className="h-64 w-[520px]" />
             </div>
           ) : (
-            reports?.map((report) => (
-              <div key={report.id}>
-                <pre>{report.content.trim()}</pre>
-              </div>
-            ))
+            <div className="space-y-4">
+              {reports?.map((report) => (
+                <div key={report.id} className="flex justify-center">
+                  <pre>{report.content.trim()}</pre>
+                </div>
+              ))}
+            </div>
           )}
         </div>
 
