@@ -25,21 +25,22 @@ export function ListCourseDisciplinesPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoading
-            ? Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="w-full">
-                  <Skeleton className="mb-2 h-16 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              ))
-            : disciplines?.map((discipline) => (
-                <Link
-                  key={discipline.disciplineId}
-                  to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
-                >
-                  <Discipline name={discipline.name} />
-                </Link>
-              ))}
+          {isLoading ? (
+            <>
+              <Skeleton className="h-10 rounded bg-slate-300" />
+              <Skeleton className="h-10 rounded bg-slate-300" />
+              <Skeleton className="h-10 rounded bg-slate-300" />
+            </>
+          ) : (
+            disciplines?.map((discipline) => (
+              <Link
+                key={discipline.disciplineId}
+                to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
+              >
+                <Discipline name={discipline.name} />
+              </Link>
+            ))
+          )}
         </div>
       </section>
     </div>

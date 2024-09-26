@@ -32,21 +32,22 @@ export function ListDisciplinesPage() {
         </div>
 
         <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoadingGetDisciplines
-            ? Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="w-full">
-                  <Skeleton className="mb-2 h-16 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              ))
-            : disciplines?.map((discipline) => (
-                <Link
-                  key={discipline.id}
-                  to={`/disciplines/${discipline.id}/${method}?discipline=${discipline.name}`}
-                >
-                  <Discipline name={discipline.name} />
-                </Link>
-              ))}
+          {isLoadingGetDisciplines ? (
+            <>
+              <Skeleton className="h-10 rounded bg-slate-300" />
+              <Skeleton className="h-10 rounded bg-slate-300" />
+              <Skeleton className="h-10 rounded bg-slate-300" />
+            </>
+          ) : (
+            disciplines?.map((discipline) => (
+              <Link
+                key={discipline.id}
+                to={`/disciplines/${discipline.id}/${method}?discipline=${discipline.name}`}
+              >
+                <Discipline name={discipline.name} />
+              </Link>
+            ))
+          )}
         </div>
 
         {disciplines && (

@@ -17,12 +17,12 @@ export function CourseDiscipline() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
+      <section className="mx-auto w-full text-center sm:text-left md:max-w-[90rem] md:px-4">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar disciplinas do curso
         </h2>
 
-        <div className="my-4 flex items-start justify-between gap-2">
+        <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row">
           <aside className="w-full max-w-72 space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
             <p className="text-lg font-semibold">Polos Adicionados ao curso:</p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
