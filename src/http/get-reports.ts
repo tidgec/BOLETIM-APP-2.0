@@ -4,6 +4,7 @@ import { api } from '@/lib/axios'
 
 export interface GetReportsRequest {
   page?: string
+  username?: string
   action?: string
 }
 
@@ -24,6 +25,7 @@ interface GetReportsResponse {
 
 export async function getReports({
   action,
+  username,
   page,
 }: GetReportsRequest): Promise<GetReportsResponse> {
   const token = Cookies.get('token')
@@ -34,6 +36,7 @@ export async function getReports({
     },
     params: {
       action: action === 'all' ? undefined : action,
+      username: username ?? '',
       page,
     },
   })

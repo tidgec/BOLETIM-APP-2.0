@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 
 import { getReports, GetReportsRequest } from '@/http/get-reports'
 
-export function useGetReports({ action, page }: GetReportsRequest) {
+export function useGetReports({ action, page, username }: GetReportsRequest) {
   const query = useQuery({
-    queryKey: ['reports', action, page],
-    queryFn: () => getReports({ action, page }),
+    queryKey: ['reports', action, page, username],
+    queryFn: () => getReports({ action, page, username }),
   })
 
   return {

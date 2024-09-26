@@ -32,6 +32,7 @@ export function Reports() {
 
   const { reports, totalItems, pages, isLoading } = useGetReports({
     action,
+    username,
     page,
   })
 
