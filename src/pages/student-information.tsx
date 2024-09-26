@@ -3,7 +3,10 @@ import { useSearchParams } from 'react-router-dom'
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
 import { UserSkeleton } from '@/components/skeletons/user-skeleton'
+import { Button } from '@/components/ui/button'
+import { useCreateStudentsInformationSheet } from '@/hooks/use-create-students-information-sheet'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
+import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
 
 export function StudentInformation() {
@@ -21,6 +24,23 @@ export function StudentInformation() {
     cpf: cpf ?? '',
     username: username ?? '',
   })
+
+  const { mutateAsync: createStudentsInformationSheetFn } =
+    useCreateStudentsInformationSheet()
+
+  async function handleDownloadExcel() {
+    if (!courseId) return
+
+    try {
+      const response = await createStudentsInformationSheetFn({
+        courseId,
+      })
+
+      window.location.href = response.fileUrl
+    } catch (err) {
+      fail(err)
+    }
+  }
 
   return (
     <div className="w-full px-4 py-6">
@@ -93,6 +113,12 @@ export function StudentInformation() {
             items={totalItems ?? 0}
           />
         )}
+
+        <div className="flex justify-end py-4">
+          <Button size={'lg'} onClick={handleDownloadExcel}>
+            Baixar
+          </Button>
+        </div>
       </section>
     </div>
   )
