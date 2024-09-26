@@ -36,10 +36,12 @@ export function BoletimCard() {
     formula,
   })
 
-  const behaviorAverage = grades?.averageInform.behaviorAverageStatus.reduce(
-    (acc, item) => acc + item.behaviorAverage,
-    0,
-  )
+  const behaviorAverage =
+    grades &&
+    grades?.averageInform.behaviorAverageStatus.reduce(
+      (acc, item) => acc + item.behaviorAverage,
+      0,
+    )
 
   return (
     <div className="mx-auto mt-10 w-full max-w-4xl print:max-w-7xl">
@@ -59,7 +61,7 @@ export function BoletimCard() {
       <div className="rounded-lg bg-white p-4 shadow-md print:p-2">
         <div className="mb-4 flex flex-col gap-1">
           {isLoadingCourseStudent ? (
-            <Skeleton className="h-8 w-24" />
+            <Skeleton className="h-8 w-24 bg-slate-300" />
           ) : (
             <span className="text-xl font-bold text-gray-700">
               Curso: {student?.course.name}
@@ -67,7 +69,7 @@ export function BoletimCard() {
           )}
 
           {isLoadingCourseStudent ? (
-            <Skeleton className="h-7 w-20" />
+            <Skeleton className="h-7 w-20 bg-slate-300" />
           ) : (
             <span className="font-medium text-gray-700">
               Pólo: {student?.pole.name}
@@ -75,7 +77,7 @@ export function BoletimCard() {
           )}
 
           {isLoadingCourseStudent ? (
-            <Skeleton className="h-6 w-32" />
+            <Skeleton className="h-6 w-32 bg-slate-300" />
           ) : (
             <span className="font-medium text-gray-700">
               Nome: {student?.username}
@@ -86,7 +88,7 @@ export function BoletimCard() {
         <div className="mb-4">
           <h3 className="text-lg font-bold md:text-xl">DISCIPLINAS:</h3>
           {isLoadingStudentBoletim ? (
-            <Skeleton className="h-8 w-10" />
+            <Skeleton className="h-8 w-10 bg-slate-300" />
           ) : (
             <span className="font-medium text-gray-700">
               {grades?.assessmentsCount || 'Sem notas lançadas'}
@@ -95,22 +97,22 @@ export function BoletimCard() {
         </div>
 
         <div className="mb-4">
-          <p className="flex gap-2 text-lg font-bold md:text-xl">
-            MÉDIA GERAL:{' '}
+          <div className="flex gap-2 text-lg font-bold md:text-xl">
+            <p>MÉDIA GERAL:</p>{' '}
             {grades ? (
               grades?.averageInform.geralAverage || 'Nota geral não lançada'
             ) : (
-              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-8 w-48 bg-slate-300" />
             )}
-          </p>
-          <p className="flex items-center gap-2 text-gray-700">
-            STATUS GERAL:{' '}
+          </div>
+          <div className="flex items-center gap-2 text-gray-700">
+            <p>STATUS GERAL:</p>{' '}
             {grades ? (
               conceptMap[grades.averageInform.studentAverageStatus.concept]
             ) : (
-              <Skeleton className="h-5 w-36" />
+              <Skeleton className="h-5 w-36 bg-slate-300" />
             )}
-          </p>
+          </div>
         </div>
 
         <div className="mb-4 flex justify-start">
@@ -123,30 +125,16 @@ export function BoletimCard() {
         </div>
 
         {showGrades && (
-          <table className="mb-4 w-full table-auto print:hidden">
+          <table className="mb-4 hidden w-full table-auto md:table print:hidden">
             <thead>
               <tr className="flex flex-col items-center bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600 md:table-row">
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  DISCIPLINA
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  1° VC
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  2° VC
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  VF
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  VFE
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  MÉDIA
-                </th>
-                <th className="whitespace-nowrap px-4 py-3 text-left font-bold print:text-xs">
-                  STATUS
-                </th>
+                <th className="py-3 font-bold print:text-xs">DISCIPLINA</th>
+                <th className="py-3 font-bold print:text-xs">1° VC</th>
+                <th className="py-3 font-bold print:text-xs">2° VC</th>
+                <th className="py-3 font-bold print:text-xs">VF</th>
+                <th className="py-3 font-bold print:text-xs">VFE</th>
+                <th className="py-3 font-bold print:text-xs">MÉDIA</th>
+                <th className="py-3 font-bold print:text-xs">STATUS</th>
               </tr>
             </thead>
             <tbody>
@@ -169,62 +157,91 @@ export function BoletimCard() {
                   />
                 ))
               ) : (
-                <p>Loading...</p>
+                <tr className="space-y-2 bg-gray-100 lg:table-row lg:space-y-0">
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-28 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-10 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-10 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-10 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-10 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-10 bg-slate-300" />
+                  </td>
+                  <td className="py-3">
+                    <Skeleton className="mx-auto h-4 w-20 bg-slate-300" />
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
         )}
 
-        <table className="mb-4 hidden w-full table-auto print:table">
-          <thead>
-            <tr className="bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                DISCIPLINA
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                1° VC
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                2° VC
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                VF
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                VFE
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                MÉDIA
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-left font-bold">
-                STATUS
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {disciplines ? (
-              disciplines.map((discipline, index) => (
-                <GradeItem
-                  key={discipline.disciplineId}
-                  grade={{
-                    disciplina: discipline.name,
-                    vf: grades?.assessments[index]?.vf ?? 0,
-                    vc1: grades?.assessments[index]?.avi ?? 0,
-                    vc2: grades?.assessments[index]?.avii ?? 0,
-                    vfe: grades?.assessments[index]?.vfe ?? 0,
-                    average: grades?.assessments[index]?.average ?? 0,
-                    status:
-                      statusMap[
-                        grades?.assessments[index]?.status ?? 'approved'
-                      ],
-                  }}
-                />
-              ))
+        {showGrades && (
+          <div className="mb-4 flex h-[320px] flex-col gap-4 overflow-auto md:hidden">
+            {!disciplines ? (
+              <>
+                <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
+                  <Skeleton className="h-3 w-44 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
+                  <Skeleton className="h-3 w-44 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                  <Skeleton className="h-3 w-20 bg-slate-300" />
+                </div>
+              </>
             ) : (
-              <p>Loading...</p>
+              disciplines?.map((discipline, index) => {
+                return (
+                  <ol
+                    key={discipline.disciplineId}
+                    className="flex flex-col items-center border-2 border-slate-300"
+                  >
+                    <li className="text-center text-sm">
+                      Disciplina: {discipline.name ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      1º VF: {grades?.assessments[index]?.avi ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      2º VF: {grades?.assessments[index]?.avii ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      VF: {grades?.assessments[index]?.vf ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      VFE: {grades?.assessments[index]?.vfe ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      MÉDIA: {grades?.assessments[index]?.average ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      STATUS: {grades?.assessments[index]?.status ?? '---'}
+                    </li>
+                  </ol>
+                )
+              })
             )}
-          </tbody>
-        </table>
+          </div>
+        )}
 
         <div className="mb-4 flex justify-start">
           <button
@@ -234,8 +251,9 @@ export function BoletimCard() {
             {showBehavior ? 'Ocultar Comportamento' : 'Ver Comportamento'}
           </button>
         </div>
+
         {showBehavior && (
-          <table className="mb-4 w-full table-auto">
+          <table className="mb-4 hidden w-full table-auto lg:table print:hidden">
             <thead>
               <tr className="flex flex-col space-y-2 bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600 lg:table-row lg:space-y-0">
                 <th className="print:text-xs">Janeiro</th>
@@ -259,38 +277,169 @@ export function BoletimCard() {
                     className="flex flex-col space-y-2 bg-gray-100 lg:table-row lg:space-y-0"
                     key={index}
                   >
-                    <td className="text-center text-sm">{month.january}</td>
-                    <td className="text-center text-sm">{month.february}</td>
-                    <td className="text-center text-sm">{month.march}</td>
-                    <td className="text-center text-sm">{month.april}</td>
-                    <td className="text-center text-sm">{month.may}</td>
-                    <td className="text-center text-sm">{month.jun}</td>
-                    <td className="text-center text-sm">{month.july}</td>
-                    <td className="text-center text-sm">{month.august}</td>
-                    <td className="text-center text-sm">{month.september}</td>
-                    <td className="text-center text-sm">{month.october}</td>
-                    <td className="text-center text-sm">{month.november}</td>
-                    <td className="text-center text-sm">{month.december}</td>
+                    <td className="text-center text-sm">
+                      {month.january ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.february ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.march ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.april ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.may ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.jun ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.july ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.august ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.september ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.october ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.november ?? '---'}
+                    </td>
+                    <td className="text-center text-sm">
+                      {month.december ?? '---'}
+                    </td>
                   </tr>
                 ))
               ) : (
-                <tr className="flex flex-col space-y-2 bg-gray-100 lg:table-row lg:space-y-0">
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
-                  <Skeleton className="h-2 w-10" />
+                <tr className="flex justify-center space-y-2 bg-gray-100 lg:table-row lg:space-y-0">
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
+                  <td>
+                    <Skeleton className="mx-auto h-2 w-10 bg-slate-300" />
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
+        )}
+
+        {showBehavior && (
+          <div className="mb-4 flex h-[520px] flex-col gap-4 overflow-auto lg:hidden">
+            {!behaviorMonths ? (
+              <>
+                <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                  <Skeleton className="h-3 w-24 bg-slate-300" />
+                </div>
+              </>
+            ) : (
+              behaviorMonths?.map((month, index) => {
+                return (
+                  <ol
+                    key={index}
+                    className="flex flex-col items-center border-2 border-slate-300"
+                  >
+                    <li className="text-center text-sm">
+                      Janeiro: {month.january ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Fevereiro:{month.february ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Março: {month.march ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Abril: {month.april ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Maio: {month.may ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Junho: {month.jun ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Julho: {month.july ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Agosto: {month.august ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Setembro: {month.september ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Outubro: {month.october ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Novembro: {month.november ?? '---'}
+                    </li>
+                    <li className="text-center text-sm">
+                      Dezembro: {month.december ?? '---'}
+                    </li>
+                  </ol>
+                )
+              })
+            )}
+          </div>
         )}
 
         <div className="mb-4 space-y-2 print:mt-4">
@@ -361,26 +510,26 @@ interface GradeProps {
 
 function GradeItem({ grade }: { grade: GradeProps }) {
   return (
-    <tr className="flex flex-col gap-2 border-b border-gray-200 hover:bg-gray-100 md:table-row">
-      <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">
+    <tr className="mb-2 flex flex-col border-b border-gray-200 hover:bg-gray-100 md:mb-0 md:table-row print:table-row">
+      <td className="text-center text-sm font-medium text-gray-900 md:py-3 print:text-left">
         {grade.disciplina}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+      <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
         {grade.vc1}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+      <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
         {grade.vc2}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+      <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
         {grade.vf}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+      <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
         {grade.vfe}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+      <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
         {grade.average}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-sm text-lime-700">
+      <td className="text-center text-sm text-lime-700 md:py-3 print:text-left">
         {grade.status}
       </td>
     </tr>
