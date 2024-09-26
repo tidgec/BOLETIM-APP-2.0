@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
+import { useCreatePoleSubRankingSheet } from '@/hooks/use-create-pole-sub-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetSubPoleRanking } from '@/hooks/use-get-sub-pole-ranking'
 import { fail } from '@/utils/fail'
@@ -46,13 +46,16 @@ export function OverallSubPoleRanking() {
     disciplineModule: Number(disciplineModule),
   })
 
-  const { mutateAsync: createRankingSheetFn } = useCreateRankingSheet()
+  const { mutateAsync: createSubPoleRankingSheet } =
+    useCreatePoleSubRankingSheet()
 
   async function handleDownloadExcel() {
     try {
-      const response = await createRankingSheetFn({
+      const response = await createSubPoleRankingSheet({
         courseId: String(courseId),
+        poleId: String(id),
         hasBehavior: 'true',
+        disciplineModule: Number(disciplineModule),
       })
 
       window.location.href = response.fileUrl

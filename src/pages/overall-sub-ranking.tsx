@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
+import { useCreateSubRankingSheet } from '@/hooks/use-create-sub-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetSubRanking } from '@/hooks/use-get-sub-ranking'
 import { fail } from '@/utils/fail'
@@ -43,13 +43,14 @@ export function OverallSubRanking() {
     disciplineModule: Number(disciplineModule),
   })
 
-  const { mutateAsync: createRankingSheetFn } = useCreateRankingSheet()
+  const { mutateAsync: createSubRankingSheetFn } = useCreateSubRankingSheet()
 
   async function handleDownloadExcel() {
     try {
-      const response = await createRankingSheetFn({
+      const response = await createSubRankingSheetFn({
         courseId: String(courseId),
         hasBehavior: 'true',
+        disciplineModule: Number(disciplineModule),
       })
 
       window.location.href = response.fileUrl
