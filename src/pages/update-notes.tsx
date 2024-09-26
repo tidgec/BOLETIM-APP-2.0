@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { UpdateAssessmentForm } from '@/components/update-assessment-form'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
@@ -31,9 +32,14 @@ export function UpdateNotes() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
         <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
-          {!isLoading &&
+          {isLoading ? (
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
+          ) : (
             students?.map((student) => (
               <div key={student.id} className="rounded border p-4">
                 <h2 className="mb-4 text-lg font-bold">
@@ -44,7 +50,8 @@ export function UpdateNotes() {
 
                 <UpdateAssessmentForm studentId={student.id} />
               </div>
-            ))}
+            ))
+          )}
         </div>
 
         <Pagination

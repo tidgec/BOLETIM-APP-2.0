@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 
 export function SearchNotes() {
@@ -36,13 +37,14 @@ export function SearchNotes() {
           </div>
         </div>
 
-        {isLoading && <p>Loading...</p>}
-
-        <div
-          className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto
-        "
-        >
-          {!isLoading &&
+        <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
+          {isLoading ? (
+            <div className="h-full space-y-2 overflow-auto">
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </div>
+          ) : (
             students?.map((student) => (
               <Link
                 to={`${currentUrl.origin}/students/${student.id}/boletim?courseId=${student.course.id}`}
@@ -62,7 +64,8 @@ export function SearchNotes() {
                 </span>
                 <span className="font-medium">Polo: {student.pole.name}</span>
               </Link>
-            ))}
+            ))
+          )}
         </div>
 
         <Pagination

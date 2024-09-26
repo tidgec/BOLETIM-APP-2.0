@@ -2,6 +2,7 @@ import { useState } from 'react'
 import QRCode from 'react-qr-code'
 import { useParams, useSearchParams } from 'react-router-dom'
 
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 import { useGetCourseStudent } from '@/hooks/use-get-course-student'
 import { useGetStudentBoletim } from '@/hooks/use-get-student-boletim'
@@ -9,8 +10,8 @@ import { conceptMap, statusMap } from '@/utils/status-and-concept-mapper'
 import { verifyFormula } from '@/utils/verify-formula-type'
 
 export function BoletimCard() {
-  const [showGrades, setShowGrades] = useState(false)
-  const [showBehavior, setShowBehavior] = useState(false)
+  const [showGrades, setShowGrades] = useState(true)
+  const [showBehavior, setShowBehavior] = useState(true)
 
   const [searchParams] = useSearchParams()
   const { id: studentId } = useParams()
@@ -58,7 +59,7 @@ export function BoletimCard() {
       <div className="rounded-lg bg-white p-4 shadow-md print:p-2">
         <div className="mb-4 flex flex-col gap-1">
           {isLoadingCourseStudent ? (
-            <p>Loading...</p>
+            <Skeleton className="h-8 w-24" />
           ) : (
             <span className="text-xl font-bold text-gray-700">
               Curso: {student?.course.name}
@@ -66,7 +67,7 @@ export function BoletimCard() {
           )}
 
           {isLoadingCourseStudent ? (
-            <p>Loading...</p>
+            <Skeleton className="h-7 w-20" />
           ) : (
             <span className="font-medium text-gray-700">
               Pólo: {student?.pole.name}
@@ -74,7 +75,7 @@ export function BoletimCard() {
           )}
 
           {isLoadingCourseStudent ? (
-            <p>Loading...</p>
+            <Skeleton className="h-6 w-32" />
           ) : (
             <span className="font-medium text-gray-700">
               Nome: {student?.username}
@@ -85,7 +86,7 @@ export function BoletimCard() {
         <div className="mb-4">
           <h3 className="text-lg font-bold md:text-xl">DISCIPLINAS:</h3>
           {isLoadingStudentBoletim ? (
-            <p>Loading...</p>
+            <Skeleton className="h-8 w-10" />
           ) : (
             <span className="font-medium text-gray-700">
               {grades?.assessmentsCount || 'Sem notas lançadas'}
@@ -94,20 +95,22 @@ export function BoletimCard() {
         </div>
 
         <div className="mb-4">
-          {!grades ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              <h3 className="text-lg font-bold md:text-xl">
-                MÉDIA GERAL:{' '}
-                {grades?.averageInform.geralAverage || 'Nota geral não lançada'}
-              </h3>
-              <p className="text-gray-700">
-                STATUS GERAL:{' '}
-                {conceptMap[grades.averageInform.studentAverageStatus.concept]}
-              </p>
-            </>
-          )}
+          <p className="flex gap-2 text-lg font-bold md:text-xl">
+            MÉDIA GERAL:{' '}
+            {grades ? (
+              grades?.averageInform.geralAverage || 'Nota geral não lançada'
+            ) : (
+              <Skeleton className="h-8 w-48" />
+            )}
+          </p>
+          <p className="flex items-center gap-2 text-gray-700">
+            STATUS GERAL:{' '}
+            {grades ? (
+              conceptMap[grades.averageInform.studentAverageStatus.concept]
+            ) : (
+              <Skeleton className="h-5 w-36" />
+            )}
+          </p>
         </div>
 
         <div className="mb-4 flex justify-start">
@@ -271,37 +274,59 @@ export function BoletimCard() {
                   </tr>
                 ))
               ) : (
-                <p>Loading...</p>
+                <tr className="flex flex-col space-y-2 bg-gray-100 lg:table-row lg:space-y-0">
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                  <Skeleton className="h-2 w-10" />
+                </tr>
               )}
             </tbody>
           </table>
         )}
 
-        <div className="mb-4 print:mt-4">
+        <div className="mb-4 space-y-2 print:mt-4">
+          <div>
+            <p className="text-xl font-bold md:text-base">
+              MÉDIA DE COMPORTAMENTO:{' '}
+              {behaviorAverage ?? <Skeleton className="h-2 w-6" />}
+            </p>
+            <p className="text-xl font-bold md:text-base">
+              STATUS COMPORTAMENTO:{' '}
+              {behaviorAverage && behaviorAverage <= 6
+                ? 'REPROVADO'
+                : 'APROVADO'}
+            </p>
+          </div>
+
           {grades ? (
-            <ul className="text-xl font-bold">
+            <ul className="text-sm font-bold text-gray-700">
               {grades.averageInform.behaviorAverageStatus.map((item, index) => (
-                <li key={index}>
+                <li key={index} className="flex flex-col">
                   <span>
-                    Média {index + 1} Período: {item.behaviorAverage}
+                    Média {index + 1}º Período: {item.behaviorAverage}
                   </span>
                   <span>
-                    Status {index + 1} Período: {item.status}
+                    Status {index + 1}º Período:{' '}
+                    {item.behaviorAverage <= 6 ? 'REPROVADO' : 'APROVADO'}
                   </span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>Loading...</p>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-4 w-52" />
+            </div>
           )}
-
-          <p className="text-sm text-gray-700 md:text-base">
-            MÉDIA DE COMPORTAMENTO: {behaviorAverage}
-          </p>
-          <p className="text-sm text-gray-700 md:text-base">
-            STATUS COMPORTAMENTO:{' '}
-            {behaviorAverage && behaviorAverage <= 6 ? 'REPROVADO' : 'APROVADO'}
-          </p>
         </div>
       </div>
 

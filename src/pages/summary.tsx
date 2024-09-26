@@ -1,5 +1,6 @@
 import { Course } from '@/components/course'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateSummary } from '@/hooks/use-create-summary'
 import { useGetCourses } from '@/hooks/use-get-courses'
 
@@ -22,14 +23,25 @@ export function Summary() {
           Selecione o curso para baixar ementa
         </h2>
 
-        <div className="flex flex-wrap justify-center">
-          {isLoading && <p>Loading...</p>}
+        {isLoading && (
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="bg-white shadow-md">
+              <Skeleton className="h-40 w-80" />
+            </div>
+
+            <div className="bg-white shadow-md">
+              <Skeleton className="h-40 w-80" />
+            </div>
+          </div>
+        )}
+
+        <div className="mt-6 flex flex-wrap justify-center">
           {!isLoading &&
             courses?.map((course) => (
               <Button
                 key={course.id}
                 variant={'outline'}
-                className="m-10 h-full w-80 bg-white py-1 shadow-md"
+                className="h-full w-80 bg-white py-1 shadow-md"
                 onClick={() => handleDownloadSummary(course.id)}
               >
                 <Course course={course} />

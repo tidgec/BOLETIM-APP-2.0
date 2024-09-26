@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { FilterForm } from '@/components/filter/filter-form'
 import { Pagination } from '@/components/pagination'
+import { UserSkeleton } from '@/components/skeletons/user-skeleton'
 import { useGetCourseStudents } from '@/hooks/use-get-course-students'
 import { formatCPF } from '@/utils/format-cpf'
 
@@ -30,9 +31,14 @@ export function StudentInformation() {
 
         <FilterForm />
 
-        {isLoading && <p>Loading...</p>}
         <div className="mb-2 mt-4 flex h-[28rem] flex-col gap-4 overflow-y-auto px-4 md:grid md:grid-cols-2">
-          {!isLoading &&
+          {isLoading ? (
+            <>
+              <UserSkeleton />
+              <UserSkeleton />
+              <UserSkeleton />
+            </>
+          ) : (
             students?.map((student) => (
               <div key={student.id}>
                 <ul className="flex flex-col gap-2 rounded border p-4">
@@ -76,7 +82,8 @@ export function StudentInformation() {
                   </div>
                 </ul>
               </div>
-            ))}
+            ))
+          )}
         </div>
 
         {students && (
