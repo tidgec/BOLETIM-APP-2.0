@@ -34,7 +34,7 @@ export function DeleteCourseDiscipline({
   }
 
   return (
-    <div className="flex flex-col gap-1 rounded bg-pmpa-blue-700 px-2 py-1">
+    <div className="flex flex-col gap-1 rounded bg-pmpa-blue-700 px-2 py-1 text-center md:text-left">
       <span className="font-medium">{discipline.name}</span>
       <Button
         variant={'destructive'}

@@ -54,7 +54,17 @@ export function UpdateBehavior() {
           <div className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto">
             {students?.map((student) => {
               if (!behaviors) {
-                return <p key={student.id}>Carregando...</p>
+                return (
+                  <div
+                    key={student.id}
+                    className="mx-2 mb-4 h-[36rem] space-y-4 overflow-auto"
+                  >
+                    <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+                    <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+                    <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+                    <Skeleton className="h-96 w-full rounded border bg-slate-300 p-4" />
+                  </div>
+                )
               }
 
               const studentBehaviors = behaviors.filter(
