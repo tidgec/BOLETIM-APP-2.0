@@ -24,7 +24,9 @@ export function BoletimCard() {
 
   const formula = verifyFormula(student?.course.formula ?? '')
 
-  const { disciplines } = useGetCourseDisciplines(String(courseId))
+  const { disciplines } = useGetCourseDisciplines({
+    courseId: String(courseId),
+  })
 
   const {
     grades,

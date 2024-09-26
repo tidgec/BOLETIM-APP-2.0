@@ -1,11 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getCourseDisciplines } from '@/http/get-course-disciplines'
+import {
+  getCourseDisciplines,
+  GetCourseDisciplinesRequest,
+} from '@/http/get-course-disciplines'
 
-export function useGetCourseDisciplines(courseId: string) {
+export function useGetCourseDisciplines({
+  courseId,
+  disciplineName,
+}: GetCourseDisciplinesRequest) {
   const query = useQuery({
-    queryKey: ['course-disciplines', courseId],
-    queryFn: () => getCourseDisciplines({ courseId }),
+    queryKey: ['course-disciplines', courseId, disciplineName],
+    queryFn: () => getCourseDisciplines({ courseId, disciplineName }),
     staleTime: Infinity,
   })
 

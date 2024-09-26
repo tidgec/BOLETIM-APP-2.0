@@ -1,16 +1,48 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
 
 import { Discipline } from '@/components/discipline'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 
-export function ListCourseDisciplinesPage() {
-  const [searchParams] = useSearchParams()
-  const courseId = searchParams.get('courseId')
+const disciplineFiltersSchema = z.object({
+  name: z.string().optional(),
+})
 
-  const { disciplines, isLoading } = useGetCourseDisciplines(String(courseId))
+type DisciplineFiltersSchema = z.infer<typeof disciplineFiltersSchema>
+
+export function ListCourseDisciplinesPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const courseId = searchParams.get('courseId')
+  const disciplineName = searchParams.get('disciplineName') ?? ''
+
+  const { handleSubmit, register } = useForm<DisciplineFiltersSchema>({
+    resolver: zodResolver(disciplineFiltersSchema),
+    defaultValues: {
+      name: disciplineName,
+    },
+  })
+
+  const { disciplines, isLoading } = useGetCourseDisciplines({
+    courseId: String(courseId),
+    disciplineName,
+  })
 
   const currentUrl = new URL(window.location.href)
+
+  function handleFilter({ name }: DisciplineFiltersSchema) {
+    setSearchParams((state) => {
+      if (name) {
+        state.set('disciplineName', name)
+      } else {
+        state.delete('disciplineName')
+      }
+
+      return state
+    })
+  }
 
   return (
     <div className="container mx-auto w-full p-4">
@@ -18,13 +50,18 @@ export function ListCourseDisciplinesPage() {
         <h2 className="w-full border-b-2 border-black py-4 text-xl font-semibold">
           Disciplinas
         </h2>
-        <div className="mb-4 flex items-center py-4">
+
+        <form
+          className="mb-4 flex items-center py-4"
+          onSubmit={handleSubmit(handleFilter)}
+        >
           <input
             type="text"
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             placeholder="Pesquise pela disciplina"
+            {...register('name')}
           />
-        </div>
+        </form>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {isLoading ? (

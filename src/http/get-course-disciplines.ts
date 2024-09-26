@@ -4,6 +4,7 @@ import { api } from '@/lib/axios'
 
 export interface GetCourseDisciplinesRequest {
   courseId: string
+  disciplineName?: string
 }
 
 export interface GetCourseDisciplinesResponse {
@@ -17,6 +18,7 @@ export interface GetCourseDisciplinesResponse {
 
 export async function getCourseDisciplines({
   courseId,
+  disciplineName,
 }: GetCourseDisciplinesRequest): Promise<GetCourseDisciplinesResponse> {
   const token = Cookies.get('token')
 
@@ -25,6 +27,10 @@ export async function getCourseDisciplines({
     {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+
+      params: {
+        search: disciplineName ?? '',
       },
     },
   )

@@ -13,11 +13,13 @@ export function CourseDiscipline() {
   const { id } = useParams()
 
   const { disciplines } = useGetDisciplines({})
-  const { disciplines: courseDisciplines } = useGetCourseDisciplines(String(id))
+  const { disciplines: courseDisciplines } = useGetCourseDisciplines({
+    courseId: String(id),
+  })
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full text-center sm:text-left md:max-w-[90rem] md:px-4">
+      <section className="mx-auto w-full px-2 text-center sm:text-left md:max-w-[90rem] md:px-4">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar disciplinas do curso
         </h2>
