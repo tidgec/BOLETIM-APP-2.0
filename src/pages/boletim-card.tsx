@@ -74,7 +74,7 @@ export function BoletimCard() {
             <Skeleton className="h-7 w-20 bg-slate-300" />
           ) : (
             <span className="font-medium text-gray-700">
-              Pólo: {student?.pole.name}
+              Polo: {student?.pole.name}
             </span>
           )}
 

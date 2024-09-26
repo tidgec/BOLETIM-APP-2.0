@@ -42,7 +42,7 @@ export function CoursePole() {
     <div className="w-full py-6">
       <section className="mx-auto w-full text-center sm:text-left md:max-w-[90rem] md:px-4">
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
-          Adicionar pólos do curso
+          Adicionar polos do curso
         </h2>
 
         <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row">

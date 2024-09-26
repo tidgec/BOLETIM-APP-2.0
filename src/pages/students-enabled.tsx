@@ -46,6 +46,7 @@ export function StudentsEnabled() {
     username: username ?? '',
     page: page ?? '1',
     poleId: poleId ?? 'all',
+    isEnabled: true,
   })
 
   const { handleSubmit, register, reset } = useForm<DisableStudentSchema>({

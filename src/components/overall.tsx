@@ -301,7 +301,7 @@ export function Overall() {
                       DATA DE NASCIMENTO: {item.studentBirthday}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      PÓLO: {item.studentPole}
+                      POLO: {item.studentPole}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       STATUS:{' '}

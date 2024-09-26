@@ -22,7 +22,7 @@ export function CourseManagementInformation() {
             className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2"
             alt=""
           />
-          <span className="font-medium text-white">Pólos</span>
+          <span className="font-medium text-white">Polos</span>
         </Link>
         <Link
           to={`/courses/management/${id}/disciplines`}

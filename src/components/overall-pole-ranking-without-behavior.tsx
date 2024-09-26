@@ -97,7 +97,7 @@ export function OverallPoleRankingWithoutBehavior() {
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
         <h2 className="mb-4 border-b-2 border-b-black text-xl font-semibold">
-          Classificação por pólo sem comportamento
+          Classificação por polo sem comportamento
         </h2>
 
         <div className="mb-4 flex flex-col items-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
@@ -301,7 +301,7 @@ export function OverallPoleRankingWithoutBehavior() {
                       DATA DE NASCIMENTO: {item.studentBirthday}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      PÓLO: {item.studentPole}
+                      POLO: {item.studentPole}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       STATUS:{' '}
