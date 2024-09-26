@@ -35,6 +35,7 @@ import { DeleteCourses } from './pages/delete-courses'
 import { DeleteManagers } from './pages/delete-managers'
 import { DeleteStudents } from './pages/delete-students'
 import { DownloadAcademicRecord } from './pages/download-academic-record'
+import { ForgotPassword } from './pages/forgot-password'
 import { Home } from './pages/home'
 import { ListAdminsPage } from './pages/list-admins'
 import { ListCourseDisciplinesPage } from './pages/list-course-disciplines'
@@ -62,6 +63,7 @@ import { RemoveBehaviorsBatch } from './pages/remove-behaviors-batch'
 import { RemoveNotes } from './pages/remove-notes'
 import { RemoveNotesBatch } from './pages/remove-notes-batch'
 import { Reports } from './pages/reports'
+import { RestorePassword } from './pages/restore-password'
 import { SearchNotes } from './pages/search-notes'
 import { SignIn } from './pages/sign-in'
 import { StudentAcademicRecord } from './pages/student/student-academic-record'
@@ -1039,6 +1041,14 @@ export const router = createBrowserRouter([
       {
         path: '/sign-in',
         element: <SignIn />,
+      },
+      {
+        path: '/forgot',
+        element: <ForgotPassword />,
+      },
+      {
+        path: '/restore',
+        element: <RestorePassword />,
       },
       {
         path: '/students/confirm',
