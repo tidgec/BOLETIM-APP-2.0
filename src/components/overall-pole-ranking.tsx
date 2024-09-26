@@ -3,7 +3,10 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import { Pagination } from '@/components/pagination'
-import { RankingSkeleton } from '@/components/skeletons/ranking-skeleton'
+import {
+  RankingResponsiveSkeleton,
+  RankingSkeleton,
+} from '@/components/skeletons/ranking-skeleton'
 import { RankingViewer } from '@/components/templates/ranking-viewer'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -254,62 +257,67 @@ export function OverallPoleRanking() {
           </Table>
 
           <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
-            {isLoading
-              ? ''
-              : ranking?.map((item, index) => {
-                  const classification = getClassificationPosition(index, page)
+            {isLoading ? (
+              <>
+                <RankingResponsiveSkeleton />
+                <RankingResponsiveSkeleton />
+              </>
+            ) : (
+              ranking?.map((item, index) => {
+                const classification = getClassificationPosition(index, page)
 
-                  return (
-                    <ol
-                      key={item.studentName}
-                      className="flex flex-col items-center border-2 border-slate-300"
-                    >
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Classificação: {classification}ª
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Q.AV: {item.studentAverage.assessmentsCount}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Q.C {item.studentAverage.averageInform.behaviorsCount}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        RG: {item.studentCivilID}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        NOME COMPLETO: {item.studentName}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        MÉDIA FINAL:{' '}
-                        {item.studentAverage.averageInform.geralAverage}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        CONCEITO:{' '}
-                        {
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ]
-                        }
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        DATA DE NASCIMENTO: {item.studentBirthday}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        PÓLO: {item.studentPole}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        STATUS:{' '}
-                        {
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ]
-                        }
-                      </li>
-                    </ol>
-                  )
-                })}
+                return (
+                  <ol
+                    key={item.studentName}
+                    className="flex flex-col items-center border-2 border-slate-300"
+                  >
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      Classificação: {classification}ª
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      Q.AV: {item.studentAverage.assessmentsCount}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      Q.C {item.studentAverage.averageInform.behaviorsCount}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      RG: {item.studentCivilID}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      NOME COMPLETO: {item.studentName}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      MÉDIA FINAL:{' '}
+                      {item.studentAverage.averageInform.geralAverage}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      CONCEITO:{' '}
+                      {
+                        conceptMap[
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .concept
+                        ]
+                      }
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      DATA DE NASCIMENTO: {item.studentBirthday}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      PÓLO: {item.studentPole}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      STATUS:{' '}
+                      {
+                        overallStatusMap[
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status
+                        ]
+                      }
+                    </li>
+                  </ol>
+                )
+              })
+            )}
           </div>
         </div>
 

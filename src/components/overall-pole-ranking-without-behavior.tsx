@@ -1,66 +1,55 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { useParams, useSearchParams } from 'react-router-dom'
 
-import { Chart } from '@/components/chart'
-import { Pagination } from '@/components/pagination'
-import {
-  RankingResponsiveSkeleton,
-  RankingSkeleton,
-} from '@/components/skeletons/ranking-skeleton'
-import { RankingViewer } from '@/components/templates/ranking-viewer'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { useCreatePoleSubRankingSheet } from '@/hooks/use-create-pole-sub-ranking-sheet'
+import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
-import { useGetSubPoleRanking } from '@/hooks/use-get-sub-pole-ranking'
+import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { fail } from '@/utils/fail'
 import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
-export function OverallSubPoleRanking() {
+import { Chart } from './chart'
+import { Pagination } from './pagination'
+import {
+  RankingResponsiveSkeleton,
+  RankingSkeleton,
+} from './skeletons/ranking-skeleton'
+import { RankingViewer } from './templates/ranking-viewer'
+import { Button } from './ui/button'
+import { Skeleton } from './ui/skeleton'
+
+export function OverallPoleRankingWithoutBehavior() {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
-  const disciplineModule = searchParams.get('disciplineModule') ?? '1'
-  const hasBehavior = searchParams.get('hasBehavior') ?? 'true'
 
   const { course, isLoading: isLoadingGetCourse } = useGetCourse({
     courseId: String(courseId),
   })
 
-  const { ranking, pages, totalItems, isLoading } = useGetSubPoleRanking({
-    courseId: course?.id,
+  const { ranking, isLoading, pages, totalItems } = useGetPoleRanking({
+    courseId: String(courseId),
     poleId: String(id),
     page,
-    disciplineModule: Number(disciplineModule),
-    hasBehavior,
+    hasBehavior: 'false',
   })
 
-  const { ranking: rankingToPrint } = useGetSubPoleRanking({
-    courseId: course?.id,
+  const { ranking: rankingToPrint } = useGetPoleRanking({
+    courseId: String(courseId),
     poleId: String(id),
-    disciplineModule: Number(disciplineModule),
+    hasBehavior: 'false',
   })
 
-  const { mutateAsync: createSubPoleRankingSheet } =
-    useCreatePoleSubRankingSheet()
+  const { mutateAsync: createPoleRankingWithoutBehaviorSheetFn } =
+    useCreatePoleRankingSheet()
 
   async function handleDownloadExcel() {
     try {
-      const response = await createSubPoleRankingSheet({
+      const response = await createPoleRankingWithoutBehaviorSheetFn({
         courseId: String(courseId),
         poleId: String(id),
-        hasBehavior: 'true',
-        disciplineModule: Number(disciplineModule),
+        hasBehavior: 'false',
       })
 
       window.location.href = response.fileUrl
@@ -106,15 +95,17 @@ export function OverallSubPoleRanking() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left print:px-0">
+      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
         <h2 className="mb-4 border-b-2 border-b-black text-xl font-semibold">
-          Sub Classificação {disciplineModule} Período
+          Classificação por pólo sem comportamento
         </h2>
 
-        <div className="mb-4 flex items-center justify-center rounded-lg bg-pmpa-blue-500 p-4 print:hidden">
-          <div>
+        <div className="mb-4 flex flex-col items-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
+          <div className="w-full sm:w-1/4">
             {isLoading ? (
-              <Skeleton className="h-80 w-80" />
+              <div className="h-64 w-full">
+                <Skeleton className="h-full w-full rounded-lg" />
+              </div>
             ) : (
               <Chart
                 charts={[
@@ -164,43 +155,44 @@ export function OverallSubPoleRanking() {
           )}
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-md print:overflow-hidden">
-          <Table className="min-w-full table-auto">
-            <TableHeader>
-              <TableRow className="border-b bg-pmpa-blue-500 print:flex print:justify-start">
-                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
+          <table className="hidden min-w-full table-auto lg:table">
+            <thead>
+              <tr className="border-b bg-pmpa-blue-500">
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   CLASS
-                </TableHead>
-                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   Q.AV
-                </TableHead>
-                <TableHead className="w-10 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   Q.C
-                </TableHead>
-                <TableHead className="w-20 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   RG
-                </TableHead>
-                <TableHead className="w-[340px] py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   NOME COMPLETO
-                </TableHead>
-                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   MÉDIA FINAL
-                </TableHead>
-                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   CONCEITO
-                </TableHead>
-                <TableHead className="w-32 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   DATA DE NASCIMENTO
-                </TableHead>
-                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   POLO
-                </TableHead>
-                <TableHead className="w-24 py-2 text-center text-sm font-semibold text-white print:w-auto print:px-0 print:py-0 print:pl-4">
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
                   STATUS
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody className="print:hidden">
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
               {isLoading ? (
                 <>
                   <RankingSkeleton />
@@ -214,53 +206,53 @@ export function OverallSubPoleRanking() {
                   const classification = getClassificationPosition(index, page)
 
                   return (
-                    <TableRow key={item.studentName}>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {classification}ª
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                    <tr key={index}>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {classification}º
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentAverage.assessmentsCount}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentAverage.averageInform.behaviorsCount}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentCivilID}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentName}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
+                        {item.studentPole}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentAverage.averageInform.geralAverage}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {
                           conceptMap[
                             item.studentAverage.averageInform
                               .studentAverageStatus.concept
                           ]
                         }
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentBirthday}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentPole}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
+                      </td>
+                      <td className="px-4 py-2 text-sm text-slate-700">
                         {
                           overallStatusMap[
                             item.studentAverage.averageInform
                               .studentAverageStatus.status
                           ]
                         }
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   )
                 })
               )}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
 
           <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
             {isLoading ? (
@@ -278,13 +270,13 @@ export function OverallSubPoleRanking() {
                     className="flex flex-col items-center border-2 border-slate-300"
                   >
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      Classificação: {classification}ª
+                      CLASSIFICAÇÃO: {classification}ª
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       Q.AV: {item.studentAverage.assessmentsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      Q.C {item.studentAverage.averageInform.behaviorsCount}
+                      Q.C: {item.studentAverage.averageInform.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       RG: {item.studentCivilID}
@@ -327,7 +319,7 @@ export function OverallSubPoleRanking() {
           </div>
         </div>
 
-        <div className="mt-4 space-x-2 text-center print:hidden">
+        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
@@ -373,11 +365,13 @@ export function OverallSubPoleRanking() {
           <Button onClick={handleDownloadExcel}>Download Excel</Button>
         </div>
 
-        <Pagination
-          items={totalItems ?? 0}
-          page={Number(page)}
-          pages={pages ?? 0}
-        />
+        {ranking && (
+          <Pagination
+            items={totalItems ?? 0}
+            page={Number(page)}
+            pages={pages ?? 0}
+          />
+        )}
       </section>
     </div>
   )

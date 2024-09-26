@@ -1,365 +1,59 @@
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 
-import { Chart } from '@/components/chart'
-import { Pagination } from '@/components/pagination'
-import { RankingViewer } from '@/components/templates/ranking-viewer'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton' // Importar o componente Skeleton
-import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
+import { OverallPoleRankingWithoutBehavior } from '@/components/overall-pole-ranking-without-behavior'
 import { useGetCourse } from '@/hooks/use-get-course'
-import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
-import { fail } from '@/utils/fail'
-import { getClassificationPosition } from '@/utils/get-classification-position'
-import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function PoleRankingWithoutBehavior() {
-  const { id } = useParams()
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
-  const page = searchParams.get('page') ?? '1'
+  const { id } = useParams()
 
-  const { course, isLoading: isLoadingGetCourse } = useGetCourse({
+  const [isOverall, setIsOverall] = useState<boolean>(true)
+
+  const { course } = useGetCourse({
     courseId: String(courseId),
   })
 
-  const { ranking, isLoading, pages, totalItems } = useGetPoleRanking({
-    courseId: String(courseId),
-    poleId: String(id),
-    page,
-    hasBehavior: 'false',
-  })
+  if (course?.formula === 'CFO' && isOverall) {
+    return (
+      <div className="w-full py-6">
+        <section className="mx-auto w-full max-w-[90rem] text-center sm:text-left">
+          <h2 className="w-full border-b-2 border-black text-xl font-semibold">
+            Selecione a classificação
+          </h2>
 
-  const { ranking: rankingToPrint } = useGetPoleRanking({
-    courseId: String(courseId),
-    poleId: String(id),
-    hasBehavior: 'false',
-  })
+          <div className="mt-4 flex w-full flex-col items-center justify-center gap-4 px-4 md:flex-row">
+            <Link
+              to={`/rankings/poles/no-beahavior/${id}/sub-ranking?courseId=${course.id}&disciplineModule=1&hasBehavior=false`}
+              className="h-16 w-full max-w-64 rounded-lg bg-pmpa-blue-500 text-lg font-semibold text-white shadow-lg"
+            >
+              <button className="h-full w-full">1º Período</button>
+            </Link>
+            <Link
+              to={`/rankings/poles/no-beahavior/${id}/sub-ranking?courseId=${course.id}&disciplineModule=2&hasBehavior=false`}
+              className="h-16 w-full max-w-64 rounded-lg bg-pmpa-blue-500 text-lg font-semibold text-white shadow-lg"
+            >
+              <button className="h-full w-full">2º Período</button>
+            </Link>
+            <Link
+              to={`/rankings/poles/no-beahavior/${id}/sub-ranking?courseId=${course.id}&disciplineModule=3&hasBehavior=false`}
+              className="h-16 w-full max-w-64 rounded-lg bg-pmpa-blue-500 text-lg font-semibold text-white shadow-lg"
+            >
+              <button className="h-full w-full">3º Período</button>
+            </Link>
 
-  const { mutateAsync: createPoleRankingWithoutBehaviorSheetFn } =
-    useCreatePoleRankingSheet()
-
-  async function handleDownloadExcel() {
-    try {
-      const response = await createPoleRankingWithoutBehaviorSheetFn({
-        courseId: String(courseId),
-        poleId: String(id),
-        hasBehavior: 'false',
-      })
-
-      window.location.href = response.fileUrl
-    } catch (err) {
-      fail(err)
-    }
+            <button
+              className="h-16 w-full max-w-64 rounded-lg bg-pmpa-blue-500 text-lg font-semibold text-white shadow-lg"
+              onClick={() => setIsOverall(false)}
+            >
+              Geral
+            </button>
+          </div>
+        </section>
+      </div>
+    )
   }
 
-  const totalExcellentSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'excellent',
-  )?.length
-
-  const totalVeryGoodSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'very good',
-  )?.length
-
-  const totalGoodSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept === 'good',
-  )?.length
-
-  const totalRegularSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'regular',
-  )?.length
-
-  const totalInsufficientSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'insufficient',
-  )?.length
-
-  const totalNoIncomeSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'no income',
-  )?.length
-
-  console.log(pages)
-
-  return (
-    <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
-        <h2 className="mb-4 border-b-2 border-b-black text-xl font-semibold">
-          Classificação por polo sem comportamento
-        </h2>
-
-        <div className="mb-4 flex flex-col items-center rounded-lg bg-pmpa-blue-500 p-4 sm:flex-row sm:justify-center">
-          <div className="w-full sm:w-1/4">
-            {isLoading ? (
-              <div className="h-64 w-full">
-                <Skeleton className="h-full w-full rounded-lg" />
-              </div>
-            ) : (
-              <Chart
-                charts={[
-                  {
-                    status: 'excellent',
-                    size: totalExcellentSize ?? 0,
-                    fill: 'var(--color-excellent)',
-                  },
-                  {
-                    status: 'very good',
-                    size: totalVeryGoodSize ?? 0,
-                    fill: 'var(--color-very-good)',
-                  },
-                  {
-                    status: 'good',
-                    size: totalGoodSize ?? 0,
-                    fill: 'var(--color-good)',
-                  },
-                  {
-                    status: 'regular',
-                    size: totalRegularSize ?? 0,
-                    fill: 'var(--color-regular)',
-                  },
-                  {
-                    status: 'insufficient',
-                    size: totalInsufficientSize ?? 0,
-                    fill: 'var(--color-insufficient)',
-                  },
-                  {
-                    status: 'no income',
-                    size: totalNoIncomeSize ?? 0,
-                    fill: 'var(--color-no-income)',
-                  },
-                ]}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="mb-6 flex items-center justify-center font-bold">
-          {isLoadingGetCourse ? (
-            <Skeleton className="h-4 w-44 bg-slate-300" />
-          ) : (
-            <span className="text-black">
-              Classificação Geral: {course?.name}
-            </span>
-          )}
-        </div>
-
-        <div className="overflow-x-auto rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
-          <table className="hidden min-w-full">
-            <thead>
-              <tr className="border-b bg-pmpa-blue-500">
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  CLASS
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  Q.AV
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  Q.C
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  RG
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  NOME COMPLETO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  MÉDIA FINAL
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  CONCEITO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  DATA DE NASCIMENTO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  POLO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
-                  STATUS
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
-                <tr>
-                  <td colSpan={10} className="py-4 text-center">
-                    <Skeleton className="h-8 w-full" />
-                  </td>
-                </tr>
-              ) : (
-                ranking?.map((item, index) => {
-                  const classification = getClassificationPosition(index, page)
-
-                  return (
-                    <tr key={index}>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {classification}º
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentAverage.assessmentsCount}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentAverage.averageInform.behaviorsCount}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentCivilID}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentPole}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentAverage.averageInform.geralAverage}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ]
-                        }
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentBirthday}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentPole}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ]
-                        }
-                      </td>
-                    </tr>
-                  )
-                })
-              )}
-            </tbody>
-          </table>
-
-          <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
-            {isLoading
-              ? ''
-              : ranking?.map((item, index) => {
-                  const classification = getClassificationPosition(index, page)
-
-                  return (
-                    <ol
-                      key={item.studentName}
-                      className="flex flex-col items-center border-2 border-slate-300"
-                    >
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Classificação: {classification}ª
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Q.AV: {item.studentAverage.assessmentsCount}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        Q.C {item.studentAverage.averageInform.behaviorsCount}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        RG: {item.studentCivilID}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        NOME COMPLETO: {item.studentName}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        MÉDIA FINAL:{' '}
-                        {item.studentAverage.averageInform.geralAverage}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        CONCEITO:{' '}
-                        {
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ]
-                        }
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        DATA DE NASCIMENTO: {item.studentBirthday}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        PÓLO: {item.studentPole}
-                      </li>
-                      <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        STATUS:{' '}
-                        {
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ]
-                        }
-                      </li>
-                    </ol>
-                  )
-                })}
-          </div>
-        </div>
-
-        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
-          <PDFDownloadLink
-            document={
-              <RankingViewer
-                courseName={course?.name ?? ''}
-                ranking={
-                  rankingToPrint
-                    ? rankingToPrint.map((item, index) => ({
-                        classification: index + 1,
-                        average: Number(
-                          item.studentAverage.averageInform.geralAverage,
-                        ),
-                        concept:
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ],
-                        name: item.studentName ?? '',
-                        pole: item.studentPole ?? '',
-                        qav: item.studentAverage.assessmentsCount,
-                        qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilID ?? '',
-                        birthday: item.studentBirthday ?? '',
-                        status:
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ],
-                      }))
-                    : []
-                }
-              />
-            }
-            fileName="classificacao-geral-2023.pdf"
-          >
-            {({ loading }) =>
-              loading ? (
-                'Preparando documento...'
-              ) : (
-                <Button>Download PDF</Button>
-              )
-            }
-          </PDFDownloadLink>
-          <Button onClick={handleDownloadExcel}>Download Excel</Button>
-        </div>
-
-        <Pagination
-          items={totalItems ?? 0}
-          page={Number(page)}
-          pages={pages ?? 0}
-        />
-      </section>
-    </div>
-  )
+  return <OverallPoleRankingWithoutBehavior />
 }

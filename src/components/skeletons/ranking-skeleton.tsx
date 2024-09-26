@@ -36,3 +36,20 @@ export function RankingSkeleton() {
     </tr>
   )
 }
+
+export function RankingResponsiveSkeleton() {
+  return (
+    <div className="flex flex-col items-center gap-4 border-2 border-slate-300 py-2">
+      <Skeleton className="h-5 w-40 bg-slate-300" />
+      <Skeleton className="h-5 w-20 bg-slate-300" />
+      <Skeleton className="h-5 w-20 bg-slate-300" />
+      <Skeleton className="h-5 w-24 bg-slate-300" />
+      <Skeleton className="h-5 w-60 bg-slate-300" />
+      <Skeleton className="h-5 w-28 bg-slate-300" />
+      <Skeleton className="h-5 w-32 bg-slate-300" />
+      <Skeleton className="h-5 w-60 bg-slate-300" />
+      <Skeleton className="h-5 w-28 bg-slate-300" />
+      <Skeleton className="h-5 w-36 bg-slate-300" />
+    </div>
+  )
+}
