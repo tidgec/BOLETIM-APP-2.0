@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
@@ -19,6 +19,8 @@ import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 
 export function OverallPoleRankingWithoutBehavior() {
+  const navigate = useNavigate()
+
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
@@ -92,6 +94,10 @@ export function OverallPoleRankingWithoutBehavior() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
+
+  function handleNavigateToBoletim(studentId: string) {
+    navigate(`/students/${studentId}/boletim?courseId=${courseId}`)
+  }
 
   return (
     <div className="w-full py-6">
@@ -206,7 +212,11 @@ export function OverallPoleRankingWithoutBehavior() {
                   const classification = getClassificationPosition(index, page)
 
                   return (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      onClick={() => handleNavigateToBoletim(item.studentId)}
+                      className="cursor-pointer"
+                    >
                       <td className="px-4 py-2 text-sm text-slate-700">
                         {classification}º
                       </td>
@@ -217,7 +227,7 @@ export function OverallPoleRankingWithoutBehavior() {
                         {item.studentAverage.averageInform.behaviorsCount}
                       </td>
                       <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentCivilID}
+                        {item.studentCivilOrMilitaryId}
                       </td>
                       <td className="px-4 py-2 text-sm text-slate-700">
                         {item.studentPole}
@@ -267,7 +277,8 @@ export function OverallPoleRankingWithoutBehavior() {
                 return (
                   <ol
                     key={item.studentName}
-                    className="flex flex-col items-center border-2 border-slate-300"
+                    className="flex cursor-pointer flex-col items-center border-2 border-slate-300"
+                    onClick={() => handleNavigateToBoletim(item.studentId)}
                   >
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       CLASSIFICAÇÃO: {classification}ª
@@ -279,7 +290,7 @@ export function OverallPoleRankingWithoutBehavior() {
                       Q.C: {item.studentAverage.averageInform.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      RG: {item.studentCivilID}
+                      RG: {item.studentCivilOrMilitaryId}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
@@ -340,7 +351,7 @@ export function OverallPoleRankingWithoutBehavior() {
                         pole: item.studentPole ?? '',
                         qav: item.studentAverage.assessmentsCount,
                         qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilID ?? '',
+                        civilId: item.studentCivilOrMilitaryId ?? '',
                         birthday: item.studentBirthday ?? '',
                         status:
                           overallStatusMap[

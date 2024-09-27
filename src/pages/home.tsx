@@ -122,13 +122,30 @@ export function Home() {
                                 key={course.id}
                                 className="flex w-full items-start gap-1 border-2"
                               >
-                                <Course
-                                  course={{
-                                    ...course,
-                                    imageUrl:
-                                      'https://github.com/igorabreu29.png',
-                                  }}
-                                />
+                                {user.role === 'STUDENT' && (
+                                  <Link
+                                    to={`/students/${user.id}/boletim?courseId=${course.id}`}
+                                    className="h-full border bg-transparent p-0"
+                                  >
+                                    <Course
+                                      course={{
+                                        ...course,
+                                        imageUrl:
+                                          'https://github.com/igorabreu29.png',
+                                      }}
+                                    />
+                                  </Link>
+                                )}
+
+                                {user.role !== 'STUDENT' && (
+                                  <Course
+                                    course={{
+                                      ...course,
+                                      imageUrl:
+                                        'https://github.com/igorabreu29.png',
+                                    }}
+                                  />
+                                )}
 
                                 <div className="flex flex-col gap-2">
                                   <Button variant={'link'} size={'sm'}>

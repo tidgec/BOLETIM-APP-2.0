@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import { Pagination } from '@/components/pagination'
@@ -26,6 +26,8 @@ import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function OverallPoleRanking() {
+  const navigate = useNavigate()
+
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
@@ -97,6 +99,10 @@ export function OverallPoleRanking() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
+
+  function handleNavigateToBoletim(studentId: string) {
+    navigate(`/students/${studentId}/boletim?courseId=${courseId}`)
+  }
 
   return (
     <div className="w-full py-6">
@@ -208,7 +214,11 @@ export function OverallPoleRanking() {
                   const classification = getClassificationPosition(index, page)
 
                   return (
-                    <TableRow key={item.studentName}>
+                    <TableRow
+                      key={item.studentName}
+                      onClick={() => handleNavigateToBoletim(item.studentId)}
+                      className="cursor-pointer"
+                    >
                       <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                         {classification}º
                       </TableCell>
@@ -219,7 +229,7 @@ export function OverallPoleRanking() {
                         {item.studentAverage.averageInform.behaviorsCount}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentCivilID}
+                        {item.studentCivilOrMilitaryId}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                         {item.studentName}
@@ -269,7 +279,8 @@ export function OverallPoleRanking() {
                 return (
                   <ol
                     key={item.studentName}
-                    className="flex flex-col items-center border-2 border-slate-300"
+                    className="flex cursor-pointer flex-col items-center border-2 border-slate-300"
+                    onClick={() => handleNavigateToBoletim(item.studentId)}
                   >
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       Classificação: {classification}ª
@@ -281,7 +292,7 @@ export function OverallPoleRanking() {
                       Q.C {item.studentAverage.averageInform.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      RG: {item.studentCivilID}
+                      RG: {item.studentCivilOrMilitaryId}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
@@ -342,7 +353,7 @@ export function OverallPoleRanking() {
                         pole: item.studentPole ?? '',
                         qav: item.studentAverage.assessmentsCount,
                         qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilID ?? '',
+                        civilId: item.studentCivilOrMilitaryId ?? '',
                         birthday: item.studentBirthday ?? '',
                         status:
                           overallStatusMap[

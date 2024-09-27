@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { Chart } from '@/components/chart'
 import { Pagination } from '@/components/pagination'
@@ -25,6 +25,8 @@ import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
 export function Overall() {
+  const navigate = useNavigate()
+
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
   const page = searchParams.get('page') ?? '1'
@@ -91,6 +93,10 @@ export function Overall() {
       item.studentAverage.averageInform.studentAverageStatus.concept ===
       'no income',
   )?.length
+
+  function handleNavigateToBoletim(studentId: string) {
+    navigate(`/students/${studentId}/boletim?courseId=${courseId}`)
+  }
 
   return (
     <div className="w-full py-6">
@@ -205,7 +211,8 @@ export function Overall() {
                   return (
                     <TableRow
                       key={item.studentName}
-                      className="flex flex-col lg:table-row"
+                      className="flex cursor-pointer flex-col lg:table-row"
+                      onClick={() => handleNavigateToBoletim(item.studentId)}
                     >
                       <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {classification}ª
@@ -217,7 +224,7 @@ export function Overall() {
                         {item.studentAverage.averageInform.behaviorsCount}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                        {item.studentCivilID}
+                        {item.studentCivilOrMilitaryId}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentName}
@@ -267,7 +274,8 @@ export function Overall() {
                 return (
                   <ol
                     key={item.studentName}
-                    className="flex flex-col items-center border-2 border-slate-300"
+                    className="flex cursor-pointer flex-col items-center border-2 border-slate-300"
+                    onClick={() => handleNavigateToBoletim(item.studentId)}
                   >
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       Classificação: {classification}ª
@@ -279,7 +287,7 @@ export function Overall() {
                       Q.C {item.studentAverage.averageInform.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      RG: {item.studentCivilID}
+                      RG: {item.studentCivilOrMilitaryId}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
@@ -340,7 +348,7 @@ export function Overall() {
                         pole: item.studentPole ?? '',
                         qav: item.studentAverage.assessmentsCount,
                         qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilID ?? '',
+                        civilId: item.studentCivilOrMilitaryId ?? '',
                         birthday: item.studentBirthday ?? '',
                         status:
                           overallStatusMap[
