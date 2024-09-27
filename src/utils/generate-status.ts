@@ -20,18 +20,25 @@ export function generateBehaviorStatus(grade: GenerateStatusProps) {
   return 'text-red-500'
 }
 
-export function generateStatus(grade: GenerateStatusProps) {
-  if (grade.vfe) {
-    if (grade.average >= 7 && grade.average < 10) return 'text-green-500'
-    if (grade.average >= 5 && grade.average < 7) return 'text-orange-500'
-    if (grade.average > 0 && grade.average < 5) return 'text-red-500'
-
-    return 'text-red-700'
+export function generateStatus(
+  concept:
+    | 'excellent'
+    | 'very good'
+    | 'good'
+    | 'regular'
+    | 'insufficient'
+    | 'no income'
+    | 'second season',
+) {
+  const status = {
+    excellent: 'text-green-500',
+    'very good': 'text-lime-600',
+    good: 'text-blue-500',
+    regular: 'text-orange-400',
+    insufficient: 'text-red-500',
+    'no income': 'text-red-700',
+    'second season': 'text-orange-400',
   }
 
-  if (grade.average >= 8 && grade.average < 10) return 'text-green-500'
-  if (grade.average >= 7 && grade.average < 8) return 'text-blue-500'
-  if (grade.average >= 5 && grade.average < 7) return 'text-orange-500'
-  if (grade.average > 0 && grade.average < 5) return 'text-red-500'
-  return 'text-red-700'
+  return status[concept]
 }

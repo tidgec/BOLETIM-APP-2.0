@@ -42,7 +42,7 @@ interface GetPoleRankingResponse {
             }
           }
 
-          assessments: {
+          assessmentsPerPeriod: {
             [x: string]: {
               vf: number
               avi: number | null
@@ -59,6 +59,22 @@ interface GetPoleRankingResponse {
               module: number
             }[]
           }
+
+          assessments: {
+            vf: number
+            avi: number | null
+            avii: number | null
+            vfe?: number | null
+            average: number
+            status:
+              | 'approved'
+              | 'disapproved'
+              | 'approved second season'
+              | 'second season'
+            isRecovering: boolean
+            id: string
+            module: number
+          }[]
           assessmentsCount: number
         }
         studentBirthday?: string

@@ -59,23 +59,23 @@ interface GetSubRankingResponse {
               id: string
               module: number
             }[]
-
-            assessments: {
-              vf: number
-              avi: number | null
-              avii: number | null
-              vfe?: number | null
-              average: number
-              status:
-                | 'approved'
-                | 'disapproved'
-                | 'approved second season'
-                | 'second season'
-              isRecovering: boolean
-              id: string
-              module: number
-            }[]
           }
+
+          assessments: {
+            vf: number
+            avi: number | null
+            avii: number | null
+            vfe?: number | null
+            average: number
+            status:
+              | 'approved'
+              | 'disapproved'
+              | 'approved second season'
+              | 'second season'
+            isRecovering: boolean
+            id: string
+            module: number
+          }[]
           assessmentsCount: number
         }
         studentBirthday?: string

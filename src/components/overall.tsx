@@ -21,6 +21,7 @@ import {
 import { useCreateRankingSheet } from '@/hooks/use-create-ranking-sheet'
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetRanking } from '@/hooks/use-get-ranking'
+import { generateStatus } from '@/utils/generate-status'
 import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -229,10 +230,28 @@ export function Overall() {
                       <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentName}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )},
+                        )} lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {item.studentAverage.averageInform.geralAverage}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )},
+                        )} lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {
                           conceptMap[
                             item.studentAverage.averageInform
@@ -246,7 +265,16 @@ export function Overall() {
                       <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentPole}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )},
+                          lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {
                           overallStatusMap[
                             item.studentAverage.averageInform
@@ -292,11 +320,29 @@ export function Overall() {
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
+                      )} lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       MÉDIA FINAL:{' '}
                       {item.studentAverage.averageInform.geralAverage}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`${generateStatus(
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
+                      )} px-4 py-2 text-start
+                        text-base
+                      font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       CONCEITO:{' '}
                       {
                         conceptMap[
@@ -311,7 +357,15 @@ export function Overall() {
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       POLO: {item.studentPole}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
+                      )} lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       STATUS:{' '}
                       {
                         overallStatusMap[

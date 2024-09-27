@@ -5,6 +5,7 @@ import { useCreatePoleRankingSheet } from '@/hooks/use-create-pole-ranking-sheet
 import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetPoleRanking } from '@/hooks/use-get-pole-ranking'
 import { fail } from '@/utils/fail'
+import { generateStatus } from '@/utils/generate-status'
 import { getClassificationPosition } from '@/utils/get-classification-position'
 import { conceptMap, overallStatusMap } from '@/utils/status-and-concept-mapper'
 
@@ -273,6 +274,9 @@ export function OverallPoleRankingWithoutBehavior() {
             ) : (
               ranking?.map((item, index) => {
                 const classification = getClassificationPosition(index, page)
+                const assessment = item.studentAverage.assessments.find(
+                  (item) => item.isRecovering,
+                )
 
                 return (
                   <ol
@@ -295,11 +299,29 @@ export function OverallPoleRankingWithoutBehavior() {
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                        {
+                          average: Number(
+                            item.studentAverage.averageInform.geralAverage,
+                          ),
+                          vfe: assessment?.vfe ?? undefined,
+                        },
+                      )} lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       MÉDIA FINAL:{' '}
                       {item.studentAverage.averageInform.geralAverage}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                        {
+                          average: Number(
+                            item.studentAverage.averageInform.geralAverage,
+                          ),
+                          vfe: assessment?.vfe ?? undefined,
+                        },
+                      )} lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       CONCEITO:{' '}
                       {
                         conceptMap[
@@ -314,7 +336,16 @@ export function OverallPoleRankingWithoutBehavior() {
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       POLO: {item.studentPole}
                     </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                    <li
+                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                        {
+                          average: Number(
+                            item.studentAverage.averageInform.geralAverage,
+                          ),
+                          vfe: assessment?.vfe ?? undefined,
+                        },
+                      )} lg:text-center lg:text-sm lg:font-normal`}
+                    >
                       STATUS:{' '}
                       {
                         overallStatusMap[
