@@ -6,6 +6,10 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 import { useGetCourseStudent } from '@/hooks/use-get-course-student'
 import { useGetStudentBoletim } from '@/hooks/use-get-student-boletim'
+import {
+  generateAssessmentStatus,
+  generateBehaviorStatus,
+} from '@/utils/generate-status'
 import { conceptMap, statusMap } from '@/utils/status-and-concept-mapper'
 import { verifyFormula } from '@/utils/verify-formula-type'
 
@@ -44,6 +48,8 @@ export function BoletimCard() {
       (acc, item) => acc + item.behaviorAverage,
       0,
     )
+
+  console.log(behaviorAverage)
 
   return (
     <div className="mx-auto mt-10 w-full max-w-4xl print:max-w-7xl">
@@ -88,7 +94,7 @@ export function BoletimCard() {
         </div>
 
         <div className="mb-4">
-          <h3 className="text-lg font-bold md:text-xl">DISCIPLINAS:</h3>
+          <h3 className="text-lg font-bold md:text-xl">DISCIPLINAS (Notas):</h3>
           {isLoadingStudentBoletim ? (
             <Skeleton className="h-8 w-10 bg-slate-300" />
           ) : (
@@ -110,7 +116,9 @@ export function BoletimCard() {
           <div className="flex items-center gap-2 text-gray-700">
             <p>STATUS GERAL:</p>{' '}
             {grades ? (
-              conceptMap[grades.averageInform.studentAverageStatus.concept]
+              <span className="font-bold">
+                {conceptMap[grades.averageInform.studentAverageStatus.concept]}
+              </span>
             ) : (
               <Skeleton className="h-5 w-36 bg-slate-300" />
             )}
@@ -448,13 +456,25 @@ export function BoletimCard() {
           <div>
             <p className="text-xl font-bold md:text-base">
               MÉDIA DE COMPORTAMENTO:{' '}
-              {behaviorAverage ?? <Skeleton className="h-2 w-6" />}
+              {behaviorAverage !== undefined && behaviorAverage >= 0 ? (
+                <span
+                  className={`${generateBehaviorStatus({ average: behaviorAverage ?? 0 })}`}
+                >
+                  {behaviorAverage}
+                </span>
+              ) : (
+                <Skeleton className="h-2 w-6" />
+              )}
             </p>
             <p className="text-xl font-bold md:text-base">
               STATUS COMPORTAMENTO:{' '}
-              {behaviorAverage && behaviorAverage <= 6
-                ? 'REPROVADO'
-                : 'APROVADO'}
+              <span
+                className={`${generateBehaviorStatus({ average: behaviorAverage ?? 0 })}`}
+              >
+                {behaviorAverage && behaviorAverage >= 6
+                  ? 'APROVADO'
+                  : 'REPROVADO'}
+              </span>
             </p>
           </div>
 
@@ -467,7 +487,11 @@ export function BoletimCard() {
                   </span>
                   <span>
                     Status {index + 1}º Período:{' '}
-                    {item.behaviorAverage <= 6 ? 'REPROVADO' : 'APROVADO'}
+                    <span
+                      className={`${generateBehaviorStatus({ average: item.behaviorAverage ?? '' })}`}
+                    >
+                      {item.behaviorAverage >= 6 ? 'APROVADO' : 'REPROVADO'}
+                    </span>
                   </span>
                 </li>
               ))}
@@ -502,10 +526,10 @@ export function BoletimCard() {
 
 interface GradeProps {
   disciplina: string
-  vc1: number
-  vc2: number
-  vf: number
-  vfe: number
+  vc1?: number
+  vc2?: number
+  vf?: number
+  vfe?: number
   average: number
   status: string
 }
@@ -517,21 +541,23 @@ function GradeItem({ grade }: { grade: GradeProps }) {
         {grade.disciplina}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vc1}
+        {grade.vc1 ? grade.vc1.toFixed(3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vc2}
+        {grade.vc2 ? grade.vc2.toFixed(3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vf}
+        {grade.vf ? grade.vf.toFixed(3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vfe}
+        {grade.vfe ? grade.vfe.toFixed(3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.average}
+        {grade.average.toFixed(3)}
       </td>
-      <td className="text-center text-sm text-lime-700 md:py-3 print:text-left">
+      <td
+        className={`text-center text-sm ${generateAssessmentStatus(grade)} md:py-3 print:text-left`}
+      >
         {grade.status}
       </td>
     </tr>
