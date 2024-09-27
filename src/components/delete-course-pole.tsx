@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { useDeleteCoursePole } from '@/hooks/use-delete-course-pole'
@@ -14,17 +14,16 @@ interface DeleteCoursePoleProps {
 }
 
 export function DeleteCoursePole({ pole }: DeleteCoursePoleProps) {
-  const [searchParams] = useSearchParams()
-  const courseId = searchParams.get('courseId')
+  const { id } = useParams()
 
   const { mutateAsync: deleteCoursePoleFn } = useDeleteCoursePole()
 
   async function handleDeleteCoursePole() {
-    if (!courseId) throw new Error('Curso inexistente!')
+    if (!id) throw new Error('Curso inexistente!')
 
     try {
       await deleteCoursePoleFn({
-        courseId,
+        courseId: id,
         poleId: pole.id,
       })
 
