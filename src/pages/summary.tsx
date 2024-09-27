@@ -38,14 +38,15 @@ export function Summary() {
         <div className="mt-6 flex flex-wrap justify-center">
           {!isLoading &&
             courses?.map((course) => (
-              <Button
-                key={course.id}
-                variant={'outline'}
-                className="h-full w-80 bg-white py-1 shadow-md"
-                onClick={() => handleDownloadSummary(course.id)}
-              >
-                <Course course={course} />
-              </Button>
+              <div key={course.id} className="bg-white shadow-md">
+                <Button
+                  variant={'outline'}
+                  className="block h-full bg-transparent p-0"
+                  onClick={() => handleDownloadSummary(course.id)}
+                >
+                  <Course course={course} />
+                </Button>
+              </div>
             ))}
         </div>
       </section>
