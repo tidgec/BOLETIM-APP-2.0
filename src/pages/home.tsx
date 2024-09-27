@@ -113,14 +113,14 @@ export function Home() {
 
                         <DialogContent className="w-full max-w-3xl">
                           <DialogHeader>
-                            <span>See more user information</span>
+                            <span>Veja mais informações</span>
                           </DialogHeader>
 
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                             {user.courses.map((course) => (
                               <div
                                 key={course.id}
-                                className="flex w-full items-start gap-1"
+                                className="flex w-full items-start gap-1 border-2"
                               >
                                 <Course
                                   course={{
@@ -135,7 +135,7 @@ export function Home() {
                                     <Link
                                       to={`/students/update/${user.id}?courseId=${course.id}`}
                                     >
-                                      Editar
+                                      Editar aluno
                                     </Link>
                                   </Button>
                                 </div>
