@@ -30,7 +30,9 @@ export function ListCourseDisciplinesPage() {
     disciplineName,
   })
 
-  const currentUrl = new URL(window.location.href)
+  const currentUrl = window.location.href
+    .replace(`?courseId=${courseId}`, '')
+    .replace(`&disciplineName=${disciplineName}`, '')
 
   function handleFilter({ name }: DisciplineFiltersSchema) {
     setSearchParams((state) => {
@@ -74,7 +76,7 @@ export function ListCourseDisciplinesPage() {
             disciplines?.map((discipline) => (
               <Link
                 key={discipline.disciplineId}
-                to={`${currentUrl.origin}/notes/update/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
+                to={`${currentUrl}/disciplines/${discipline.disciplineId}?courseId=${courseId}`}
               >
                 <Discipline name={discipline.name} />
               </Link>
