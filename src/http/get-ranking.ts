@@ -79,7 +79,8 @@ interface GetRankingResponse {
         }
         studentBirthday?: string
         studentName?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
+        studentId: string
         studentPole?: string
       }[]
     | {
@@ -132,7 +133,8 @@ interface GetRankingResponse {
         }
         studentBirthday?: string
         studentName?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
+        studentId: string
         studentPole?: string
       }[]
   pages?: number
@@ -161,7 +163,9 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
     )
 
     return {
-      overanking: response.data.studentsWithAverage,
+      ranking: response.data.studentsWithAverage,
+      pages: response.data.pages,
+      totalItems: response.data.totalItems,
     }
   }
 

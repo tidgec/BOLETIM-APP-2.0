@@ -225,7 +225,7 @@ export function OverallSubPoleRanking() {
                         {item.studentAverage.averageInform.behaviorsCount}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentCivilID}
+                        {item.studentCivilOrMilitaryId}
                       </TableCell>
                       <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
                         {item.studentName}
@@ -287,7 +287,7 @@ export function OverallSubPoleRanking() {
                       Q.C {item.studentAverage.averageInform.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      RG: {item.studentCivilID}
+                      RG: {item.studentCivilOrMilitaryId}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                       NOME COMPLETO: {item.studentName}
@@ -348,7 +348,7 @@ export function OverallSubPoleRanking() {
                         pole: item.studentPole ?? '',
                         qav: item.studentAverage.assessmentsCount,
                         qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilID ?? '',
+                        civilId: item.studentCivilOrMilitaryId ?? '',
                         birthday: item.studentBirthday ?? '',
                         status:
                           overallStatusMap[

@@ -79,8 +79,9 @@ interface GetSubRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
+        studentId: string
         studentName?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
         studentPole?: string
       }[]
     | {
@@ -132,8 +133,9 @@ interface GetSubRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
+        studentId: string
         studentName?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
         studentPole?: string
       }[]
   pages?: number

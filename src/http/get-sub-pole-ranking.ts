@@ -62,8 +62,9 @@ interface GetSubPoleRankingResponse {
           }
           assessmentsCount: number
         }
+        studentId: string
         studentBirthday?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
         studentPole?: string
         studentName?: string
       }[]
@@ -115,8 +116,9 @@ interface GetSubPoleRankingResponse {
           }[]
           assessmentsCount: number
         }
+        studentId: string
         studentBirthday?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
         studentPole?: string
         studentName?: string
       }[]

@@ -62,7 +62,8 @@ interface GetPoleRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
-        studentCivilID?: string
+        studentCivilOrMilitaryId?: string
+        studentId: string
         studentPole?: string
         studentName?: string
       }[]
@@ -115,7 +116,8 @@ interface GetPoleRankingResponse {
           assessmentsCount: number
         }
         studentBirthday?: string
-        studentCivilID?: string
+        studentId: string
+        studentCivilOrMilitaryId?: string
         studentPole?: string
         studentName?: string
       }[]
