@@ -6,7 +6,7 @@ export function fail(err: unknown) {
   const { message } = error.response?.data as { message: string }
 
   toast.error(`${message}`, {
-    duration: 2500,
+    duration: 5000,
     closeButton: true,
   })
 }
