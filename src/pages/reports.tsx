@@ -127,13 +127,19 @@ export function Reports() {
           )}
         </div>
 
-        {reports && (
-          <Pagination
-            items={totalItems ?? 0}
-            page={page ? Number(page) : 1}
-            pages={pages ?? 0}
-          />
-        )}
+        <div className="mx-auto max-w-6xl">
+          {reports && (
+            <Pagination
+              items={totalItems ?? 0}
+              page={page ? Number(page) : 1}
+              pages={pages ?? 0}
+            />
+          )}
+        </div>
+
+        <div className="mx-auto mt-4 flex max-w-6xl items-center justify-end">
+          <Button size={'lg'}>Baixar</Button>
+        </div>
       </section>
     </div>
   )
