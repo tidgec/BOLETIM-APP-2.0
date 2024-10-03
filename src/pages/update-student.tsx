@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
+import { useGetCourseStudent } from '@/hooks/use-get-course-student'
 import { useUpdateStudent } from '@/hooks/use-update-student'
 import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
@@ -32,11 +33,25 @@ export function UpdateStudent() {
 
   const courseId = searchParams.get('courseId')
 
+  const { student } = useGetCourseStudent({
+    courseId: String(courseId),
+    studentId: String(id),
+  })
+
   const { handleSubmit, register, watch, control, reset } =
     useForm<UpdateStudentSchema>({
       resolver: zodResolver(updateStudentSchema),
-      defaultValues: {
+      values: {
         newCourseId: courseId ?? '',
+        email: student?.email ?? '',
+        cpf: student?.cpf ? formatCPF(student.cpf) : '',
+        username: student?.username ?? '',
+        poleId: student?.pole?.id ?? '',
+        civilId: student?.civilId ?? '',
+        militaryId: student?.militaryId ?? '',
+        birthday: student?.birthday ?? '',
+        fatherName: student?.fatherName ?? '',
+        motherName: student?.motherName ?? '',
       },
     })
 

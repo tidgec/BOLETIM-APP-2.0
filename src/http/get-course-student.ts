@@ -14,6 +14,11 @@ export interface GetCourseStudentResponse {
     email: string
     cpf: string
     createdAt: string
+    birthday: string
+    civilId: string
+    militaryId: string
+    fatherName: string
+    motherName: string
     course: {
       id: string
       name: string
