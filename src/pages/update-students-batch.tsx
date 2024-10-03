@@ -32,7 +32,16 @@ export function UpdateStudentsBatch() {
     resolver: zodResolver(updateStudentBatchSchema),
   })
 
-  const { mutateAsync: createStudentsBatchFn } = useUpdateStudentsBatch()
+  const { mutateAsync: createStudentsBatchFn, isPending } =
+    useUpdateStudentsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! Os alunos estão sendo atualizados.',
+    )
+  }
 
   async function handleUpdateStudentsBatch({
     excel,
@@ -48,6 +57,9 @@ export function UpdateStudentsBatch() {
 
       toast.success('Estudantes atualizados com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

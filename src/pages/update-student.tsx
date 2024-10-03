@@ -44,7 +44,13 @@ export function UpdateStudent() {
     courseId: String(courseId),
   })
 
-  const { mutateAsync: updateStudentFn } = useUpdateStudent()
+  const { mutateAsync: updateStudentFn, isPending } = useUpdateStudent()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O aluno está sendo atualizado.')
+  }
 
   async function handleUpdateStudent({
     username,
@@ -76,7 +82,12 @@ export function UpdateStudent() {
         militaryId: militaryId || undefined,
       })
 
-      toast.success('Estudante atualizado com sucesso!')
+      toast.success('Estudante atualizado com sucesso!', {
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
+      })
       reset()
     } catch (err) {
       fail(err)

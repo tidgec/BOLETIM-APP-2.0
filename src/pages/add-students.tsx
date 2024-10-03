@@ -54,7 +54,13 @@ export function AddStudents() {
     watch,
   } = addStudentForm
 
-  const { mutateAsync: createStudentFn } = useCreateStudent()
+  const { mutateAsync: createStudentFn, isPending } = useCreateStudent()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O aluno está sendo cadastrado.')
+  }
 
   async function handleAddStudent({
     username,
@@ -80,7 +86,10 @@ export function AddStudents() {
       })
 
       toast.success('Estudante criado com sucesso!', {
-        duration: 500,
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

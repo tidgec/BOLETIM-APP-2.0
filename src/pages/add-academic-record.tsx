@@ -52,7 +52,16 @@ export function AddAcademicRecord() {
     },
   })
 
-  const { mutateAsync: createAcademicRecordFn } = useCreateAcademicRecord()
+  const { mutateAsync: createAcademicRecordFn, isPending } =
+    useCreateAcademicRecord()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O histórico escolar está sendo ativado.',
+    )
+  }
 
   async function handleAddAcademicRecord({
     className,
@@ -75,8 +84,11 @@ export function AddAcademicRecord() {
         divisionBoss,
       })
 
-      toast.success('Histórico escolar criado com sucesso!', {
+      toast.success('Histórico escolar ativado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

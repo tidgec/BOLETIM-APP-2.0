@@ -32,8 +32,16 @@ export function RemoveBehaviorsBatch() {
     resolver: zodResolver(removeBehaviorsBatchSchema),
   })
 
-  const { mutateAsync: removeBehaviorsGradeBatchFn } =
+  const { mutateAsync: removeBehaviorsGradeBatchFn, isPending } =
     useRemoveBehaviorsGradeBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamento estão sendo removidas.',
+    )
+  }
 
   async function handleRemoveBehaviorsBatch({
     excel,
@@ -51,6 +59,9 @@ export function RemoveBehaviorsBatch() {
 
       toast.success('Notas de comportamento removidas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

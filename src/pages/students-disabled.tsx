@@ -57,7 +57,14 @@ export function StudentsDisabled() {
     },
   })
 
-  const { mutateAsync: activeStudentStatusFn } = useActiveStudentStatus()
+  const { mutateAsync: activeStudentStatusFn, isPending } =
+    useActiveStudentStatus()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O estudante está sendo ativado.')
+  }
 
   async function handleActiveStudent({
     id,
@@ -75,6 +82,9 @@ export function StudentsDisabled() {
 
       toast.success('Estudante ativado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

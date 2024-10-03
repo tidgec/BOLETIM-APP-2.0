@@ -32,7 +32,14 @@ export function RemoveAssessmentGradeForm({
 
   const courseId = searchParams.get('courseId')
 
-  const { mutateAsync: removeAssessmentGradeFn } = useRemoveAssessmentGrade()
+  const { mutateAsync: removeAssessmentGradeFn, isPending } =
+    useRemoveAssessmentGrade()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! As notas estão sendo removidas.')
+  }
 
   const { handleSubmit, control } = useForm<RemoveAssessmentGradeFormSchema>({
     resolver: zodResolver(removeAssessmentGradeFormSchema),
@@ -55,7 +62,10 @@ export function RemoveAssessmentGradeForm({
         vfe: vfe ? -1 : undefined,
       })
       toast.success('Notas removidas com sucesso!', {
-        duration: 2000,
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

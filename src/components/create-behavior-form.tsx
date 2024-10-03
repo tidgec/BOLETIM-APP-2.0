@@ -33,7 +33,15 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
 
   const courseId = searchParams.get('courseId')
 
-  const { mutateAsync: createBehaviorFn } = useCreateBehavior()
+  const { mutateAsync: createBehaviorFn, isPending } = useCreateBehavior()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamento estão sendo adicionadas.',
+    )
+  }
 
   const {
     handleSubmit,
@@ -77,6 +85,9 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
 
       toast.success('Notas de comportamento adicionadas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

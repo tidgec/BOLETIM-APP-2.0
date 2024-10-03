@@ -32,7 +32,16 @@ export function UpdateBehaviorsBatch() {
     resolver: zodResolver(updateBehaviorsBatchSchema),
   })
 
-  const { mutateAsync: updateBehaviorsBatchFn } = useUpdateBehaviorsBatch()
+  const { mutateAsync: updateBehaviorsBatchFn, isPending } =
+    useUpdateBehaviorsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamento estão sendo atualizadas.',
+    )
+  }
 
   async function handleUpdateBehaviorsBatch({
     excel,
@@ -48,6 +57,9 @@ export function UpdateBehaviorsBatch() {
 
       toast.success('Notas de comportamento atualizadas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

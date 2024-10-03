@@ -27,7 +27,13 @@ export function DeleteCourses() {
 
   const { courses, totalItems, pages, isLoading } = useGetCourses(page ?? '1')
 
-  const { mutateAsync: deleteCourseFn } = useDeleteCourse()
+  const { mutateAsync: deleteCourseFn, isPending } = useDeleteCourse()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O curso está sendo deletado.')
+  }
 
   async function handleDeleteCourse(id: string) {
     try {
@@ -35,6 +41,9 @@ export function DeleteCourses() {
 
       toast.success('Curso deletado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

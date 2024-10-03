@@ -52,7 +52,15 @@ export function AdminsDisabled() {
     },
   })
 
-  const { mutateAsync: activeAdminStatus } = useActiveAdminStatus()
+  const { mutateAsync: activeAdminStatus, isPending } = useActiveAdminStatus()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O administrador está sendo ativado.',
+    )
+  }
 
   async function handleDisableAdmin({
     id,
@@ -67,8 +75,11 @@ export function AdminsDisabled() {
         reason,
       })
 
-      toast.success('Estudante desativado com sucesso!', {
+      toast.success('Adminstrador ativado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

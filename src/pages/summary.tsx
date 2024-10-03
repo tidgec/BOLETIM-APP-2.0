@@ -1,3 +1,5 @@
+import { toast } from 'sonner'
+
 import { Course } from '@/components/course'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -6,11 +8,26 @@ import { useGetCourses } from '@/hooks/use-get-courses'
 
 export function Summary() {
   const { courses, isLoading } = useGetCourses()
-  const { mutateAsync: createSummaryFn } = useCreateSummary()
+  const { mutateAsync: createSummaryFn, isPending } = useCreateSummary()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! A ementa do curso está sendo gerada.',
+    )
+  }
 
   async function handleDownloadSummary(courseId: string) {
     const { fileUrl } = await createSummaryFn({
       courseId,
+    })
+
+    toast.success('Ementa do curso gerada com sucesso!', {
+      duration: 1000,
+      onAutoClose: () => {
+        toast.dismiss(toastId)
+      },
     })
 
     window.location.href = fileUrl

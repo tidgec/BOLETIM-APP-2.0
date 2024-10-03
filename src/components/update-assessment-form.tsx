@@ -26,7 +26,15 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
 
   const courseId = searchParams.get('courseId')
 
-  const { mutateAsync: updateAssessmentFn } = useUpdateAssessment()
+  const { mutateAsync: updateAssessmentFn, isPending } = useUpdateAssessment()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas estão sendo atualizadas.',
+    )
+  }
 
   const {
     handleSubmit,
@@ -54,7 +62,12 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
         vfe: vfe ? Number(vfe) : undefined,
       })
 
-      toast.success('Notas atualizadas com sucesso!')
+      toast.success('Notas atualizadas com sucesso!', {
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
+      })
     } catch (err) {
       fail(err)
     }

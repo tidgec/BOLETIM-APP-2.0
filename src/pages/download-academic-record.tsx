@@ -24,7 +24,16 @@ export function DownloadAcademicRecord() {
     poleId: poleId ?? 'all',
   })
 
-  const { mutateAsync: downloadAcademicRecordFn } = useDownloadAcademicRecord()
+  const { mutateAsync: downloadAcademicRecordFn, isPending } =
+    useDownloadAcademicRecord()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O histórico escolar está sendo baixado.',
+    )
+  }
 
   async function handleDownloadAcademicRecord(studentId: string) {
     try {
@@ -35,6 +44,9 @@ export function DownloadAcademicRecord() {
 
       toast.success('Histórico baixado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       window.location.href = fileUrl

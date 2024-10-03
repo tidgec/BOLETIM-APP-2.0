@@ -16,7 +16,15 @@ interface DeleteCoursePoleProps {
 export function DeleteCoursePole({ pole }: DeleteCoursePoleProps) {
   const { id } = useParams()
 
-  const { mutateAsync: deleteCoursePoleFn } = useDeleteCoursePole()
+  const { mutateAsync: deleteCoursePoleFn, isPending } = useDeleteCoursePole()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O polo está sendo removido do curso.',
+    )
+  }
 
   async function handleDeleteCoursePole() {
     if (!id) throw new Error('Curso inexistente!')
@@ -29,6 +37,9 @@ export function DeleteCoursePole({ pole }: DeleteCoursePoleProps) {
 
       toast.success('Polo deletado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

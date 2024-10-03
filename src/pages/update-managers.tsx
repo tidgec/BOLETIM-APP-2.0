@@ -44,7 +44,15 @@ export function UpdateManager() {
     courseId: String(courseId),
   })
 
-  const { mutateAsync: updateManagerFn } = useUpdateManager()
+  const { mutateAsync: updateManagerFn, isPending } = useUpdateManager()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O gerente está sendo atualizado.',
+    )
+  }
 
   async function handleUpdateManager({
     username,
@@ -76,7 +84,12 @@ export function UpdateManager() {
         militaryId: militaryId || undefined,
       })
 
-      toast.success('Gerente atualizado com sucesso!')
+      toast.success('Gerente atualizado com sucesso!', {
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
+      })
       reset()
     } catch (err) {
       fail(err)

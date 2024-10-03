@@ -13,7 +13,16 @@ export function RemoveAcademicRecord() {
   const page = searchParams.get('page') ?? '1'
 
   const { courses, totalItems, pages, isLoading } = useGetCourses(page)
-  const { mutateAsync: removeAcademicRecordFn } = useRemoveAcademicRecord()
+  const { mutateAsync: removeAcademicRecordFn, isPending } =
+    useRemoveAcademicRecord()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O histórico escolar está sendo desativado.',
+    )
+  }
 
   async function handleRemoveAcademicRecord(id: string) {
     try {
@@ -21,8 +30,11 @@ export function RemoveAcademicRecord() {
         courseId: id,
       })
 
-      toast.success('Histórico do curso removido com sucesso!', {
+      toast.success('Histórico do curso desativado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

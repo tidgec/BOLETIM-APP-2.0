@@ -43,7 +43,13 @@ export function UpdateCourses() {
   const { course } = useGetCourse({ courseId: String(courseId) })
 
   const { mutateAsync: uploadAttachmentFn } = useUploadAttachment()
-  const { mutateAsync: updateCourseFn } = useUpdateCourse()
+  const { mutateAsync: updateCourseFn, isPending } = useUpdateCourse()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O curso está sendo atualizado.')
+  }
 
   async function handleOnFileSelected(e: ChangeEvent<HTMLInputElement>) {
     const { files } = e.target
@@ -78,8 +84,11 @@ export function UpdateCourses() {
         imageUrl: course.imageUrl,
       })
 
-      toast.success('Curso criado com sucesso!', {
+      toast.success('Curso atualizado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       navigate(`/courses/management/${course.id}/poles`)

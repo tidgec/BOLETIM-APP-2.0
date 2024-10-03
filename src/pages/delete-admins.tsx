@@ -34,7 +34,15 @@ export function DeleteAdmins() {
     page: page ?? '1',
   })
 
-  const { mutateAsync: deleteAdminFn } = useDeleteAdmin()
+  const { mutateAsync: deleteAdminFn, isPending } = useDeleteAdmin()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O administrador está sendo removido.',
+    )
+  }
 
   async function handleDeleteAdmin(id: string) {
     try {
@@ -44,6 +52,9 @@ export function DeleteAdmins() {
 
       toast.success('Administrador deletado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

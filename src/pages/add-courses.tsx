@@ -41,7 +41,13 @@ export function AddCourses() {
   })
 
   const { mutateAsync: uploadAttachmentFn } = useUploadAttachment()
-  const { mutateAsync: createCourseFn } = useCreateCourse()
+  const { mutateAsync: createCourseFn, isPending } = useCreateCourse()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O curso está sendo criado.')
+  }
 
   async function handleOnFileSelected(e: ChangeEvent<HTMLInputElement>) {
     const { files } = e.target
@@ -83,6 +89,9 @@ export function AddCourses() {
 
       toast.success('Curso criado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       navigate(`/courses/management/${id}/poles`)

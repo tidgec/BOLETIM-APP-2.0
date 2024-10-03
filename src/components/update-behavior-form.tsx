@@ -44,7 +44,15 @@ interface UpdateBehaviorFormProps {
 }
 
 export function UpdateBehaviorForm({ behavior }: UpdateBehaviorFormProps) {
-  const { mutateAsync: updateBehaviorFn } = useUpdateBehavior()
+  const { mutateAsync: updateBehaviorFn, isPending } = useUpdateBehavior()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamentos estão sendo atualizadas.',
+    )
+  }
 
   const {
     handleSubmit,
@@ -101,6 +109,9 @@ export function UpdateBehaviorForm({ behavior }: UpdateBehaviorFormProps) {
 
       toast.success('Notas de comportamento atualizadas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

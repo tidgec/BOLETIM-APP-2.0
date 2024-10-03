@@ -41,7 +41,16 @@ export function CreateCourseDisciplineForm({
     resolver: zodResolver(createCourseDisciplineSchema),
   })
 
-  const { mutateAsync: createCourseDisciplineFn } = useCreateCourseDiscipline()
+  const { mutateAsync: createCourseDisciplineFn, isPending } =
+    useCreateCourseDiscipline()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! A disciplina está sendo adicionada ao curso.',
+    )
+  }
 
   async function handleCreateCourseDiscipline(
     { module, hours, vf, avi, avii }: CreateCourseDisciplineSchema,
@@ -72,8 +81,11 @@ export function CreateCourseDisciplineForm({
         hours,
       })
 
-      toast.success('Disciplina adicionada com sucesso!', {
+      toast.success('Disciplina adicionada ao curso com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

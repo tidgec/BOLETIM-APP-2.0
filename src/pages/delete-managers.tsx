@@ -38,7 +38,13 @@ export function DeleteManagers() {
     poleId: poleId ?? 'all',
   })
 
-  const { mutateAsync: deleteManagerFn } = useDeleteManager()
+  const { mutateAsync: deleteManagerFn, isPending } = useDeleteManager()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O gerente está sendo removido.')
+  }
 
   async function handleDeleteManager(id: string) {
     try {
@@ -48,6 +54,9 @@ export function DeleteManagers() {
 
       toast.success('Gerente deletado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

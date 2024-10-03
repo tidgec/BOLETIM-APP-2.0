@@ -56,7 +56,16 @@ export function ManagersEnabled() {
     },
   })
 
-  const { mutateAsync: disableManagerStatusFn } = useDisableManagerStatus()
+  const { mutateAsync: disableManagerStatusFn, isPending } =
+    useDisableManagerStatus()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O gerente está sendo desativado.',
+    )
+  }
 
   async function handleDisableManager({
     id,
@@ -74,6 +83,9 @@ export function ManagersEnabled() {
 
       toast.success('Gerente desativado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

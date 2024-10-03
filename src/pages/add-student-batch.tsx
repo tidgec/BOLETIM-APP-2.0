@@ -32,7 +32,16 @@ export function AddStudentsBatch() {
     resolver: zodResolver(addStudentBatchSchema),
   })
 
-  const { mutateAsync: createStudentsBatchFn } = useCreateStudentsBatch()
+  const { mutateAsync: createStudentsBatchFn, isPending } =
+    useCreateStudentsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! Os alunos estão sendo cadastrados.',
+    )
+  }
 
   async function handleAddStudentsBatch({ excel }: AddStudentBatchSchema) {
     const uploadFormData = new FormData()
@@ -46,6 +55,9 @@ export function AddStudentsBatch() {
 
       toast.success('Estudantes criados com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()
@@ -60,7 +72,6 @@ export function AddStudentsBatch() {
         <h2 className="w-full border-b-2 border-b-black text-xl font-semibold">
           Adicionar em Lote
         </h2>
-
         <form onSubmit={handleSubmit(handleAddStudentsBatch)}>
           <div className="mb-4 py-8">
             <label

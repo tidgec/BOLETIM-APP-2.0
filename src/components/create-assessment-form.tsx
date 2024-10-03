@@ -26,7 +26,15 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
 
   const courseId = searchParams.get('courseId')
 
-  const { mutateAsync: createAssessmentFn } = useCreateAssessment()
+  const { mutateAsync: createAssessmentFn, isPending } = useCreateAssessment()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas estão sendo adicionadas.',
+    )
+  }
 
   const {
     handleSubmit,
@@ -56,7 +64,12 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
         vfe: vfe ? Number(vfe) : undefined,
       })
 
-      toast.success('Notas adicionadas com sucesso!')
+      toast.success('Notas adicionadas com sucesso!', {
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
+      })
     } catch (err) {
       fail(err)
     }

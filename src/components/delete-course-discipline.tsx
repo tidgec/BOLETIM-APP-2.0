@@ -16,7 +16,16 @@ interface DeleteCourseDisciplineProps {
 export function DeleteCourseDiscipline({
   discipline,
 }: DeleteCourseDisciplineProps) {
-  const { mutateAsync: deleteCourseDisciplineFn } = useDeleteCourseDiscipline()
+  const { mutateAsync: deleteCourseDisciplineFn, isPending } =
+    useDeleteCourseDiscipline()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! A disciplina está sendo removida do curso.',
+    )
+  }
 
   async function handleDeleteCourseDiscipline() {
     try {
@@ -25,8 +34,11 @@ export function DeleteCourseDiscipline({
         disciplineId: discipline.disciplineId,
       })
 
-      toast.success('Disciplina deletada com sucesso!', {
+      toast.success('Disciplina deletada do curso com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

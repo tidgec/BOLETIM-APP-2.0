@@ -32,8 +32,14 @@ export function RemoveNotesBatch() {
     resolver: zodResolver(removeNotesBatchSchema),
   })
 
-  const { mutateAsync: removeAssessmentGradesBatchFn } =
+  const { mutateAsync: removeAssessmentGradesBatchFn, isPending } =
     useRemoveAssessmentGradesBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! As notas estão sendo removidas.')
+  }
 
   async function handleRemoveNotesBatch({ excel }: RemoveNotesBatchSchema) {
     const uploadFormData = new FormData()
@@ -47,6 +53,9 @@ export function RemoveNotesBatch() {
 
       toast.success('Notas removidas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

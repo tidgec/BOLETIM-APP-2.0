@@ -39,7 +39,15 @@ export function UpdateAdmins() {
     },
   })
 
-  const { mutateAsync: updateAdminFn } = useUpdateAdmin()
+  const { mutateAsync: updateAdminFn, isPending } = useUpdateAdmin()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O administrador está sendo atualizado.',
+    )
+  }
 
   async function handleUpdateAdmin({
     username,
@@ -62,6 +70,9 @@ export function UpdateAdmins() {
 
       toast.success('Administrador atualizado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

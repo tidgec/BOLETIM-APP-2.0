@@ -38,7 +38,13 @@ export function DeleteStudents() {
     poleId: poleId ?? 'all',
   })
 
-  const { mutateAsync: deleteStudentFn } = useDeleteStudent()
+  const { mutateAsync: deleteStudentFn, isPending } = useDeleteStudent()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading('Aguarde um pouco! O aluno está sendo removido.')
+  }
 
   async function handleDeleteStudent(id: string) {
     try {
@@ -48,6 +54,9 @@ export function DeleteStudents() {
 
       toast.success('Estudante deletado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

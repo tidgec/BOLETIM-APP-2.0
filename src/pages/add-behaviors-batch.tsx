@@ -32,7 +32,16 @@ export function AddBehaviorsBatch() {
     resolver: zodResolver(addBehaviorsBatchSchema),
   })
 
-  const { mutateAsync: createBehaviorsBatchFn } = useCreateBehaviorsBatch()
+  const { mutateAsync: createBehaviorsBatchFn, isPending } =
+    useCreateBehaviorsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamento estão sendo adicionadas.',
+    )
+  }
 
   async function handleAddBehaviorsBatch({ excel }: AddBehaviorsBatchSchema) {
     const uploadFormData = new FormData()
@@ -46,6 +55,9 @@ export function AddBehaviorsBatch() {
 
       toast.success('Notas de comportamento adicionados com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

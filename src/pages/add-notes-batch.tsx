@@ -32,7 +32,16 @@ export function AddNotesBatch() {
     resolver: zodResolver(addNotesBatchSchema),
   })
 
-  const { mutateAsync: createAssessmentsBatchFn } = useCreateAssessmentsBatch()
+  const { mutateAsync: createAssessmentsBatchFn, isPending } =
+    useCreateAssessmentsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas estão sendo adicionadas.',
+    )
+  }
 
   async function handleAddNotesBatch({ excel }: AddNotesBatchSchema) {
     const uploadFormData = new FormData()
@@ -46,6 +55,9 @@ export function AddNotesBatch() {
 
       toast.success('Notas adicionadas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

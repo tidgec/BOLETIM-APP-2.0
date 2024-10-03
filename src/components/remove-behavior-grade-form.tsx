@@ -32,7 +32,16 @@ interface RemoveBehaviorGradeFormProps {
 }
 
 export function RemoveBehaviorGradeForm({ id }: RemoveBehaviorGradeFormProps) {
-  const { mutateAsync: removeBehaviorGradeFn } = useRemoveBehaviorGrade()
+  const { mutateAsync: removeBehaviorGradeFn, isPending } =
+    useRemoveBehaviorGrade()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas de comportamento estão sendo removidas.',
+    )
+  }
 
   const { handleSubmit, control, reset } =
     useForm<RemoveBehaviorGradeFormSchema>({
@@ -70,7 +79,10 @@ export function RemoveBehaviorGradeForm({ id }: RemoveBehaviorGradeFormProps) {
         december: december ? -1 : undefined,
       })
       toast.success('Notas de comportamento removidas com sucesso!', {
-        duration: 2000,
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

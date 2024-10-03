@@ -51,7 +51,15 @@ export function AddAdmins() {
     reset,
   } = addAdminForm
 
-  const { mutateAsync: createAdminFn } = useCreateAdmin()
+  const { mutateAsync: createAdminFn, isPending } = useCreateAdmin()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O administrador está sendo cadastrado.',
+    )
+  }
 
   async function handleAddAdmin({
     username,
@@ -75,6 +83,9 @@ export function AddAdmins() {
 
       toast.success('Administrator criado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

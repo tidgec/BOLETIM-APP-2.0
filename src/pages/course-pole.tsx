@@ -19,7 +19,15 @@ export function CoursePole() {
     courseId: String(id),
   })
 
-  const { mutateAsync: createCoursePoleFn } = useCreateCoursePole()
+  const { mutateAsync: createCoursePoleFn, isPending } = useCreateCoursePole()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O polo está sendo adicionado ao curso.',
+    )
+  }
 
   async function handleCreateCoursePole(poleId: string) {
     if (!id) throw new Error('Curso inexistente!')
@@ -30,8 +38,11 @@ export function CoursePole() {
         poleId,
       })
 
-      toast.success('Polo adicionado com sucesso!', {
+      toast.success('Polo adicionado ao curso com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
     } catch (err) {
       fail(err)

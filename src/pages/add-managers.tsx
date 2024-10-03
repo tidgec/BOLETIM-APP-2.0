@@ -54,7 +54,15 @@ export function AddManagers() {
     watch,
   } = addManagerForm
 
-  const { mutateAsync: createManagerFn } = useCreateManager()
+  const { mutateAsync: createManagerFn, isPending } = useCreateManager()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! O gerente está sendo cadastrado.',
+    )
+  }
 
   async function handleAddManager({
     username,
@@ -81,6 +89,9 @@ export function AddManagers() {
 
       toast.success('Gerente criado com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()

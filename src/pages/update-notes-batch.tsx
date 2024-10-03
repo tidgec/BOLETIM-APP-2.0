@@ -32,7 +32,16 @@ export function UpdateNotesBatch() {
     resolver: zodResolver(updateNotesBatchSchema),
   })
 
-  const { mutateAsync: updateAssessmentsBatchFn } = useUpdateAssessmentsBatch()
+  const { mutateAsync: updateAssessmentsBatchFn, isPending } =
+    useUpdateAssessmentsBatch()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! As notas estão sendo atualizadas.',
+    )
+  }
 
   async function handleUpdateNotesBatch({ excel }: UpdateNotesBatchSchema) {
     const uploadFormData = new FormData()
@@ -46,6 +55,9 @@ export function UpdateNotesBatch() {
 
       toast.success('Notas atualizadas com sucesso!', {
         duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
       })
 
       reset()
