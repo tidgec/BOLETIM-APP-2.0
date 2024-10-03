@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetCourseManager } from '@/hooks/use-get-course-manager'
 import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useUpdateManager } from '@/hooks/use-update-manager'
 import { fail } from '@/utils/fail'
@@ -32,11 +33,24 @@ export function UpdateManager() {
 
   const courseId = searchParams.get('courseId')
 
+  const { manager } = useGetCourseManager({
+    courseId: String(courseId),
+    managerId: String(id),
+  })
+
   const { handleSubmit, register, watch, control, reset } =
     useForm<UpdateManagerSchema>({
       resolver: zodResolver(updateManagerSchema),
       defaultValues: {
         newCourseId: courseId ?? '',
+        email: manager?.email ?? '',
+        cpf: manager?.cpf ? formatCPF(manager.cpf) : '',
+        username: manager?.username ?? '',
+        poleId: manager?.pole?.id ?? '',
+        civilId: manager?.civilId ?? '',
+        militaryId: manager?.militaryId ?? '',
+        fatherName: manager?.fatherName ?? '',
+        motherName: manager?.motherName ?? '',
       },
     })
 

@@ -10,6 +10,9 @@ interface UpdateAdminRequest {
   password?: string
   birthday?: string
   civilId?: string
+  militaryId?: string
+  fatherName?: string
+  motherName?: string
 }
 
 export async function updateAdmin({
@@ -20,6 +23,9 @@ export async function updateAdmin({
   password,
   birthday,
   civilId,
+  militaryId,
+  fatherName,
+  motherName,
 }: UpdateAdminRequest) {
   const token = Cookies.get('token')
 
@@ -27,11 +33,14 @@ export async function updateAdmin({
     `/administrators/${id}`,
     {
       username,
-      cpf,
       email,
+      cpf,
       password,
+      civilId,
+      militaryId,
+      fatherName,
+      motherName,
       birthday,
-      civilId: civilId ? Number(civilId) : undefined,
     },
     {
       headers: {

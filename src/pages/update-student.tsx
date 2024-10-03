@@ -20,7 +20,7 @@ const updateStudentSchema = z.object({
   motherName: z.string().optional(),
   civilId: z.string().optional(),
   militaryId: z.string().optional(),
-  birthday: z.string(),
+  birthday: z.string().optional(),
   poleId: z.string(),
   newCourseId: z.string(),
 })
@@ -49,7 +49,6 @@ export function UpdateStudent() {
         poleId: student?.pole?.id ?? '',
         civilId: student?.civilId ?? '',
         militaryId: student?.militaryId ?? '',
-        birthday: student?.birthday ?? '',
         fatherName: student?.fatherName ?? '',
         motherName: student?.motherName ?? '',
       },

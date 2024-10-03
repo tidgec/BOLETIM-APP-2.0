@@ -15,6 +15,10 @@ export interface GetAdminsAxiosResponse {
     username: string
     email: string
     cpf: string
+    civilId: string
+    militaryId: string
+    fatherName: string
+    motherName: string
     createdAt: string
   }[]
   pages: number
@@ -27,6 +31,10 @@ export interface GetAdminsResponse {
     username: string
     email: string
     cpf: string
+    civilId: string
+    militaryId: string
+    fatherName: string
+    motherName: string
     createdAt: string
   }[]
   pages: number

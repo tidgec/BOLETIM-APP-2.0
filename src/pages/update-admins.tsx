@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { useGetAdmins } from '@/hooks/use-get-admins'
 import { useUpdateAdmin } from '@/hooks/use-update-admin'
 import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
@@ -13,6 +14,9 @@ const updateAdminSchema = z.object({
   cpf: z.string().optional(),
   email: z.string().optional(),
   civilId: z.string().optional(),
+  militaryId: z.string().optional(),
+  fatherName: z.string().optional(),
+  motherName: z.string().optional(),
   birthday: z.string().optional(),
   password: z.string().optional(),
 })
@@ -22,6 +26,10 @@ type UpdateAdminSchema = z.infer<typeof updateAdminSchema>
 export function UpdateAdmins() {
   const { id } = useParams()
 
+  const { admins } = useGetAdmins({})
+
+  const admin = admins?.find((item) => item.id === id)
+
   const {
     handleSubmit,
     register,
@@ -30,12 +38,14 @@ export function UpdateAdmins() {
     reset,
   } = useForm<UpdateAdminSchema>({
     resolver: zodResolver(updateAdminSchema),
-    defaultValues: {
-      username: '',
-      civilId: '',
-      cpf: '',
-      email: '',
-      birthday: '',
+    values: {
+      username: admin?.username ?? '',
+      civilId: admin?.civilId ?? '',
+      militaryId: admin?.militaryId ?? '',
+      cpf: admin?.cpf ? formatCPF(admin.cpf) : '',
+      email: admin?.email ?? '',
+      fatherName: admin?.fatherName ?? '',
+      motherName: admin?.motherName ?? '',
     },
   })
 
@@ -56,6 +66,9 @@ export function UpdateAdmins() {
     password,
     birthday,
     civilId,
+    fatherName,
+    motherName,
+    militaryId,
   }: UpdateAdminSchema) {
     try {
       await updateAdminFn({
@@ -65,7 +78,10 @@ export function UpdateAdmins() {
         email: email || undefined,
         password: password || undefined,
         birthday: birthday || undefined,
-        civilId,
+        fatherName: fatherName || undefined,
+        motherName: motherName || undefined,
+        civilId: civilId || undefined,
+        militaryId: militaryId || undefined,
       })
 
       toast.success('Administrador atualizado com sucesso!', {
@@ -168,35 +184,39 @@ export function UpdateAdmins() {
               </div>
 
               <div className="space-y-2 rounded bg-pmpa-blue-700 p-4">
-                {/* <div className="space-y-1">
-                  <label htmlFor="pai" className="text-sm text-gray-200">
+                <div className="space-y-1">
+                  <label htmlFor="fatherName" className="text-sm text-gray-200">
                     Nome do pai:
                   </label>
                   <input
                     type="text"
-                    id="pai"
+                    id="fatherName"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite o nome completo do pai..."
+                    autoComplete="off"
+                    {...register('fatherName')}
                   />
                 </div>
                 <div className="space-y-1">
-                  <label htmlFor="mãe" className="text-sm text-gray-200">
+                  <label htmlFor="motherName" className="text-sm text-gray-200">
                     Nome da mãe:
                   </label>
                   <input
                     type="text"
-                    id="mãe"
+                    id="motherName"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite o nome completo da mãe..."
+                    autoComplete="off"
+                    {...register('motherName')}
                   />
-                </div> */}
+                </div>
                 <div className="space-y-1">
-                  <label htmlFor="civil" className="text-sm text-gray-200">
+                  <label htmlFor="civilId" className="text-sm text-gray-200">
                     RG Civil:
                   </label>
                   <input
                     type="text"
-                    id="civil"
+                    id="civilId"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG CIVIL..."
                     {...register('civilId')}
@@ -207,17 +227,22 @@ export function UpdateAdmins() {
                     </span>
                   )}
                 </div>
-                {/* <div className="space-y-1">
-                  <label htmlFor="civil" className="text-sm text-gray-200">
+                <div className="space-y-1">
+                  <label htmlFor="militaryId" className="text-sm text-gray-200">
                     RG Militar:
                   </label>
                   <input
                     type="text"
-                    id="militar"
+                    id="militaryId"
                     className="w-full rounded-sm px-4 py-3 text-sm text-gray-700"
                     placeholder="Digite seu RG MILITAR..."
                   />
-                </div> */}
+                  {errors.militaryId && (
+                    <span className="text-sm text-red-500">
+                      {errors.militaryId.message}
+                    </span>
+                  )}
+                </div>
                 <div className="space-y-1">
                   <label htmlFor="date" className="text-sm text-gray-200">
                     Data de nascimento:
