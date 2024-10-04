@@ -1,5 +1,3 @@
-import CAS from '@/assets/cas-img-course.png'
-
 interface CourseProps {
   course: {
     id: string
@@ -11,7 +9,11 @@ interface CourseProps {
 export function Course({ course }: CourseProps) {
   return (
     <div className="flex w-full max-w-xs flex-col gap-2 pb-2 text-center">
-      <img src={CAS} alt="Imagem do curso" className="w-full object-cover" />
+      <img
+        src={course.imageUrl}
+        alt="Imagem do curso"
+        className="w-full object-cover"
+      />
       <h3 className="text-xl">{course.name}</h3>
     </div>
   )
