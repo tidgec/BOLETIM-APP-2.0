@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
@@ -16,6 +17,7 @@ const reportFiltersSchema = z.object({
 type ReportFiltersSchema = z.infer<typeof reportFiltersSchema>
 
 export function Reports() {
+  const [toPaginated, setToPaginated] = useState<boolean>(true)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const action = searchParams.get('action') ?? 'all'
@@ -33,7 +35,7 @@ export function Reports() {
   const { reports, totalItems, pages, isLoading } = useGetReports({
     action,
     username,
-    page,
+    page: toPaginated ? page : undefined,
   })
 
   function handleFilter({ action, username }: ReportFiltersSchema) {
@@ -56,6 +58,14 @@ export function Reports() {
     })
   }
 
+  function handlePrintReport() {
+    setToPaginated(false)
+
+    window.print()
+
+    setToPaginated(true)
+  }
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
@@ -63,11 +73,11 @@ export function Reports() {
           Relatórios
         </h2>
 
-        <div className="group relative mx-auto my-8 h-[46rem] max-h-screen max-w-6xl overflow-auto rounded bg-white p-4 shadow-md">
+        <div className="group relative mx-auto my-8 h-[46rem] max-w-6xl overflow-auto rounded bg-white p-4 shadow-md print:h-auto print:overflow-hidden">
           <div className="mb-8 flex items-center justify-between">
             <form
               onSubmit={handleSubmit(handleFilter)}
-              className="mb-4 mt-4 flex w-full flex-col items-start gap-4 md:flex-row md:gap-2"
+              className="mb-4 mt-4 flex w-full flex-col items-start gap-4 md:flex-row md:gap-2 print:hidden"
             >
               <div className="flex w-full flex-col gap-2 md:flex-grow md:flex-row">
                 <input
@@ -117,9 +127,9 @@ export function Reports() {
               <Skeleton className="h-64 w-[520px]" />
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-4 print:space-y-8">
               {reports?.map((report) => (
-                <div key={report.id} className="flex justify-center">
+                <div key={report.id} className="w-full max-w-3xl">
                   <pre>{report.content.trim()}</pre>
                 </div>
               ))}
@@ -127,7 +137,7 @@ export function Reports() {
           )}
         </div>
 
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl print:hidden">
           {reports && (
             <Pagination
               items={totalItems ?? 0}
@@ -137,8 +147,10 @@ export function Reports() {
           )}
         </div>
 
-        <div className="mx-auto mt-4 flex max-w-6xl items-center justify-end">
-          <Button size={'lg'}>Baixar</Button>
+        <div className="mx-auto mt-4 flex max-w-6xl items-center justify-end print:hidden">
+          <Button size={'lg'} onClick={handlePrintReport}>
+            Baixar
+          </Button>
         </div>
       </section>
     </div>
