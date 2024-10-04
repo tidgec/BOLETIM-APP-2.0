@@ -82,18 +82,14 @@ export function Home() {
                         <div className="md:ml-2">
                           <span className="font-medium uppercase">Cursos:</span>
                           <ul className="list-inside list-disc md:ml-2">
-                            {user.courses.map((item) => (
-                              <li key={item.userOnCourseId}>{item.name}</li>
-                            ))}
+                            <li>{user.courses[0].name}</li>
                           </ul>
                         </div>
 
                         <div className="md:mr-2">
                           <span className="font-medium uppercase">Polos:</span>
                           <ul className="list-inside list-disc">
-                            {user.poles.map((item) => (
-                              <li key={item.userCourseOnPoleId}>{item.name}</li>
-                            ))}
+                            <li>{user.poles[0].name}</li>
                           </ul>
                         </div>
                       </div>
@@ -116,11 +112,11 @@ export function Home() {
                             <span>Veja mais informações</span>
                           </DialogHeader>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {user.courses.map((course) => (
                               <div
                                 key={course.id}
-                                className="flex w-full items-start gap-1 border-2"
+                                className="flex w-full flex-col items-start gap-1 border-2"
                               >
                                 {user.role === 'STUDENT' && (
                                   <Link
@@ -147,15 +143,17 @@ export function Home() {
                                   />
                                 )}
 
-                                <div className="flex flex-col gap-2">
-                                  <Button variant={'link'} size={'sm'}>
-                                    <Link
-                                      to={`/students/update/${user.id}?courseId=${course.id}`}
-                                    >
-                                      Editar aluno
-                                    </Link>
-                                  </Button>
-                                </div>
+                                <Button
+                                  variant={'link'}
+                                  className="mx-auto"
+                                  size={'sm'}
+                                >
+                                  <Link
+                                    to={`/students/update/${user.id}?courseId=${course.id}`}
+                                  >
+                                    Editar aluno
+                                  </Link>
+                                </Button>
                               </div>
                             ))}
                           </div>
