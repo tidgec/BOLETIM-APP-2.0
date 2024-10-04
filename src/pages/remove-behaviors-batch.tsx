@@ -66,7 +66,7 @@ export function RemoveBehaviorsBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

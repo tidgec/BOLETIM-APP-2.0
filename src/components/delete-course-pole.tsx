@@ -42,7 +42,7 @@ export function DeleteCoursePole({ pole }: DeleteCoursePoleProps) {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

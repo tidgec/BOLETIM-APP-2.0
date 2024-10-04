@@ -71,7 +71,7 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

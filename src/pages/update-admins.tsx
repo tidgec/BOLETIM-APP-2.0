@@ -93,7 +93,7 @@ export function UpdateAdmins() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

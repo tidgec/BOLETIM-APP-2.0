@@ -114,7 +114,7 @@ export function UpdateBehaviorForm({ behavior }: UpdateBehaviorFormProps) {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

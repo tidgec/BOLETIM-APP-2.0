@@ -89,7 +89,7 @@ export function StudentsDisabled() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

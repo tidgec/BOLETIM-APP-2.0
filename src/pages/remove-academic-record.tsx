@@ -37,7 +37,7 @@ export function RemoveAcademicRecord() {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

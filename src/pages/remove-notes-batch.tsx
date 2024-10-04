@@ -60,7 +60,7 @@ export function RemoveNotesBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

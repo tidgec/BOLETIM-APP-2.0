@@ -106,7 +106,7 @@ export function UpdateManager() {
       })
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

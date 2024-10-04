@@ -59,7 +59,7 @@ export function DeleteStudents() {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

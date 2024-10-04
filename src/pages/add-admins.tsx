@@ -90,7 +90,7 @@ export function AddAdmins() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

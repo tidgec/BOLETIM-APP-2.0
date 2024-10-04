@@ -26,7 +26,9 @@ export function CourseDiscipline() {
 
         <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row">
           <aside className="w-full max-w-72 space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
-            <p className="text-lg font-semibold">Polos Adicionados ao curso:</p>
+            <p className="text-lg font-semibold">
+              Disciplinas Adicionadas ao curso:
+            </p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {courseDisciplines ? (
                 courseDisciplines.map((courseDiscipline) => (

@@ -104,7 +104,7 @@ export function UpdateStudent() {
       })
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

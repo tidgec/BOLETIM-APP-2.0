@@ -51,7 +51,7 @@ export function DownloadAcademicRecord() {
 
       window.location.href = fileUrl
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

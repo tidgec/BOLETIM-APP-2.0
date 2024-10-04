@@ -93,7 +93,7 @@ export function AddAcademicRecord() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

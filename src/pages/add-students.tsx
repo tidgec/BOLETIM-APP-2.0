@@ -94,7 +94,7 @@ export function AddStudents() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

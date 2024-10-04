@@ -62,7 +62,7 @@ export function AddStudentsBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

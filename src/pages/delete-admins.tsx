@@ -57,7 +57,7 @@ export function DeleteAdmins() {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

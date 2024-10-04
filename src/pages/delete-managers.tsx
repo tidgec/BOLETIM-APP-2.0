@@ -59,7 +59,7 @@ export function DeleteManagers() {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

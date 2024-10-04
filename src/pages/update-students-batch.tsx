@@ -64,7 +64,7 @@ export function UpdateStudentsBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

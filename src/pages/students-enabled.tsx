@@ -90,7 +90,7 @@ export function StudentsEnabled() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

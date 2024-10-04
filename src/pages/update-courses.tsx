@@ -93,7 +93,7 @@ export function UpdateCourses() {
 
       navigate(`/courses/management/${course.id}/poles`)
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

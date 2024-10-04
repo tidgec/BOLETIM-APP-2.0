@@ -69,7 +69,7 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

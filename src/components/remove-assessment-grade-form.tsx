@@ -68,7 +68,7 @@ export function RemoveAssessmentGradeForm({
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

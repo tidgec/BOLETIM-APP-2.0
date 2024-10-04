@@ -46,7 +46,7 @@ export function DeleteCourses() {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

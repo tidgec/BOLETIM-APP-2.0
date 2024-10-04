@@ -85,7 +85,7 @@ export function AdminsEnabled() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

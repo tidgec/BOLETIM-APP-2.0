@@ -96,7 +96,7 @@ export function AddCourses() {
 
       navigate(`/courses/management/${id}/poles`)
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

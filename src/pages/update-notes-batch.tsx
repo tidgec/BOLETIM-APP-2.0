@@ -62,7 +62,7 @@ export function UpdateNotesBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

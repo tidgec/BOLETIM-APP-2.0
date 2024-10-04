@@ -96,7 +96,7 @@ export function AddManagers() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

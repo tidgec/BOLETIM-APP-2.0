@@ -87,7 +87,7 @@ export function RemoveBehaviorGradeForm({ id }: RemoveBehaviorGradeFormProps) {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

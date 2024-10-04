@@ -90,7 +90,7 @@ export function CreateBehaviorForm({ studentId }: CreateBehaviorFormProps) {
         },
       })
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

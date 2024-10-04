@@ -90,7 +90,7 @@ export function CreateCourseDisciplineForm({
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

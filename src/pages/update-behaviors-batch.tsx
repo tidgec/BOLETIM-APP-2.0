@@ -64,7 +64,7 @@ export function UpdateBehaviorsBatch() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 

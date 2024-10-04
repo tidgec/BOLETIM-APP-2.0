@@ -88,7 +88,7 @@ export function ManagersDisabled() {
 
       reset()
     } catch (err) {
-      fail(err)
+      fail(err, toastId)
     }
   }
 
