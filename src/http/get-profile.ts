@@ -3,22 +3,59 @@ import { jwtDecode } from 'jwt-decode'
 
 import { api } from '@/lib/axios'
 
-export interface GetProfileResponse {
+export interface GetProfileAxiosResponse {
   id: string
   cpf: string
   email: string
-  civilId: string
+  civilId?: string
   username: string
   avatarUrl: string | null
   role: string
   birthday: Date
+  profile?: {
+    militaryId?: string
+    fatherName?: string
+    motherName?: string
+    state?: string
+    county?: string
+  }
   courses?: {
+    studentCourseId: string
     id: string
     name: string
     startAt: string
     imageUrl: string
   }[]
   poles?: {
+    studentPoleId: string
+    id: string
+    name: string
+  }[]
+}
+
+export interface GetProfileResponse {
+  id: string
+  cpf: string
+  email: string
+  civilId?: string
+  militaryId?: string
+  fatherName?: string
+  motherName?: string
+  state?: string
+  county?: string
+  username: string
+  avatarUrl: string | null
+  role: string
+  birthday: Date
+  courses?: {
+    studentCourseId: string
+    id: string
+    name: string
+    startAt: string
+    imageUrl: string
+  }[]
+  poles?: {
+    studentPoleId: string
     id: string
     name: string
   }[]
@@ -56,12 +93,22 @@ export async function getProfile(): Promise<GetProfileResponse> {
   }
 
   if (payload.role === 'manager') {
-    const response = await api.get('/managers/profile', {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await api.get<GetProfileAxiosResponse>(
+      '/managers/profile',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
-    return response.data.manager
+    )
+    return {
+      ...response.data,
+      militaryId: response.data.profile?.militaryId,
+      state: response.data.profile?.state,
+      county: response.data.profile?.county,
+      fatherName: response.data.profile?.fatherName,
+      motherName: response.data.profile?.motherName,
+    }
   }
 
   const response = await api.get('/students/profile', {
@@ -69,5 +116,12 @@ export async function getProfile(): Promise<GetProfileResponse> {
       Authorization: `Bearer ${token}`,
     },
   })
-  return response.data.student
+  return {
+    ...response.data,
+    militaryId: response.data.profile?.militaryId,
+    state: response.data.profile?.state,
+    county: response.data.profile?.county,
+    fatherName: response.data.profile?.fatherName,
+    motherName: response.data.profile?.motherName,
+  }
 }
