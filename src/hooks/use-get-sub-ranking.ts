@@ -7,12 +7,10 @@ export function useGetSubRanking({
   page,
   disciplineModule,
 }: GetSubRankingRequest) {
-  const expiresIn = 1000 * 60 * 60 // 1hr
-
   const query = useQuery({
     queryKey: ['sub-ranking', courseId, page, disciplineModule],
     queryFn: () => getSubRanking({ courseId, page, disciplineModule }),
-    staleTime: expiresIn,
+    staleTime: Infinity,
     enabled: !!courseId,
   })
 

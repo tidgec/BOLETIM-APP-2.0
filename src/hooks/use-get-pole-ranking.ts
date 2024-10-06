@@ -8,12 +8,10 @@ export function useGetPoleRanking({
   page,
   hasBehavior,
 }: GetPoleRankingRequest) {
-  const expiresIn = 1000 * 60 * 60 // 1hr
-
   const query = useQuery({
     queryKey: ['pole-ranking', courseId, poleId, page, hasBehavior],
     queryFn: () => getPoleRanking({ courseId, poleId, page, hasBehavior }),
-    staleTime: expiresIn,
+    staleTime: Infinity,
     enabled: !!courseId,
   })
 

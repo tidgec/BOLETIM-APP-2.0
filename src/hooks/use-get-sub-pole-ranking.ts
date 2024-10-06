@@ -12,8 +12,6 @@ export function useGetSubPoleRanking({
   hasBehavior,
   disciplineModule,
 }: GetSubPoleRankingRequest) {
-  const expiresIn = 1000 * 60 * 60 // 1hr
-
   const query = useQuery({
     queryKey: [
       'sub-pole-ranking',
@@ -31,7 +29,7 @@ export function useGetSubPoleRanking({
         hasBehavior,
         disciplineModule,
       }),
-    staleTime: expiresIn,
+    staleTime: Infinity,
     enabled: !!courseId,
   })
 
