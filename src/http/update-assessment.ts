@@ -3,9 +3,7 @@ import Cookies from 'js-cookie'
 import { api } from '@/lib/axios'
 
 interface UpdateAssessmentProps {
-  courseId: string
-  disciplineId: string
-  studentId: string
+  id: string
   vf?: number
   avi?: number
   avii?: number
@@ -13,9 +11,7 @@ interface UpdateAssessmentProps {
 }
 
 export async function updateAssessment({
-  courseId,
-  disciplineId,
-  studentId,
+  id,
   vf,
   avi,
   avii,
@@ -24,10 +20,8 @@ export async function updateAssessment({
   const token = Cookies.get('token')
 
   await api.put(
-    `/disciplines/${disciplineId}/assessment`,
+    `/assessments/${id}`,
     {
-      courseId,
-      studentId,
       vf,
       avi,
       avii,

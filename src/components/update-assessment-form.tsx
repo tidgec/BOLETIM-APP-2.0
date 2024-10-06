@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -18,14 +17,19 @@ type UpdateAssessmentFormSchema = z.infer<typeof updateAssessmentFormSchema>
 
 interface UpdateAssessmentFormProps {
   studentId: string
+  assessment: {
+    id: string
+    studentId: string
+    vf?: number
+    avi?: number
+    avii?: number
+    vfe?: number
+  }
 }
 
-export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
-  const [searchParams] = useSearchParams()
-  const { disciplineId } = useParams()
-
-  const courseId = searchParams.get('courseId')
-
+export function UpdateAssessmentForm({
+  assessment,
+}: UpdateAssessmentFormProps) {
   const { mutateAsync: updateAssessmentFn, isPending } = useUpdateAssessment()
 
   let toastId: string | number
@@ -42,7 +46,12 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
     formState: { errors },
   } = useForm<UpdateAssessmentFormSchema>({
     resolver: zodResolver(updateAssessmentFormSchema),
-    defaultValues: {},
+    defaultValues: {
+      vf: assessment.vf ? String(assessment.vf) : undefined,
+      avi: assessment.avi ? String(assessment.avi) : undefined,
+      avii: assessment.avii ? String(assessment.avii) : undefined,
+      vfe: assessment.vfe ? String(assessment.vfe) : undefined,
+    },
   })
 
   async function handleUpdateAssessment({
@@ -53,9 +62,7 @@ export function UpdateAssessmentForm({ studentId }: UpdateAssessmentFormProps) {
   }: UpdateAssessmentFormSchema) {
     try {
       await updateAssessmentFn({
-        courseId: String(courseId),
-        disciplineId: String(disciplineId),
-        studentId,
+        id: assessment.id,
         vf: vf ? Number(vf) : undefined,
         avi: avi ? Number(avi) : undefined,
         avii: avii ? Number(avii) : undefined,
