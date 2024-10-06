@@ -6,7 +6,7 @@ interface GetCourseBehaviorsRequest {
   courseId: string
 }
 
-interface GetCourseBehaviorsResponse {
+export interface GetCourseBehaviorsResponse {
   behaviors: {
     id: string
     studentId: string
