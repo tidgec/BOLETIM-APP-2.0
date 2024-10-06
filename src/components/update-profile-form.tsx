@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { useProfile } from '@/hooks/use-profile'
 import { useUpdateProfile } from '@/hooks/use-update-profile'
 import { fail } from '@/utils/fail'
+import { formatDate } from '@/utils/format-date'
 
 import { DialogFooter } from './ui/dialog'
 
@@ -24,6 +26,8 @@ const updateProfileFormSchema = z.object({
 type UpdateProfileFormSchema = z.infer<typeof updateProfileFormSchema>
 
 export function UpdateProfileForm() {
+  const { user } = useProfile()
+
   const {
     handleSubmit,
     register,
@@ -31,6 +35,16 @@ export function UpdateProfileForm() {
     formState: { errors },
   } = useForm<UpdateProfileFormSchema>({
     resolver: zodResolver(updateProfileFormSchema),
+    defaultValues: {
+      username: user?.username ?? '',
+      email: user?.email ?? '',
+      civilId: user?.civilId ?? '',
+      militaryId: user?.militaryId ?? '',
+      state: user?.state ?? '',
+      county: user?.county ?? '',
+      fatherName: user?.fatherName ?? '',
+      motherName: user?.motherName ?? '',
+    },
   })
 
   const { mutateAsync: updateProfileFn } = useUpdateProfile()
@@ -52,7 +66,7 @@ export function UpdateProfileForm() {
         username: username || undefined,
         email: email || undefined,
         password: password || undefined,
-        birthday: birthday || undefined,
+        birthday: birthday ? formatDate(birthday) : undefined,
         fatherName: fatherName || undefined,
         motherName: motherName || undefined,
         civilId: civilId || undefined,
@@ -134,9 +148,8 @@ export function UpdateProfileForm() {
             Data de nascimento:
           </label>
           <input
-            type="text"
+            type="date"
             id="birthday"
-            placeholder="20/12/2022"
             className="rounded px-4 py-3 text-black"
             {...register('birthday')}
           />

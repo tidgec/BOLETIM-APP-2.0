@@ -10,6 +10,7 @@ import { useGetCourseStudent } from '@/hooks/use-get-course-student'
 import { useUpdateStudent } from '@/hooks/use-update-student'
 import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
 
 const updateStudentSchema = z.object({
   username: z.string().optional(),
@@ -89,7 +90,7 @@ export function UpdateStudent() {
         cpf: cpf || undefined,
         email: email || undefined,
         password: password || undefined,
-        birthday: birthday || undefined,
+        birthday: birthday ? formatDate(birthday) : undefined,
         fatherName: fatherName || undefined,
         motherName: motherName || undefined,
         civilId: civilId || undefined,

@@ -10,6 +10,7 @@ import { useGetCoursePoles } from '@/hooks/use-get-course-poles'
 import { useUpdateManager } from '@/hooks/use-update-manager'
 import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
 
 const updateManagerSchema = z.object({
   username: z.string().optional(),
@@ -91,7 +92,7 @@ export function UpdateManager() {
         cpf: cpf || undefined,
         email: email || undefined,
         password: password || undefined,
-        birthday: birthday || undefined,
+        birthday: birthday ? formatDate(birthday) : undefined,
         fatherName: fatherName || undefined,
         motherName: motherName || undefined,
         civilId: civilId || undefined,

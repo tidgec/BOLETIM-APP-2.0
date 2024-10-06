@@ -8,6 +8,7 @@ import { useGetAdmins } from '@/hooks/use-get-admins'
 import { useUpdateAdmin } from '@/hooks/use-update-admin'
 import { fail } from '@/utils/fail'
 import { formatCPF } from '@/utils/format-cpf'
+import { formatDate } from '@/utils/format-date'
 
 const updateAdminSchema = z.object({
   username: z.string().optional(),
@@ -77,7 +78,7 @@ export function UpdateAdmins() {
         cpf: cpf || undefined,
         email: email || undefined,
         password: password || undefined,
-        birthday: birthday || undefined,
+        birthday: birthday ? formatDate(birthday) : undefined,
         fatherName: fatherName || undefined,
         motherName: motherName || undefined,
         civilId: civilId || undefined,
