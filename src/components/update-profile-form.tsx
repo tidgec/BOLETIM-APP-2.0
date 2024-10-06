@@ -203,7 +203,7 @@ export function UpdateProfileForm() {
           <input
             type="text"
             id="fatherName"
-            placeholder="John Doe"
+            placeholder="Jonas Doe"
             className="rounded px-4 py-3 text-black"
             {...register('fatherName')}
           />
@@ -221,7 +221,7 @@ export function UpdateProfileForm() {
           <input
             type="text"
             id="motherName"
-            placeholder="John Doe"
+            placeholder="Jenny Doe"
             className="rounded px-4 py-3 text-black"
             {...register('motherName')}
           />
