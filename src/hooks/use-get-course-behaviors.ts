@@ -4,7 +4,7 @@ import { getCourseBehaviors } from '@/http/get-course-behaviors'
 
 export function useGetCourseBehaviors(courseId: string) {
   const query = useQuery({
-    queryKey: ['courses', courseId, 'behaviors'],
+    queryKey: ['course-behaviors', courseId],
     queryFn: () => getCourseBehaviors({ courseId }),
     staleTime: Infinity,
   })

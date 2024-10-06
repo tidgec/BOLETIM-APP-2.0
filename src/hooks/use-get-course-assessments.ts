@@ -1,19 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getCourseAssessments } from '@/http/get-course-assessments'
-
-interface GetCourseAssessmentsProps {
-  courseId: string
-}
+import {
+  getCourseAssessments,
+  type GetCourseAssessmentsRequest,
+} from '@/http/get-course-assessments'
 
 export function useGetCourseAssessments({
   courseId,
-}: GetCourseAssessmentsProps) {
+  disciplineId,
+}: GetCourseAssessmentsRequest) {
   const expiresIn = 1000 * 60 * 60 // 1hr
 
   const query = useQuery({
     queryKey: ['course-assessments', courseId],
-    queryFn: () => getCourseAssessments({ courseId }),
+    queryFn: () => getCourseAssessments({ courseId, disciplineId }),
     staleTime: expiresIn,
   })
 
