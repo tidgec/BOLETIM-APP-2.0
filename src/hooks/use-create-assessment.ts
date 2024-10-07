@@ -17,6 +17,7 @@ export function useCreateAssessment() {
           'average-behavior-poles-ranking',
           'poles-average-ranking',
           'boletims',
+          'course-assessments',
         ],
       })
     },

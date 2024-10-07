@@ -18,9 +18,24 @@ type CreateAssessmentFormSchema = z.infer<typeof createAssessmentFormSchema>
 
 interface CreateAssessmentFormProps {
   studentId: string
+  assessment:
+    | {
+        id: string
+        courseId: string
+        disciplineId: string
+        studentId: string
+        vf?: number
+        avi?: number
+        avii?: number
+        vfe?: number
+      }
+    | undefined
 }
 
-export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
+export function CreateAssessmentForm({
+  studentId,
+  assessment,
+}: CreateAssessmentFormProps) {
   const [searchParams] = useSearchParams()
   const { disciplineId } = useParams()
 
@@ -73,6 +88,10 @@ export function CreateAssessmentForm({ studentId }: CreateAssessmentFormProps) {
     } catch (err) {
       fail(err, toastId)
     }
+  }
+
+  if (assessment) {
+    return <p className="mt-2 font-medium">Nota do usuário já lançada!</p>
   }
 
   return (
