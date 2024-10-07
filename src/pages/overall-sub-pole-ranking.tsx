@@ -213,9 +213,6 @@ export function OverallSubPoleRanking() {
               ) : (
                 ranking?.map((item, index) => {
                   const classification = getClassificationPosition(index, page)
-                  const assessment = item.studentAverage.assessments.find(
-                    (item) => item.isRecovering,
-                  )
 
                   return (
                     <TableRow key={item.studentName}>
@@ -236,24 +233,22 @@ export function OverallSubPoleRanking() {
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          {
-                            average: Number(
-                              item.studentAverage.averageInform.geralAverage,
-                            ),
-                            vfe: assessment?.vfe ?? undefined,
-                          },
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {item.studentAverage.averageInform.geralAverage}
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          {
-                            average: Number(
-                              item.studentAverage.averageInform.geralAverage,
-                            ),
-                            vfe: assessment?.vfe ?? undefined,
-                          },
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {
@@ -271,12 +266,11 @@ export function OverallSubPoleRanking() {
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          {
-                            average: Number(
-                              item.studentAverage.averageInform.geralAverage,
-                            ),
-                            vfe: assessment?.vfe ?? undefined,
-                          },
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {
@@ -302,9 +296,6 @@ export function OverallSubPoleRanking() {
             ) : (
               ranking?.map((item, index) => {
                 const classification = getClassificationPosition(index, page)
-                const assessment = item.studentAverage.assessments.find(
-                  (item) => item.isRecovering,
-                )
 
                 return (
                   <ol
@@ -328,12 +319,11 @@ export function OverallSubPoleRanking() {
                     </li>
                     <li
                       className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        {
-                          average: Number(
-                            item.studentAverage.averageInform.geralAverage,
-                          ),
-                          vfe: assessment?.vfe ?? undefined,
-                        },
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
                       MÉDIA FINAL:{' '}
@@ -341,12 +331,11 @@ export function OverallSubPoleRanking() {
                     </li>
                     <li
                       className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        {
-                          average: Number(
-                            item.studentAverage.averageInform.geralAverage,
-                          ),
-                          vfe: assessment?.vfe ?? undefined,
-                        },
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
                       CONCEITO:{' '}
@@ -365,12 +354,11 @@ export function OverallSubPoleRanking() {
                     </li>
                     <li
                       className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        {
-                          average: Number(
-                            item.studentAverage.averageInform.geralAverage,
-                          ),
-                          vfe: assessment?.vfe ?? undefined,
-                        },
+                        item.studentAverage.averageInform.studentAverageStatus
+                          .status === 'second season'
+                          ? 'second season'
+                          : item.studentAverage.averageInform
+                              .studentAverageStatus.concept,
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
                       STATUS:{' '}
