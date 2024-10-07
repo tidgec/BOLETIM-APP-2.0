@@ -62,7 +62,7 @@ export function Pagination({ items, page, pages }: PaginationProps) {
       <span>Total {items} item(s)</span>
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:w-auto sm:flex-row sm:justify-start sm:gap-8">
         <span>
-          Page {page} of {pages}
+          Page {page} de {pages}
         </span>
 
         <div className="space-x-1.5">
