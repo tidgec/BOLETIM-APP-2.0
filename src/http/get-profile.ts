@@ -3,34 +3,68 @@ import { jwtDecode } from 'jwt-decode'
 
 import { api } from '@/lib/axios'
 
-export interface GetProfileAxiosResponse {
-  id: string
-  cpf: string
-  email: string
-  civilId?: string
-  username: string
-  avatarUrl: string | null
-  role: string
-  birthday: Date
-  profile?: {
-    militaryId?: string
-    fatherName?: string
-    motherName?: string
-    state?: string
-    county?: string
+export interface GetProfileStudentResponse {
+  student: {
+    id: string
+    cpf: string
+    email: string
+    civilId?: string
+    username: string
+    avatarUrl: string | null
+    role: string
+    birthday: Date
+    profile?: {
+      militaryId?: string
+      fatherName?: string
+      motherName?: string
+      state?: string
+      county?: string
+    }
+    courses?: {
+      studentCourseId: string
+      id: string
+      name: string
+      startAt: string
+      imageUrl: string
+    }[]
+    poles?: {
+      studentPoleId: string
+      id: string
+      name: string
+    }[]
   }
-  courses?: {
-    studentCourseId: string
+}
+
+export interface GetProfileManagerResponse {
+  manager: {
     id: string
-    name: string
-    startAt: string
-    imageUrl: string
-  }[]
-  poles?: {
-    studentPoleId: string
-    id: string
-    name: string
-  }[]
+    cpf: string
+    email: string
+    civilId?: string
+    username: string
+    avatarUrl: string | null
+    role: string
+    birthday: Date
+    profile?: {
+      militaryId?: string
+      fatherName?: string
+      motherName?: string
+      state?: string
+      county?: string
+    }
+    courses?: {
+      studentCourseId: string
+      id: string
+      name: string
+      startAt: string
+      imageUrl: string
+    }[]
+    poles?: {
+      studentPoleId: string
+      id: string
+      name: string
+    }[]
+  }
 }
 
 export interface GetProfileResponse {
@@ -93,7 +127,7 @@ export async function getProfile(): Promise<GetProfileResponse> {
   }
 
   if (payload.role === 'manager') {
-    const response = await api.get<GetProfileAxiosResponse>(
+    const response = await api.get<GetProfileManagerResponse>(
       '/managers/profile',
       {
         headers: {
@@ -101,27 +135,54 @@ export async function getProfile(): Promise<GetProfileResponse> {
         },
       },
     )
+
+    const { manager } = response.data
+
     return {
-      ...response.data,
-      militaryId: response.data.profile?.militaryId,
-      state: response.data.profile?.state,
-      county: response.data.profile?.county,
-      fatherName: response.data.profile?.fatherName,
-      motherName: response.data.profile?.motherName,
+      id: manager.id,
+      username: manager.username,
+      email: manager.email,
+      avatarUrl: manager.avatarUrl,
+      birthday: manager.birthday,
+      cpf: manager.cpf,
+      role: manager.role,
+      civilId: manager.civilId,
+      courses: manager.courses,
+      poles: manager.poles,
+      militaryId: manager.profile?.militaryId,
+      state: manager.profile?.state,
+      county: manager.profile?.county,
+      fatherName: manager.profile?.fatherName,
+      motherName: manager.profile?.motherName,
     }
   }
 
-  const response = await api.get('/students/profile', {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await api.get<GetProfileStudentResponse>(
+    '/students/profile',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  })
+  )
+
+  const { student } = response.data
+
   return {
-    ...response.data,
-    militaryId: response.data.profile?.militaryId,
-    state: response.data.profile?.state,
-    county: response.data.profile?.county,
-    fatherName: response.data.profile?.fatherName,
-    motherName: response.data.profile?.motherName,
+    id: student.id,
+    username: student.username,
+    email: student.email,
+    avatarUrl: student.avatarUrl,
+    birthday: student.birthday,
+    cpf: student.cpf,
+    role: student.role,
+    civilId: student.civilId,
+    courses: student.courses,
+    poles: student.poles,
+    militaryId: student.profile?.militaryId,
+    state: student.profile?.state,
+    county: student.profile?.county,
+    fatherName: student.profile?.fatherName,
+    motherName: student.profile?.motherName,
   }
 }
