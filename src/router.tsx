@@ -109,7 +109,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/students/:id/boletim/courses',
+        path: '/students/:id/boletim/list-courses',
         element: (
           <ProtectedLayout roles={['student']}>
             <ListCoursesPage />
