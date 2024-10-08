@@ -7,10 +7,12 @@ export const api = axios.create({
   withCredentials: true,
 })
 
-api.interceptors.request.use(async (config) => {
-  await new Promise((resolve) =>
-    setTimeout(resolve, Math.round(Math.random() * 4000)),
-  )
+if (env.VITE_ENABLE_API_DELAY === 'true') {
+  api.interceptors.request.use(async (config) => {
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.round(Math.random() * 4000)),
+    )
 
-  return config
-})
+    return config
+  })
+}
