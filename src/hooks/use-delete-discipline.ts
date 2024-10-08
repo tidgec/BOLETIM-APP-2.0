@@ -19,21 +19,23 @@ export function useDeleteDiscipline() {
 
         let pages: number = 1
 
-        if (cached.totalItems > 10) {
-          pages = cached.pages
-        }
+        if (cached.pages && cached.totalItems) {
+          if (cached.totalItems > 10) {
+            pages = cached.pages
+          }
 
-        pages =
-          cached.totalItems <= 10 && cached.pages === 1
-            ? cached.pages
-            : cached.pages - 1
+          pages =
+            cached.totalItems && cached.totalItems <= 10 && cached.pages === 1
+              ? cached.pages
+              : cached.pages - 1
+        }
 
         queryClient.setQueryData<GetDisciplinesResponse>(cacheKey, {
           ...cached,
           disciplines: cached.disciplines.filter((discipline) => {
             return discipline.id !== id
           }),
-          totalItems: cached.totalItems - 1,
+          totalItems: cached.totalItems && cached.totalItems - 1,
           pages,
         })
       })
