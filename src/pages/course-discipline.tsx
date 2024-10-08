@@ -1,18 +1,22 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { CreateCourseDisciplineForm } from '@/components/create-course-discipline-form'
 import { DeleteCourseDiscipline } from '@/components/delete-course-discipline'
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 import { useGetDisciplines } from '@/hooks/use-get-disciplines'
 
 export function CourseDiscipline() {
+  const [searchParams] = useSearchParams()
+  const page = searchParams.get('page') ?? '1'
+
   const navigate = useNavigate()
 
   const { id } = useParams()
 
-  const { disciplines } = useGetDisciplines({})
+  const { disciplines, pages, totalItems } = useGetDisciplines({})
   const { disciplines: courseDisciplines } = useGetCourseDisciplines({
     courseId: String(id),
   })
@@ -24,7 +28,7 @@ export function CourseDiscipline() {
           Adicionar disciplinas do curso
         </h2>
 
-        <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row">
+        <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row lg:items-start">
           <aside className="w-full max-w-72 space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
             <p className="text-lg font-semibold">
               Disciplinas Adicionadas ao curso:
@@ -78,6 +82,12 @@ export function CourseDiscipline() {
                 Voltar ao início
               </Button>
             </div>
+
+            <Pagination
+              items={totalItems ?? 0}
+              page={Number(page)}
+              pages={pages ?? 0}
+            />
           </div>
         </div>
       </section>

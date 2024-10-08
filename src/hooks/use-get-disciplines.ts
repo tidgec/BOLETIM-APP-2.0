@@ -10,9 +10,9 @@ export function useGetDisciplines({ page }: GetDisciplinesRequest) {
   })
 
   return {
+    ...query,
     disciplines: query.data?.disciplines,
     totalItems: query.data?.totalItems,
     pages: query.data?.pages,
-    ...query,
   }
 }

@@ -12,8 +12,8 @@ export interface GetDisciplinesResponse {
     name: string
   }[]
 
-  totalItems: number
-  pages: number
+  totalItems?: number
+  pages?: number
 }
 
 export async function getDisciplines({ page }: GetDisciplinesRequest) {
