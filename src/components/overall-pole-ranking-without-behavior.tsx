@@ -18,6 +18,14 @@ import {
 import { RankingViewer } from './templates/ranking-viewer'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table'
 
 export function OverallPoleRankingWithoutBehavior() {
   const navigate = useNavigate()
@@ -162,44 +170,44 @@ export function OverallPoleRankingWithoutBehavior() {
           )}
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
-          <table className="hidden min-w-full table-auto lg:table">
-            <thead>
-              <tr className="border-b bg-pmpa-blue-500">
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+        <div className="rounded-lg border border-gray-200 lg:bg-white lg:shadow-md">
+          <Table className="hidden w-full table-auto lg:table">
+            <TableHeader className="overflow-x-auto">
+              <TableRow className="flex flex-col justify-center border-b bg-pmpa-blue-500 lg:table-row">
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-10">
                   CLASS
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-10">
                   Q.AV
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-10">
                   Q.C
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-20">
                   RG
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-[340px]">
                   NOME COMPLETO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-32">
                   MÉDIA FINAL
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-32">
                   CONCEITO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-32">
                   DATA DE NASCIMENTO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-24">
                   POLO
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-white">
+                </TableHead>
+                <TableHead className="py-2 text-center text-xs font-semibold text-white md:text-sm lg:max-w-24">
                   STATUS
-                </th>
-              </tr>
-            </thead>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
 
-            <tbody>
+            <TableBody className="lg:overflow-hidden">
               {isLoading ? (
                 <>
                   <RankingSkeleton />
@@ -213,57 +221,84 @@ export function OverallPoleRankingWithoutBehavior() {
                   const classification = getClassificationPosition(index, page)
 
                   return (
-                    <tr
-                      key={index}
+                    <TableRow
+                      key={item.studentName}
+                      className="flex cursor-pointer flex-col lg:table-row"
                       onClick={() => handleNavigateToBoletim(item.studentId)}
-                      className="cursor-pointer"
                     >
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {classification}º
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {classification}ª
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentAverage.assessmentsCount}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentAverage.averageInform.behaviorsCount}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentCivilOrMilitaryId}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
-                        {item.studentPole}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {item.studentName}
+                      </TableCell>
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )}
+                        )} lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {item.studentAverage.averageInform.geralAverage}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )}
+                        )} lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {
                           conceptMap[
                             item.studentAverage.averageInform
                               .studentAverageStatus.concept
                           ]
                         }
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentBirthday}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
                         {item.studentPole}
-                      </td>
-                      <td className="px-4 py-2 text-sm text-slate-700">
+                      </TableCell>
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.studentAverage.averageInform.studentAverageStatus
+                            .status === 'second season'
+                            ? 'second season'
+                            : item.studentAverage.averageInform
+                                .studentAverageStatus.concept,
+                        )}
+                          lg:text-center lg:text-sm lg:font-normal`}
+                      >
                         {
                           overallStatusMap[
                             item.studentAverage.averageInform
                               .studentAverageStatus.status
                           ]
                         }
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   )
                 })
               )}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
 
           <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
             {isLoading ? (

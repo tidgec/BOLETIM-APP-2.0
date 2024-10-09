@@ -99,6 +99,8 @@ export function Overall() {
     navigate(`/students/${studentId}/boletim?courseId=${courseId}`)
   }
 
+  console.log(ranking)
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left print:px-0">
@@ -237,7 +239,7 @@ export function Overall() {
                             ? 'second season'
                             : item.studentAverage.averageInform
                                 .studentAverageStatus.concept,
-                        )},
+                        )}
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {item.studentAverage.averageInform.geralAverage}
@@ -249,7 +251,7 @@ export function Overall() {
                             ? 'second season'
                             : item.studentAverage.averageInform
                                 .studentAverageStatus.concept,
-                        )},
+                        )}
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {
@@ -272,7 +274,7 @@ export function Overall() {
                             ? 'second season'
                             : item.studentAverage.averageInform
                                 .studentAverageStatus.concept,
-                        )},
+                        )}
                           lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {
