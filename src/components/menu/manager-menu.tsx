@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-export function ManagerMenu() {
+export function ManagerMenu({ isOpen }: { isOpen?: boolean }) {
   return (
     <ul className="flex flex-col items-center justify-center space-y-4 text-lg md:items-start md:text-sm">
       <li className="flex gap-4">
@@ -17,7 +17,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideHome size={20} />
-          Home
+          {isOpen && 'Home'}
         </Link>
       </li>
       <li className="flex gap-4">
@@ -26,7 +26,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideUsers size={20} />
-          Alunos
+          {isOpen && 'Alunos'}
         </Link>
       </li>
       <li className="flex gap-4">
@@ -35,7 +35,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideScrollText size={20} />
-          Notas
+          {isOpen && 'Notas'}
         </Link>
       </li>
       <li className="flex gap-4">
@@ -44,7 +44,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideBrain size={20} />
-          Comportamentos
+          {isOpen && 'Comportamentos'}
         </Link>
       </li>
       <li className="flex gap-4">
@@ -53,7 +53,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideBarChart2 size={20} />
-          Classificação
+          {isOpen && 'Classificação'}
         </Link>
       </li>
       <li className="flex gap-4">
@@ -62,7 +62,7 @@ export function ManagerMenu() {
           className="flex items-center justify-center gap-4 md:justify-start"
         >
           <LucideBoxes size={20} />
-          Gerenciamento de dados
+          {isOpen && 'Gerenciamento de dados'}
         </Link>
       </li>
     </ul>

@@ -13,21 +13,32 @@ interface MenuProps {
 
 export function Menu({ role }: MenuProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false)
 
   return (
     <>
-      <aside className="relative hidden w-full max-w-60 bg-pmpa-blue-700 px-4 py-8 text-white md:block">
+      <aside
+        data-size={isOpenSideBar}
+        className="relative hidden w-full bg-pmpa-blue-700 p-4 text-white transition-all data-[size=false]:max-w-14 data-[size=true]:max-w-60 md:block"
+      >
+        <button
+          className="mb-8 cursor-pointer rounded"
+          onClick={() => setIsOpenSideBar(!isOpenSideBar)}
+        >
+          <LucideList size={25} />
+        </button>
+
         <div className="fixed space-y-8">
           <nav>
-            {role === 'dev' && <DevMenu />}
-            {role === 'admin' && <AdminMenu />}
-            {role === 'manager' && <ManagerMenu />}
-            {role === 'student' && <StudentMenu />}
+            {role === 'dev' && <DevMenu isOpen={isOpenSideBar} />}
+            {role === 'admin' && <AdminMenu isOpen={isOpenSideBar} />}
+            {role === 'manager' && <ManagerMenu isOpen={isOpenSideBar} />}
+            {role === 'student' && <StudentMenu isOpen={isOpenSideBar} />}
           </nav>
           <div className="border-y-2 py-4">
             <Link to={'/profile'} className="flex gap-4 text-sm tracking-wider">
               <LucideCircleUser size={20} />
-              Perfil
+              {isOpenSideBar && 'Perfil'}
             </Link>
           </div>
         </div>
