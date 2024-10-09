@@ -46,6 +46,7 @@ interface GetStudentBoletimResponse {
         | 'disapproved'
         | 'approved second season'
         | 'second season'
+        | 'no income'
       isRecovering: boolean
       id: string
       module: number
