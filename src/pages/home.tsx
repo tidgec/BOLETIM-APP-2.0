@@ -59,7 +59,7 @@ export function Home() {
           <SearchForm />
 
           <section className="w-full max-w-5xl space-y-4">
-            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid h-64 w-full grid-cols-1 gap-4 overflow-auto md:grid-cols-2">
               {users ? (
                 users?.map((user) => (
                   <div
@@ -123,13 +123,7 @@ export function Home() {
                                     to={`/students/${user.id}/boletim?courseId=${course.id}`}
                                     className="h-full border bg-transparent p-0"
                                   >
-                                    <Course
-                                      course={{
-                                        ...course,
-                                        imageUrl:
-                                          'https://github.com/igorabreu29.png',
-                                      }}
-                                    />
+                                    <Course course={course} />
                                   </Link>
                                 )}
 
