@@ -20,6 +20,8 @@ type Status =
   | 'disapproved'
   | 'approved second season'
   | 'second season'
+  | 'no income'
+
 export const behaviorStatusMap: Record<BehaviorStatus, string> = {
   approved: 'Aprovado',
   disapproved: 'Reprovado',
@@ -47,4 +49,5 @@ export const statusMap: Record<Status, string> = {
   disapproved: 'Reprovado',
   'approved second season': 'Aprovado em segunda época',
   'second season': 'Segunda época',
+  'no income': 'Nota não definida',
 }
