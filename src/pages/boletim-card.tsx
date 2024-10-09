@@ -9,6 +9,7 @@ import { useGetStudentBoletim } from '@/hooks/use-get-student-boletim'
 import {
   generateAssessmentStatus,
   generateBehaviorStatus,
+  generateStatus,
 } from '@/utils/generate-status'
 import { conceptMap, statusMap } from '@/utils/status-and-concept-mapper'
 import { verifyFormula } from '@/utils/verify-formula-type'
@@ -49,8 +50,6 @@ export function BoletimCard() {
       0,
     )
 
-  console.log(behaviorAverage)
-
   return (
     <div className="mx-auto mt-10 w-full max-w-4xl print:max-w-7xl">
       <h2 className="mb-4 w-full border-b-2 border-b-black py-3 text-3xl font-bold">
@@ -71,7 +70,7 @@ export function BoletimCard() {
           {isLoadingCourseStudent ? (
             <Skeleton className="h-8 w-24 bg-slate-300" />
           ) : (
-            <span className="text-xl font-bold text-gray-700">
+            <span className="text-lg font-bold md:text-xl">
               Curso: {student?.course.name}
             </span>
           )}
@@ -108,7 +107,16 @@ export function BoletimCard() {
           <div className="flex gap-2 text-lg font-bold md:text-xl">
             <p>MÉDIA GERAL:</p>{' '}
             {grades ? (
-              grades?.averageInform.geralAverage || 'Nota geral não lançada'
+              <span
+                className={`${generateStatus(
+                  grades.averageInform.studentAverageStatus.status ===
+                    'second season'
+                    ? 'second season'
+                    : grades.averageInform.studentAverageStatus.concept,
+                )}`}
+              >
+                {grades?.averageInform.geralAverage || 'Nota geral não lançada'}
+              </span>
             ) : (
               <Skeleton className="h-8 w-48 bg-slate-300" />
             )}
@@ -116,7 +124,14 @@ export function BoletimCard() {
           <div className="flex items-center gap-2 text-gray-700">
             <p>STATUS GERAL:</p>{' '}
             {grades ? (
-              <span className="font-bold">
+              <span
+                className={`${generateStatus(
+                  grades.averageInform.studentAverageStatus.status ===
+                    'second season'
+                    ? 'second season'
+                    : grades.averageInform.studentAverageStatus.concept,
+                )} font-bold`}
+              >
                 {conceptMap[grades.averageInform.studentAverageStatus.concept]}
               </span>
             ) : (
@@ -161,7 +176,7 @@ export function BoletimCard() {
                       average: grades?.assessments[index]?.average ?? 0,
                       status:
                         statusMap[
-                          grades?.assessments[index]?.status ?? 'approved'
+                          grades?.assessments[index]?.status ?? 'no income'
                         ],
                     }}
                   />
@@ -196,7 +211,7 @@ export function BoletimCard() {
         )}
 
         {showGrades && (
-          <div className="mb-4 flex h-[320px] flex-col gap-4 overflow-auto md:hidden">
+          <div className="mb-4 flex h-[320px] flex-col gap-4 overflow-auto md:hidden print:h-auto print:overflow-visible">
             {!disciplines ? (
               <>
                 <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
@@ -370,7 +385,7 @@ export function BoletimCard() {
         )}
 
         {showBehavior && (
-          <div className="mb-4 flex h-[520px] flex-col gap-4 overflow-auto lg:hidden">
+          <div className="mb-4 flex h-[520px] flex-col gap-4 overflow-auto lg:hidden print:h-auto print:overflow-visible">
             {!behaviorMonths ? (
               <>
                 <div className="flex flex-col items-center justify-center gap-2 border-2 border-slate-300 py-2">
@@ -454,7 +469,7 @@ export function BoletimCard() {
 
         <div className="mb-4 space-y-2 print:mt-4">
           <div>
-            <p className="text-xl font-bold md:text-base">
+            <p className="font-bold md:text-lg">
               MÉDIA DE COMPORTAMENTO:{' '}
               {behaviorAverage !== undefined && behaviorAverage >= 0 ? (
                 <span
@@ -466,7 +481,7 @@ export function BoletimCard() {
                 <Skeleton className="h-2 w-6" />
               )}
             </p>
-            <p className="text-xl font-bold md:text-base">
+            <p className="font-bold md:text-lg">
               STATUS COMPORTAMENTO:{' '}
               <span
                 className={`${generateBehaviorStatus({ average: behaviorAverage ?? 0 })}`}
