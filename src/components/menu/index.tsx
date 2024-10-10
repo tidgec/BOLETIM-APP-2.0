@@ -52,7 +52,7 @@ export function Menu({ role }: MenuProps) {
       </button>
 
       {isOpenMenu && (
-        <aside className="fixed inset-0 z-50 w-full space-y-8 bg-pmpa-blue-700 px-4 py-8 text-white md:static md:hidden md:max-w-60">
+        <aside className="fixed inset-0 z-50 h-full w-full space-y-8 bg-pmpa-blue-700 px-4 py-8 text-white md:hidden">
           <button
             className="absolute right-6 top-4"
             onClick={() => setIsOpenMenu(false)}
