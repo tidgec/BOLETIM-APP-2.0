@@ -64,7 +64,9 @@ export function Profile() {
                   className="h-full w-full rounded-3xl object-cover"
                 />
               ) : (
-                ''
+                <span className="text-7xl">
+                  {user?.username.trim().toUpperCase().substring(0, 1)}
+                </span>
               )}
             </div>
             <p className="text-md mt-2 text-center font-medium md:text-lg">
