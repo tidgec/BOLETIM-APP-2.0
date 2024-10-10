@@ -376,7 +376,7 @@ export function OverallSubPoleRanking() {
           </div>
         </div>
 
-        <div className="mt-4 space-x-2 text-center print:hidden">
+        <div className="my-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer

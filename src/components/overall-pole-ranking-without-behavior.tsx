@@ -390,7 +390,7 @@ export function OverallPoleRankingWithoutBehavior() {
           </div>
         </div>
 
-        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
+        <div className="my-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer

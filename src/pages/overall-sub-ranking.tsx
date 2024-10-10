@@ -375,7 +375,7 @@ export function OverallSubRanking() {
           </div>
         </div>
 
-        <div className="flex h-[576px] flex-col gap-4 overflow-auto lg:hidden">
+        <div className="my-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
