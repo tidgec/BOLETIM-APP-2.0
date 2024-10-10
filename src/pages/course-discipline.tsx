@@ -16,7 +16,9 @@ export function CourseDiscipline() {
 
   const { id } = useParams()
 
-  const { disciplines, pages, totalItems } = useGetDisciplines({})
+  const { disciplines, pages, totalItems } = useGetDisciplines({
+    page,
+  })
   const { disciplines: courseDisciplines } = useGetCourseDisciplines({
     courseId: String(id),
   })
@@ -29,7 +31,7 @@ export function CourseDiscipline() {
         </h2>
 
         <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row lg:items-start">
-          <aside className="w-full max-w-72 space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
+          <aside className="w-full max-w-md space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
             <p className="text-lg font-semibold">
               Disciplinas Adicionadas ao curso:
             </p>
@@ -50,7 +52,7 @@ export function CourseDiscipline() {
             </div>
           </aside>
 
-          <div className="max-w-4xl rounded bg-pmpa-blue-500 p-4">
+          <div className="flex-1 rounded bg-pmpa-blue-500 p-4">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {disciplines ? (
                 disciplines?.map((discipline) => (
