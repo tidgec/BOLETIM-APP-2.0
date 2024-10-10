@@ -170,10 +170,10 @@ export function Home() {
                 ))
               ) : (
                 <>
-                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
-                  <Skeleton className="h-16 w-full space-y-2 rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-32 w-full rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-32 w-full rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-32 w-full rounded border bg-slate-300 px-2 py-1" />
+                  <Skeleton className="h-32 w-full rounded border bg-slate-300 px-2 py-1" />
                 </>
               )}
             </div>
