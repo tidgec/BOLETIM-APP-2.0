@@ -3,8 +3,8 @@ import Cookies from 'js-cookie'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import LogoBoletim from '@/assets/dgec.png'
 import { useDecode } from '@/auth'
+import { Footer } from '@/components/footer'
 import { Menu } from '@/components/menu'
 import { api } from '@/lib/axios'
 
@@ -56,32 +56,7 @@ export function AppLayout() {
         </div>
       </div>
 
-      <footer className="gap-2 bg-pmpa-blue-700 py-8 text-white">
-        <div className="flex gap-4 px-6">
-          <img src={LogoBoletim} alt="" className="flex h-28 w-auto" />
-          <div>
-            <span className="text-lg font-bold">Endereço:</span>
-            <p className="w-full max-w-80">
-              Rod. Augusto Montenegro, Km 9, n° 8401, Bairro Parque
-              Guajará/Dist. de Icoaraci – Belém/PA. CEP: 66821-000.
-            </p>
-          </div>
-
-          <div>
-            <span className="text-lg font-bold">Contato:</span>
-            <p>ti.dgecpmpa@gmail.com</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-xl font-bold">
-            Desenvolvido Pela Subseção de Tecnologia Educacional.
-          </p>
-          <p className="text-xl font-bold">
-            Polícia Militar do Pará © 2022 | Todos os Direitos Reservados.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
