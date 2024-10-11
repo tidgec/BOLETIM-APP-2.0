@@ -36,6 +36,9 @@ interface GetStudentBoletimResponse {
     }
 
     assessments: ({
+      courseId: string
+      disciplineId: string
+
       vf: number
       avi: number | null
       avii: number | null
