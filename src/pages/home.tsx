@@ -59,7 +59,7 @@ export function Home() {
           <SearchForm />
 
           <section className="w-full max-w-5xl space-y-4">
-            <div className="grid h-64 w-full grid-cols-1 gap-4 overflow-auto md:grid-cols-2">
+            <div className="grid h-80 w-full grid-cols-1 gap-4 overflow-auto md:grid-cols-2">
               {users ? (
                 users?.map((user) => (
                   <div
