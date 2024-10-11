@@ -7,9 +7,9 @@ export function useCreateCourseDiscipline() {
 
   const mutation = useMutation({
     mutationFn: createCourseDiscipline,
-    onSuccess: async (_, { courseId }) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['course-disciplines', courseId],
+        queryKey: ['course-disciplines'],
       })
     },
   })
