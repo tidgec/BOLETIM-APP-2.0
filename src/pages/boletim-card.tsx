@@ -164,23 +164,26 @@ export function BoletimCard() {
             </thead>
             <tbody>
               {disciplines ? (
-                disciplines.map((discipline, index) => (
-                  <GradeItem
-                    key={discipline.disciplineId}
-                    grade={{
-                      disciplina: discipline.name,
-                      vf: grades?.assessments[index]?.vf ?? 0,
-                      vc1: grades?.assessments[index]?.avi ?? 0,
-                      vc2: grades?.assessments[index]?.avii ?? 0,
-                      vfe: grades?.assessments[index]?.vfe ?? 0,
-                      average: grades?.assessments[index]?.average ?? 0,
-                      status:
-                        statusMap[
-                          grades?.assessments[index]?.status ?? 'no income'
-                        ],
-                    }}
-                  />
-                ))
+                disciplines.map((discipline) => {
+                  const assessment = grades?.assessments.find(
+                    (item) => item?.disciplineId === discipline.disciplineId,
+                  )
+
+                  return (
+                    <GradeItem
+                      key={discipline.disciplineId}
+                      grade={{
+                        disciplina: discipline.name,
+                        vf: assessment?.vf ?? 0,
+                        vc1: assessment?.avi ?? 0,
+                        vc2: assessment?.avii ?? 0,
+                        vfe: assessment?.vfe ?? 0,
+                        average: assessment?.average ?? 0,
+                        status: statusMap[assessment?.status ?? 'no income'],
+                      }}
+                    />
+                  )
+                })
               ) : (
                 <tr className="space-y-2 bg-gray-100 lg:table-row lg:space-y-0">
                   <td className="py-3">
