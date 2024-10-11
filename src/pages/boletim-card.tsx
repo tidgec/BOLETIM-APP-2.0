@@ -48,7 +48,7 @@ export function BoletimCard() {
     grades?.averageInform.behaviorAverageStatus.reduce(
       (acc, item) => acc + item.behaviorAverage,
       0,
-    )
+    ) / grades.averageInform.behaviorAverageStatus.length
 
   return (
     <div className="mx-auto mt-10 w-full max-w-4xl print:max-w-7xl">
