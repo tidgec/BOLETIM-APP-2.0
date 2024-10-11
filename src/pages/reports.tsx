@@ -127,10 +127,15 @@ export function Reports() {
               <Skeleton className="h-64 w-[520px]" />
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center space-y-4 print:space-y-8">
+            <div className="flex flex-col items-start justify-center space-y-4 px-2 lg:items-center print:space-y-8">
               {reports?.map((report) => (
-                <div key={report.id} className="w-full max-w-3xl">
-                  <pre>{report.content.trim()}</pre>
+                <div
+                  key={report.id}
+                  className="w-auto text-left lg:w-full lg:max-w-3xl"
+                >
+                  <pre className="text-clip text-wrap">
+                    {report.content.trim()}
+                  </pre>
                 </div>
               ))}
             </div>
