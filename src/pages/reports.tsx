@@ -133,9 +133,19 @@ export function Reports() {
                   key={report.id}
                   className="w-auto text-left lg:w-full lg:max-w-3xl"
                 >
-                  <pre className="text-clip text-wrap">
-                    {report.content.trim()}
-                  </pre>
+                  {report.filename && (
+                    <a href={report.filelink}>
+                      <pre className="text-clip text-wrap">
+                        {report.content.trim()}
+                      </pre>
+                    </a>
+                  )}
+
+                  {!report.filename && (
+                    <pre className="text-clip text-wrap">
+                      {report.content.trim()}
+                    </pre>
+                  )}
                 </div>
               ))}
             </div>
