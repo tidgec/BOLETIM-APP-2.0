@@ -15,8 +15,8 @@ interface GetReportsResponse {
     content: string
     ip: string
     createdAt: string
-    fileLink?: string
-    fileName?: string
+    filelink?: string
+    filename?: string
   }[]
 
   totalItems: number
