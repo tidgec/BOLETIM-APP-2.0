@@ -28,7 +28,7 @@ export function Menu({ role }: MenuProps) {
           <LucideList size={25} />
         </button>
 
-        <div className="fixed space-y-8">
+        <div className="fixed z-40 space-y-8">
           <nav>
             {role === 'dev' && <DevMenu isOpen={isOpenSideBar} />}
             {role === 'admin' && <AdminMenu isOpen={isOpenSideBar} />}

@@ -243,13 +243,15 @@ export function AddCourses() {
                   accept="image/*"
                 />
 
-                {previewUrl && (
-                  <img
-                    src={previewUrl}
-                    alt=""
-                    className="aspect-video w-full rounded-lg object-cover"
-                  />
-                )}
+                <div className="flex w-full items-center justify-center">
+                  {previewUrl && (
+                    <img
+                      src={previewUrl}
+                      alt=""
+                      className="aspect-video h-80 w-full max-w-80 rounded-lg object-cover"
+                    />
+                  )}
+                </div>
               </div>
 
               <Button

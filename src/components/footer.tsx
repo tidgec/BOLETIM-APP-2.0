@@ -2,7 +2,7 @@ import LogoBoletim from '@/assets/dgec.png'
 
 export function Footer() {
   return (
-    <footer className="gap-2 bg-pmpa-blue-700 py-8 text-white">
+    <footer className="gap-2 bg-pmpa-blue-700 py-4 text-white">
       <div className="flex flex-col items-center gap-4 px-6 sm:flex-row">
         <img src={LogoBoletim} alt="" className="h-40 w-36 sm:h-28 sm:w-28" />
         <div>

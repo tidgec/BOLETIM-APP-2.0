@@ -17,6 +17,7 @@ interface CreateBehaviorRequest {
   october?: number | null
   november?: number | null
   december?: number | null
+  module: number
 }
 
 export async function createBehavior({
@@ -34,6 +35,7 @@ export async function createBehavior({
   october,
   november,
   december,
+  module: behaviorModule,
 }: CreateBehaviorRequest) {
   const token = Cookies.get('token')
 
@@ -53,6 +55,7 @@ export async function createBehavior({
       october,
       november,
       december,
+      module: behaviorModule,
     },
     {
       headers: {

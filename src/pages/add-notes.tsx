@@ -61,7 +61,10 @@ export function AddNotes() {
               }
 
               const studentAssessment = assessments.find(
-                (item) => item.studentId === student.id,
+                (item) =>
+                  item.studentId === student.id &&
+                  item.disciplineId === disciplineId &&
+                  item.courseId === courseId,
               )
 
               return (
