@@ -144,7 +144,7 @@ export function StudentConfirm() {
               type="text"
               id="civilId"
               className="rounded px-4 py-2 text-black placeholder:text-xs sm:placeholder:text-sm"
-              placeholder="Digite o nome da sua mãe"
+              placeholder="Digite seu RG Civil"
               {...register('civilId')}
             />
           </div>
@@ -157,7 +157,7 @@ export function StudentConfirm() {
               type="text"
               id="militaryId"
               className="rounded px-4 py-2 text-black placeholder:text-xs sm:placeholder:text-sm"
-              placeholder="Digite o nome da sua mãe"
+              placeholder="Digite seu RG Militar"
               {...register('militaryId')}
             />
           </div>
@@ -170,7 +170,7 @@ export function StudentConfirm() {
               type="text"
               id="state"
               className="rounded px-4 py-2 text-black placeholder:text-xs sm:placeholder:text-sm"
-              placeholder="Digite o nome da sua mãe"
+              placeholder="PA"
               {...register('state')}
             />
           </div>
@@ -183,7 +183,7 @@ export function StudentConfirm() {
               type="text"
               id="county"
               className="rounded px-4 py-2 text-black placeholder:text-xs sm:placeholder:text-sm"
-              placeholder="Digite o nome da sua mãe"
+              placeholder="Belém"
               {...register('county')}
             />
           </div>
