@@ -10,6 +10,7 @@ interface DeleteCourseDisciplineProps {
     courseId: string
     disciplineId: string
     name: string
+    module: number
   }
 }
 
@@ -47,7 +48,12 @@ export function DeleteCourseDiscipline({
 
   return (
     <div className="flex flex-col gap-1 rounded bg-pmpa-blue-700 px-2 py-1 text-center md:text-left">
-      <span className="font-medium">{discipline.name}</span>
+      <div className="flex flex-col gap-1">
+        <span className="text-sm font-medium">{discipline.name}</span>
+        <span className="text-sm font-medium">
+          Período: {discipline.module}
+        </span>
+      </div>
       <Button
         variant={'destructive'}
         size={'sm'}
