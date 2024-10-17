@@ -99,8 +99,6 @@ export function Overall() {
     navigate(`/students/${studentId}/boletim?courseId=${courseId}`)
   }
 
-  console.log(ranking)
-
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left print:px-0">
