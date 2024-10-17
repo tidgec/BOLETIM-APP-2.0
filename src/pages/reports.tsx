@@ -61,9 +61,10 @@ export function Reports() {
   function handlePrintReport() {
     setToPaginated(false)
 
-    window.print()
-
-    setToPaginated(true)
+    setTimeout(() => {
+      window.print()
+      setToPaginated(true)
+    }, 0)
   }
 
   return (
