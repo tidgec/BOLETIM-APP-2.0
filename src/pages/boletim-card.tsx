@@ -115,7 +115,8 @@ export function BoletimCard() {
                     : grades.averageInform.studentAverageStatus.concept,
                 )}`}
               >
-                {grades?.averageInform.geralAverage || 'Nota geral não lançada'}
+                {Number(grades?.averageInform.geralAverage).toFixed(3) ||
+                  'Nota geral não lançada'}
               </span>
             ) : (
               <Skeleton className="h-8 w-48 bg-slate-300" />
@@ -152,7 +153,7 @@ export function BoletimCard() {
         {showGrades && (
           <table className="mb-4 hidden w-full table-auto md:table print:hidden">
             <thead>
-              <tr className="flex flex-col items-center bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600 md:table-row">
+              <tr className="items-center bg-gray-200 text-sm uppercase leading-normal text-pmpa-blue-600">
                 <th className="py-3 font-bold print:text-xs">DISCIPLINA</th>
                 <th className="py-3 font-bold print:text-xs">1° VC</th>
                 <th className="py-3 font-bold print:text-xs">2° VC</th>
@@ -237,7 +238,11 @@ export function BoletimCard() {
                 </div>
               </>
             ) : (
-              disciplines?.map((discipline, index) => {
+              disciplines?.map((discipline) => {
+                const assessment = grades?.assessments.find(
+                  (item) => item?.disciplineId === discipline.disciplineId,
+                )
+
                 return (
                   <ol
                     key={discipline.disciplineId}
@@ -247,22 +252,23 @@ export function BoletimCard() {
                       Disciplina: {discipline.name ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      1º VF: {grades?.assessments[index]?.avi ?? '---'}
+                      1º VF: {assessment?.avi ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      2º VF: {grades?.assessments[index]?.avii ?? '---'}
+                      2º VF: {assessment?.avii ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      VF: {grades?.assessments[index]?.vf ?? '---'}
+                      VF: {assessment?.vf ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      VFE: {grades?.assessments[index]?.vfe ?? '---'}
+                      VFE: {assessment?.vfe ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      MÉDIA: {grades?.assessments[index]?.average ?? '---'}
+                      MÉDIA: {assessment?.average ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      STATUS: {grades?.assessments[index]?.status ?? '---'}
+                      STATUS:{' '}
+                      {statusMap[assessment?.status ?? 'no income'] ?? '---'}
                     </li>
                   </ol>
                 )
@@ -421,51 +427,53 @@ export function BoletimCard() {
                 </div>
               </>
             ) : (
-              behaviorMonths?.map((month, index) => {
-                return (
-                  <ol
-                    key={index}
-                    className="flex flex-col items-center border-2 border-slate-300"
-                  >
-                    <li className="text-center text-sm">
-                      Janeiro: {month.january ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Fevereiro:{month.february ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Março: {month.march ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Abril: {month.april ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Maio: {month.may ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Junho: {month.jun ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Julho: {month.july ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Agosto: {month.august ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Setembro: {month.september ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Outubro: {month.october ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Novembro: {month.november ?? '---'}
-                    </li>
-                    <li className="text-center text-sm">
-                      Dezembro: {month.december ?? '---'}
-                    </li>
-                  </ol>
-                )
-              })
+              behaviorMonths
+                ?.sort((a, b) => a.module - b.module)
+                .map((month, index) => {
+                  return (
+                    <ol
+                      key={index}
+                      className="flex flex-col items-center border-2 border-slate-300"
+                    >
+                      <li className="text-center text-sm">
+                        Janeiro: {month.january ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Fevereiro:{month.february ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Março: {month.march ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Abril: {month.april ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Maio: {month.may ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Junho: {month.jun ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Julho: {month.july ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Agosto: {month.august ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Setembro: {month.september ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Outubro: {month.october ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Novembro: {month.november ?? '---'}
+                      </li>
+                      <li className="text-center text-sm">
+                        Dezembro: {month.december ?? '---'}
+                      </li>
+                    </ol>
+                  )
+                })
             )}
           </div>
         )}
@@ -478,7 +486,7 @@ export function BoletimCard() {
                 <span
                   className={`${generateBehaviorStatus({ average: behaviorAverage ?? 0 })}`}
                 >
-                  {behaviorAverage}
+                  {behaviorAverage.toFixed(3)}
                 </span>
               ) : (
                 <Skeleton className="h-2 w-6" />
@@ -501,7 +509,8 @@ export function BoletimCard() {
               {grades.averageInform.behaviorAverageStatus.map((item, index) => (
                 <li key={index} className="flex flex-col">
                   <span>
-                    Média {index + 1}º Período: {item.behaviorAverage}
+                    Média {index + 1}º Período:{' '}
+                    {item.behaviorAverage.toFixed(3)}
                   </span>
                   <span>
                     Status {index + 1}º Período:{' '}
