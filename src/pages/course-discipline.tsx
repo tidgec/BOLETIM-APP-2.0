@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { CreateCourseDisciplineForm } from '@/components/create-course-discipline-form'
 import { DeleteCourseDiscipline } from '@/components/delete-course-discipline'
@@ -31,7 +31,7 @@ export function CourseDiscipline() {
         </h2>
 
         <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row lg:items-start">
-          <aside className="w-full max-w-md space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
+          <aside className="h-[32rem] w-full max-w-md space-y-3 overflow-auto rounded bg-pmpa-blue-500 p-4 text-white">
             <p className="text-lg font-semibold">
               Disciplinas Adicionadas ao curso:
             </p>
@@ -53,6 +53,12 @@ export function CourseDiscipline() {
           </aside>
 
           <div className="flex-1 rounded bg-pmpa-blue-500 p-4">
+            <Button variant={'link'} className="text-white">
+              <Link to={'/disciplines/add'}>
+                Adicionar nova disciplina na plataforma.
+              </Link>
+            </Button>
+
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {disciplines ? (
                 disciplines?.map((discipline) => (
@@ -69,12 +75,11 @@ export function CourseDiscipline() {
                 ))
               ) : (
                 <>
-                  <Skeleton className="h-56 w-72 rounded bg-slate-300" />
-                  <Skeleton className="h-56 w-72 rounded bg-slate-300" />
+                  <Skeleton className="h-64 w-[28rem] rounded bg-slate-300" />
+                  <Skeleton className="h-64 w-[28rem] rounded bg-slate-300" />
                 </>
               )}
             </div>
-
             <div className="flex justify-end">
               <Button
                 variant={'link'}
@@ -84,7 +89,6 @@ export function CourseDiscipline() {
                 Voltar ao início
               </Button>
             </div>
-
             <Pagination
               items={totalItems ?? 0}
               page={Number(page)}

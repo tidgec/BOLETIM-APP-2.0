@@ -57,7 +57,7 @@ export function CoursePole() {
         </h2>
 
         <div className="my-4 flex flex-col items-center justify-between gap-2 lg:flex-row lg:items-start">
-          <aside className="w-full max-w-72 space-y-3 rounded bg-pmpa-blue-500 p-4 text-white">
+          <aside className="h-[32rem] w-full max-w-72 space-y-3 overflow-auto rounded bg-pmpa-blue-500 p-4 text-white">
             <p className="text-lg font-semibold">Polos Adicionados ao curso:</p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {coursePoles ? (
