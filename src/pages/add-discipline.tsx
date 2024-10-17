@@ -10,8 +10,7 @@ import { fail } from '@/utils/fail'
 const createDisciplineSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'O nome deve conter no mínimo 3 caracteres' })
-    .max(30, { message: 'O nome deve conter no máximo 30 caracteres' }),
+    .min(3, { message: 'O nome deve conter no mínimo 3 caracteres' }),
 })
 
 type CreateDisciplineSchema = z.infer<typeof createDisciplineSchema>
