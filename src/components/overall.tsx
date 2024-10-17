@@ -414,7 +414,7 @@ export function Overall() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Classificação Geral - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

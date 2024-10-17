@@ -409,7 +409,7 @@ export function OverallSubPoleRanking() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Sub Classificação Por Polo - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

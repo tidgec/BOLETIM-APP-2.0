@@ -123,7 +123,7 @@ export function PolesAverageRanking() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Classificação de média - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

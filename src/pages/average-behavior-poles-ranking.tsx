@@ -123,7 +123,7 @@ export function AverageBehaviorPolesRanking() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Classificação de média de comportamentos - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

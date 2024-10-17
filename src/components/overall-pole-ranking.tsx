@@ -414,7 +414,7 @@ export function OverallPoleRanking() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Classificação Por Polo - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

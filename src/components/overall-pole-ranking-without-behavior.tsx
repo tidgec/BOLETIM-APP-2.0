@@ -423,7 +423,7 @@ export function OverallPoleRankingWithoutBehavior() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Classificação Sem Comportamento - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (

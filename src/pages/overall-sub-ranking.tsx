@@ -414,7 +414,7 @@ export function OverallSubRanking() {
                 }
               />
             }
-            fileName="classificacao-geral-2023.pdf"
+            fileName={`Sub Classificação - ${course?.name}.pdf`}
           >
             {({ loading }) =>
               loading ? (
