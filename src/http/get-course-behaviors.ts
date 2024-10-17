@@ -22,6 +22,8 @@ export interface GetCourseBehaviorsResponse {
     october?: number | null
     november?: number | null
     december?: number | null
+    currentYear: number
+    module: number
   }[]
 }
 

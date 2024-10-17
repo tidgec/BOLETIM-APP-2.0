@@ -70,6 +70,7 @@ interface GetStudentBoletimResponse {
     october?: number | null
     november?: number | null
     december?: number | null
+    module: number
   }[]
 }
 
