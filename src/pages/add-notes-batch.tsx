@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -32,8 +33,12 @@ export function AddNotesBatch() {
     resolver: zodResolver(addNotesBatchSchema),
   })
 
-  const { mutateAsync: createAssessmentsBatchFn, isPending } =
-    useCreateAssessmentsBatch()
+  const {
+    mutateAsync: createAssessmentsBatchFn,
+    isPending,
+    isError,
+    error,
+  } = useCreateAssessmentsBatch()
 
   let toastId: string | number
 
@@ -65,6 +70,8 @@ export function AddNotesBatch() {
       fail(err, toastId)
     }
   }
+
+  const err = error as AxiosError<{ message: string }>
 
   return (
     <div className="w-full py-6">
@@ -103,6 +110,10 @@ export function AddNotesBatch() {
             </button>
           </div>
         </form>
+
+        {isError && (
+          <span className="text-red-500">{err.response?.data.message}</span>
+        )}
       </section>
     </div>
   )
