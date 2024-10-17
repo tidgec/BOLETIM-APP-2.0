@@ -5,7 +5,7 @@ interface GenerateStatusProps {
 
 export function generateAssessmentStatus(grade: GenerateStatusProps) {
   if (grade.vfe)
-    return grade.average >= 7 && grade.average <= 10
+    return grade.average >= 5 && grade.average <= 10
       ? 'text-blue-500'
       : 'text-red-500'
 
