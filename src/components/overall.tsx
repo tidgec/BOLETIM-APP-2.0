@@ -240,7 +240,9 @@ export function Overall() {
                         )}
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
-                        {item.studentAverage.averageInform.geralAverage}
+                        {Number(
+                          item.studentAverage.averageInform.geralAverage,
+                        ).toFixed(3)}
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
@@ -330,7 +332,9 @@ export function Overall() {
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
                       MÉDIA FINAL:{' '}
-                      {item.studentAverage.averageInform.geralAverage}
+                      {Number(
+                        item.studentAverage.averageInform.geralAverage,
+                      ).toFixed(3)}
                     </li>
                     <li
                       className={`${generateStatus(
