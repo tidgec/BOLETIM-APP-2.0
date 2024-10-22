@@ -12,6 +12,7 @@ interface GetCourseResponse {
     name: string
     imageUrl: string
     formula: string
+    decimalPlaces: number
   }
 }
 
