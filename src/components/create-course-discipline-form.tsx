@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useCreateCourseDiscipline } from '@/hooks/use-create-course-discipline'
+import { useDeleteCourseDiscipline } from '@/hooks/use-delete-course-discipline'
 import { fail } from '@/utils/fail'
 
 import { Button } from './ui/button'
@@ -30,7 +31,6 @@ export function CreateCourseDisciplineForm({
   discipline,
 }: CreateCourseDisciplineProps) {
   const { id } = useParams()
-
   const {
     handleSubmit,
     register,
@@ -43,6 +43,7 @@ export function CreateCourseDisciplineForm({
 
   const { mutateAsync: createCourseDisciplineFn, isPending } =
     useCreateCourseDiscipline()
+  const { mutateAsync: deleteCourseDisciplineFn } = useDeleteCourseDiscipline()
 
   let toastId: string | number
 
@@ -60,17 +61,9 @@ export function CreateCourseDisciplineForm({
 
     let expected = ''
 
-    if (vf) {
-      expected = 'VF'
-    }
-
-    if (vf && avi) {
-      expected = 'AVI VF'
-    }
-
-    if (vf && avi && avii) {
-      expected = 'AVI AVII VF'
-    }
+    if (vf) expected = 'VF'
+    if (vf && avi) expected = 'AVI VF'
+    if (vf && avi && avii) expected = 'AVI AVII VF'
 
     try {
       await createCourseDisciplineFn({
@@ -94,6 +87,18 @@ export function CreateCourseDisciplineForm({
     }
   }
 
+  async function handleDeleteCourseDiscipline(disciplineId: string) {
+    if (!id) throw new Error('Curso inexistente!')
+
+    try {
+      await deleteCourseDisciplineFn({ courseId: id, disciplineId })
+      toast.success('Disciplina excluída com sucesso!', { duration: 1000 })
+    } catch (err) {
+      toast.error('Erro ao excluir disciplina')
+      fail(err)
+    }
+  }
+
   return (
     <form
       onSubmit={handleSubmit((data) =>
@@ -111,9 +116,7 @@ export function CreateCourseDisciplineForm({
             id="hours"
             placeholder="30"
             className="w-full max-w-32 rounded px-2 py-1 text-black"
-            {...register('hours', {
-              valueAsNumber: true,
-            })}
+            {...register('hours', { valueAsNumber: true })}
           />
         </div>
 
@@ -126,9 +129,7 @@ export function CreateCourseDisciplineForm({
             id="module"
             placeholder="1"
             className="w-full max-w-32 rounded px-2 py-1 text-black"
-            {...register('module', {
-              valueAsNumber: true,
-            })}
+            {...register('module', { valueAsNumber: true })}
           />
         </div>
       </div>
@@ -140,18 +141,16 @@ export function CreateCourseDisciplineForm({
             name="vf"
             defaultValue={false}
             control={control}
-            render={({ field: { name, onChange, value, disabled } }) => {
-              return (
-                <Checkbox
-                  name={name}
-                  checked={value}
-                  disabled={disabled}
-                  onCheckedChange={onChange}
-                  className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
-                  id="vf"
-                />
-              )
-            }}
+            render={({ field: { name, onChange, value, disabled } }) => (
+              <Checkbox
+                name={name}
+                checked={value}
+                disabled={disabled}
+                onCheckedChange={onChange}
+                className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
+                id="vf"
+              />
+            )}
           />
         </div>
 
@@ -161,18 +160,16 @@ export function CreateCourseDisciplineForm({
             name="avi"
             defaultValue={false}
             control={control}
-            render={({ field: { name, onChange, value, disabled } }) => {
-              return (
-                <Checkbox
-                  name={name}
-                  checked={value}
-                  disabled={disabled}
-                  onCheckedChange={onChange}
-                  className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
-                  id="avi"
-                />
-              )
-            }}
+            render={({ field: { name, onChange, value, disabled } }) => (
+              <Checkbox
+                name={name}
+                checked={value}
+                disabled={disabled}
+                onCheckedChange={onChange}
+                className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
+                id="avi"
+              />
+            )}
           />
         </div>
 
@@ -182,25 +179,33 @@ export function CreateCourseDisciplineForm({
             name="avii"
             defaultValue={false}
             control={control}
-            render={({ field: { name, onChange, value, disabled } }) => {
-              return (
-                <Checkbox
-                  name={name}
-                  checked={value}
-                  disabled={disabled}
-                  onCheckedChange={onChange}
-                  className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
-                  id="avii"
-                />
-              )
-            }}
+            render={({ field: { name, onChange, value, disabled } }) => (
+              <Checkbox
+                name={name}
+                checked={value}
+                disabled={disabled}
+                onCheckedChange={onChange}
+                className="h-6 w-6 border-slate-100 data-[state=checked]:bg-green-600"
+                id="avii"
+              />
+            )}
           />
         </div>
       </div>
 
-      <Button type="submit" variant={'ghost'} disabled={isSubmitting}>
-        Adicionar
-      </Button>
+      <div className="flex items-center gap-4">
+        <Button type="submit" variant={'ghost'} disabled={isSubmitting}>
+          Adicionar
+        </Button>
+        <Button
+          type="button"
+          variant={'default'}
+          onClick={() => handleDeleteCourseDiscipline(discipline.id)}
+          disabled={isSubmitting}
+        >
+          Excluir
+        </Button>
+      </div>
     </form>
   )
 }
