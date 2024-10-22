@@ -9,12 +9,12 @@ export function useDeleteDiscipline() {
   const mutation = useMutation({
     mutationFn: deleteDiscipline,
     onSuccess: async (_, { id }) => {
-      const courseManagersCache =
+      const disciplinesCache =
         queryClient.getQueriesData<GetDisciplinesResponse>({
           queryKey: ['disciplines'],
         })
 
-      courseManagersCache.forEach(([cacheKey, cached]) => {
+      disciplinesCache.forEach(([cacheKey, cached]) => {
         if (!cached) return
 
         let pages: number = 1
