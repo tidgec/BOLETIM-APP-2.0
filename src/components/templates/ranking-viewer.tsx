@@ -50,7 +50,7 @@ interface Row {
   qc: number
   civilId: string
   name: string
-  average: number
+  average: number | string
   concept: string
   birthday: string
   pole: string

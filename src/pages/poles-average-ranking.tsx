@@ -98,7 +98,9 @@ export function PolesAverageRanking() {
                       {item.poleAverage.name}
                     </TableCell>
                     <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.poleAverage.average}
+                      {item.poleAverage.average.toFixed(
+                        course?.decimalPlaces ?? 3,
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
@@ -116,7 +118,9 @@ export function PolesAverageRanking() {
                   ranking
                     ? ranking.map((item, index) => ({
                         classification: index + 1,
-                        average: item.poleAverage.average,
+                        average: item.poleAverage.average.toFixed(
+                          course?.decimalPlaces ?? 3,
+                        ),
                         pole: item.poleAverage.name ?? '',
                       }))
                     : []

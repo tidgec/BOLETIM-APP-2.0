@@ -10,132 +10,39 @@ export interface GetRankingRequest {
 }
 
 interface GetRankingResponse {
-  studentsWithAverage:
-    | {
-        studentAverage: {
-          averageInform: {
-            geralAverage: number | string
-            behaviorAverageStatus:
-              | {
-                  behaviorAverage: number
-                  status: 'disapproved' | 'approved'
-                }[]
-              | {
-                  behaviorAverage: number
-                  status: 'disapproved' | 'approved'
-                }
-            behaviorsCount: number
-            studentAverageStatus: {
-              concept:
-                | 'excellent'
-                | 'very good'
-                | 'good'
-                | 'regular'
-                | 'insufficient'
-                | 'no income'
-              status:
-                | 'approved'
-                | 'disapproved'
-                | 'approved second season'
-                | 'disapproved second season'
-                | 'second season'
-            }
-          }
+  classifications: {
+    id: string
+    courseId: string
+    studentId: string
+    poleId: string
+    average: number
+    concept:
+      | 'excellent'
+      | 'very good'
+      | 'good'
+      | 'regular'
+      | 'insufficient'
+      | 'no income'
+    assessmentsCount: number
+    status:
+      | 'approved'
+      | 'disapproved'
+      | 'approved second season'
+      | 'disapproved second season'
+      | 'second season'
 
-          assessmentsPerPeriod: {
-            [x: string]: {
-              vf: number
-              avi: number | null
-              avii: number | null
-              vfe?: number | null
-              average: number
-              status:
-                | 'approved'
-                | 'disapproved'
-                | 'approved second season'
-                | 'second season'
-              isRecovering: boolean
-              id: string
-              module: number
-            }[]
-          }
-          assessments: {
-            vf: number
-            avi: number | null
-            avii: number | null
-            vfe?: number | null
-            average: number
-            status:
-              | 'approved'
-              | 'disapproved'
-              | 'approved second season'
-              | 'second season'
-            isRecovering: boolean
-            id: string
-            module: number
-          }[]
-          assessmentsCount: number
-        }
-        studentBirthday?: string
-        studentName?: string
-        studentCivilOrMilitaryId?: string
-        studentId: string
-        studentPole?: string
-      }[]
-    | {
-        studentAverage: {
-          averageInform: {
-            geralAverage: number | string
-            behaviorAverageStatus:
-              | {
-                  behaviorAverage: number
-                  status: 'disapproved' | 'approved'
-                }[]
-              | {
-                  behaviorAverage: number
-                  status: 'disapproved' | 'approved'
-                }
-            behaviorsCount: number
-            studentAverageStatus: {
-              concept:
-                | 'excellent'
-                | 'very good'
-                | 'good'
-                | 'regular'
-                | 'insufficient'
-                | 'no income'
-              status:
-                | 'approved'
-                | 'disapproved'
-                | 'approved second season'
-                | 'disapproved second season'
-                | 'second season'
-            }
-          }
-
-          assessments: {
-            vf: number
-            avi: number | null
-            avii: number | null
-            vfe?: number | null
-            average: number
-            status:
-              | 'approved'
-              | 'disapproved'
-              | 'approved second season'
-              | 'second season'
-            isRecovering: boolean
-            id: string
-            module: number
-          }[]
-          assessmentsCount: number
-        }
-        studentBirthday?: string
-        studentName?: string
-        studentCivilOrMilitaryId?: string
-        studentId: string
-        studentPole?: string
-      }[]
+    behaviorsCount: number
+  }[]
+  students: {
+    id: string
+    username: string
+    civilId: string
+    birthday: string
+    militaryId: string
+    pole: {
+      name: string
+    }
+  }[]
   pages?: number
   totalItems?: number
 }
@@ -162,7 +69,8 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
     )
 
     return {
-      ranking: response.data.studentsWithAverage,
+      ranking: response.data.classifications,
+      students: response.data.students,
       pages: response.data.pages,
       totalItems: response.data.totalItems,
     }
@@ -183,7 +91,8 @@ export async function getRanking({ courseId, page }: GetRankingRequest) {
   )
 
   return {
-    ranking: response.data.studentsWithAverage,
+    ranking: response.data.classifications,
+    students: response.data.students,
     pages: response.data.pages,
     totalItems: response.data.totalItems,
   }

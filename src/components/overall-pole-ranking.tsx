@@ -38,17 +38,20 @@ export function OverallPoleRanking() {
     courseId: String(courseId),
   })
 
-  const { ranking, isLoading, totalItems, pages } = useGetPoleRanking({
-    courseId: course?.id,
-    poleId: String(id),
-    page,
-  })
+  const { ranking, students, isLoading, totalItems, pages } = useGetPoleRanking(
+    {
+      courseId: course?.id,
+      poleId: String(id),
+      page,
+    },
+  )
 
-  const { ranking: rankingToPrint } = useGetPoleRanking({
-    courseId: course?.id,
-    poleId: String(id),
-    page,
-  })
+  const { ranking: rankingToPrint, students: studentsPrint } =
+    useGetPoleRanking({
+      courseId: course?.id,
+      poleId: String(id),
+      page,
+    })
 
   const { mutateAsync: createPoleRankingSheet } = useCreatePoleRankingSheet()
 
@@ -67,38 +70,27 @@ export function OverallPoleRanking() {
   }
 
   const totalExcellentSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'excellent',
+    (item) => item.concept === 'excellent',
   )?.length
 
   const totalVeryGoodSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'very good',
+    (item) => item.concept === 'very good',
   )?.length
 
   const totalGoodSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept === 'good',
+    (item) => item.concept === 'good',
   )?.length
 
   const totalRegularSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'regular',
+    (item) => item.concept === 'regular',
   )?.length
 
   const totalInsufficientSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'insufficient',
+    (item) => item.concept === 'insufficient',
   )?.length
 
   const totalNoIncomeSize = ranking?.filter(
-    (item) =>
-      item.studentAverage.averageInform.studentAverageStatus.concept ===
-      'no income',
+    (item) => item.concept === 'no income',
   )?.length
 
   function handleNavigateToBoletim(studentId: string) {
@@ -213,76 +205,68 @@ export function OverallPoleRanking() {
               ) : (
                 ranking?.map((item, index) => {
                   const classification = getClassificationPosition(index, page)
+                  const student = students?.find(
+                    (student) => student.id === item.studentId,
+                  )
 
                   return (
                     <TableRow
-                      key={item.studentName}
+                      key={item.studentId}
+                      className="flex cursor-pointer flex-col lg:table-row"
                       onClick={() => handleNavigateToBoletim(item.studentId)}
-                      className="cursor-pointer"
                     >
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {classification}º
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {classification}ª
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentAverage.assessmentsCount}
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {item.assessmentsCount}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentAverage.averageInform.behaviorsCount}
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {item.behaviorsCount}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentCivilOrMilitaryId}
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {student?.militaryId ?? student?.civilId}
                       </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentName}
-                      </TableCell>
-                      <TableCell
-                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status === 'second season'
-                            ? 'second season'
-                            : item.studentAverage.averageInform
-                                .studentAverageStatus.concept,
-                        )} lg:text-center lg:text-sm lg:font-normal`}
-                      >
-                        {item.studentAverage.averageInform.geralAverage}
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {student?.username}
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status === 'second season'
+                          item.status === 'second season'
                             ? 'second season'
-                            : item.studentAverage.averageInform
-                                .studentAverageStatus.concept,
+                            : item.concept,
+                        )}
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
-                        {
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ]
-                        }
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentBirthday}
-                      </TableCell>
-                      <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                        {item.studentPole}
+                        {Number(item.average).toFixed(
+                          course?.decimalPlaces ?? 3,
+                        )}
                       </TableCell>
                       <TableCell
                         className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status === 'second season'
+                          item.status === 'second season'
                             ? 'second season'
-                            : item.studentAverage.averageInform
-                                .studentAverageStatus.concept,
+                            : item.concept,
+                        )}
                         )} lg:text-center lg:text-sm lg:font-normal`}
                       >
-                        {
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ]
-                        }
+                        {conceptMap[item.concept]}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {student?.birthday}
+                      </TableCell>
+                      <TableCell className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                        {student?.pole.name}
+                      </TableCell>
+                      <TableCell
+                        className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
+                          item.status === 'second season'
+                            ? 'second season'
+                            : item.concept,
+                        )}
+                          lg:text-center lg:text-sm lg:font-normal`}
+                      >
+                        {overallStatusMap[item.status]}
                       </TableCell>
                     </TableRow>
                   )
@@ -300,10 +284,13 @@ export function OverallPoleRanking() {
             ) : (
               ranking?.map((item, index) => {
                 const classification = getClassificationPosition(index, page)
+                const student = students?.find(
+                  (student) => student.id === item.studentId,
+                )
 
                 return (
                   <ol
-                    key={item.studentName}
+                    key={item.studentId}
                     className="flex cursor-pointer flex-col items-center border-2 border-slate-300"
                     onClick={() => handleNavigateToBoletim(item.studentId)}
                   >
@@ -311,68 +298,52 @@ export function OverallPoleRanking() {
                       Classificação: {classification}ª
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      Q.AV: {item.studentAverage.assessmentsCount}
+                      Q.AV: {item.assessmentsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      Q.C {item.studentAverage.averageInform.behaviorsCount}
+                      Q.C {item.behaviorsCount}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      RG: {item.studentCivilOrMilitaryId}
+                      RG: {student?.militaryId ?? student?.civilId}
                     </li>
                     <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      NOME COMPLETO: {item.studentName}
+                      NOME COMPLETO: {student?.username}
                     </li>
                     <li
                       className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .status === 'second season'
+                        item.status === 'second season'
                           ? 'second season'
-                          : item.studentAverage.averageInform
-                              .studentAverageStatus.concept,
+                          : item.concept,
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
                       MÉDIA FINAL:{' '}
-                      {item.studentAverage.averageInform.geralAverage}
+                      {Number(item.average).toFixed(course?.decimalPlaces ?? 3)}
+                    </li>
+                    <li
+                      className={`${generateStatus(
+                        item.status === 'second season'
+                          ? 'second season'
+                          : item.concept,
+                      )} px-4 py-2 text-start
+                        text-base
+                      font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal`}
+                    >
+                      CONCEITO: {conceptMap[item.concept]}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      DATA DE NASCIMENTO: {student?.birthday}
+                    </li>
+                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
+                      POLO: {student?.pole.name}
                     </li>
                     <li
                       className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .status === 'second season'
+                        item.status === 'second season'
                           ? 'second season'
-                          : item.studentAverage.averageInform
-                              .studentAverageStatus.concept,
+                          : item.concept,
                       )} lg:text-center lg:text-sm lg:font-normal`}
                     >
-                      CONCEITO:{' '}
-                      {
-                        conceptMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .concept
-                        ]
-                      }
-                    </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      DATA DE NASCIMENTO: {item.studentBirthday}
-                    </li>
-                    <li className="px-4 py-2 text-start text-base font-medium text-slate-700 lg:text-center lg:text-sm lg:font-normal">
-                      POLO: {item.studentPole}
-                    </li>
-                    <li
-                      className={`px-4 py-2 text-start text-base font-medium ${generateStatus(
-                        item.studentAverage.averageInform.studentAverageStatus
-                          .status === 'second season'
-                          ? 'second season'
-                          : item.studentAverage.averageInform
-                              .studentAverageStatus.concept,
-                      )} lg:text-center lg:text-sm lg:font-normal`}
-                    >
-                      STATUS:{' '}
-                      {
-                        overallStatusMap[
-                          item.studentAverage.averageInform.studentAverageStatus
-                            .status
-                        ]
-                      }
+                      STATUS: {overallStatusMap[item.status]}
                     </li>
                   </ol>
                 )
@@ -381,35 +352,34 @@ export function OverallPoleRanking() {
           </div>
         </div>
 
-        <div className="my-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
+        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
                 courseName={course?.name ?? ''}
                 ranking={
                   rankingToPrint
-                    ? rankingToPrint.map((item, index) => ({
-                        classification: index + 1,
-                        average: Number(
-                          item.studentAverage.averageInform.geralAverage,
-                        ),
-                        concept:
-                          conceptMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.concept
-                          ],
-                        name: item.studentName ?? '',
-                        pole: item.studentPole ?? '',
-                        qav: item.studentAverage.assessmentsCount,
-                        qc: item.studentAverage.averageInform.behaviorsCount,
-                        civilId: item.studentCivilOrMilitaryId ?? '',
-                        birthday: item.studentBirthday ?? '',
-                        status:
-                          overallStatusMap[
-                            item.studentAverage.averageInform
-                              .studentAverageStatus.status
-                          ],
-                      }))
+                    ? rankingToPrint.map((item, index) => {
+                        const student = studentsPrint?.find(
+                          (student) => student.id === item.studentId,
+                        )
+
+                        return {
+                          classification: index + 1,
+                          average: item.average.toFixed(
+                            course?.decimalPlaces ?? 3,
+                          ),
+                          concept: conceptMap[item.concept],
+                          name: student?.username ?? '',
+                          pole: student?.pole.name ?? '',
+                          qav: item.assessmentsCount,
+                          qc: item.behaviorsCount,
+                          civilId:
+                            student?.militaryId ?? student?.civilId ?? '',
+                          birthday: student?.birthday ?? '',
+                          status: overallStatusMap[item.status],
+                        }
+                      })
                     : []
                 }
               />

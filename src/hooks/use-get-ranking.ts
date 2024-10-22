@@ -13,6 +13,7 @@ export function useGetRanking({ courseId, page }: GetRankingRequest) {
   return {
     ...query,
     ranking: query.data?.ranking,
+    students: query.data?.students,
     pages: query.data?.pages,
     totalItems: query.data?.totalItems,
   }
