@@ -3,6 +3,7 @@ import QRCode from 'react-qr-code'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetCourse } from '@/hooks/use-get-course'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 import { useGetCourseStudent } from '@/hooks/use-get-course-student'
 import { useGetStudentBoletim } from '@/hooks/use-get-student-boletim'
@@ -21,6 +22,8 @@ export function BoletimCard() {
   const [searchParams] = useSearchParams()
   const { id: studentId } = useParams()
   const courseId = searchParams.get('courseId')
+
+  const { course } = useGetCourse({ courseId: String(courseId) })
 
   const { student, isLoading: isLoadingCourseStudent } = useGetCourseStudent({
     courseId: String(courseId),
@@ -181,6 +184,7 @@ export function BoletimCard() {
                         vfe: assessment?.vfe ?? 0,
                         average: assessment?.average ?? 0,
                         status: statusMap[assessment?.status ?? 'no income'],
+                        decimalPlaces: course?.decimalPlaces,
                       }}
                     />
                   )
@@ -252,19 +256,30 @@ export function BoletimCard() {
                       Disciplina: {discipline.name ?? '---'}
                     </li>
                     <li className="text-center text-sm">
-                      1º VF: {assessment?.avi ?? '---'}
+                      1º VF:{' '}
+                      {assessment?.avi?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </li>
                     <li className="text-center text-sm">
-                      2º VF: {assessment?.avii ?? '---'}
+                      2º VF:{' '}
+                      {assessment?.avii?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </li>
                     <li className="text-center text-sm">
-                      VF: {assessment?.vf ?? '---'}
+                      VF:{' '}
+                      {assessment?.vf.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </li>
                     <li className="text-center text-sm">
-                      VFE: {assessment?.vfe ?? '---'}
+                      VFE:{' '}
+                      {assessment?.vfe?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </li>
                     <li className="text-center text-sm">
-                      MÉDIA: {assessment?.average ?? '---'}
+                      MÉDIA:{' '}
+                      {assessment?.average.toFixed(
+                        course?.decimalPlaces ?? 3,
+                      ) ?? '---'}
                     </li>
                     <li className="text-center text-sm">
                       STATUS:{' '}
@@ -312,40 +327,49 @@ export function BoletimCard() {
                     key={index}
                   >
                     <td className="text-center text-sm">
-                      {month.january ?? '---'}
+                      {month.january?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.february ?? '---'}
+                      {month.february?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.march ?? '---'}
+                      {month.march?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.april ?? '---'}
+                      {month.april?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.may ?? '---'}
+                      {month.may?.toFixed(course?.decimalPlaces ?? 3) ?? '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.jun ?? '---'}
+                      {month.jun?.toFixed(course?.decimalPlaces ?? 3) ?? '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.july ?? '---'}
+                      {month.july?.toFixed(course?.decimalPlaces ?? 3) ?? '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.august ?? '---'}
+                      {month.august?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.september ?? '---'}
+                      {month.september?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.october ?? '---'}
+                      {month.october?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.november ?? '---'}
+                      {month.november?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                     <td className="text-center text-sm">
-                      {month.december ?? '---'}
+                      {month.december?.toFixed(course?.decimalPlaces ?? 3) ??
+                        '---'}
                     </td>
                   </tr>
                 ))
@@ -436,40 +460,64 @@ export function BoletimCard() {
                       className="flex flex-col items-center border-2 border-slate-300"
                     >
                       <li className="text-center text-sm">
-                        Janeiro: {month.january ?? '---'}
+                        Janeiro:{' '}
+                        {month.january?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Fevereiro:{month.february ?? '---'}
+                        Fevereiro:
+                        {month.february?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Março: {month.march ?? '---'}
+                        Março:{' '}
+                        {month.march?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Abril: {month.april ?? '---'}
+                        Abril:{' '}
+                        {month.april?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Maio: {month.may ?? '---'}
+                        Maio:{' '}
+                        {month.may?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Junho: {month.jun ?? '---'}
+                        Junho:{' '}
+                        {month.jun?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Julho: {month.july ?? '---'}
+                        Julho:{' '}
+                        {month.july?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Agosto: {month.august ?? '---'}
+                        Agosto:{' '}
+                        {month.august?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Setembro: {month.september ?? '---'}
+                        Setembro:{' '}
+                        {month.september?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Outubro: {month.october ?? '---'}
+                        Outubro:{' '}
+                        {month.october?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Novembro: {month.november ?? '---'}
+                        Novembro:{' '}
+                        {month.november?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                       <li className="text-center text-sm">
-                        Dezembro: {month.december ?? '---'}
+                        Dezembro:{' '}
+                        {month.december?.toFixed(course?.decimalPlaces ?? 3) ??
+                          '---'}
                       </li>
                     </ol>
                   )
@@ -559,6 +607,8 @@ interface GradeProps {
   vfe?: number
   average: number
   status: string
+
+  decimalPlaces?: number
 }
 
 function GradeItem({ grade }: { grade: GradeProps }) {
@@ -568,19 +618,19 @@ function GradeItem({ grade }: { grade: GradeProps }) {
         {grade.disciplina}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vc1 ? grade.vc1.toFixed(3) : '---'}
+        {grade.vc1 ? grade.vc1.toFixed(grade.decimalPlaces ?? 3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vc2 ? grade.vc2.toFixed(3) : '---'}
+        {grade.vc2 ? grade.vc2.toFixed(grade.decimalPlaces ?? 3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vf ? grade.vf.toFixed(3) : '---'}
+        {grade.vf ? grade.vf.toFixed(grade.decimalPlaces ?? 3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.vfe ? grade.vfe.toFixed(3) : '---'}
+        {grade.vfe ? grade.vfe.toFixed(grade.decimalPlaces ?? 3) : '---'}
       </td>
       <td className="text-center text-sm text-gray-700 md:py-3 print:text-left">
-        {grade.average.toFixed(3)}
+        {grade.average.toFixed(grade.decimalPlaces ?? 3)}
       </td>
       <td
         className={`text-center text-sm ${generateAssessmentStatus(grade)} md:py-3 print:text-left`}
