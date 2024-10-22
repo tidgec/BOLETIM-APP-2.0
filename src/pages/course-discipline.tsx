@@ -1,12 +1,15 @@
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { CreateCourseDisciplineForm } from '@/components/create-course-discipline-form'
 import { DeleteCourseDiscipline } from '@/components/delete-course-discipline'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useDeleteDiscipline } from '@/hooks/use-delete-discipline'
 import { useGetCourseDisciplines } from '@/hooks/use-get-course-disciplines'
 import { useGetDisciplines } from '@/hooks/use-get-disciplines'
+import { fail } from '@/utils/fail'
 
 export function CourseDiscipline() {
   const [searchParams] = useSearchParams()
@@ -22,6 +25,33 @@ export function CourseDiscipline() {
   const { disciplines: courseDisciplines } = useGetCourseDisciplines({
     courseId: String(id),
   })
+
+  const { mutateAsync: deleteDisciplineFn, isPending } = useDeleteDiscipline()
+
+  let toastId: string | number
+
+  if (isPending) {
+    toastId = toast.loading(
+      'Aguarde um pouco! A disciplina está sendo removida do curso.',
+    )
+  }
+
+  async function handleDeleteDiscipline(id: string) {
+    try {
+      await deleteDisciplineFn({
+        id,
+      })
+
+      toast.success('Disciplina deletada com sucesso!', {
+        duration: 1000,
+        onAutoClose: () => {
+          toast.dismiss(toastId)
+        },
+      })
+    } catch (err) {
+      fail(err, toastId)
+    }
+  }
 
   return (
     <div className="w-full py-6">
@@ -71,6 +101,15 @@ export function CourseDiscipline() {
                     </span>
 
                     <CreateCourseDisciplineForm discipline={discipline} />
+                    <div className="flex w-full items-center justify-end">
+                      <Button
+                        variant={'destructive'}
+                        size={'sm'}
+                        onClick={() => handleDeleteDiscipline(discipline.id)}
+                      >
+                        Deletar disciplina
+                      </Button>
+                    </div>
                   </div>
                 ))
               ) : (
