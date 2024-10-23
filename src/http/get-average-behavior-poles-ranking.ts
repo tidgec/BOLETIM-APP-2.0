@@ -11,7 +11,7 @@ interface GetAverageBehaviorPolesRankingResponse {
     poleAverage: {
       poleId: string
       name: string
-      average: number
+      average: number | null
     }
   }[]
 }

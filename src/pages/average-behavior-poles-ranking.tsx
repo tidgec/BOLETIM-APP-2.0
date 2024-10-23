@@ -45,6 +45,8 @@ export function AverageBehaviorPolesRanking() {
     }
   }
 
+  console.log(ranking)
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left">
@@ -98,7 +100,7 @@ export function AverageBehaviorPolesRanking() {
                       {item.poleAverage.name}
                     </TableCell>
                     <TableCell className="px-4 py-2 text-center text-sm text-slate-700">
-                      {item.poleAverage.average.toFixed(
+                      {item.poleAverage?.average?.toFixed(
                         course?.decimalPlaces ?? 3,
                       )}
                     </TableCell>
@@ -118,9 +120,11 @@ export function AverageBehaviorPolesRanking() {
                   ranking
                     ? ranking.map((item, index) => ({
                         classification: index + 1,
-                        average: item.poleAverage.average.toFixed(
-                          course?.decimalPlaces ?? 3,
-                        ),
+                        average: item.poleAverage.average
+                          ? item.poleAverage?.average.toFixed(
+                              course?.decimalPlaces ?? 3,
+                            )
+                          : null,
                         pole: item.poleAverage.name ?? '',
                       }))
                     : []

@@ -36,6 +36,7 @@ export function useGetSubPoleRanking({
   return {
     ...query,
     ranking: query.data?.ranking,
+    students: query.data?.students,
     pages: query.data?.pages,
     totalItems: query.data?.totalItems,
   }
