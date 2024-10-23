@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
 interface Row {
   classification: number
-  average: number | string
+  average: number | string | null
   pole: string
 }
 
