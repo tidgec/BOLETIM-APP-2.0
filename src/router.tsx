@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 
+import { OverallRankingWithoutBehavior } from './components/overall-ranking-whitout-behavior'
 import { NotFound } from './pages/__errors/404'
 import { AppLayout } from './pages/__layouts/app'
 import { AuthLayout } from './pages/__layouts/auth'
@@ -53,7 +54,6 @@ import { OverallRanking } from './pages/overall-ranking'
 import { OverallSubPoleRanking } from './pages/overall-sub-pole-ranking'
 import { OverallSubRanking } from './pages/overall-sub-ranking'
 import { PoleRanking } from './pages/pole-ranking'
-import { PoleRankingWithoutBehavior } from './pages/pole-ranking-without-behavior'
 import { PolesAverageRanking } from './pages/poles-average-ranking'
 import { Profile } from './pages/profile'
 import { Rankings } from './pages/rankings'
@@ -857,7 +857,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/poles/no-behavior/list-courses',
+        path: '/rankings/no-behavior/list-courses',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
             <ListCoursesPage />
@@ -865,18 +865,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/rankings/poles/no-behavior',
+        path: '/rankings/no-behavior',
         element: (
           <ProtectedLayout roles={['admin', 'dev']}>
-            <ListCoursePolesPage />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/rankings/poles/no-behavior/:id',
-        element: (
-          <ProtectedLayout roles={['admin', 'dev']}>
-            <PoleRankingWithoutBehavior />
+            <OverallRankingWithoutBehavior />
           </ProtectedLayout>
         ),
       },
