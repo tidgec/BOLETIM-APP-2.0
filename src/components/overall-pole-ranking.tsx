@@ -46,12 +46,12 @@ export function OverallPoleRanking() {
     },
   )
 
-  const { ranking: rankingToPrint, students: studentsPrint } =
-    useGetPoleRanking({
-      courseId: course?.id,
-      poleId: String(id),
-      page,
-    })
+  // const { ranking: rankingToPrint, students: studentsPrint } =
+  //   useGetPoleRanking({
+  //     courseId: course?.id,
+  //     poleId: String(id),
+  //     page,
+  //   })
 
   const { mutateAsync: createPoleRankingSheet } = useCreatePoleRankingSheet()
 
@@ -99,7 +99,7 @@ export function OverallPoleRanking() {
 
   return (
     <div className="w-full py-6">
-      <section className="mx-auto w-full max-w-[90rem] px-4 text-center sm:text-left">
+      <section className="mx-auto w-full max-w-full px-4 text-center sm:text-left print:px-0">
         <h2 className="mb-4 w-full border-b-2 border-b-black text-xl font-semibold">
           Classificação por polo
         </h2>
@@ -352,7 +352,7 @@ export function OverallPoleRanking() {
           </div>
         </div>
 
-        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
+        {/* <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
@@ -395,7 +395,7 @@ export function OverallPoleRanking() {
             }
           </PDFDownloadLink>
           <Button onClick={handleDownloadExcel}>Download Excel</Button>
-        </div>
+        </div> */}
 
         <Pagination
           items={totalItems ?? 0}

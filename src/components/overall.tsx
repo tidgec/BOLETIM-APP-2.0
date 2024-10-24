@@ -41,9 +41,9 @@ export function Overall() {
     page,
   })
 
-  const { ranking: rankingToPrint, students: studentsPrint } = useGetRanking({
-    courseId: course?.id,
-  })
+  // const { ranking: rankingToPrint, students: studentsPrint } = useGetRanking({
+  //   courseId: course?.id,
+  // })
 
   const { mutateAsync: createRankingSheetFn } = useCreateRankingSheet()
 
@@ -256,6 +256,7 @@ export function Overall() {
                             ? 'second season'
                             : item.concept,
                         )}
+                        
                           lg:text-center lg:text-sm lg:font-normal`}
                       >
                         {overallStatusMap[item.status]}
@@ -344,7 +345,7 @@ export function Overall() {
           </div>
         </div>
 
-        <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
+        {/* <div className="mt-4 flex w-full items-center justify-center gap-2 text-center print:hidden">
           <PDFDownloadLink
             document={
               <RankingViewer
@@ -387,7 +388,7 @@ export function Overall() {
             }
           </PDFDownloadLink>
           <Button onClick={handleDownloadExcel}>Download Excel</Button>
-        </div>
+        </div> */}
 
         <Pagination
           items={totalItems ?? 0}

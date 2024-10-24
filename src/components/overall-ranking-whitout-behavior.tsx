@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
-import { Overall } from '@/components/overall'
 import { useGetCourse } from '@/hooks/use-get-course'
+
+import { OverallWithoutBehavior } from './overall-without-behavior'
 
 export function OverallRankingWithoutBehavior() {
   const [isOverall, setIsOverall] = useState<boolean>(true)
@@ -53,5 +54,5 @@ export function OverallRankingWithoutBehavior() {
     )
   }
 
-  return <Overall />
+  return <OverallWithoutBehavior />
 }

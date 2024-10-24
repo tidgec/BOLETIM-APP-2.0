@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -27,13 +28,17 @@ export function AddStudentsBatch() {
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<AddStudentBatchSchema>({
     resolver: zodResolver(addStudentBatchSchema),
   })
 
-  const { mutateAsync: createStudentsBatchFn, isPending } =
-    useCreateStudentsBatch()
+  const {
+    mutateAsync: createStudentsBatchFn,
+    isPending,
+    error,
+    isError,
+  } = useCreateStudentsBatch()
 
   let toastId: string | number
 
@@ -66,6 +71,8 @@ export function AddStudentsBatch() {
     }
   }
 
+  const err = error as AxiosError<{ message: string }>
+
   return (
     <div className="w-full py-6">
       <section className="mx-auto w-full max-w-[90rem]">
@@ -95,13 +102,18 @@ export function AddStudentsBatch() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="hover:bg-pmpa-blue- rounded bg-pmpa-blue-500 px-4 py-2 font-semibold text-white"
+              disabled={isSubmitting}
+              className="hover:bg-pmpa-blue- rounded bg-pmpa-blue-500 px-4 py-2 font-semibold text-white disabled:opacity-75"
             >
               Adicionar
             </button>
           </div>
         </form>
       </section>
+
+      {isError && (
+        <span className="text-red-500">{err.response?.data.message}</span>
+      )}
     </div>
   )
 }
